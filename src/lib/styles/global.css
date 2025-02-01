@@ -119,29 +119,75 @@ body {
 .primary-button,
 .secondary-button {
 	padding: 0.8rem 1.5rem;
-	border-radius: 4px;
+	border-radius: 8px;
+	font-weight: 600;
+	text-transform: uppercase;
+	letter-spacing: 0.5px;
+	position: relative;
+	transition: all 0.3s ease;
+	border: none;
 	text-decoration: none;
-	font-weight: 500;
-	transition: all 0.2s;
+	
+	/* 3D effect with box-shadow layers */
+	box-shadow: 
+		0 2px 0 rgba(0, 0, 0, 0.2),
+		0 4px 8px rgba(0, 0, 0, 0.2),
+		inset 0 1px rgba(255, 255, 255, 0.2);
 }
 
 .primary-button {
-	background-color: #340143;
+	background: linear-gradient(45deg, var(--primary-color), var(--primary-light));
 	color: white;
+	border: 2px solid var(--primary-lighter);
+	text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+	position: relative;
 }
 
 .primary-button:hover {
-	background-color: #0052a3;
+	transform: translateY(-2px);
+	color: #fff;
+	background: var(--primary-color);
+	box-shadow: 
+		0 0 5px var(--primary-lighter),
+		0 0 25px var(--primary-lighter),
+		0 0 50px var(--primary-lighter),
+		0 0 100px var(--primary-lighter);
+	text-shadow: 
+		0 0 5px #fff,
+		0 0 10px #fff,
+		0 0 20px #fff;
 }
 
 .secondary-button {
-	border: 2px solid var(--primary-color);
-	color: var(--primary-lighter);
+	background: linear-gradient(45deg, #1e293b, #334155);
+	color: white;
+	border: 2px solid #4a5568;
 }
 
 .secondary-button:hover {
-	background-color: var(--primary-color);
-	color: white;
+	transform: translateY(-2px);
+	color: #fff;
+	background: #1e293b;
+	box-shadow: 
+		0 0 5px #4a5568,
+		0 0 25px #4a5568,
+		0 0 50px #4a5568,
+		0 0 100px #4a5568;
+	text-shadow: 
+		0 0 5px #fff,
+		0 0 10px #fff,
+		0 0 20px #fff;
+}
+
+/* Active state - pressed effect */
+.primary-button:active,
+.secondary-button:active {
+	transform: translateY(1px);
+	box-shadow: 
+		0 0 2px var(--primary-lighter),
+		0 0 10px var(--primary-lighter),
+		0 0 20px var(--primary-lighter),
+		0 0 40px var(--primary-lighter);
 }
 
 /* Section styles */
