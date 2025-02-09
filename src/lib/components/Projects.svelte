@@ -70,6 +70,15 @@
       image: '/images/alignment.png',
       liveUrl: 'https://shawnmcpeek.github.io/alignment/'
   
+    },
+    {
+      title: 'Inspiration by Simpsons',
+      description: 'A simple web app that allows users to generate inspiration quotes from The Simpsons.',
+      status: 'Completed',
+      technologies: ['HTML', 'CSS', 'JavaScript'],
+      image: '/images/ce31fc0724c4269bd1386d8c866c92a6.jpg',
+      liveUrl: 'https://shawnmcpeek.github.io/simpsonsquotes/'
+  
     }
   ];
 </script>
