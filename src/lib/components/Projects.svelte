@@ -52,6 +52,24 @@
       image: '/images/coaster.jpg',
       liveUrl: 'https://coaster-score.web.app/'
   
+    },
+    {
+      title: 'Stock Market Game',
+      description: 'A simple stock market game where users can buy and sell stocks, and track their success.',
+      status: 'Completed',
+      technologies: ['SvelteKit', 'Firebase', 'TypeScript', 'Tailwind CSS'],
+      image: '/images/marketgame.png',
+      liveUrl: 'https://marketgame-3e924.firebaseapp.com/'
+  
+    },
+    {
+      title: 'Alignment Quiz',
+      description: 'Want to know your D&D alignment? Take this unique quiz and find out! My son and I were at WDW and joking about determining your alignment based on which stall you use, so early on I created this simple quiz. ',
+      status: 'Completed',
+      technologies: ['HTML', 'CSS', 'JavaScript'],
+      image: '/images/alignment.png',
+      liveUrl: 'https://shawnmcpeek.github.io/alignment/'
+  
     }
   ];
 </script>
