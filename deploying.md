@@ -1,0 +1,1 @@
+THis is deploying with firebase hosting. To deply, in cli use firebase deploy

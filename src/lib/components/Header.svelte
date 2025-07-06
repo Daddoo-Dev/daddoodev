@@ -5,7 +5,8 @@
     { label: 'Home', href: '#' },
     { label: 'About', href: '#about' },
     { label: 'Projects', href: '#projects' },
-    { label: 'Contact', href: '#contact' }
+    { label: 'Contact', href: '#contact' },
+    { label: 'QR Generator', href: '/qr-generator' }
   ];
 
   let isMenuOpen = false;
@@ -27,7 +28,7 @@
   });
 </script>
 
-<header class="header">
+<header class="header" class:menu-open={isMenuOpen && isMobile}>
   <nav class="nav">
     <div class="logo">
       <a href="/" class="nav-link">Daddoo Dev</a>
@@ -42,6 +43,15 @@
           {:else}
             <path d="M3 12h18M3 6h18M3 18h18"/>
           {/if}
+        </svg>
+      </button>
+    {/if}
+
+    {#if isMobile && isMenuOpen}
+      <button class="close-menu-button" on:click={toggleMenu} aria-label="Close menu">
+        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18" />
+          <line x1="6" y1="6" x2="18" y2="18" />
         </svg>
       </button>
     {/if}
@@ -61,4 +71,8 @@
       {/each}
     </ul>
   </nav>
-</header> 
+</header>
+
+<style>
+
+</style> 

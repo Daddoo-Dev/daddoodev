@@ -19,7 +19,10 @@ const config = {
 			fallback: 'index.html', // This enables SPA mode
 			precompress: false,
 			strict: false
-		})
+		}),
+		prerender: {
+			handleMissingId: 'ignore'
+		}
 	}
 };
 
