@@ -47,6 +47,15 @@
       category: 'Web App'
     },
     {
+      title: 'Council Programs Annual Survey',
+      description: 'A web app for KofC Councils to track programs and generate the annual survey.',
+      status: 'Completed',
+      technologies: ['SvelteKit', 'Firebase', 'TypeScript'],
+      image: '/images/kcsurvey.png',
+      liveUrl: 'https://kcannualsurvey.web.app/'
+  
+    },
+    {
       title: 'Alignment Quiz',
       description: 'Want to know your D&D alignment? Take this unique quiz and find out!',
       status: 'Completed',
