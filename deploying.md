@@ -1,1 +1,1 @@
-THis is deploying with firebase hosting. To deply, in cli use firebase deploy
+THis is deploying with firebase hosting. To deply, in cli use npm run build and firebase deploy

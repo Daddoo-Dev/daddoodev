@@ -135,47 +135,50 @@
     
     <div class="bento-grid">
       {#each projects as project, i}
-        <div 
-          class="bento-card {project.size || 'small'}"
-          in:fly={{ y: 50, duration: 500, delay: i * 100 }}
-          out:fade
-        >
-          <div class="card-background">
-            <div class="card-image">
-              <img src={project.image} alt={project.title} />
-              <div class="image-overlay"></div>
-            </div>
-            <div class="card-content">
-              <div class="card-header">
-                <span class="category-tag">{project.category}</span>
-                <span class="status-badge {project.status.toLowerCase().replace(/\s+/g, '-')}">
-                  {project.status}
-                </span>
+        {#if project.liveUrl}
+          <a 
+            href={project.liveUrl}
+            target="_blank"
+            rel="noopener"
+            class="bento-card {project.size || 'small'}"
+            in:fly={{ y: 50, duration: 500, delay: i * 100 }}
+            out:fade
+          >
+            <div class="card-background">
+              <div class="card-image">
+                <img src={project.image} alt={project.title} />
+                <div class="image-overlay"></div>
               </div>
-              <h3 class="card-title">{project.title}</h3>
-              <p class="card-description">{project.description}</p>
-              
-              <div class="tech-stack">
-                {#each project.technologies.slice(0, 3) as tech}
-                  <span class="tech-chip">{tech}</span>
-                {/each}
-                {#if project.technologies.length > 3}
-                  <span class="tech-chip more">+{project.technologies.length - 3}</span>
-                {/if}
-              </div>
-              
-              {#if project.liveUrl}
+              <div class="card-content">
+                <div class="card-header">
+                  <span class="category-tag">{project.category}</span>
+                  <span class="status-badge {project.status.toLowerCase().replace(/\s+/g, '-')}">
+                    {project.status}
+                  </span>
+                </div>
+                <h3 class="card-title">{project.title}</h3>
+                <p class="card-description">{project.description}</p>
+                
+                <div class="tech-stack">
+                  {#each project.technologies.slice(0, 3) as tech}
+                    <span class="tech-chip">{tech}</span>
+                  {/each}
+                  {#if project.technologies.length > 3}
+                    <span class="tech-chip more">+{project.technologies.length - 3}</span>
+                  {/if}
+                </div>
+                
                 <div class="card-actions">
-                  <a href={project.liveUrl} class="action-button primary" target="_blank" rel="noopener">
+                  <span class="action-button primary">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                       <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
                       <polyline points="15,3 21,3 21,9"/>
                       <line x1="10" y1="14" x2="21" y2="3"/>
                     </svg>
                     View Live
-                  </a>
+                  </span>
                   {#if project.githubUrl}
-                    <a href={project.githubUrl} class="action-button secondary" target="_blank" rel="noopener">
+                    <a href={project.githubUrl} class="action-button secondary" target="_blank" rel="noopener" on:click|stopPropagation>
                       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>
                       </svg>
@@ -183,10 +186,42 @@
                     </a>
                   {/if}
                 </div>
-              {/if}
+              </div>
+            </div>
+          </a>
+        {:else}
+          <div 
+            class="bento-card {project.size || 'small'}"
+            in:fly={{ y: 50, duration: 500, delay: i * 100 }}
+            out:fade
+          >
+            <div class="card-background">
+              <div class="card-image">
+                <img src={project.image} alt={project.title} />
+                <div class="image-overlay"></div>
+              </div>
+              <div class="card-content">
+                <div class="card-header">
+                  <span class="category-tag">{project.category}</span>
+                  <span class="status-badge {project.status.toLowerCase().replace(/\s+/g, '-')}">
+                    {project.status}
+                  </span>
+                </div>
+                <h3 class="card-title">{project.title}</h3>
+                <p class="card-description">{project.description}</p>
+                
+                <div class="tech-stack">
+                  {#each project.technologies.slice(0, 3) as tech}
+                    <span class="tech-chip">{tech}</span>
+                  {/each}
+                  {#if project.technologies.length > 3}
+                    <span class="tech-chip more">+{project.technologies.length - 3}</span>
+                  {/if}
+                </div>
+              </div>
             </div>
           </div>
-        </div>
+        {/if}
       {/each}
     </div>
   </div>
@@ -226,6 +261,8 @@
     overflow: hidden;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     cursor: pointer;
+    text-decoration: none;
+    display: block;
   }
 
   .bento-card:hover {
