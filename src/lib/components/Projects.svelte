@@ -113,17 +113,27 @@
       size: 'medium',
       category: 'E-commerce'
     },
-    {
-      title: 'Otto & Furiends',
-      description: 'An e-commerce platform specializing in dog-themed stickers and accessories.',
-      status: 'In Development',
-      technologies: ['SvelteKit', 'Square API', 'Firebase', 'JavaScript'],
-      image: '/images/ottoandfuriends.png',
-      size: 'medium',
-      category: 'E-commerce'
-    },
-    
-  ];
+         {
+       title: 'Otto & Furiends',
+       description: 'An e-commerce platform specializing in dog-themed stickers and accessories.',
+       status: 'In Development',
+       technologies: ['SvelteKit', 'Square API', 'Firebase', 'JavaScript'],
+       image: '/images/ottoandfuriends.png',
+       size: 'medium',
+       category: 'E-commerce'
+     },
+     {
+       title: 'Twisted Fortunes',
+       description: 'A fun fortune cookie web app where users can click to reveal something unexpected. Built with modern web technologies for a smooth, interactive experience.',
+       status: 'Completed',
+       technologies: ['Nuxt', 'Vue.js', 'JavaScript', 'Netlify'],
+       image: '/images/twistedfortune.png',
+       liveUrl: 'https://twistedfortunes.netlify.app/',
+       size: 'small',
+       category: 'Web App'
+     },
+     
+   ];
 </script>
 
 <section class="projects" id="projects">
