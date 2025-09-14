@@ -9,13 +9,23 @@
     technologies: string[];
     image: string;
     liveUrl?: string;
+    internalUrl?: string;
     githubUrl?: string;
     size?: 'small' | 'medium' | 'large'; // For bento grid sizing
     category?: string;
   }
 
   const projects: Project[] = [
-
+    {
+      title: 'Preux',
+      description: 'Intelligent error tracking dashboard with AI-powered analysis, multi-database support, and comprehensive SDKs for modern development workflows.',
+      status: 'Available Now',
+      technologies: ['Flutter', 'AI/ML', 'Multi-Database', 'Cross-Platform'],
+      image: '/images/preuxtext.png',
+      internalUrl: '/preux',
+      size: 'large',
+      category: 'Desktop App'
+    },
     {
       title: 'Coaster Score',
       description: 'A specialized application for roller coaster enthusiasts to track their "coaster count".',
@@ -145,11 +155,11 @@
     
     <div class="bento-grid">
       {#each projects as project, i}
-        {#if project.liveUrl}
+        {#if project.liveUrl || project.internalUrl}
           <a 
-            href={project.liveUrl}
-            target="_blank"
-            rel="noopener"
+            href={project.liveUrl || project.internalUrl}
+            target={project.liveUrl ? '_blank' : '_self'}
+            rel={project.liveUrl ? 'noopener' : ''}
             class="bento-card {project.size || 'small'}"
             in:fly={{ y: 50, duration: 500, delay: i * 100 }}
             out:fade
@@ -185,7 +195,7 @@
                       <polyline points="15,3 21,3 21,9"/>
                       <line x1="10" y1="14" x2="21" y2="3"/>
                     </svg>
-                    View Live
+                    {project.internalUrl ? 'Learn More' : 'View Live'}
                   </span>
                   {#if project.githubUrl}
                     <button 
@@ -414,6 +424,12 @@
     border: 1px solid rgba(245, 158, 11, 0.3);
   }
 
+  .status-badge.available-now {
+    background: rgba(34, 197, 94, 0.2);
+    color: #22c55e;
+    border: 1px solid rgba(34, 197, 94, 0.3);
+  }
+
   .card-title {
     font-size: 1.25rem;
     font-weight: 700;
@@ -429,6 +445,7 @@
     margin-bottom: 1rem;
     display: -webkit-box;
     -webkit-line-clamp: 3;
+    line-clamp: 3;
     -webkit-box-orient: vertical;
     overflow: hidden;
   }
