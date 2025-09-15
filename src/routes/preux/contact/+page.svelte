@@ -282,7 +282,6 @@
   }
 
   .form-group input,
-  .form-group select,
   .form-group textarea {
     background: rgba(255, 255, 255, 0.1);
     border: 1px solid rgba(255, 255, 255, 0.2);
@@ -294,7 +293,6 @@
   }
 
   .form-group input:focus,
-  .form-group select:focus,
   .form-group textarea:focus {
     outline: none;
     border-color: #667eea;
@@ -306,10 +304,6 @@
     color: rgba(255, 255, 255, 0.5);
   }
 
-  .form-group select option {
-    background: #1a1a2e;
-    color: #fff;
-  }
 
   .submit-button {
     display: flex;

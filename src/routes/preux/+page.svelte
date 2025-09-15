@@ -329,7 +329,7 @@
           <a href="/" class="footer-brand-link">Daddoo Dev</a>
         </div>
         <div class="footer-links">
-          <a href="/contact" class="footer-link">Contact</a>
+          <a href="/preux/contact" class="footer-link">Contact</a>
         </div>
       </div>
       <div class="footer-bottom">
