@@ -1,14 +1,14 @@
 {
   "product_name": "Preux",
-  "version": "1.0.2",
-  "build_number": "102",
-  "download_url": "https://yourdomain.com/downloads/preux-v1.0.2.exe",
+  "version": "1.0.1",
+  "build_number": "101",
+  "download_url": "https://dadddodev.pro/downloads/preux-v1.0.1.exe",
   "release_notes": "Bug fixes and improvements",
   "release_date": "2024-09-14",
   "minimum_supported_version": "1.0.0",
   "update_required": false,
   "product_description": "Intelligent Error Tracking Dashboard with AI-powered analysis",
-  "title": "Preux v1.0.2 - Enhanced AI Analysis",
+  "title": "Preux v1.0.1 - Enhanced AI Analysis",
   "description": "Latest version of Preux with improved AI-powered error classification and enhanced database support.",
   "keyFeatures": [
     "AI-Powered Error Classification using Gemma 3 270M IT model",

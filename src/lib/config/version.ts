@@ -3,9 +3,9 @@ export const versionConfig = {
 	product_name: "Preux",
 	version: "1.0.1",
 	build_number: "101",
-	download_url: "https://yourdomain.com/downloads/preux-v1.0.2.exe",
+	download_url: "https://dadddodev.pro/downloads/preux-v1.0.1.exe",
 	release_notes: "Bug fixes and improvements",
-	release_date: "2024-09-14",
+	release_date: "2025-09-14",
 	minimum_supported_version: "1.0.0",
 	update_required: false,
 	product_description: "Your application description here"
