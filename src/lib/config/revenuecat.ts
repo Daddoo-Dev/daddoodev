@@ -1,6 +1,7 @@
 // RevenueCat Web Purchase Links Configuration
 export const revenueCatConfig = {
   // RevenueCat Web Purchase Links - Add your actual URLs here
+  // Production URL: https://pay.rev.cat/vlfphyxewaclhiri/
   purchaseUrls: {
     yearly: "https://pay.rev.cat/vlfphyxewaclhiri/",
     sandbox: {
@@ -11,9 +12,9 @@ export const revenueCatConfig = {
   // Success redirect URLs (where users go after successful purchase)
   successRedirects: {
     // Redirect back to your app after purchase
-    app: "https://dadddodev.pro/preux/success?purchase=success",
+    app: "https://daddoodev.pro/preux/success?purchase=success",
     // Or redirect to a specific success page
-    successPage: "https://dadddodev.pro/preux/success"
+    successPage: "https://daddoodev.pro/preux/success"
   },
   
   // Environment settings

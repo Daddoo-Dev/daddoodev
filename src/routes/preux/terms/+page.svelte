@@ -125,8 +125,8 @@
         <h2>14. Contact Information</h2>
         <p>For questions about these Terms, contact us at:</p>
         <ul>
-          <li>Email: support@dadddodev.pro</li>
-          <li>Website: https://dadddodev.pro</li>
+          <li>Email: daddoodev@proton.me</li>
+          <li>Website: https:/www./daddoodev.pro</li>
         </ul>
       </section>
 
