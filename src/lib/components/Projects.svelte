@@ -180,10 +180,10 @@
   // Get unique categories from all projects
   $: categories = ['All', ...new Set(projects.map(p => p.category).filter(Boolean))];
 
-  // Filter non-featured projects based on active filter
+  // Filter ALL projects based on active filter (includes featured)
   $: filteredProjects = activeFilter === 'All' 
     ? nonFeaturedProjects 
-    : nonFeaturedProjects.filter(p => p.category === activeFilter);
+    : projects.filter(p => p.category === activeFilter);
 
   function setFilter(category: string | undefined) {
     if (category) {
