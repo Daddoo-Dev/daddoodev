@@ -1,6 +1,7 @@
 <script lang="ts">
   import { fade, fly } from 'svelte/transition';
   import SectionNav from './SectionNav.svelte';
+  import LazyImage from './LazyImage.svelte';
 
   interface Project {
     title: string;
@@ -13,7 +14,10 @@
     githubUrl?: string;
     size?: 'small' | 'medium' | 'large'; // For bento grid sizing
     category?: string;
+    featured?: boolean;
   }
+
+  let activeFilter: string = 'All';
 
   const projects: Project[] = [
     {
@@ -24,7 +28,40 @@
       image: '/images/preuxtext.png',
       internalUrl: '/preux',
       size: 'large',
-      category: 'Desktop App'
+      category: 'Desktop App',
+      featured: true
+    },
+    {
+      title: 'ToDoSync',
+      description: 'VS Code extension that syncs workspace tasks with Notion databases. Bi-directional sync, bulk import from markdown, and centralized project management.',
+      status: 'Available Now',
+      technologies: ['VS Code', 'Notion API', 'TypeScript', 'Node.js'],
+      image: '/images/todosync.png',
+      liveUrl: 'https://marketplace.visualstudio.com/items?itemName=DaddooDev.todo-sync',
+      size: 'large',
+      category: 'VS Code Extension',
+      featured: true
+    },
+    {
+      title: 'AddASaint',
+      description: 'VS Code extension for Catholic developers to add saint invocations to project files. Auto-detects 30+ frameworks and uses correct comment syntax.',
+      status: 'Available Now',
+      technologies: ['VS Code', 'TypeScript', 'Multi-Language', 'Faith'],
+      image: '/images/adddasaint.png',
+      liveUrl: 'https://marketplace.visualstudio.com/items?itemName=DaddooDev.addasaint',
+      size: 'medium',
+      category: 'VS Code Extension',
+      featured: true
+    },
+    {
+      title: 'Ridewealth Assistant',
+      description: 'A comprehensive financial tracking application designed specifically for rideshare drivers. This Flutter-based app helps drivers manage their earnings, expenses, and tax obligations efficiently across mobile and web platforms.',
+      status: 'Launching Soon',
+      technologies: ['Flutter', 'Firebase', 'iOS', 'Android', 'Web'],
+      image: 'images/rwa.png',
+      size: 'medium',
+      category: 'Mobile App',
+      featured: true
     },
     {
       title: 'Coaster Score',
@@ -106,15 +143,6 @@
       category: 'Web Service'
     },
     {
-      title: 'Ridewealth Assistant',
-      description: 'A comprehensive financial tracking application designed specifically for rideshare drivers. This Flutter-based app helps drivers manage their earnings, expenses, and tax obligations efficiently across mobile and web platforms.',
-      status: 'Launching Soon',
-      technologies: ['Flutter', 'Firebase', 'iOS', 'Android', 'Web'],
-      image: 'images/rwa.png',
-      size: 'medium',
-      category: 'Mobile App'
-    },
-    {
       title: '303-Vinyl',
       description: 'A modern web store for online sales of vinyl stickers, featuring Square integration for inventory and payment processing.',
       status: 'In Development',
@@ -144,6 +172,24 @@
      },
      
    ];
+
+  // Get featured and non-featured projects
+  $: featuredProjects = projects.filter(p => p.featured);
+  $: nonFeaturedProjects = projects.filter(p => !p.featured);
+
+  // Get unique categories from all projects
+  $: categories = ['All', ...new Set(projects.map(p => p.category).filter(Boolean))];
+
+  // Filter non-featured projects based on active filter
+  $: filteredProjects = activeFilter === 'All' 
+    ? nonFeaturedProjects 
+    : nonFeaturedProjects.filter(p => p.category === activeFilter);
+
+  function setFilter(category: string | undefined) {
+    if (category) {
+      activeFilter = category;
+    }
+  }
 </script>
 
 <section class="projects" id="projects">
@@ -153,8 +199,81 @@
       From mobile applications to e-commerce solutions, here's a showcase of my recent work:
     </p>
     
+    <!-- Featured Projects -->
+    <div class="featured-section">
+      <h3 class="featured-title">Featured Projects</h3>
+      <div class="featured-grid">
+        {#each featuredProjects as project, i}
+          {#if project.liveUrl || project.internalUrl}
+            <a 
+              href={project.liveUrl || project.internalUrl}
+              target={project.liveUrl ? '_blank' : '_self'}
+              rel={project.liveUrl ? 'noopener' : ''}
+              class="featured-card"
+              in:fly={{ y: 50, duration: 500, delay: i * 100 }}
+              out:fade
+            >
+              <div class="card-background">
+                <div class="card-image">
+                  <LazyImage src={project.image} alt={project.title} objectFit="contain" />
+                  <div class="image-overlay"></div>
+                </div>
+                <div class="card-content">
+                  <div class="card-header">
+                    <span class="category-tag">{project.category}</span>
+                    <span class="status-badge {project.status.toLowerCase().replace(/\s+/g, '-')}">
+                      {project.status}
+                    </span>
+                  </div>
+                  <h3 class="card-title">{project.title}</h3>
+                  <p class="card-description">{project.description}</p>
+                  
+                  <div class="tech-stack">
+                    {#each project.technologies.slice(0, 3) as tech}
+                      <span class="tech-chip">{tech}</span>
+                    {/each}
+                    {#if project.technologies.length > 3}
+                      <span class="tech-chip more">+{project.technologies.length - 3}</span>
+                    {/if}
+                  </div>
+                  
+                  <div class="card-actions">
+                    <span class="action-button primary">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+                        <polyline points="15,3 21,3 21,9"/>
+                        <line x1="10" y1="14" x2="21" y2="3"/>
+                      </svg>
+                      {project.internalUrl ? 'Learn More' : 'View Live'}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </a>
+          {/if}
+        {/each}
+      </div>
+    </div>
+
+    <!-- Category Filters -->
+    <div class="filter-section">
+      <h3 class="filter-title">More Projects</h3>
+      <div class="filter-buttons">
+        {#each categories as category}
+          <button 
+            class="filter-btn" 
+            class:active={activeFilter === category}
+            on:click={() => setFilter(category)}
+          >
+            {category}
+          </button>
+        {/each}
+      </div>
+    </div>
+    
+    <!-- Filtered Projects Grid -->
     <div class="bento-grid">
-      {#each projects as project, i}
+      {#each filteredProjects as project, i}
         {#if project.liveUrl || project.internalUrl}
           <a 
             href={project.liveUrl || project.internalUrl}
@@ -166,7 +285,7 @@
           >
             <div class="card-background">
               <div class="card-image">
-                <img src={project.image} alt={project.title} />
+                <LazyImage src={project.image} alt={project.title} objectFit="contain" />
                 <div class="image-overlay"></div>
               </div>
               <div class="card-content">
@@ -220,7 +339,7 @@
           >
             <div class="card-background">
               <div class="card-image">
-                <img src={project.image} alt={project.title} />
+                <LazyImage src={project.image} alt={project.title} objectFit="contain" />
                 <div class="image-overlay"></div>
               </div>
               <div class="card-content">
@@ -265,6 +384,96 @@
     max-width: 600px;
     margin-left: auto;
     margin-right: auto;
+  }
+
+  /* Featured Projects Section */
+  .featured-section {
+    margin-bottom: 4rem;
+  }
+
+  .featured-title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 2rem;
+    text-align: center;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .featured-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-bottom: 3rem;
+  }
+
+  .featured-card {
+    position: relative;
+    border-radius: 16px;
+    overflow: hidden;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
+    text-decoration: none;
+    display: block;
+    min-height: 400px;
+  }
+
+  .featured-card:hover {
+    transform: translateY(-8px) scale(1.02);
+  }
+
+  /* Filter Section */
+  .filter-section {
+    margin-bottom: 3rem;
+    text-align: center;
+  }
+
+  .filter-title {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 1.5rem;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .filter-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: center;
+    margin-bottom: 2rem;
+  }
+
+  .filter-btn {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: rgba(255, 255, 255, 0.8);
+    padding: 0.75rem 1.5rem;
+    border-radius: 25px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+  }
+
+  .filter-btn:hover {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: rgba(255, 255, 255, 0.3);
+    color: #fff;
+  }
+
+  .filter-btn.active {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-color: #667eea;
+    color: #fff;
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
   }
 
   .bento-grid {
@@ -334,18 +543,6 @@
     width: 100%;
     height: 60%;
     overflow: hidden;
-  }
-
-  .card-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    background: #111;
-    transition: transform 0.3s ease;
-  }
-
-  .bento-card:hover .card-image img {
-    transform: scale(1.05);
   }
 
   .image-overlay {

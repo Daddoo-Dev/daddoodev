@@ -5,6 +5,7 @@
   export let size: 'small' | 'medium' | 'large' = 'medium';
   export let disabled: boolean = false;
   export let loading: boolean = false;
+  export let glow: boolean = false; // No glow for Preux buttons
 
   function handlePurchase() {
     if (disabled || loading || !purchaseUrl) return;
@@ -18,6 +19,7 @@
   class="purchase-button {variant} {size}" 
   class:disabled 
   class:loading
+  class:glow
   on:click={handlePurchase}
   {disabled}
 >
@@ -71,18 +73,33 @@
     font-size: 1.1rem;
   }
 
-  .purchase-button:hover:not(.disabled) {
+  /* Non-glow hover - default */
+  .purchase-button:not(.glow):hover:not(.disabled) {
     transform: translateY(-2px);
-    box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
-  }
-
-  .purchase-button.primary:hover:not(.disabled) {
     box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
   }
 
-  .purchase-button.secondary:hover:not(.disabled) {
+  .purchase-button:not(.glow).secondary:hover:not(.disabled) {
     background: #667eea;
     color: #fff;
+    box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
+  }
+
+  /* Glow hover - optional */
+  .purchase-button.glow.primary:hover:not(.disabled) {
+    transform: translateY(-2px);
+    box-shadow: 
+      0 0 5px #667eea,
+      0 0 25px #667eea,
+      0 0 50px #667eea;
+  }
+
+  .purchase-button.glow.secondary:hover:not(.disabled) {
+    background: #667eea;
+    color: #fff;
+    box-shadow: 
+      0 0 5px #667eea,
+      0 0 25px #667eea;
   }
 
   .purchase-button.disabled {

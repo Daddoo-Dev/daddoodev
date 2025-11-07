@@ -2,6 +2,8 @@
   import { onMount } from 'svelte';
   import { goto } from '$app/navigation';
   import PurchaseButton from '$lib/components/PurchaseButton.svelte';
+  import SEO from '$lib/components/SEO.svelte';
+  import LoadingSpinner from '$lib/components/LoadingSpinner.svelte';
   import { getPurchaseUrl } from '$lib/config/revenuecat';
 
   let versionData: any = null;
@@ -56,10 +58,13 @@
   }
 </script>
 
-<svelte:head>
-  <title>Preux - Intelligent Error Tracking Dashboard | Daddoo Dev</title>
-  <meta name="description" content="Preux is a comprehensive error tracking and monitoring platform with AI-powered insights and multi-database support for modern development workflows." />
-</svelte:head>
+<SEO 
+  title="Preux - Intelligent Error Tracking Dashboard | Daddoo Dev"
+  description="Database-agnostic error tracking with AI-powered analysis. 2-week free trial, then $9.99/year. Works with Supabase, PostgreSQL, MySQL, MongoDB, and PlanetScale."
+  url="https://dadddodev.pro/preux"
+  image="https://dadddodev.pro/images/preuxtext.png"
+  keywords="error tracking, AI error analysis, database monitoring, Flutter app, developer tools, Supabase, PostgreSQL, MySQL"
+/>
 
 <div class="preux-page">
   <div class="container">
@@ -214,7 +219,7 @@
         <!-- Version Information Column -->
         <div class="version-column">
           {#if loading}
-            <div class="loading">Loading version information...</div>
+            <LoadingSpinner size="medium" text="Loading version information..." />
           {:else if error}
             <div class="error">{error}</div>
           {:else if versionData}
@@ -939,7 +944,6 @@
 
   /* Footer Styles */
 
-  .loading,
   .error {
     text-align: center;
     padding: 2rem;
