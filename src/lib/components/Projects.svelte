@@ -27,7 +27,7 @@
       technologies: ['Flutter', 'AI/ML', 'Multi-Database', 'Cross-Platform'],
       image: '/images/preuxtext.png',
       internalUrl: '/preux',
-      size: 'large',
+      size: 'medium',
       category: 'Desktop App',
       featured: true
     },
@@ -38,7 +38,7 @@
       technologies: ['VS Code', 'Notion API', 'TypeScript', 'Node.js'],
       image: '/images/todosync.png',
       liveUrl: 'https://marketplace.visualstudio.com/items?itemName=DaddooDev.todo-sync',
-      size: 'large',
+      size: 'medium',
       category: 'VS Code Extension',
       featured: true
     },
@@ -52,6 +52,17 @@
       size: 'medium',
       category: 'VS Code Extension',
       featured: true
+    },
+    {
+      title: 'SecretKeeper',
+      description: 'VS Code extension for secure local storage of API keys, tokens, and credentials. Uses OS-level encryption with auto-clearing clipboard.',
+      status: 'Available Now',
+      technologies: ['VS Code', 'TypeScript', 'Security', 'SecretStorage'],
+      image: '/images/secretkeeper.png',
+      liveUrl: 'https://marketplace.visualstudio.com/items?itemName=DaddooDev.secretkeeper',
+      size: 'medium',
+      category: 'VS Code Extension',
+      featured: false
     },
     {
       title: 'Ridewealth Assistant',
@@ -70,7 +81,7 @@
       technologies: ['SvelteKit', 'Firebase', 'JavaScript'],
       image: '/images/coaster.jpg',
       liveUrl: 'https://coaster-score.web.app/',
-      size: 'large',
+      size: 'medium',
       category: 'Web App'
     },
     {
@@ -80,7 +91,7 @@
       technologies: ['SvelteKit', 'Firebase', 'TypeScript', 'Tailwind CSS'],
       image: '/images/marketgame.png',
       liveUrl: 'https://marketgame-3e924.firebaseapp.com/',
-      size: 'large',
+      size: 'medium',
       category: 'Game'
     },
     {
@@ -90,7 +101,7 @@
       technologies: ['SvelteKit', 'TypeScript', 'Tailwind CSS'],
       image: '/images/newhorizons.jpeg',
       liveUrl: 'https://newhorizonsnativelandscaping.netlify.app/',
-      size: 'large',
+      size: 'medium',
       category: 'Web App'
     },
     {
@@ -109,7 +120,7 @@
       technologies: ['HTML', 'CSS', 'JavaScript'],
       image: '/images/alignment.png',
       liveUrl: 'https://shawnmcpeek.github.io/alignment/',
-      size: 'small',
+      size: 'medium',
       category: 'Web App'
     },
     {
@@ -119,7 +130,7 @@
       technologies: ['HTML', 'CSS', 'JavaScript'],
       image: '/images/ce31fc0724c4269bd1386d8c866c92a6.jpg',
       liveUrl: 'https://shawnmcpeek.github.io/simpsonsquotes/',
-      size: 'small',
+      size: 'medium',
       category: 'Web App'
     },
     {
@@ -129,7 +140,7 @@
       technologies: ['HTML', 'CSS', 'JavaScript'],
       image: '/images/panda-image.jpg',
       liveUrl: 'https://pandalerium-a0743.firebaseapp.com/',
-      size: 'large',
+      size: 'medium',
       category: 'Web App'
     },
     {
@@ -139,7 +150,7 @@
       technologies: ['HTML5', 'CSS3', 'JavaScript'],
       image: '/images/fractal.jpg',
       liveUrl: 'https://topmath.netlify.app/',
-      size: 'large',
+      size: 'medium',
       category: 'Web Service'
     },
     {
@@ -167,7 +178,7 @@
        technologies: ['Nuxt', 'Vue.js', 'JavaScript', 'Netlify'],
        image: '/images/twistedfortune.png',
        liveUrl: 'https://twistedfortunes.netlify.app/',
-       size: 'small',
+       size: 'medium',
        category: 'Web App'
      },
      
@@ -501,19 +512,11 @@
     transform: translateY(-8px) scale(1.02);
   }
 
-  .bento-card.small {
-    grid-column: span 2;
-    grid-row: span 1;
-  }
-
-  .bento-card.medium {
+  .bento-card.small,
+  .bento-card.medium,
+  .bento-card.large {
     grid-column: span 3;
     grid-row: span 1;
-  }
-
-  .bento-card.large {
-    grid-column: span 4;
-    grid-row: span 2;
   }
 
   .card-background {
