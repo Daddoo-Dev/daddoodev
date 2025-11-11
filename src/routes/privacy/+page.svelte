@@ -100,13 +100,10 @@
       <section>
         <h2>6. Product-Specific Privacy</h2>
         
-        <h3>6.1 Preux - Error Tracking Dashboard</h3>
-        <p>Preux collects error logs and application data as part of its error tracking functionality. This data is stored in your chosen database (Supabase, PostgreSQL, MongoDB, etc.) and is under your control. We do not have access to your error data unless you explicitly grant it for support purposes.</p>
-        
-        <h3>6.2 ToDoSync - VS Code Extension</h3>
+        <h3>6.1 ToDoSync - VS Code Extension</h3>
         <p>ToDoSync connects to your Notion workspace using API keys you provide. We do not store or have access to your Notion data or API keys. All data remains in your Notion workspace.</p>
         
-        <h3>6.3 AddASaint - VS Code Extension</h3>
+        <h3>6.2 AddASaint - VS Code Extension</h3>
         <p>AddASaint operates entirely locally within VS Code. No data is collected or transmitted to external servers.</p>
       </section>
 

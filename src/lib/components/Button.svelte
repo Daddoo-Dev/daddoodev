@@ -7,7 +7,7 @@
   export let loading: boolean = false;
   export let fullWidth: boolean = false;
   export let external: boolean = false;
-  export let glow: boolean = true; // Neon glow effect - default true for main site, false for Preux
+  export let glow: boolean = true; // Neon glow effect
 </script>
 
 {#if href}
@@ -101,7 +101,7 @@
       0 0 20px #fff;
   }
 
-  /* Non-glow - subtle modern hover for Preux */
+  /* Non-glow - subtle modern hover */
   .btn:not(.glow).primary:hover:not(.disabled):not(.loading) {
     transform: translateY(-2px);
     background: var(--primary-color);

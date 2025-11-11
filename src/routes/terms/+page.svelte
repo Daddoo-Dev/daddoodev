@@ -84,7 +84,6 @@
         <h2>6. Product-Specific Terms</h2>
         <p>Each product or service may have additional terms and conditions. Please refer to product-specific documentation:</p>
         <ul>
-          <li><a href="/preux/terms">Preux Terms and Conditions</a></li>
           <li>ToDoSync - See VS Code Marketplace listing for license terms</li>
           <li>AddASaint - See VS Code Marketplace listing for license terms</li>
         </ul>

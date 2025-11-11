@@ -21,17 +21,6 @@
 
   const projects: Project[] = [
     {
-      title: 'Preux',
-      description: 'Intelligent error tracking dashboard with AI-powered analysis, multi-database support, and comprehensive SDKs for modern development workflows.',
-      status: 'Available Now',
-      technologies: ['Flutter', 'AI/ML', 'Multi-Database', 'Cross-Platform'],
-      image: '/images/preuxtext.png',
-      internalUrl: '/preux',
-      size: 'medium',
-      category: 'Desktop App',
-      featured: true
-    },
-    {
       title: 'ToDoSync',
       description: 'VS Code extension that syncs workspace tasks with Notion databases. Bi-directional sync, bulk import from markdown, and centralized project management.',
       status: 'Available Now',

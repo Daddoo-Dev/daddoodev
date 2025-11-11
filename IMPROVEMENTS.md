@@ -5,7 +5,6 @@
 ### 1. Legal & Compliance
 - ✅ **Privacy Policy** (`/privacy`) - Comprehensive policy covering data collection, third-party services, and user rights
 - ✅ **Terms of Service** (`/terms`) - Site-wide terms covering acceptable use, intellectual property, and warranties
-- ✅ **Product-Specific Terms** - Preux has dedicated terms page
 
 ### 2. SEO & Marketing
 - ✅ **SEO Component** - Reusable component with:
@@ -14,7 +13,7 @@
   - Canonical URLs
   - Meta descriptions and keywords
 - ✅ **Google Analytics** - GA4 integrated (ID: G-W7DNPNJ5H5)
-- ✅ **Structured Meta Tags** - Applied to home page and Preux page
+- ✅ **Structured Meta Tags** - Applied to home page
 
 ### 3. UI/UX Components
 - ✅ **Consistent Button System** - New `Button.svelte` component with:
@@ -86,7 +85,6 @@
 - About.svelte
 - Projects.svelte
 - Contact.svelte
-- PurchaseButton.svelte
 
 ## 📝 Configuration Files
 
