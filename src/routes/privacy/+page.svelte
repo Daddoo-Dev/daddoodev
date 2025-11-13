@@ -100,10 +100,13 @@
       <section>
         <h2>6. Product-Specific Privacy</h2>
         
-        <h3>6.1 ToDoSync - VS Code Extension</h3>
+        <h3>6.1 Zivora - VS Code Extension</h3>
+        <p>Zivora connects to Sentry.io using your Sentry Personal API Token. API tokens are encrypted and stored via VS Code Secret Storage. All data stays local and only connects to Sentry.io. We do not store, access, or transmit your Sentry data or API tokens. No telemetry or third-party tracking is implemented.</p>
+        
+        <h3>6.2 ToDoSync - VS Code Extension</h3>
         <p>ToDoSync connects to your Notion workspace using API keys you provide. We do not store or have access to your Notion data or API keys. All data remains in your Notion workspace.</p>
         
-        <h3>6.2 AddASaint - VS Code Extension</h3>
+        <h3>6.3 AddASaint - VS Code Extension</h3>
         <p>AddASaint operates entirely locally within VS Code. No data is collected or transmitted to external servers.</p>
       </section>
 

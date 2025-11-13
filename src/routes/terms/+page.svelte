@@ -84,6 +84,7 @@
         <h2>6. Product-Specific Terms</h2>
         <p>Each product or service may have additional terms and conditions. Please refer to product-specific documentation:</p>
         <ul>
+          <li>Zivora - See VS Code Marketplace listing for license terms</li>
           <li>ToDoSync - See VS Code Marketplace listing for license terms</li>
           <li>AddASaint - See VS Code Marketplace listing for license terms</li>
         </ul>
@@ -260,17 +261,6 @@
   li {
     margin-bottom: 0.5rem;
     line-height: 1.5;
-  }
-
-  li a {
-    color: #667eea;
-    text-decoration: none;
-    transition: color 0.3s ease;
-  }
-
-  li a:hover {
-    color: #764ba2;
-    text-decoration: underline;
   }
 
   @media (max-width: 768px) {

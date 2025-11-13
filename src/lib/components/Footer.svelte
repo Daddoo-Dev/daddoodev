@@ -13,6 +13,7 @@
       <div class="footer-links">
         <div class="footer-column">
           <h4>Products</h4>
+          <a href="https://marketplace.visualstudio.com/items?itemName=DaddooDev.zivora" target="_blank" rel="noopener">Zivora</a>
           <a href="https://marketplace.visualstudio.com/items?itemName=DaddooDev.todo-sync" target="_blank" rel="noopener">ToDoSync</a>
           <a href="https://marketplace.visualstudio.com/items?itemName=DaddooDev.addasaint" target="_blank" rel="noopener">AddASaint</a>
         </div>

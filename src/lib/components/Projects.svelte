@@ -13,13 +13,24 @@
     internalUrl?: string;
     githubUrl?: string;
     size?: 'small' | 'medium' | 'large'; // For bento grid sizing
-    category?: string;
+    category?: string | string[]; // Can be single category or multiple
     featured?: boolean;
   }
 
   let activeFilter: string = 'All';
 
   const projects: Project[] = [
+    {
+      title: 'Zivora',
+      description: 'VS Code extension for Sentry integration with AI-powered debugging. Manage issues directly in your IDE, get instant AI help, and resolve errors faster.',
+      status: 'Available Now',
+      technologies: ['VS Code', 'Sentry API', 'TypeScript', 'AI'],
+      image: '/images/zivora.png',
+      liveUrl: 'https://marketplace.visualstudio.com/items?itemName=DaddooDev.zivora',
+      size: 'medium',
+      category: 'VS Code Extension',
+      featured: true
+    },
     {
       title: 'ToDoSync',
       description: 'VS Code extension that syncs workspace tasks with Notion databases. Bi-directional sync, bulk import from markdown, and centralized project management.',
@@ -81,7 +92,7 @@
       image: '/images/marketgame.png',
       liveUrl: 'https://marketgame-3e924.firebaseapp.com/',
       size: 'medium',
-      category: 'Game'
+      category: ['Game', 'Web App']
     },
     {
       title: 'New Horizons Natural Landscaping',
@@ -145,7 +156,7 @@
     {
       title: '303-Vinyl',
       description: 'A modern web store for online sales of vinyl stickers, featuring Square integration for inventory and payment processing.',
-      status: 'In Development',
+      status: 'Completed - Pending Deployment',
       technologies: ['SvelteKit', 'Square API', 'Firebase', 'JavaScript'],
       image: '/images/303vinyl.png',
       size: 'medium',
@@ -154,7 +165,7 @@
          {
        title: 'Otto & Furiends',
        description: 'An e-commerce platform specializing in dog-themed stickers and accessories.',
-       status: 'In Development',
+       status: 'Completed - Pending Deployment',
        technologies: ['SvelteKit', 'Square API', 'Firebase', 'JavaScript'],
        image: '/images/ottoandfuriends.png',
        size: 'medium',
@@ -177,13 +188,21 @@
   $: featuredProjects = projects.filter(p => p.featured);
   $: nonFeaturedProjects = projects.filter(p => !p.featured);
 
-  // Get unique categories from all projects
-  $: categories = ['All', ...new Set(projects.map(p => p.category).filter(Boolean))];
+  // Get unique categories from all projects (flatten arrays)
+  $: categories = ['All', ...new Set(projects.flatMap(p => {
+    if (Array.isArray(p.category)) return p.category;
+    return p.category ? [p.category] : [];
+  }))];
 
-  // Filter ALL projects based on active filter (includes featured)
+  // Filter projects: show ALL projects (including featured) for any filter
   $: filteredProjects = activeFilter === 'All' 
-    ? nonFeaturedProjects 
-    : projects.filter(p => p.category === activeFilter);
+    ? projects 
+    : projects.filter(p => {
+        if (Array.isArray(p.category)) {
+          return p.category.includes(activeFilter);
+        }
+        return p.category === activeFilter;
+      });
 
   function setFilter(category: string | undefined) {
     if (category) {
@@ -220,7 +239,7 @@
                 </div>
                 <div class="card-content">
                   <div class="card-header">
-                    <span class="category-tag">{project.category}</span>
+                    <span class="category-tag">{Array.isArray(project.category) ? project.category[0] : project.category}</span>
                     <span class="status-badge {project.status.toLowerCase().replace(/\s+/g, '-')}">
                       {project.status}
                     </span>
@@ -290,7 +309,7 @@
               </div>
               <div class="card-content">
                 <div class="card-header">
-                  <span class="category-tag">{project.category}</span>
+                  <span class="category-tag">{Array.isArray(project.category) ? project.category[0] : project.category}</span>
                   <span class="status-badge {project.status.toLowerCase().replace(/\s+/g, '-')}">
                     {project.status}
                   </span>
@@ -344,7 +363,7 @@
               </div>
               <div class="card-content">
                 <div class="card-header">
-                  <span class="category-tag">{project.category}</span>
+                  <span class="category-tag">{Array.isArray(project.category) ? project.category[0] : project.category}</span>
                   <span class="status-badge {project.status.toLowerCase().replace(/\s+/g, '-')}">
                     {project.status}
                   </span>
@@ -482,7 +501,7 @@
     margin: 0 auto;
     display: grid;
     grid-template-columns: repeat(12, 1fr);
-    grid-auto-rows: minmax(220px, auto);
+    grid-auto-rows: 400px;
     gap: 2.5rem;
     grid-auto-flow: dense;
   }
@@ -495,6 +514,8 @@
     cursor: pointer;
     text-decoration: none;
     display: block;
+    width: 400px;
+    height: 400px;
   }
 
   .bento-card:hover {
@@ -504,7 +525,7 @@
   .bento-card.small,
   .bento-card.medium,
   .bento-card.large {
-    grid-column: span 3;
+    grid-column: span 4;
     grid-row: span 1;
   }
 
@@ -710,13 +731,23 @@
       gap: 2rem;
       max-width: 99vw;
     }
+    .bento-card.small,
+    .bento-card.medium,
+    .bento-card.large {
+      grid-column: span 4;
+    }
   }
 
   @media (max-width: 1200px) {
     .bento-grid {
-      grid-template-columns: repeat(6, 1fr);
+      grid-template-columns: repeat(8, 1fr);
       gap: 1.5rem;
       max-width: 99vw;
+    }
+    .bento-card.small,
+    .bento-card.medium,
+    .bento-card.large {
+      grid-column: span 4;
     }
   }
 
@@ -725,6 +756,11 @@
       grid-template-columns: repeat(4, 1fr);
       gap: 1.2rem;
       max-width: 100vw;
+    }
+    .bento-card.small,
+    .bento-card.medium,
+    .bento-card.large {
+      grid-column: span 2;
     }
   }
 
