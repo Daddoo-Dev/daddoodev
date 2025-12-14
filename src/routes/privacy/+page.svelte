@@ -108,6 +108,9 @@
         
         <h3>6.3 AddASaint - VS Code Extension</h3>
         <p>AddASaint operates entirely locally within VS Code. No data is collected or transmitted to external servers.</p>
+        
+        <h3>6.4 Twisted Fortunes - Mobile App</h3>
+        <p>Twisted Fortunes is a mobile app (iOS/Android) that operates entirely offline and locally on your device. The app does not collect, store, or transmit any personal information. The only data stored is your sound mute/unmute preference, which is saved locally on your device and never leaves your device. The app includes optional rewarded advertisements through Google AdMob, which may collect anonymous usage data per Google's privacy policy. No personal information is collected by us or shared with third parties except as required for ad functionality. All fortunes are bundled with the app and no internet connection is required for core functionality.</p>
       </section>
 
       <section>
