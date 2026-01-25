@@ -139,7 +139,7 @@
       status: 'Completed',
       technologies: ['HTML', 'CSS', 'JavaScript'],
       image: '/images/panda-image.jpg',
-      liveUrl: 'https://pandalerium-a0743.firebaseapp.com/',
+      liveUrl: 'https://pandalerium.daddoodev.pro',
       size: 'medium',
       category: 'Web App'
     },
