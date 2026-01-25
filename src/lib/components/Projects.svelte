@@ -2,6 +2,7 @@
   import { fade, fly } from 'svelte/transition';
   import SectionNav from './SectionNav.svelte';
   import LazyImage from './LazyImage.svelte';
+  import StoreBadges from './StoreBadges.svelte';
 
   interface Project {
     title: string;
@@ -12,6 +13,10 @@
     liveUrl?: string;
     internalUrl?: string;
     githubUrl?: string;
+    store?: {
+      googlePlay?: string;
+      appStore?: string;
+    };
     size?: 'small' | 'medium' | 'large'; // For bento grid sizing
     category?: string | string[]; // Can be single category or multiple
     featured?: boolean;
@@ -114,16 +119,6 @@
   
     },
     {
-      title: 'Alignment Quiz',
-      description: 'Want to know your D&D alignment? Take this unique quiz and find out!',
-      status: 'Completed',
-      technologies: ['HTML', 'CSS', 'JavaScript'],
-      image: '/images/alignment.png',
-      liveUrl: 'https://shawnmcpeek.github.io/alignment/',
-      size: 'medium',
-      category: 'Web App'
-    },
-    {
       title: 'Inspiration by Simpsons',
       description: 'A simple web app that allows users to generate inspiration quotes from The Simpsons.',
       status: 'Completed',
@@ -173,13 +168,16 @@
      },
      {
        title: 'Twisted Fortunes',
-       description: 'A fun fortune cookie web app where users can click to reveal something unexpected. Built with modern web technologies for a smooth, interactive experience.',
-       status: 'Completed',
-       technologies: ['Nuxt', 'Vue.js', 'JavaScript', 'Netlify'],
+       description: 'A darkly humorous fortune cookie game. Tap to crack open a cookie and reveal a twisted fortune — with optional ads for extra fortunes.',
+       status: 'Available Now',
+       technologies: ['Android', 'Google Play', 'Mobile Game'],
        image: '/images/twistedfortune.png',
-       liveUrl: 'https://twistedfortunes.netlify.app/',
+       store: {
+         googlePlay: 'https://play.google.com/store/apps/details?id=com.daddoodev.twistedfortunes'
+       },
        size: 'medium',
-       category: 'Web App'
+       category: ['Game', 'Mobile App'],
+       featured: true
      },
      
    ];
@@ -223,7 +221,8 @@
       <h3 class="featured-title">Featured Projects</h3>
       <div class="featured-grid">
         {#each featuredProjects as project, i}
-          {#if project.liveUrl || project.internalUrl}
+          {#if project.liveUrl || project.internalUrl || project.store?.googlePlay || project.store?.appStore}
+            {#if (project.liveUrl || project.internalUrl) && !(project.store?.googlePlay || project.store?.appStore)}
             <a 
               href={project.liveUrl || project.internalUrl}
               target={project.liveUrl ? '_blank' : '_self'}
@@ -269,6 +268,46 @@
                 </div>
               </div>
             </a>
+            {:else}
+            <div
+              class="featured-card"
+              in:fly={{ y: 50, duration: 500, delay: i * 100 }}
+              out:fade
+            >
+              <div class="card-background">
+                <div class="card-image">
+                  <LazyImage src={project.image} alt={project.title} objectFit="contain" />
+                  <div class="image-overlay"></div>
+                </div>
+                <div class="card-content">
+                  <div class="card-header">
+                    <span class="category-tag">{Array.isArray(project.category) ? project.category[0] : project.category}</span>
+                    <span class="status-badge {project.status.toLowerCase().replace(/\s+/g, '-')}">
+                      {project.status}
+                    </span>
+                  </div>
+                  <h3 class="card-title">{project.title}</h3>
+                  <p class="card-description">{project.description}</p>
+
+                  <div class="tech-stack">
+                    {#each project.technologies.slice(0, 3) as tech}
+                      <span class="tech-chip">{tech}</span>
+                    {/each}
+                    {#if project.technologies.length > 3}
+                      <span class="tech-chip more">+{project.technologies.length - 3}</span>
+                    {/if}
+                  </div>
+
+                  <div class="card-actions">
+                    <StoreBadges
+                      googlePlay={project.store?.googlePlay}
+                      appStore={project.store?.appStore}
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+            {/if}
           {/if}
         {/each}
       </div>
@@ -293,7 +332,7 @@
     <!-- Filtered Projects Grid -->
     <div class="bento-grid">
       {#each filteredProjects as project, i}
-        {#if project.liveUrl || project.internalUrl}
+        {#if (project.liveUrl || project.internalUrl) && !(project.store?.googlePlay || project.store?.appStore)}
           <a 
             href={project.liveUrl || project.internalUrl}
             target={project.liveUrl ? '_blank' : '_self'}
@@ -350,6 +389,45 @@
               </div>
             </div>
           </a>
+        {:else if project.store?.googlePlay || project.store?.appStore}
+          <div 
+            class="bento-card {project.size || 'small'}"
+            in:fly={{ y: 50, duration: 500, delay: i * 100 }}
+            out:fade
+          >
+            <div class="card-background">
+              <div class="card-image">
+                <LazyImage src={project.image} alt={project.title} objectFit="contain" />
+                <div class="image-overlay"></div>
+              </div>
+              <div class="card-content">
+                <div class="card-header">
+                  <span class="category-tag">{Array.isArray(project.category) ? project.category[0] : project.category}</span>
+                  <span class="status-badge {project.status.toLowerCase().replace(/\s+/g, '-')}">
+                    {project.status}
+                  </span>
+                </div>
+                <h3 class="card-title">{project.title}</h3>
+                <p class="card-description">{project.description}</p>
+
+                <div class="tech-stack">
+                  {#each project.technologies.slice(0, 3) as tech}
+                    <span class="tech-chip">{tech}</span>
+                  {/each}
+                  {#if project.technologies.length > 3}
+                    <span class="tech-chip more">+{project.technologies.length - 3}</span>
+                  {/if}
+                </div>
+
+                <div class="card-actions">
+                  <StoreBadges
+                    googlePlay={project.store?.googlePlay}
+                    appStore={project.store?.appStore}
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
         {:else}
           <div 
             class="bento-card {project.size || 'small'}"

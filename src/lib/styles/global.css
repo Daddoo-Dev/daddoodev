@@ -267,6 +267,44 @@ body {
 	position: relative;
 }
 
+.store-badges {
+	display: flex;
+	gap: 0.75rem;
+	flex-wrap: wrap;
+}
+
+.store-badge-link {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	text-decoration: none;
+	border-radius: 12px;
+	transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+	border: 1px solid rgba(255, 255, 255, 0.25);
+	background: rgba(0, 0, 0, 0.2);
+}
+
+.store-badge-link:hover {
+	transform: translateY(-1px);
+	border-color: rgba(255, 255, 255, 0.6);
+	background: rgba(0, 0, 0, 0.35);
+}
+
+.store-badge-link:focus-visible {
+	outline: 2px solid var(--primary-lighter);
+	outline-offset: 2px;
+}
+
+.store-badge-image {
+	display: block;
+	height: 44px;
+	width: auto;
+}
+
+.store-badge-image--apple {
+	height: 44px;
+}
+
 .projects-grid {
 	display: grid;
 	grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
