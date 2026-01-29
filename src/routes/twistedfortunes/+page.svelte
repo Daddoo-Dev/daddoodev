@@ -1,6 +1,7 @@
 <script lang="ts">
   import { goto } from '$app/navigation';
   import SEO from '$lib/components/SEO.svelte';
+  import StoreBadges from '$lib/components/StoreBadges.svelte';
   import '$lib/styles/global.css';
 
   function goHome() {
@@ -50,20 +51,11 @@
       <div class="download-section">
         <h2>Download on Mobile</h2>
         <div class="download-buttons">
-          <div class="download-button ios-button">
-            <p class="coming-soon">Coming Soon</p>
-            <p class="platform-name">iOS App Store</p>
-          </div>
-          <div class="download-button android-button">
-            <p class="coming-soon">Coming Soon</p>
-            <p class="platform-name">Google Play Store</p>
-          </div>
+          <StoreBadges
+            googlePlay="https://play.google.com/store/apps/details?id=com.daddoodev.twistedfortunes"
+            appStore="https://apps.apple.com/us/app/twisted-fortunes/id6756530267"
+          />
         </div>
-        <p class="web-link">
-          <a href="https://twistedfortunes.netlify.app/" target="_blank" rel="noopener noreferrer">
-            Play on Web →
-          </a>
-        </p>
       </div>
 
       <section class="features-section">
@@ -279,53 +271,6 @@
     margin-bottom: 2rem;
   }
 
-  .download-button {
-    background: rgba(255, 255, 255, 0.1);
-    border: 2px solid rgba(255, 255, 255, 0.2);
-    border-radius: 12px;
-    padding: 1.5rem 2rem;
-    min-width: 200px;
-    transition: all 0.3s ease;
-    cursor: default;
-  }
-
-  .download-button:hover {
-    background: rgba(255, 255, 255, 0.15);
-    border-color: rgba(255, 255, 255, 0.3);
-  }
-
-  .coming-soon {
-    font-size: 0.9rem;
-    color: rgba(255, 255, 255, 0.6);
-    margin: 0 0 0.5rem 0;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-  }
-
-  .platform-name {
-    font-size: 1.1rem;
-    font-weight: 600;
-    color: #fff;
-    margin: 0;
-  }
-
-  .web-link {
-    margin-top: 1rem;
-  }
-
-  .web-link a {
-    color: var(--primary-lighter);
-    text-decoration: none;
-    font-size: 1.1rem;
-    font-weight: 600;
-    transition: color 0.2s ease;
-  }
-
-  .web-link a:hover {
-    color: var(--primary-light);
-    text-decoration: underline;
-  }
-
   section {
     margin-bottom: 3rem;
   }
@@ -485,11 +430,6 @@
     .download-buttons {
       flex-direction: column;
       align-items: center;
-    }
-
-    .download-button {
-      width: 100%;
-      max-width: 300px;
     }
 
     .features-grid {

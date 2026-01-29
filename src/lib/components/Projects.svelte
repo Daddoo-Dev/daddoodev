@@ -166,19 +166,20 @@
        size: 'medium',
        category: 'E-commerce'
      },
-     {
-       title: 'Twisted Fortunes',
-       description: 'A darkly humorous fortune cookie game. Tap to crack open a cookie and reveal a twisted fortune — with optional ads for extra fortunes.',
-       status: 'Available Now',
-       technologies: ['Android', 'Google Play', 'Mobile Game'],
-       image: '/images/twistedfortune.png',
-       store: {
-         googlePlay: 'https://play.google.com/store/apps/details?id=com.daddoodev.twistedfortunes'
-       },
-       size: 'medium',
-       category: ['Game', 'Mobile App'],
-       featured: true
-     },
+    {
+      title: 'Twisted Fortunes',
+      description: 'A darkly humorous fortune cookie game. Tap to crack open a cookie and reveal a twisted fortune — with optional ads for extra fortunes.',
+      status: 'Available Now',
+      technologies: ['Android', 'iOS', 'Google Play', 'App Store', 'Mobile Game'],
+      image: '/images/twistedfortune.png',
+      store: {
+        googlePlay: 'https://play.google.com/store/apps/details?id=com.daddoodev.twistedfortunes',
+        appStore: 'https://apps.apple.com/us/app/twisted-fortunes/id6756530267'
+      },
+      size: 'medium',
+      category: ['Game', 'Mobile App'],
+      featured: true
+    },
      
    ];
 
