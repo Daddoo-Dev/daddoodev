@@ -8,9 +8,17 @@
     ],
     "rewrites": [
       {
+        "source": "/ym/v2/**",
+        "function": "ymApi"
+      },
+      {
         "source": "!/**/*.html",
         "destination": "/index.html"
       }
     ]
+  },
+  "functions": {
+    "source": "functions",
+    "codebase": "default"
   }
 }

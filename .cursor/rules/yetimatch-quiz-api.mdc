@@ -1,0 +1,139 @@
+---
+description: Instructions for adding YetiMatch quizzes to the API
+globs: src/quizzes/**/*.json
+alwaysApply: false
+---
+
+# YetiMatch Quiz API - Adding New Quizzes
+
+## Overview
+
+Quiz JSON files in `src/quizzes/` are seeded to Firestore and served via the YetiMatch API at:
+`https://ymapi-tkbt6ug22q-uc.a.run.app/ym/v2/quizzes`
+
+## Quiz JSON Schema
+
+Every quiz file MUST follow this exact structure:
+
+```json
+{
+  "id": "quiz-id-kebab-case",
+  "title": "Quiz Title",
+  "description": "Short description of the quiz",
+  "categoryId": "category-id",
+  "questions": [
+    {
+      "id": "q1",
+      "text": "Question text?",
+      "answers": [
+        {
+          "id": "q1a1",
+          "text": "Answer text",
+          "characterId": "result-character-id"
+        }
+      ]
+    }
+  ],
+  "results": [
+    {
+      "characterId": "result-character-id",
+      "characterName": "Display Name",
+      "description": "Full description of this result personality",
+      "traits": ["Trait1", "Trait2", "Trait3"]
+    }
+  ]
+}
+```
+
+## Required Fields
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `id` | string | Unique kebab-case identifier (e.g. `mythical-beast-quiz`) |
+| `title` | string | Display title shown to users |
+| `description` | string | Brief description of the quiz |
+| `categoryId` | string | Category for grouping (see categories below) |
+| `questions` | array | Array of question objects |
+| `results` | array | Array of result/character objects |
+
+## Category IDs
+
+Use these exact category IDs (must match app exactly):
+
+| ID | Name |
+|----|------|
+| `relationship-love` | Relationship & Love |
+| `who-am-i` | Who Am I? |
+| `career-success` | Career & Success |
+| `friendship-social` | Friendship & Social |
+| `personality-self` | Personality & Self-Discovery |
+| `fun-entertainment` | Fun & Entertainment |
+| `wellness-mindset` | Wellness & Mindset |
+| `pop-culture-fandom` | Pop Culture & Fandom |
+
+## Question Structure
+
+```json
+{
+  "id": "q1",
+  "text": "Question text here?",
+  "answers": [
+    {
+      "id": "q1a1",
+      "text": "First answer option",
+      "characterId": "maps-to-result-characterId"
+    },
+    {
+      "id": "q1a2", 
+      "text": "Second answer option",
+      "characterId": "different-result-characterId"
+    }
+  ]
+}
+```
+
+- Question IDs: `q1`, `q2`, `q3`, etc.
+- Answer IDs: `q1a1`, `q1a2`, `q1a3`, etc. (question ID + answer number)
+- Each answer's `characterId` must match a `characterId` in the results array
+
+## Result Structure
+
+```json
+{
+  "characterId": "unique-id",
+  "characterName": "Display Name",
+  "description": "Detailed description of this personality result. Usually 2-4 sentences.",
+  "traits": ["Trait1", "Trait2", "Trait3", "Trait4", "Trait5"]
+}
+```
+
+- `characterId`: lowercase, usually one word or hyphenated
+- `characterName`: Title case display name
+- `description`: 2-4 sentences describing this result
+- `traits`: Array of 3-5 single-word or short trait labels
+
+## Adding a New Quiz
+
+1. Create a new file in `src/quizzes/` named `your_quiz_name.json`
+2. Follow the schema above exactly
+3. Ensure all answer `characterId` values match result `characterId` values
+4. Run the seed script from the functions folder:
+   ```bash
+   cd functions
+   npm run seed
+   ```
+
+## Validation Checklist
+
+Before seeding, verify:
+- [ ] `id` is unique and kebab-case
+- [ ] `categoryId` is one of the valid categories listed above
+- [ ] Every question has at least 2 answers
+- [ ] Every answer has a `characterId` that exists in `results`
+- [ ] Every result has all required fields
+- [ ] JSON is valid (no trailing commas, proper quotes)
+
+## API Endpoints
+
+- `GET /ym/v2/quizzes` - List all quizzes (returns id, title, description, categoryId, lastModified)
+- `GET /ym/v2/quizzes/:id` - Get full quiz by id
