@@ -211,7 +211,8 @@
   }
 
   h1 {
-    font-size: 3rem;
+    font-family: var(--font-display);
+    font-size: 2.5rem;
     font-weight: 700;
     color: #fff;
     margin-bottom: 1rem;
@@ -220,6 +221,8 @@
     -webkit-text-fill-color: transparent;
     background-clip: text;
     text-align: center;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
   }
 
   .last-updated {
@@ -292,7 +295,8 @@
     }
 
     h1 {
-      font-size: 2rem;
+      font-size: 1.75rem;
+      letter-spacing: 0.03em;
     }
 
     h2 {

@@ -223,6 +223,7 @@
   }
 
   h1 {
+    font-family: var(--font-display);
     font-size: 3rem;
     font-weight: 700;
     color: #fff;
@@ -231,6 +232,8 @@
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
   }
 
   .app-tagline {
@@ -276,12 +279,15 @@
   }
 
   h2 {
-    font-size: 2rem;
+    font-family: var(--font-display);
+    font-size: 1.75rem;
     font-weight: 600;
     color: #fff;
     margin-bottom: 1.5rem;
     border-bottom: 2px solid rgba(102, 126, 234, 0.3);
     padding-bottom: 0.5rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
   }
 
   h3 {
@@ -416,7 +422,8 @@
     }
 
     h1 {
-      font-size: 2rem;
+      font-size: 1.75rem;
+      letter-spacing: 0.03em;
     }
 
     .app-tagline {
@@ -424,7 +431,8 @@
     }
 
     h2 {
-      font-size: 1.5rem;
+      font-size: 1.25rem;
+      letter-spacing: 0.03em;
     }
 
     .download-buttons {
