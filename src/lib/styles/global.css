@@ -663,3 +663,436 @@ body {
 		border-radius: 50%;
 	}
 }
+
+/* ChronoCluster */
+.chrono-cluster-page {
+	min-height: 100vh;
+	padding: 2rem 0;
+}
+
+.chrono-cluster-page .page-title {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+	text-align: center;
+	background: var(--primary-gradient);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	background-clip: text;
+}
+
+.chrono-cluster-page .page-description {
+	font-size: 1.2rem;
+	color: #888;
+	margin-bottom: 3rem;
+	line-height: 1.6;
+	text-align: center;
+}
+
+.chrono-strip-wrap {
+	margin-bottom: 1.5rem;
+}
+
+.chrono-strip {
+	margin-bottom: 1.5rem;
+}
+
+.chrono-clocks-row {
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr 2fr;
+	gap: 1.5rem;
+	align-items: start;
+}
+
+.chrono-clocks-row .chrono-clock-cell {
+	min-width: 0;
+}
+
+.chrono-clocks-row .chrono-clock-cell:not(.hobbit-cell) {
+	min-height: 260px;
+}
+
+.chrono-clock-cell.hobbit-cell {
+	min-width: 340px;
+	padding-left: 1.25rem;
+	padding-right: 1.25rem;
+}
+
+.hobbit-cell .hobbit-face,
+.hobbit-cell .clock-face.hobbit-face {
+	width: 220px;
+	height: 220px;
+	margin-left: auto;
+	margin-right: auto;
+	--face-radius: 110;
+}
+
+.hobbit-cell .clock-hand-hour {
+	height: 38px;
+}
+
+.hobbit-cell .clock-hand-minute {
+	height: 52px;
+}
+
+.hobbit-cell .clock-hand-second {
+	height: 62px;
+}
+
+.chrono-clock-cell.hobbit-cell .hobbit-now {
+	margin-top: 1.75rem;
+}
+
+.chrono-clock-cell.hobbit-cell .hobbit-countdown {
+	margin-top: 0.5rem;
+}
+
+.chrono-clock-cell .clock-select {
+	max-width: 100%;
+	margin-bottom: 0.5rem;
+}
+
+.chrono-clock-cell .clock-time {
+	font-size: 1.35rem;
+}
+
+.chrono-clock-cell .clock-time.decimal-time {
+	font-size: 1.25rem;
+}
+
+.chrono-clock-cell .clock-date,
+.chrono-clock-cell .clock-tz {
+	font-size: 0.75rem;
+}
+
+.chrono-clock-cell .clock-face {
+	width: 100px;
+	height: 100px;
+	margin: 0.5rem auto;
+}
+
+.chrono-clock-cell .clock-hand-hour {
+	height: 28px;
+	margin-left: -2px;
+}
+
+.chrono-clock-cell .clock-hand-minute {
+	height: 36px;
+	margin-left: -1.5px;
+}
+
+.chrono-clock-cell .clock-hand-second {
+	height: 42px;
+	margin-left: -1px;
+}
+
+.chrono-clock-cell .clock-caption {
+	font-size: 0.65rem;
+	margin-top: 0.35rem;
+}
+
+
+.iss-clock {
+	text-align: center;
+}
+
+.iss-clock .world-clock-time {
+	margin-bottom: 0;
+}
+
+.iss-caption {
+	font-size: 0.65rem;
+	color: #666;
+	margin-top: 0.25rem;
+}
+
+.iss-coords {
+	font-size: 0.7rem;
+	color: #555;
+	margin-top: 0.2rem;
+}
+
+.iss-loading,
+.iss-error {
+	font-size: 0.85rem;
+	color: #888;
+}
+
+.world-clocks-wrap {
+	margin-bottom: 0;
+}
+
+.world-clocks {
+	background: rgba(0, 0, 0, 0.4);
+	border: 1px solid rgba(255, 255, 255, 0.15);
+	border-radius: 12px;
+	padding: 1.5rem;
+	backdrop-filter: blur(10px);
+}
+
+.world-clocks-title {
+	font-size: 1rem;
+	font-weight: 600;
+	color: rgba(255, 255, 255, 0.6);
+	text-transform: uppercase;
+	letter-spacing: 0.1em;
+	text-align: center;
+	margin-bottom: 1.25rem;
+}
+
+.world-clocks-row {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	gap: 1.5rem;
+}
+
+.world-clock-cell {
+	min-width: 100px;
+	text-align: center;
+	padding: 0.75rem 1rem;
+	background: rgba(255, 255, 255, 0.05);
+	border: 1px solid rgba(255, 255, 255, 0.1);
+	border-radius: 8px;
+}
+
+.world-clock-label {
+	font-size: 0.75rem;
+	font-weight: 600;
+	color: var(--primary-lighter);
+	text-transform: uppercase;
+	letter-spacing: 0.05em;
+	margin-bottom: 0.35rem;
+}
+
+.world-clock-time {
+	font-family: var(--font-display);
+	font-size: 1.35rem;
+	color: #fff;
+	letter-spacing: 0.02em;
+}
+
+.world-clock-date {
+	font-size: 0.7rem;
+	color: #666;
+	margin-top: 0.25rem;
+}
+
+@media (max-width: 768px) {
+	.world-clocks-row {
+		gap: 0.75rem;
+	}
+	.chrono-clocks-row {
+		grid-template-columns: 1fr 1fr;
+	}
+	.chrono-clock-cell.hobbit-cell {
+		grid-column: span 2;
+		min-width: 0;
+	}
+	.hobbit-cell .hobbit-face,
+	.hobbit-cell .clock-face.hobbit-face {
+		width: 180px;
+		height: 180px;
+		--face-radius: 90;
+	}
+	.hobbit-cell .hobbit-meal-label {
+		font-size: 0.6rem;
+	}
+	.world-clock-cell {
+		min-width: 0;
+		padding: 0.5rem 0.6rem;
+	}
+	.world-clock-time {
+		font-size: 1.1rem;
+	}
+}
+
+.clocks-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+	gap: 2rem;
+	max-width: 1100px;
+	margin: 0 auto;
+}
+
+.clock-card {
+	background: rgba(255, 255, 255, 0.05);
+	border: 1px solid rgba(255, 255, 255, 0.1);
+	border-radius: 16px;
+	padding: 1.5rem;
+	backdrop-filter: blur(10px);
+}
+
+.clock-card-title {
+	font-size: 1.25rem;
+	margin-bottom: 1rem;
+	color: var(--primary-lighter);
+	text-align: center;
+}
+
+.standard-clock,
+.decimal-clock,
+.hobbit-clock {
+	text-align: center;
+}
+
+.clock-select {
+	width: 100%;
+	max-width: 240px;
+	margin-bottom: 1rem;
+	padding: 0.5rem 0.75rem;
+	border-radius: 8px;
+	border: 1px solid rgba(255, 255, 255, 0.2);
+	background: rgba(0, 0, 0, 0.3);
+	color: #fff;
+	font-size: 0.9rem;
+}
+
+.clock-time {
+	font-family: var(--font-display);
+	font-size: 2.5rem;
+	color: #fff;
+	margin-bottom: 0.25rem;
+}
+
+.clock-time.decimal-time {
+	font-size: 2rem;
+	letter-spacing: 0.05em;
+}
+
+.clock-date {
+	font-size: 1rem;
+	color: #888;
+	margin-bottom: 0.25rem;
+}
+
+.clock-tz {
+	font-size: 0.85rem;
+	color: #666;
+}
+
+.clock-caption {
+	font-size: 0.8rem;
+	color: #666;
+	margin-top: 0.75rem;
+	margin-bottom: 0;
+}
+
+.clock-face {
+	position: relative;
+	width: 180px;
+	height: 180px;
+	margin: 1rem auto;
+	border: 3px solid rgba(255, 255, 255, 0.2);
+	border-radius: 50%;
+	background: rgba(0, 0, 0, 0.2);
+}
+
+.clock-hand {
+	position: absolute;
+	left: 50%;
+	bottom: 50%;
+	transform-origin: 50% 100%;
+}
+
+.clock-hand-hour {
+	width: 4px;
+	height: 45px;
+	margin-left: -2px;
+	background: var(--primary-lighter);
+	border-radius: 2px;
+	transform: rotate(var(--rotation-hour, -90deg));
+}
+
+.clock-hand-minute {
+	width: 3px;
+	height: 60px;
+	margin-left: -1.5px;
+	background: rgba(255, 255, 255, 0.8);
+	border-radius: 2px;
+	transform: rotate(var(--rotation-minute, -90deg));
+}
+
+.clock-hand-second {
+	width: 2px;
+	height: 70px;
+	margin-left: -1px;
+	background: #fff;
+	border-radius: 1px;
+	transform: rotate(var(--rotation-second, -90deg));
+}
+
+.hobbit-face {
+	overflow: visible;
+	--face-radius: 90;
+}
+
+.hobbit-tick {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: 2px;
+	height: 38%;
+	margin-left: -1px;
+	margin-top: -38%;
+	background: rgba(255, 255, 255, 0.4);
+	transform-origin: 50% 100%;
+	transform: rotate(var(--tick-rotation, 0deg));
+}
+
+.hobbit-meal-label {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	text-align: center;
+	transform-origin: 50% 100%;
+	transform: translate(-50%, -100%) rotate(var(--meal-rotation, 0deg)) translate(0, calc(-1 * var(--face-radius, 90) * 1px));
+	pointer-events: none;
+	font-size: 0.65rem;
+	font-weight: 600;
+	color: rgba(255, 255, 255, 0.9);
+	white-space: nowrap;
+	z-index: 1;
+}
+
+.hobbit-meal-label span {
+	display: inline-block;
+	transform: rotate(var(--meal-rotation-counter, 0deg));
+}
+
+.hobbit-cell .hobbit-meal-label {
+	font-size: 0.75rem;
+}
+
+.hobbit-face .clock-hand {
+	z-index: 2;
+}
+
+.hobbit-now {
+	font-size: 0.85rem;
+	color: #888;
+	margin-top: 0.5rem;
+}
+
+.hobbit-now strong {
+	color: var(--primary-lighter);
+}
+
+.hobbit-countdown {
+	font-size: 0.9rem;
+	color: #888;
+	margin-top: 0.75rem;
+}
+
+.hobbit-countdown strong {
+	color: var(--primary-lighter);
+}
+
+.chrono-clock-cell:not(.hobbit-cell) .hobbit-now {
+	font-size: 0.7rem;
+	margin-top: 0.35rem;
+}
+
+.chrono-clock-cell:not(.hobbit-cell) .hobbit-countdown {
+	font-size: 0.75rem;
+	margin-top: 0.5rem;
+}

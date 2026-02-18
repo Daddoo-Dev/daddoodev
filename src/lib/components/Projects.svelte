@@ -167,6 +167,16 @@
        category: 'E-commerce'
      },
     {
+      title: 'ChronoCluster',
+      description: 'World time strip and alternate clocks — standard (timezone), base-10 decimal, and Hobbit meal clock — displayed in one place.',
+      status: 'Completed',
+      technologies: ['SvelteKit', 'TypeScript'],
+      image: '/images/chronocluster.png',
+      internalUrl: '/clocks',
+      size: 'medium',
+      category: 'Web App'
+    },
+    {
       title: 'Twisted Fortunes',
       description: 'A darkly humorous fortune cookie game. Tap to crack open a cookie and reveal a twisted fortune — with optional ads for extra fortunes.',
       status: 'Available Now',
