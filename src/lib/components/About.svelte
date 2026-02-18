@@ -35,6 +35,8 @@
               <h4>Mobile & Web</h4>
               <ul>
                 <li>Flutter (iOS/Android/Web)</li>
+                <li>Flutter Flame (2D games)</li>
+                <li>Kotlin Multiplatform</li>
                 <li>Svelte / SvelteKit</li>
                 <li>JavaScript / TypeScript</li>
                 <li>HTML5 / CSS3</li>
@@ -45,6 +47,8 @@
               <ul>
                 <li>Firebase Authentication</li>
                 <li>Firebase Database</li>
+                <li>Supabase</li>
+                <li>RevenueCat (subscriptions)</li>
                 <li>Square Integration</li>
                 <li>E-commerce Solutions</li>
               </ul>
@@ -61,7 +65,7 @@
                   <li>WebStorm</li>
                   <li>Cursor</li>
                 </ul>
-                <li>Godot Game Development</li>
+                <li>Unity Game Development</li>
               </ul>
             </div>
           </div>

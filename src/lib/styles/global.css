@@ -925,7 +925,7 @@ body {
 }
 
 .world-clock-time {
-	font-family: var(--font-display);
+	font-family: var(--font-body);
 	font-size: 1.35rem;
 	color: #fff;
 	letter-spacing: 0.02em;
