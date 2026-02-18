@@ -19,7 +19,22 @@
 			href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&family=Orbitron:wght@400;500;700;900&display=swap"
 			rel="stylesheet"
 		/>
-		
+		<script>
+			(function() {
+				var themes = [
+					{ color: '#340143', light: '#4a0161', lighter: '#8e3ba3' },
+					{ color: '#430114', light: '#61011f', lighter: '#a33b5a' },
+					{ color: '#011f43', light: '#013d61', lighter: '#3b7aa3' },
+					{ color: '#2d2d2d', light: '#454545', lighter: '#8a8a8a' },
+					{ color: '#0d3320', light: '#145230', lighter: '#3b8a5e' }
+				];
+				var t = themes[Math.floor(Math.random() * themes.length)];
+				var r = document.documentElement;
+				r.style.setProperty('--primary-color', t.color);
+				r.style.setProperty('--primary-light', t.light);
+				r.style.setProperty('--primary-lighter', t.lighter);
+			})();
+		</script>
 		%sveltekit.head%
 	</head>
 	<body data-sveltekit-preload-data="hover">
