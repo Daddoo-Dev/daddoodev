@@ -502,13 +502,8 @@
   .featured-title {
     font-size: 2rem;
     font-weight: 700;
-    color: #fff;
     margin-bottom: 2rem;
     text-align: center;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
   }
 
   .featured-grid {
@@ -542,12 +537,7 @@
   .filter-title {
     font-size: 1.8rem;
     font-weight: 700;
-    color: #fff;
     margin-bottom: 1.5rem;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
   }
 
   .filter-buttons {
@@ -578,10 +568,7 @@
   }
 
   .filter-btn.active {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    border-color: #667eea;
     color: #fff;
-    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
   }
 
   .bento-grid {
@@ -699,35 +686,7 @@
     letter-spacing: 0.5px;
   }
 
-  .status-badge.completed {
-    background: rgba(34, 197, 94, 0.2);
-    color: #22c55e;
-    border: 1px solid rgba(34, 197, 94, 0.3);
-  }
-
-  .status-badge.in-development {
-    background: rgba(59, 130, 246, 0.2);
-    color: #3b82f6;
-    border: 1px solid rgba(59, 130, 246, 0.3);
-  }
-
-  .status-badge.launching-soon {
-    background: rgba(168, 85, 247, 0.2);
-    color: #a855f7;
-    border: 1px solid rgba(168, 85, 247, 0.3);
-  }
-
-  .status-badge.completed---pending-deployment {
-    background: rgba(245, 158, 11, 0.2);
-    color: #f59e0b;
-    border: 1px solid rgba(245, 158, 11, 0.3);
-  }
-
-  .status-badge.available-now {
-    background: rgba(34, 197, 94, 0.2);
-    color: #22c55e;
-    border: 1px solid rgba(34, 197, 94, 0.3);
-  }
+  /* status-badge colors from global.css (theme) */
 
   .card-title {
     font-size: 1.25rem;
@@ -789,17 +748,7 @@
     border: 1px solid transparent;
   }
 
-  .action-button.primary {
-    background: rgba(255, 255, 255, 0.1);
-    color: #fff;
-    border-color: rgba(255, 255, 255, 0.2);
-  }
-
-  .action-button.primary:hover {
-    background: rgba(255, 255, 255, 0.15);
-    border-color: rgba(255, 255, 255, 0.3);
-    transform: translateY(-1px);
-  }
+  /* .action-button.primary colors from global.css (theme) */
 
   .action-button.secondary {
     background: transparent;

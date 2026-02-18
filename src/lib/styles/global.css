@@ -333,6 +333,47 @@ body {
 	height: 44px;
 }
 
+/* Projects section – headings and filters use theme accent */
+.featured-title,
+.filter-title {
+	background: var(--primary-gradient);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	background-clip: text;
+}
+
+.filter-btn.active {
+	background: var(--primary-gradient);
+	border-color: var(--primary-light);
+	color: #fff;
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+}
+
+.status-badge.available-now,
+.status-badge.completed,
+.status-badge.launching-soon,
+.status-badge.in-development,
+.status-badge.completed---pending-deployment {
+	background: var(--primary-color);
+	color: var(--primary-lighter);
+	border: 1px solid var(--primary-light);
+}
+
+.action-button.primary {
+	background: linear-gradient(45deg, var(--primary-color), var(--primary-light));
+	color: #fff;
+	border: 2px solid var(--primary-lighter);
+}
+
+.action-button.primary:hover {
+	background: var(--primary-color);
+	border-color: var(--primary-lighter);
+	box-shadow:
+		0 0 5px var(--primary-lighter),
+		0 0 15px var(--primary-lighter);
+	transform: translateY(-1px);
+}
+
 .projects-grid {
 	display: grid;
 	grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
