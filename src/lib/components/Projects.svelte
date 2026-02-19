@@ -80,16 +80,6 @@
       featured: true
     },
     {
-      title: 'Coaster Score',
-      description: 'A specialized application for roller coaster enthusiasts to track their "coaster count".',
-      status: 'Completed',
-      technologies: ['SvelteKit', 'Firebase', 'JavaScript'],
-      image: '/images/coaster.jpg',
-      liveUrl: 'https://coaster-score.web.app/',
-      size: 'medium',
-      category: 'Web App'
-    },
-    {
       title: 'Stock Market Game',
       description: 'A simple stock market game where users can buy and sell stocks, and track their success.',
       status: 'Completed',
