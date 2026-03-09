@@ -1,0 +1,40 @@
+---
+description: Non-negotiable rules the agent must follow—answer first, whole scripts only, do not instruct the user to do what the agent can do, verify docs.
+alwaysApply: true
+---
+
+# Agent Rules — Follow Every Time
+
+## 1. Answer the question first
+- If the user asks "Can we do X?" or "Does Y happen?" answer **yes**, **no**, or **that isn’t possible** first.
+- Do **not** suggest workarounds or start implementing until the question is answered.
+
+## 2. Whole scripts only — no partial paste
+- For **Google Apps Script** (or any script the user pastes into an external editor): always provide the **entire** script.
+- **Never** say "replace only doPost" or "add this function." Partial updates cause duplicate code and syntax errors when the user pastes.
+- User replaces the **whole** file. Every script change = full script in one block.
+
+## 3. Do the task — don’t hand it to the user
+- If something can be done in the repo (create file, add env var, edit config): **do it**.
+- Do **not** say "add this to .env" or "create a file with this" when you can create/update the file yourself.
+- Only give step-by-step instructions when the action is outside the repo (e.g. deploy in Google, Firebase Console).
+
+## 4. Verify before claiming
+- Before stating how an **external** system works (e.g. "the URL stays the same," "CORS will allow it"), **check official/source documentation**.
+- Do not guess. If you’re not sure, say so or look it up.
+
+## 5. Include all steps
+- When a change requires a follow-up step (e.g. Apps Script: after editing code, user must **Deploy → New version**), **say it in the same response** that gives the code.
+- Do not assume the user knows; include deployment/rebuild steps every time they apply.
+
+## 6. No placeholders or .env.example
+- Do not create `.env.example` or "add this to your .env" as the only action. Create or update the real file with real values when you have them.
+- If you need a value the user has (e.g. new Web App URL), ask for it once, then update the files yourself.
+
+## 7. DO NOT OVERWRITE EXISTING DATA IN CRITICAL FILES LIKE AN ENV!
+- Critical files like a .env may have existing information. If you overwrite it, you WILL break your app
+- That existing data may not be able to be recovered and if you write it over, this could cascade into a critical ability to make the project work.
+
+## 8. ALWAYS USE PROPER POWERSHELL SYNTAX
+- I will get pissed and force death on you if you use improper syntax knowing I am in powershell.
+- You always give me a command that includes && and that is not a valid statement separator. Stop using it. Don't ever do it.

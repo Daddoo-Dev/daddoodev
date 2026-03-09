@@ -1,0 +1,323 @@
+/* Honor Guard sign-in page – light, professional theme (no site styling) */
+body {
+	background: #f0f2f5;
+	color: #1a1a1a;
+	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+	line-height: 1.5;
+	margin: 0;
+	min-height: 100vh;
+	box-sizing: border-box;
+}
+
+*, *::before, *::after {
+	box-sizing: inherit;
+}
+
+.honorguard-page {
+	min-height: 100vh;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 1.5rem;
+}
+
+.honorguard-container {
+	width: 100%;
+	max-width: 520px;
+	background: #fff;
+	border-radius: 12px;
+	box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+	padding: 2rem;
+	overflow: hidden;
+}
+
+.honorguard-title {
+	font-size: 1.75rem;
+	font-weight: 600;
+	text-align: center;
+	margin: 0 0 1.25rem;
+	color: #1a1a1a;
+}
+
+.honorguard-event-section {
+	background: #f8f9fa;
+	border-radius: 6px;
+	padding: 0.75rem 1rem;
+	margin-bottom: 1.5rem;
+	border: 1px solid #e9ecef;
+}
+
+.honorguard-event-title {
+	font-size: 0.7rem;
+	font-weight: 600;
+	color: #6b7280;
+	margin: 0 0 0.5rem;
+	text-transform: uppercase;
+	letter-spacing: 0.04em;
+}
+
+.honorguard-event-grid {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 0.5rem 0.75rem;
+	min-width: 0;
+}
+
+.honorguard-event-grid .honorguard-field {
+	margin-bottom: 0;
+	min-width: 0;
+}
+
+.honorguard-event-grid .honorguard-field.full-width {
+	grid-column: 1 / -1;
+}
+
+.honorguard-event-grid .honorguard-field label {
+	font-size: 0.75rem;
+	margin-bottom: 0.25rem;
+	color: #6b7280;
+}
+
+.honorguard-event-grid .honorguard-input {
+	min-height: 36px;
+	padding: 0.4rem 0.6rem;
+	font-size: 13px;
+	border-radius: 6px;
+}
+
+.honorguard-clear-row {
+	margin-top: 0.75rem;
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 0.5rem;
+}
+
+.honorguard-clear-btn {
+	min-height: 36px;
+	padding: 0.4rem 0.75rem;
+	font-size: 13px;
+	font-weight: 500;
+	border: 1px solid #d1d5db;
+	border-radius: 6px;
+	background: #fff;
+	color: #374151;
+	cursor: pointer;
+	font-family: inherit;
+}
+
+.honorguard-clear-btn:hover:not(:disabled) {
+	background: #f9fafb;
+	border-color: #9ca3af;
+}
+
+.honorguard-clear-btn:disabled {
+	opacity: 0.7;
+	cursor: not-allowed;
+}
+
+.honorguard-clear-ok {
+	font-size: 0.8125rem;
+	color: #059669;
+}
+
+.honorguard-pdf-row {
+	margin-top: 1.25rem;
+	margin-bottom: 0;
+}
+
+.honorguard-pdf-btn {
+	display: block;
+	width: 100%;
+	min-height: 44px;
+	font-size: 0.9375rem;
+	font-weight: 500;
+	padding: 0.6rem 1rem;
+	border: 1px solid #d1d5db;
+	border-radius: 8px;
+	background: #fff;
+	color: #374151;
+	cursor: pointer;
+	font-family: inherit;
+	text-align: center;
+	text-decoration: none;
+	box-sizing: border-box;
+}
+
+.honorguard-pdf-btn:hover:not(:disabled) {
+	background: #f9fafb;
+	border-color: #9ca3af;
+}
+
+.honorguard-pdf-btn:disabled {
+	opacity: 0.7;
+	cursor: not-allowed;
+}
+
+.honorguard-form {
+	display: flex;
+	flex-direction: column;
+	gap: 0;
+}
+
+.honorguard-form-title {
+	font-size: 0.875rem;
+	font-weight: 600;
+	color: #495057;
+	margin: 0 0 1rem;
+	text-transform: uppercase;
+	letter-spacing: 0.03em;
+}
+
+.honorguard-field {
+	margin-bottom: 1.25rem;
+}
+
+.honorguard-field label {
+	display: block;
+	margin-bottom: 0.4rem;
+	font-weight: 500;
+	color: #374151;
+	font-size: 0.9375rem;
+}
+
+.honorguard-input,
+.honorguard-select {
+	width: 100%;
+	padding: 0.75rem 1rem;
+	font-size: 16px;
+	min-height: 48px;
+	border: 1px solid #d1d5db;
+	border-radius: 8px;
+	background: #fff;
+	color: #1a1a1a;
+	font-family: inherit;
+}
+
+.honorguard-input::placeholder {
+	color: #9ca3af;
+}
+
+.honorguard-input:focus,
+.honorguard-select:focus {
+	outline: none;
+	border-color: #2563eb;
+	box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+.honorguard-select {
+	cursor: pointer;
+	appearance: auto;
+}
+
+.honorguard-autocomplete {
+	position: relative;
+}
+
+.honorguard-suggestions {
+	position: absolute;
+	top: 100%;
+	left: 0;
+	right: 0;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	background: #fff;
+	border: 1px solid #e5e7eb;
+	border-radius: 8px;
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+	z-index: 10;
+	max-height: 240px;
+	overflow-y: auto;
+}
+
+.honorguard-suggestion-item {
+	display: block;
+	width: 100%;
+	padding: 0.75rem 1rem;
+	font-size: 16px;
+	font-family: inherit;
+	text-align: left;
+	cursor: pointer;
+	color: #1a1a1a;
+	background: none;
+	border: none;
+	border-bottom: 1px solid #f3f4f6;
+}
+
+.honorguard-suggestions li:last-child .honorguard-suggestion-item {
+	border-bottom: none;
+}
+
+.honorguard-suggestion-item:hover {
+	background: #f3f4f6;
+}
+
+.honorguard-submit {
+	width: 100%;
+	margin-top: 0.5rem;
+	min-height: 52px;
+	font-size: 1rem;
+	font-weight: 600;
+	padding: 0.75rem 1.5rem;
+	border: none;
+	border-radius: 8px;
+	background: #2563eb;
+	color: #fff;
+	cursor: pointer;
+	font-family: inherit;
+}
+
+.honorguard-submit:hover:not(:disabled) {
+	background: #1d4ed8;
+}
+
+.honorguard-submit:disabled {
+	opacity: 0.7;
+	cursor: not-allowed;
+}
+
+.honorguard-success {
+	font-size: 1.125rem;
+	text-align: center;
+	color: #059669;
+	margin-bottom: 1.5rem;
+	font-weight: 500;
+}
+
+.honorguard-success-inline {
+	margin-bottom: 0.75rem;
+	text-align: left;
+	font-size: 1rem;
+}
+
+.honorguard-success + button {
+	width: 100%;
+	min-height: 48px;
+	font-size: 1rem;
+	font-weight: 600;
+	padding: 0.75rem 1.5rem;
+	border: 1px solid #2563eb;
+	border-radius: 8px;
+	background: #fff;
+	color: #2563eb;
+	cursor: pointer;
+	font-family: inherit;
+}
+
+.honorguard-success + button:hover {
+	background: #eff6ff;
+}
+
+.honorguard-error {
+	color: #dc2626;
+	font-size: 0.9375rem;
+	margin-top: 0.5rem;
+}
+
+.honorguard-hint {
+	color: #6b7280;
+	font-size: 0.875rem;
+	margin-top: 0.25rem;
+}
+
