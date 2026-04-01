@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { fillSignInTemplate } from '$lib/honorguardSigninSheet';
   import { buildSignInSheetHtml } from '$lib/honorguardPdfHtml';
 
   const TEMPLATE_URL = '/templates/honorguard-signin-template.xlsx';
@@ -70,6 +69,7 @@
     isSheetDownloading = true;
     sheetDownloadError = '';
     try {
+      const { fillSignInTemplate } = await import('$lib/honorguardSigninSheet');
       const templateRes = await fetch(TEMPLATE_URL);
       if (!templateRes.ok) throw new Error('Failed to load template');
       const templateBuf = await templateRes.arrayBuffer();

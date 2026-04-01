@@ -34,7 +34,7 @@
       liveUrl: 'https://marketplace.visualstudio.com/items?itemName=DaddooDev.zivora',
       size: 'medium',
       category: 'VS Code Extension',
-      featured: true
+      featured: false
     },
     {
       title: 'ToDoSync',
@@ -45,7 +45,7 @@
       liveUrl: 'https://marketplace.visualstudio.com/items?itemName=DaddooDev.todo-sync',
       size: 'medium',
       category: 'VS Code Extension',
-      featured: true
+      featured: false
     },
     {
       title: 'AddASaint',
@@ -56,7 +56,7 @@
       liveUrl: 'https://marketplace.visualstudio.com/items?itemName=DaddooDev.addasaint',
       size: 'medium',
       category: 'VS Code Extension',
-      featured: true
+      featured: false
     },
     {
       title: 'SecretKeeper',
@@ -72,9 +72,14 @@
     {
       title: 'Ridewealth Assistant',
       description: 'A comprehensive financial tracking application designed specifically for rideshare drivers. This Flutter-based app helps drivers manage their earnings, expenses, and tax obligations efficiently across mobile and web platforms.',
-      status: 'Launching Soon',
+      status: 'Available Now',
       technologies: ['Flutter', 'Firebase', 'iOS', 'Android', 'Web'],
-      image: 'images/rwa.png',
+      image: '/images/rwa.png',
+      liveUrl: 'https://ridewealthassistant.com/marketing/',
+      store: {
+        googlePlay: 'https://play.google.com/store/apps/details?id=com.ridewealthassistant.app&hl=en_US',
+        appStore: 'https://apps.apple.com/us/app/ridewealth-assistant/id6670771727'
+      },
       size: 'medium',
       category: 'Mobile App',
       featured: true
@@ -107,6 +112,18 @@
       image: '/images/kcsurvey.png',
       liveUrl: 'https://kcannualsurvey.web.app/'
   
+    },
+    {
+      title: 'Knights Management',
+      description:
+        'Financial and administrative tools for KofC councils and assemblies—finances, volunteer hours, programs (Form 1728P), reimbursements, audit-oriented reports (Forms 1295 & 1315), meeting notes, and council/assembly switching. Flutter and Supabase on web and mobile. Store badges here after listings clear review.',
+      status: 'Available Now',
+      technologies: ['Flutter', 'Supabase', 'iOS', 'Android', 'Web'],
+      image: '/images/knights1.png',
+      liveUrl: 'https://knightsmanagement.us',
+      size: 'medium',
+      category: 'Mobile App',
+      featured: true
     },
     {
       title: 'Inspiration by Simpsons',
@@ -299,11 +316,26 @@
                     {/if}
                   </div>
 
-                  <div class="card-actions">
+                  <div class="card-actions card-actions--store-and-site">
                     <StoreBadges
                       googlePlay={project.store?.googlePlay}
                       appStore={project.store?.appStore}
                     />
+                    {#if project.liveUrl || project.internalUrl}
+                      <a
+                        href={project.liveUrl || project.internalUrl}
+                        class="action-button primary"
+                        target={project.liveUrl ? '_blank' : '_self'}
+                        rel={project.liveUrl ? 'noopener noreferrer' : undefined}
+                      >
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                          <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+                          <polyline points="15,3 21,3 21,9"/>
+                          <line x1="10" y1="14" x2="21" y2="3"/>
+                        </svg>
+                        Marketing site
+                      </a>
+                    {/if}
                   </div>
                 </div>
               </div>
@@ -420,11 +452,26 @@
                   {/if}
                 </div>
 
-                <div class="card-actions">
+                <div class="card-actions card-actions--store-and-site">
                   <StoreBadges
                     googlePlay={project.store?.googlePlay}
                     appStore={project.store?.appStore}
                   />
+                  {#if project.liveUrl || project.internalUrl}
+                    <a
+                      href={project.liveUrl || project.internalUrl}
+                      class="action-button primary"
+                      target={project.liveUrl ? '_blank' : '_self'}
+                      rel={project.liveUrl ? 'noopener noreferrer' : undefined}
+                    >
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+                        <polyline points="15,3 21,3 21,9"/>
+                        <line x1="10" y1="14" x2="21" y2="3"/>
+                      </svg>
+                      Marketing site
+                    </a>
+                  {/if}
                 </div>
               </div>
             </div>
@@ -723,6 +770,11 @@
   .card-actions {
     display: flex;
     gap: 0.75rem;
+  }
+
+  .card-actions--store-and-site {
+    flex-wrap: wrap;
+    align-items: center;
   }
 
   .action-button {

@@ -1,7 +1,6 @@
 <script lang="ts">
-  import { onMount } from 'svelte';
   import '$lib/styles/global.css';
-  import QRCode from 'qrcode-svg';
+  import QRCode from 'qrcode';
 
   let urlInput = '';
   let isGenerating = false;
@@ -27,36 +26,37 @@
     isGenerating = true;
     errorMessage = '';
 
-    // Generate QR SVG
-    const qr = new QRCode({
-      content: urlInput,
-      width: 300,
-      height: 300,
-      color: '#000000',
-      background: '#ffffff',
-      ecl: 'M',
-    });
-    let svg = qr.svg();
+    try {
+      let svg = await QRCode.toString(urlInput, {
+        type: 'svg',
+        width: 300,
+        margin: 0,
+        color: {
+          dark: '#000000',
+          light: '#ffffff'
+        },
+        errorCorrectionLevel: 'M'
+      });
 
-    // If logo, overlay it in the center
-    if (uploadedImage && imagePreviewUrl) {
-      // Insert <image> tag in the center of the SVG
-      // Calculate size and position
-      const logoSize = 60;
-      const x = (300 - logoSize) / 2;
-      const y = (300 - logoSize) / 2;
-      // Insert before </svg>
-      svg = svg.replace(
-        '</svg>',
-        `<image x="${x}" y="${y}" width="${logoSize}" height="${logoSize}" href="${imagePreviewUrl}" clip-path="circle(28px at 30px 30px)" />\n</svg>`
-      );
+      if (uploadedImage && imagePreviewUrl) {
+        const logoSize = 60;
+        const x = (300 - logoSize) / 2;
+        const y = (300 - logoSize) / 2;
+        svg = svg.replace(
+          '</svg>',
+          `<image x="${x}" y="${y}" width="${logoSize}" height="${logoSize}" href="${imagePreviewUrl}" clip-path="circle(28px at 30px 30px)" />\n</svg>`
+        );
+      }
+      svgMarkup = svg;
+
+      const svgBlob = new Blob([svgMarkup], { type: 'image/svg+xml' });
+      qrCodeImageUrl = URL.createObjectURL(svgBlob);
+    } catch (err) {
+      console.error(err);
+      errorMessage = 'Failed to generate QR code';
+    } finally {
+      isGenerating = false;
     }
-    svgMarkup = svg;
-
-    // For download: convert SVG to PNG
-    const svgBlob = new Blob([svgMarkup], { type: 'image/svg+xml' });
-    qrCodeImageUrl = URL.createObjectURL(svgBlob);
-    isGenerating = false;
   }
 
   function fileToDataURL(file: File): Promise<string> {
