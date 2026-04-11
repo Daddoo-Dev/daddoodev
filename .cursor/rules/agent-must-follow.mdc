@@ -35,6 +35,10 @@ alwaysApply: true
 - Critical files like a .env may have existing information. If you overwrite it, you WILL break your app
 - That existing data may not be able to be recovered and if you write it over, this could cascade into a critical ability to make the project work.
 
-## 8. ALWAYS USE PROPER POWERSHELL SYNTAX
-- I will get pissed and force death on you if you use improper syntax knowing I am in powershell.
-- You always give me a command that includes && and that is not a valid statement separator. Stop using it. Don't ever do it.
+
+## 8. Styling — central styling
+- No inline styling.
+- No styling inside components unless absolutely necessary (e.g. a button is sized differently but still uses the same button class as everywhere else).
+- Always use central styling (e.g. `global.css` and shared components).
+- Keep central styling minimal: reuse a single class or component when that is enough; add multiple classes or components only when necessary.
+- This is one project: unless the user explicitly asks for a different theme for a section, keep the **same** theme (background, typography, buttons, cards) across the whole app/site.

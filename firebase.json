@@ -1,5 +1,9 @@
 {
+  "firestore": {
+    "rules": "firestore.rules"
+  },
   "hosting": {
+    "predeploy": ["npm run build"],
     "public": "build",
     "ignore": [
       "firebase.json",
@@ -10,6 +14,10 @@
       {
         "source": "/ym/v2/**",
         "function": "ymApi"
+      },
+      {
+        "source": "/mm/chart",
+        "function": "mmChart"
       },
       {
         "source": "!/**/*.html",

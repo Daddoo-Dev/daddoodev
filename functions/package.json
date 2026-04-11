@@ -11,14 +11,16 @@
     "start": "npm run shell",
     "deploy": "firebase deploy --only functions",
     "logs": "firebase functions:log",
-    "seed": "npm run build && node lib/seed.js"
+    "seed": "npm run build && node lib/seed.js",
+    "migrate:mm": "npm run build && node lib/migrateMm.js",
+    "push:mm": "bash scripts/push-mm-user-doc.sh"
   },
   "engines": {
     "node": "22"
   },
   "dependencies": {
     "firebase-admin": "^12.0.0",
-    "firebase-functions": "^7.2.2"
+    "firebase-functions": "^7.2.5"
   },
   "devDependencies": {
     "typescript": "^5.0.0"

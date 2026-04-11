@@ -4,6 +4,9 @@ import * as admin from 'firebase-admin';
 
 admin.initializeApp();
 
+export { mmChart } from './mmChart.js';
+export { mmImport } from './mmImportHttp.js';
+
 const apiKey = defineSecret('YM_API_KEY');
 
 const QUIZZES_COLLECTION = 'quizzes';

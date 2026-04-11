@@ -2,6 +2,36 @@
   import '$lib/styles/global.css';
   import QRCode from 'qrcode';
 
+  /** XML-escape attribute value (data URLs can contain &). */
+  function escapeXmlAttr(value: string): string {
+    return value.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;');
+  }
+
+  /**
+   * node-qrcode SVG uses viewBox in module units, not pixel width — logo coords must match viewBox.
+   * See node-qrcode README: errorCorrectionLevel H (~30% damage tolerance) for center logos.
+   */
+  function overlayLogoOnSvg(svg: string, imageDataUrl: string): string {
+    const vb = svg.match(/viewBox="\s*([\d.]+)\s+([\d.]+)\s+([\d.]+)\s+([\d.]+)\s*"/);
+    if (!vb) return svg;
+    const w = parseFloat(vb[3]);
+    const h = parseFloat(vb[4]);
+    const safeHref = escapeXmlAttr(imageDataUrl);
+    const logoFraction = 0.22;
+    const logoSize = Math.min(w, h) * logoFraction;
+    const x = (w - logoSize) / 2;
+    const y = (h - logoSize) / 2;
+    const cx = x + logoSize / 2;
+    const cy = y + logoSize / 2;
+    const r = logoSize / 2;
+    const clipId =
+      typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function'
+        ? `qr-logo-${crypto.randomUUID()}`
+        : `qr-logo-${Date.now()}`;
+    const inset = `<defs><clipPath id="${clipId}"><circle cx="${cx}" cy="${cy}" r="${r}"/></clipPath></defs><circle cx="${cx}" cy="${cy}" r="${r * 1.08}" fill="#ffffff"/><image x="${x}" y="${y}" width="${logoSize}" height="${logoSize}" href="${safeHref}" preserveAspectRatio="xMidYMid slice" clip-path="url(#${clipId})"/>`;
+    return svg.replace('</svg>', `${inset}</svg>`);
+  }
+
   let urlInput = '';
   let isGenerating = false;
   let errorMessage = '';
@@ -27,25 +57,20 @@
     errorMessage = '';
 
     try {
+      const hasLogo = Boolean(uploadedImage && imagePreviewUrl);
       let svg = await QRCode.toString(urlInput, {
         type: 'svg',
         width: 300,
-        margin: 0,
+        margin: hasLogo ? 1 : 0,
         color: {
           dark: '#000000',
           light: '#ffffff'
         },
-        errorCorrectionLevel: 'M'
+        errorCorrectionLevel: hasLogo ? 'H' : 'M'
       });
 
-      if (uploadedImage && imagePreviewUrl) {
-        const logoSize = 60;
-        const x = (300 - logoSize) / 2;
-        const y = (300 - logoSize) / 2;
-        svg = svg.replace(
-          '</svg>',
-          `<image x="${x}" y="${y}" width="${logoSize}" height="${logoSize}" href="${imagePreviewUrl}" clip-path="circle(28px at 30px 30px)" />\n</svg>`
-        );
+      if (hasLogo && imagePreviewUrl) {
+        svg = overlayLogoOnSvg(svg, imagePreviewUrl);
       }
       svgMarkup = svg;
 
