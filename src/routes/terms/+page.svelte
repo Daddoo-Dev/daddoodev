@@ -158,12 +158,6 @@
 <style>
   .terms-page {
     min-height: 100vh;
-    background-color: #000;
-    background-image: linear-gradient(rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.85)),
-      url('/images/vortex-bg.jpg');
-    background-size: cover;
-    background-position: center;
-    background-attachment: fixed;
     color: #e0e0e0;
     padding: 2rem 0;
   }

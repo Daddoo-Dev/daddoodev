@@ -19,6 +19,10 @@ Thumbs.db
 !.env.example
 !.env.test
 
+# Local Firebase Admin key (e.g. quiz seed) — keep out of git
+/daddoodev-sa.json
+/daddoodev-firebase-adminsdk-*.json
+
 # Firebase Functions
 functions/lib
 functions/.env

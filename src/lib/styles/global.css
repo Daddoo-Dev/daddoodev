@@ -25,11 +25,24 @@ body {
 	line-height: 1.6;
 	color: #e0e0e0;
 	background-color: #000;
-	background-image: linear-gradient(rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.85)),
-		url('/images/vortex-bg.jpg');
+	background-image: linear-gradient(rgba(0, 0, 0, 0.87), rgba(0, 0, 0, 0.87)),
+		url('/images/artemis-bg.jpg');
 	background-size: cover;
 	background-position: center;
+	background-repeat: no-repeat;
 	background-attachment: fixed;
+}
+
+@media (max-width: 768px) {
+	body {
+		background-attachment: scroll;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	body {
+		background-attachment: scroll;
+	}
 }
 
 /* Layout */

@@ -105,22 +105,17 @@
       category: 'Web App'
     },
     {
-      title: 'Council Programs Annual Survey',
-      description: 'A web app for KofC Councils to track programs and generate the annual survey.',
-      status: 'Completed',
-      technologies: ['SvelteKit', 'Firebase', 'TypeScript'],
-      image: '/images/kcsurvey.png',
-      liveUrl: 'https://kcannualsurvey.web.app/'
-  
-    },
-    {
       title: 'Knights Management',
       description:
-        'Financial and administrative tools for KofC councils and assemblies—finances, volunteer hours, programs (Form 1728P), reimbursements, audit-oriented reports (Forms 1295 & 1315), meeting notes, and council/assembly switching. Flutter and Supabase on web and mobile. Store badges here after listings clear review.',
+        'Financial and administrative tools for KofC councils and assemblies—finances, volunteer hours, programs (Form 1728P), reimbursements, audit-oriented reports (Forms 1295 & 1315), meeting notes, and council/assembly switching. Flutter and Supabase on web and mobile.',
       status: 'Available Now',
       technologies: ['Flutter', 'Supabase', 'iOS', 'Android', 'Web'],
       image: '/images/knights1.png',
       liveUrl: 'https://knightsmanagement.us',
+      store: {
+        googlePlay: 'https://play.google.com/store/apps/details?id=com.councilfinance.app',
+        appStore: 'https://apps.apple.com/us/app/knights-management/id6758227765'
+      },
       size: 'medium',
       category: 'Mobile App',
       featured: true
@@ -280,7 +275,7 @@
                         <polyline points="15,3 21,3 21,9"/>
                         <line x1="10" y1="14" x2="21" y2="3"/>
                       </svg>
-                      {project.internalUrl ? 'Learn More' : 'View Live'}
+                      View Live
                     </span>
                   </div>
                 </div>
@@ -405,7 +400,7 @@
                       <polyline points="15,3 21,3 21,9"/>
                       <line x1="10" y1="14" x2="21" y2="3"/>
                     </svg>
-                    {project.internalUrl ? 'Learn More' : 'View Live'}
+                    View Live
                   </span>
                   {#if project.githubUrl}
                     <button 

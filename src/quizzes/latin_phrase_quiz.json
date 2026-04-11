@@ -1,0 +1,874 @@
+{
+  "id": "latin-phrase-match",
+  "title": "What Is Your Latin Phrase?",
+  "description": "Discover which ancient Roman wisdom speaks to your soul and guides your life journey.",
+  "categoryId": "personality-self",
+  "questions": [
+    {
+      "id": "q1",
+      "text": "When facing a major life decision, you:",
+      "answers": [
+        {
+          "id": "q1a1",
+          "text": "Reflect deeply on where it leads",
+          "characterId": "quo-vadis"
+        },
+        {
+          "id": "q1a2",
+          "text": "Trust in a higher purpose",
+          "characterId": "deus-vult"
+        },
+        {
+          "id": "q1a3",
+          "text": "Consider life's brevity",
+          "characterId": "memento-mori"
+        },
+        {
+          "id": "q1a4",
+          "text": "Jump in without hesitation",
+          "characterId": "carpe-diem"
+        }
+      ]
+    },
+    {
+      "id": "q2",
+      "text": "What drives you forward in difficult times?",
+      "answers": [
+        {
+          "id": "q2a1",
+          "text": "Love and compassion for others",
+          "characterId": "amor-vincit-omnia"
+        },
+        {
+          "id": "q2a2",
+          "text": "The dream of reaching the stars",
+          "characterId": "per-aspera-ad-astra"
+        },
+        {
+          "id": "q2a3",
+          "text": "Hope and unwavering optimism",
+          "characterId": "dum-spiro-spero"
+        },
+        {
+          "id": "q2a4",
+          "text": "Courage and boldness",
+          "characterId": "fortis-fortuna-adiuvat"
+        }
+      ]
+    },
+    {
+      "id": "q3",
+      "text": "Your approach to challenges is:",
+      "answers": [
+        {
+          "id": "q3a1",
+          "text": "Swift, decisive, victorious",
+          "characterId": "veni-vidi-vici"
+        },
+        {
+          "id": "q3a2",
+          "text": "Guided by truth and honesty",
+          "characterId": "veritas-lux-mea"
+        },
+        {
+          "id": "q3a3",
+          "text": "Patient, starting from humble beginnings",
+          "characterId": "sic-parvis-magna"
+        },
+        {
+          "id": "q3a4",
+          "text": "Determined to find or create a solution",
+          "characterId": "aut-viam-inveniam"
+        }
+      ]
+    },
+    {
+      "id": "q4",
+      "text": "What question keeps you up at night?",
+      "answers": [
+        {
+          "id": "q4a1",
+          "text": "Where am I headed in life?",
+          "characterId": "quo-vadis"
+        },
+        {
+          "id": "q4a2",
+          "text": "Am I fulfilling my purpose?",
+          "characterId": "deus-vult"
+        },
+        {
+          "id": "q4a3",
+          "text": "Am I making the most of my time?",
+          "characterId": "memento-mori"
+        },
+        {
+          "id": "q4a4",
+          "text": "What opportunity am I missing?",
+          "characterId": "carpe-diem"
+        }
+      ]
+    },
+    {
+      "id": "q5",
+      "text": "Your life philosophy centers on:",
+      "answers": [
+        {
+          "id": "q5a1",
+          "text": "The power of love",
+          "characterId": "amor-vincit-omnia"
+        },
+        {
+          "id": "q5a2",
+          "text": "Reaching for greatness through struggle",
+          "characterId": "per-aspera-ad-astra"
+        },
+        {
+          "id": "q5a3",
+          "text": "Maintaining hope no matter what",
+          "characterId": "dum-spiro-spero"
+        },
+        {
+          "id": "q5a4",
+          "text": "Taking bold risks",
+          "characterId": "fortis-fortuna-adiuvat"
+        }
+      ]
+    },
+    {
+      "id": "q6",
+      "text": "When you succeed, you attribute it to:",
+      "answers": [
+        {
+          "id": "q6a1",
+          "text": "Quick action and execution",
+          "characterId": "veni-vidi-vici"
+        },
+        {
+          "id": "q6a2",
+          "text": "Staying true to my values",
+          "characterId": "veritas-lux-mea"
+        },
+        {
+          "id": "q6a3",
+          "text": "Consistent small steps",
+          "characterId": "sic-parvis-magna"
+        },
+        {
+          "id": "q6a4",
+          "text": "Refusing to give up",
+          "characterId": "aut-viam-inveniam"
+        }
+      ]
+    },
+    {
+      "id": "q7",
+      "text": "People describe you as:",
+      "answers": [
+        {
+          "id": "q7a1",
+          "text": "A deep thinker and wanderer",
+          "characterId": "quo-vadis"
+        },
+        {
+          "id": "q7a2",
+          "text": "Devoted and purposeful",
+          "characterId": "deus-vult"
+        },
+        {
+          "id": "q7a3",
+          "text": "Wise and reflective",
+          "characterId": "memento-mori"
+        },
+        {
+          "id": "q7a4",
+          "text": "Spontaneous and lively",
+          "characterId": "carpe-diem"
+        }
+      ]
+    },
+    {
+      "id": "q8",
+      "text": "What matters most to you?",
+      "answers": [
+        {
+          "id": "q8a1",
+          "text": "Loving and being loved",
+          "characterId": "amor-vincit-omnia"
+        },
+        {
+          "id": "q8a2",
+          "text": "Achieving your biggest dreams",
+          "characterId": "per-aspera-ad-astra"
+        },
+        {
+          "id": "q8a3",
+          "text": "Keeping faith and hope alive",
+          "characterId": "dum-spiro-spero"
+        },
+        {
+          "id": "q8a4",
+          "text": "Living courageously",
+          "characterId": "fortis-fortuna-adiuvat"
+        }
+      ]
+    },
+    {
+      "id": "q9",
+      "text": "Your greatest strength is:",
+      "answers": [
+        {
+          "id": "q9a1",
+          "text": "Decisiveness and confidence",
+          "characterId": "veni-vidi-vici"
+        },
+        {
+          "id": "q9a2",
+          "text": "Integrity and honesty",
+          "characterId": "veritas-lux-mea"
+        },
+        {
+          "id": "q9a3",
+          "text": "Patience and humility",
+          "characterId": "sic-parvis-magna"
+        },
+        {
+          "id": "q9a4",
+          "text": "Resourcefulness and determination",
+          "characterId": "aut-viam-inveniam"
+        }
+      ]
+    },
+    {
+      "id": "q10",
+      "text": "When lost, you:",
+      "answers": [
+        {
+          "id": "q10a1",
+          "text": "Stop and ask where you're going",
+          "characterId": "quo-vadis"
+        },
+        {
+          "id": "q10a2",
+          "text": "Trust the journey has meaning",
+          "characterId": "deus-vult"
+        },
+        {
+          "id": "q10a3",
+          "text": "Remind yourself life is short",
+          "characterId": "memento-mori"
+        },
+        {
+          "id": "q10a4",
+          "text": "Pick a direction and go",
+          "characterId": "carpe-diem"
+        }
+      ]
+    },
+    {
+      "id": "q11",
+      "text": "Your motivation comes from:",
+      "answers": [
+        {
+          "id": "q11a1",
+          "text": "Connection and relationships",
+          "characterId": "amor-vincit-omnia"
+        },
+        {
+          "id": "q11a2",
+          "text": "Ambition and big goals",
+          "characterId": "per-aspera-ad-astra"
+        },
+        {
+          "id": "q11a3",
+          "text": "Optimism for the future",
+          "characterId": "dum-spiro-spero"
+        },
+        {
+          "id": "q11a4",
+          "text": "Desire for adventure",
+          "characterId": "fortis-fortuna-adiuvat"
+        }
+      ]
+    },
+    {
+      "id": "q12",
+      "text": "How do you handle obstacles?",
+      "answers": [
+        {
+          "id": "q12a1",
+          "text": "Overcome them quickly and move on",
+          "characterId": "veni-vidi-vici"
+        },
+        {
+          "id": "q12a2",
+          "text": "Face them with honesty and clarity",
+          "characterId": "veritas-lux-mea"
+        },
+        {
+          "id": "q12a3",
+          "text": "Chip away at them bit by bit",
+          "characterId": "sic-parvis-magna"
+        },
+        {
+          "id": "q12a4",
+          "text": "Find a way around or through",
+          "characterId": "aut-viam-inveniam"
+        }
+      ]
+    },
+    {
+      "id": "q13",
+      "text": "Your ideal legacy would be:",
+      "answers": [
+        {
+          "id": "q13a1",
+          "text": "Someone who sought truth and meaning",
+          "characterId": "quo-vadis"
+        },
+        {
+          "id": "q13a2",
+          "text": "Someone who lived with purpose",
+          "characterId": "deus-vult"
+        },
+        {
+          "id": "q13a3",
+          "text": "Someone who lived fully and wisely",
+          "characterId": "memento-mori"
+        },
+        {
+          "id": "q13a4",
+          "text": "Someone who seized every moment",
+          "characterId": "carpe-diem"
+        }
+      ]
+    },
+    {
+      "id": "q14",
+      "text": "What gives your life meaning?",
+      "answers": [
+        {
+          "id": "q14a1",
+          "text": "The people I love",
+          "characterId": "amor-vincit-omnia"
+        },
+        {
+          "id": "q14a2",
+          "text": "The dreams I'm chasing",
+          "characterId": "per-aspera-ad-astra"
+        },
+        {
+          "id": "q14a3",
+          "text": "The hope I carry",
+          "characterId": "dum-spiro-spero"
+        },
+        {
+          "id": "q14a4",
+          "text": "The risks I take",
+          "characterId": "fortis-fortuna-adiuvat"
+        }
+      ]
+    },
+    {
+      "id": "q15",
+      "text": "You're proudest of:",
+      "answers": [
+        {
+          "id": "q15a1",
+          "text": "My decisive victories",
+          "characterId": "veni-vidi-vici"
+        },
+        {
+          "id": "q15a2",
+          "text": "My unwavering principles",
+          "characterId": "veritas-lux-mea"
+        },
+        {
+          "id": "q15a3",
+          "text": "How far I've come from where I started",
+          "characterId": "sic-parvis-magna"
+        },
+        {
+          "id": "q15a4",
+          "text": "My ability to solve any problem",
+          "characterId": "aut-viam-inveniam"
+        }
+      ]
+    },
+    {
+      "id": "q16",
+      "text": "In times of uncertainty, you:",
+      "answers": [
+        {
+          "id": "q16a1",
+          "text": "Reflect on your direction",
+          "characterId": "quo-vadis"
+        },
+        {
+          "id": "q16a2",
+          "text": "Trust in something greater",
+          "characterId": "deus-vult"
+        },
+        {
+          "id": "q16a3",
+          "text": "Remember what truly matters",
+          "characterId": "memento-mori"
+        },
+        {
+          "id": "q16a4",
+          "text": "Act immediately",
+          "characterId": "carpe-diem"
+        }
+      ]
+    },
+    {
+      "id": "q17",
+      "text": "Your superpower would be:",
+      "answers": [
+        {
+          "id": "q17a1",
+          "text": "Spreading love and peace",
+          "characterId": "amor-vincit-omnia"
+        },
+        {
+          "id": "q17a2",
+          "text": "Achieving the impossible",
+          "characterId": "per-aspera-ad-astra"
+        },
+        {
+          "id": "q17a3",
+          "text": "Inspiring hope in others",
+          "characterId": "dum-spiro-spero"
+        },
+        {
+          "id": "q17a4",
+          "text": "Fearlessness in any situation",
+          "characterId": "fortis-fortuna-adiuvat"
+        }
+      ]
+    },
+    {
+      "id": "q18",
+      "text": "Others seek your advice about:",
+      "answers": [
+        {
+          "id": "q18a1",
+          "text": "Getting things done efficiently",
+          "characterId": "veni-vidi-vici"
+        },
+        {
+          "id": "q18a2",
+          "text": "Making ethical choices",
+          "characterId": "veritas-lux-mea"
+        },
+        {
+          "id": "q18a3",
+          "text": "Building something from nothing",
+          "characterId": "sic-parvis-magna"
+        },
+        {
+          "id": "q18a4",
+          "text": "Overcoming impossible odds",
+          "characterId": "aut-viam-inveniam"
+        }
+      ]
+    },
+    {
+      "id": "q19",
+      "text": "Your daily mantra is:",
+      "answers": [
+        {
+          "id": "q19a1",
+          "text": "Where am I going today?",
+          "characterId": "quo-vadis"
+        },
+        {
+          "id": "q19a2",
+          "text": "I'm here for a reason",
+          "characterId": "deus-vult"
+        },
+        {
+          "id": "q19a3",
+          "text": "Make today count",
+          "characterId": "memento-mori"
+        },
+        {
+          "id": "q19a4",
+          "text": "Today is the day",
+          "characterId": "carpe-diem"
+        }
+      ]
+    },
+    {
+      "id": "q20",
+      "text": "What fuels your soul?",
+      "answers": [
+        {
+          "id": "q20a1",
+          "text": "Deep connections with others",
+          "characterId": "amor-vincit-omnia"
+        },
+        {
+          "id": "q20a2",
+          "text": "Working toward something greater",
+          "characterId": "per-aspera-ad-astra"
+        },
+        {
+          "id": "q20a3",
+          "text": "Believing in better days",
+          "characterId": "dum-spiro-spero"
+        },
+        {
+          "id": "q20a4",
+          "text": "Taking chances",
+          "characterId": "fortis-fortuna-adiuvat"
+        }
+      ]
+    },
+    {
+      "id": "q21",
+      "text": "You measure success by:",
+      "answers": [
+        {
+          "id": "q21a1",
+          "text": "How fast you achieved it",
+          "characterId": "veni-vidi-vici"
+        },
+        {
+          "id": "q21a2",
+          "text": "Whether you stayed true to yourself",
+          "characterId": "veritas-lux-mea"
+        },
+        {
+          "id": "q21a3",
+          "text": "The journey from start to finish",
+          "characterId": "sic-parvis-magna"
+        },
+        {
+          "id": "q21a4",
+          "text": "The obstacles you overcame",
+          "characterId": "aut-viam-inveniam"
+        }
+      ]
+    },
+    {
+      "id": "q22",
+      "text": "Your life motto focuses on:",
+      "answers": [
+        {
+          "id": "q22a1",
+          "text": "Finding your path",
+          "characterId": "quo-vadis"
+        },
+        {
+          "id": "q22a2",
+          "text": "Following your calling",
+          "characterId": "deus-vult"
+        },
+        {
+          "id": "q22a3",
+          "text": "Living with awareness",
+          "characterId": "memento-mori"
+        },
+        {
+          "id": "q22a4",
+          "text": "Taking action now",
+          "characterId": "carpe-diem"
+        }
+      ]
+    },
+    {
+      "id": "q23",
+      "text": "What brings you peace?",
+      "answers": [
+        {
+          "id": "q23a1",
+          "text": "Being surrounded by love",
+          "characterId": "amor-vincit-omnia"
+        },
+        {
+          "id": "q23a2",
+          "text": "Knowing you're reaching for the stars",
+          "characterId": "per-aspera-ad-astra"
+        },
+        {
+          "id": "q23a3",
+          "text": "Maintaining hope through everything",
+          "characterId": "dum-spiro-spero"
+        },
+        {
+          "id": "q23a4",
+          "text": "Living courageously",
+          "characterId": "fortis-fortuna-adiuvat"
+        }
+      ]
+    },
+    {
+      "id": "q24",
+      "text": "Your leadership style is:",
+      "answers": [
+        {
+          "id": "q24a1",
+          "text": "Quick and commanding",
+          "characterId": "veni-vidi-vici"
+        },
+        {
+          "id": "q24a2",
+          "text": "Honest and transparent",
+          "characterId": "veritas-lux-mea"
+        },
+        {
+          "id": "q24a3",
+          "text": "Patient and steady",
+          "characterId": "sic-parvis-magna"
+        },
+        {
+          "id": "q24a4",
+          "text": "Creative and adaptable",
+          "characterId": "aut-viam-inveniam"
+        }
+      ]
+    },
+    {
+      "id": "q25",
+      "text": "When contemplating the future, you:",
+      "answers": [
+        {
+          "id": "q25a1",
+          "text": "Wonder about your destination",
+          "characterId": "quo-vadis"
+        },
+        {
+          "id": "q25a2",
+          "text": "Trust it will unfold as meant",
+          "characterId": "deus-vult"
+        },
+        {
+          "id": "q25a3",
+          "text": "Focus on making it meaningful",
+          "characterId": "memento-mori"
+        },
+        {
+          "id": "q25a4",
+          "text": "Plan to make it happen",
+          "characterId": "carpe-diem"
+        }
+      ]
+    },
+    {
+      "id": "q26",
+      "text": "Your greatest belief is:",
+      "answers": [
+        {
+          "id": "q26a1",
+          "text": "Love conquers all obstacles",
+          "characterId": "amor-vincit-omnia"
+        },
+        {
+          "id": "q26a2",
+          "text": "Struggle leads to greatness",
+          "characterId": "per-aspera-ad-astra"
+        },
+        {
+          "id": "q26a3",
+          "text": "Hope never dies",
+          "characterId": "dum-spiro-spero"
+        },
+        {
+          "id": "q26a4",
+          "text": "Fortune favors the brave",
+          "characterId": "fortis-fortuna-adiuvat"
+        }
+      ]
+    },
+    {
+      "id": "q27",
+      "text": "You're energized by:",
+      "answers": [
+        {
+          "id": "q27a1",
+          "text": "Winning and achieving",
+          "characterId": "veni-vidi-vici"
+        },
+        {
+          "id": "q27a2",
+          "text": "Living authentically",
+          "characterId": "veritas-lux-mea"
+        },
+        {
+          "id": "q27a3",
+          "text": "Slow, steady progress",
+          "characterId": "sic-parvis-magna"
+        },
+        {
+          "id": "q27a4",
+          "text": "Solving complex problems",
+          "characterId": "aut-viam-inveniam"
+        }
+      ]
+    },
+    {
+      "id": "q28",
+      "text": "In your heart of hearts, you are:",
+      "answers": [
+        {
+          "id": "q28a1",
+          "text": "A seeker of direction",
+          "characterId": "quo-vadis"
+        },
+        {
+          "id": "q28a2",
+          "text": "A person of faith and purpose",
+          "characterId": "deus-vult"
+        },
+        {
+          "id": "q28a3",
+          "text": "A philosopher of life",
+          "characterId": "memento-mori"
+        },
+        {
+          "id": "q28a4",
+          "text": "A bold adventurer",
+          "characterId": "carpe-diem"
+        }
+      ]
+    },
+    {
+      "id": "q29",
+      "text": "What inspires you most?",
+      "answers": [
+        {
+          "id": "q29a1",
+          "text": "The power of human connection",
+          "characterId": "amor-vincit-omnia"
+        },
+        {
+          "id": "q29a2",
+          "text": "The possibility of achieving dreams",
+          "characterId": "per-aspera-ad-astra"
+        },
+        {
+          "id": "q29a3",
+          "text": "The resilience of the human spirit",
+          "characterId": "dum-spiro-spero"
+        },
+        {
+          "id": "q29a4",
+          "text": "Stories of courage and bravery",
+          "characterId": "fortis-fortuna-adiuvat"
+        }
+      ]
+    },
+    {
+      "id": "q30",
+      "text": "Your final words of wisdom would be:",
+      "answers": [
+        {
+          "id": "q30a1",
+          "text": "Conquer swiftly and completely",
+          "characterId": "veni-vidi-vici"
+        },
+        {
+          "id": "q30a2",
+          "text": "Let truth guide you always",
+          "characterId": "veritas-lux-mea"
+        },
+        {
+          "id": "q30a3",
+          "text": "Great things come from small steps",
+          "characterId": "sic-parvis-magna"
+        },
+        {
+          "id": "q30a4",
+          "text": "Never give up, create your path",
+          "characterId": "aut-viam-inveniam"
+        }
+      ]
+    }
+  ],
+  "results": [
+    {
+      "characterId": "quo-vadis",
+      "characterName": "Quo Vadis",
+      "description": "Where are you going? You are a deep thinker and seeker of meaning. You constantly reflect on your life's direction and purpose, never content to wander without intention. Your journey is one of self-discovery and philosophical exploration.",
+      "traits": ["Reflective", "Thoughtful", "Seeking", "Philosophical", "Introspective"],
+      "imageUrl": null
+    },
+    {
+      "characterId": "deus-vult",
+      "characterName": "Deus Vult",
+      "description": "God wills it. You live with deep purpose and conviction. You believe your path has meaning beyond yourself and trust in a greater plan. Your faith and devotion guide your decisions and give strength to your actions.",
+      "traits": ["Devoted", "Purposeful", "Faithful", "Convicted", "Steadfast"],
+      "imageUrl": null
+    },
+    {
+      "characterId": "memento-mori",
+      "characterName": "Memento Mori",
+      "description": "Remember you must die. You embrace life's impermanence with wisdom and grace. This awareness drives you to live authentically and make every moment count. You find beauty in life's fleeting nature rather than fear.",
+      "traits": ["Wise", "Realistic", "Present", "Philosophical", "Authentic"],
+      "imageUrl": null
+    },
+    {
+      "characterId": "carpe-diem",
+      "characterName": "Carpe Diem",
+      "description": "Seize the day! You live spontaneously and embrace every opportunity. You refuse to let moments slip by and believe in taking action now rather than waiting. Your energy and enthusiasm inspire others to live fully.",
+      "traits": ["Spontaneous", "Energetic", "Present", "Bold", "Enthusiastic"],
+      "imageUrl": null
+    },
+    {
+      "characterId": "amor-vincit-omnia",
+      "characterName": "Amor Vincit Omnia",
+      "description": "Love conquers all. You believe in the transformative power of love and compassion. You lead with your heart and know that kindness and connection can overcome any obstacle. Your relationships define your greatest achievements.",
+      "traits": ["Loving", "Compassionate", "Warm", "Connected", "Heart-centered"],
+      "imageUrl": null
+    },
+    {
+      "characterId": "per-aspera-ad-astra",
+      "characterName": "Per Aspera Ad Astra",
+      "description": "Through hardships to the stars. You thrive on challenge and see struggle as the path to greatness. Your ambitions reach high and you know that difficulty is simply part of the journey to achieving extraordinary dreams.",
+      "traits": ["Ambitious", "Resilient", "Dreamer", "Persevering", "Visionary"],
+      "imageUrl": null
+    },
+    {
+      "characterId": "dum-spiro-spero",
+      "characterName": "Dum Spiro Spero",
+      "description": "While I breathe, I hope. You are the eternal optimist who never loses faith in better days. Even in darkness, you find reasons to believe and continue forward. Your hope is contagious and lifts others in their darkest hours.",
+      "traits": ["Hopeful", "Optimistic", "Resilient", "Believing", "Uplifting"],
+      "imageUrl": null
+    },
+    {
+      "characterId": "fortis-fortuna-adiuvat",
+      "characterName": "Fortis Fortuna Adiuvat",
+      "description": "Fortune favors the bold. You take risks and embrace courage in all you do. You know that great rewards come to those who dare to act fearlessly. Your bravery opens doors others never knew existed.",
+      "traits": ["Courageous", "Bold", "Daring", "Fearless", "Adventurous"],
+      "imageUrl": null
+    },
+    {
+      "characterId": "veni-vidi-vici",
+      "characterName": "Veni Vidi Vici",
+      "description": "I came, I saw, I conquered. You are decisive, confident, and achieve your goals with remarkable efficiency. You don't hesitate when opportunity knocks and your victories speak for themselves. Leadership comes naturally to you.",
+      "traits": ["Decisive", "Confident", "Victorious", "Efficient", "Leader"],
+      "imageUrl": null
+    },
+    {
+      "characterId": "veritas-lux-mea",
+      "characterName": "Veritas Lux Mea",
+      "description": "Truth is my light. You value honesty above all else and live by your principles. You seek truth in all situations and let integrity guide your path. Your authenticity and transparency earn deep respect from others.",
+      "traits": ["Honest", "Principled", "Authentic", "Transparent", "Ethical"],
+      "imageUrl": null
+    },
+    {
+      "characterId": "sic-parvis-magna",
+      "characterName": "Sic Parvis Magna",
+      "description": "Greatness from small beginnings. You understand that monumental achievements start with humble steps. You're patient and persistent, knowing that consistent effort builds extraordinary results over time. Your humility is your strength.",
+      "traits": ["Patient", "Humble", "Persistent", "Steady", "Wise"],
+      "imageUrl": null
+    },
+    {
+      "characterId": "aut-viam-inveniam",
+      "characterName": "Aut Viam Inveniam Aut Faciam",
+      "description": "I will either find a way or make one. You are resourceful and refuse to accept defeat. When obstacles appear, you get creative and forge your own path. Your determination and problem-solving abilities are legendary.",
+      "traits": ["Determined", "Resourceful", "Creative", "Unstoppable", "Problem-solver"],
+      "imageUrl": null
+    }
+  ]
+}
