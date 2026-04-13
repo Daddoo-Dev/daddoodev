@@ -6,8 +6,7 @@
     { label: 'About', href: '#about' },
     { label: 'Projects', href: '#projects' },
     { label: 'Contact', href: '#contact' },
-    { label: 'QR Generator', href: '/qr-generator' },
-    { label: 'MarketMinder', href: '/marketminder' }
+    { label: 'QR Generator', href: '/qr-generator' }
   ];
 
   let isMenuOpen = false;
