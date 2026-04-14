@@ -2144,3 +2144,253 @@ a.action-button {
 	width: 100%;
 	margin: 0 auto;
 }
+
+/* ========== Knights Management analytics (internal) ========== */
+.km-analytics {
+	/* Chart.js reads these via getComputedStyle (central theme for canvas) */
+	--km-chart-classic: #3b82f6;
+	--km-chart-overview: #22c55e;
+	--km-chart-neutral: #94a3b8;
+	--km-chart-android: #818cf8;
+	--km-chart-ios: #f472b6;
+	--km-chart-tick: rgba(224, 224, 224, 0.75);
+	--km-chart-grid: rgba(255, 255, 255, 0.08);
+
+	padding: 2rem 0 3rem;
+	color: #e0e0e0;
+}
+
+.km-analytics-header {
+	margin-bottom: 1.5rem;
+}
+
+.km-analytics-title {
+	font-family: var(--font-display), sans-serif;
+	font-size: 1.75rem;
+	letter-spacing: 0.04em;
+	text-transform: uppercase;
+	color: #fff;
+	margin-bottom: 0.35rem;
+}
+
+.km-analytics-sub {
+	font-size: 0.95rem;
+	color: rgba(255, 255, 255, 0.55);
+}
+
+.km-analytics-empty {
+	padding: 1.25rem;
+	border-radius: 12px;
+	background: rgba(0, 0, 0, 0.35);
+	border: 1px solid rgba(255, 255, 255, 0.12);
+	color: rgba(255, 255, 255, 0.75);
+	margin-bottom: 1.5rem;
+}
+
+.km-analytics-toolbar {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 0.75rem;
+	margin-bottom: 1.25rem;
+}
+
+.km-analytics-label {
+	font-size: 0.85rem;
+	font-weight: 600;
+	color: rgba(255, 255, 255, 0.65);
+}
+
+.km-analytics-select {
+	min-width: 220px;
+	padding: 0.5rem 0.75rem;
+	border-radius: 8px;
+	border: 1px solid rgba(255, 255, 255, 0.2);
+	background: rgba(0, 0, 0, 0.35);
+	color: #fff;
+	font-family: inherit;
+	font-size: 0.9rem;
+}
+
+.km-analytics-select:focus {
+	outline: none;
+	border-color: var(--primary-lighter);
+}
+
+.km-analytics-metrics {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+	gap: 1rem;
+	margin-bottom: 1.5rem;
+}
+
+.km-analytics-card {
+	padding: 1rem 1.1rem;
+	border-radius: 12px;
+	background: rgba(0, 0, 0, 0.35);
+	border: 1px solid rgba(255, 255, 255, 0.12);
+	backdrop-filter: blur(8px);
+}
+
+.km-analytics-card-label {
+	font-size: 0.75rem;
+	text-transform: uppercase;
+	letter-spacing: 0.06em;
+	color: rgba(255, 255, 255, 0.55);
+	margin-bottom: 0.35rem;
+}
+
+.km-analytics-card-value {
+	font-size: 1.5rem;
+	font-weight: 700;
+	color: #fff;
+}
+
+.km-analytics-delta {
+	margin-top: 0.5rem;
+	font-size: 0.8rem;
+	color: rgba(255, 255, 255, 0.55);
+}
+
+.km-analytics-delta--up {
+	color: #6ee7b7;
+}
+
+.km-analytics-delta--down {
+	color: #fca5a5;
+}
+
+.km-analytics-delta-arrow {
+	margin-right: 0.25rem;
+}
+
+.km-analytics-delta-sep {
+	margin: 0 0.35rem;
+	opacity: 0.5;
+}
+
+.km-analytics-grid {
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	gap: 1rem;
+	margin-bottom: 2rem;
+}
+
+@media (max-width: 900px) {
+	.km-analytics-grid {
+		grid-template-columns: 1fr;
+	}
+}
+
+.km-analytics-chart-wrap {
+	position: relative;
+	border-radius: 12px;
+	background: rgba(0, 0, 0, 0.28);
+	border: 1px solid rgba(255, 255, 255, 0.1);
+	padding: 0.75rem;
+}
+
+.km-analytics-chart-wrap--donut {
+	height: 260px;
+}
+
+.km-analytics-chart-wrap--bars {
+	grid-column: 1 / -1;
+	height: min(520px, 70vh);
+}
+
+.km-analytics-chart-wrap--stacked {
+	grid-column: 1 / -1;
+	height: min(420px, 60vh);
+}
+
+.km-analytics-chart-wrap--trend {
+	grid-column: 1 / -1;
+	height: 300px;
+}
+
+.km-analytics-chart-placeholder {
+	grid-column: 1 / -1;
+	padding: 1.25rem;
+	border-radius: 12px;
+	background: rgba(0, 0, 0, 0.2);
+	border: 1px dashed rgba(255, 255, 255, 0.15);
+	color: rgba(255, 255, 255, 0.55);
+	font-size: 0.9rem;
+}
+
+.km-analytics-details {
+	margin-top: 1rem;
+	border-radius: 12px;
+	border: 1px solid rgba(255, 255, 255, 0.12);
+	background: rgba(0, 0, 0, 0.25);
+}
+
+.km-analytics-summary {
+	cursor: pointer;
+	padding: 0.85rem 1rem;
+	font-weight: 600;
+	color: rgba(255, 255, 255, 0.85);
+	list-style: none;
+}
+
+.km-analytics-summary::-webkit-details-marker {
+	display: none;
+}
+
+.km-analytics-details[open] .km-analytics-summary {
+	border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.km-analytics-form {
+	padding: 1rem 1rem 1.25rem;
+	display: flex;
+	flex-direction: column;
+	gap: 0.65rem;
+}
+
+.km-analytics-textarea {
+	width: 100%;
+	padding: 0.75rem;
+	border-radius: 8px;
+	border: 1px solid rgba(255, 255, 255, 0.2);
+	background: rgba(0, 0, 0, 0.35);
+	color: #e8e8e8;
+	font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, monospace;
+	font-size: 0.82rem;
+	line-height: 1.45;
+	resize: vertical;
+	min-height: 12rem;
+}
+
+.km-analytics-textarea:focus {
+	outline: none;
+	border-color: var(--primary-lighter);
+}
+
+.km-analytics-form-actions {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.75rem;
+	align-items: center;
+}
+
+.km-analytics-msg {
+	margin-top: 0.25rem;
+	text-align: left;
+}
+
+/* Chart text must stay light: this route sits on the site’s dark UI even when the OS prefers light mode. */
+@media (prefers-color-scheme: light) {
+	.km-analytics-card,
+	.km-analytics-chart-wrap,
+	.km-analytics-details,
+	.km-analytics-empty,
+	.km-analytics-chart-placeholder {
+		background: rgba(255, 255, 255, 0.06);
+	}
+	.km-analytics-textarea {
+		background: rgba(255, 255, 255, 0.95);
+		color: #1a1a1a;
+	}
+}

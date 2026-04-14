@@ -1,0 +1,160 @@
+[
+	{
+		"week": "2026-03-30",
+		"to": "2026-04-06",
+		"totalEvents": 12,
+		"featureOpens": 12,
+		"uiModeChanges": 0,
+		"byFeature": {
+			"overview_shell": 3,
+			"form1728": 2,
+			"reports": 2,
+			"balance_sheet": 1,
+			"programs_collect": 1,
+			"organization_management": 1,
+			"budget": 1,
+			"menu_overview": 1
+		},
+		"byUiMode": {
+			"overview": 12
+		},
+		"byPlatform": {
+			"linux": 11,
+			"ios": 1
+		},
+		"featureByMode": {
+			"overview_shell": {
+				"classic": 0,
+				"overview": 3
+			},
+			"form1728": {
+				"classic": 0,
+				"overview": 2
+			},
+			"reports": {
+				"classic": 0,
+				"overview": 2
+			},
+			"balance_sheet": {
+				"classic": 0,
+				"overview": 1
+			},
+			"programs_collect": {
+				"classic": 0,
+				"overview": 1
+			},
+			"organization_management": {
+				"classic": 0,
+				"overview": 1
+			},
+			"budget": {
+				"classic": 0,
+				"overview": 1
+			},
+			"menu_overview": {
+				"classic": 0,
+				"overview": 1
+			}
+		},
+		"uiModeChangesDetail": {
+			"toClassic": 0,
+			"toOverview": 0
+		}
+	},
+	{
+		"week": "2026-04-06",
+		"to": "2026-04-13",
+		"totalEvents": 114,
+		"featureOpens": 109,
+		"uiModeChanges": 5,
+		"byFeature": {
+			"classic_menu": 15,
+			"classic_home": 15,
+			"financial_hub": 10,
+			"volunteer_hours": 9,
+			"menu_overview": 9,
+			"programs_collect": 9,
+			"profile": 8,
+			"overview_shell": 6,
+			"reports": 5,
+			"organization_management": 4,
+			"deposits": 3,
+			"meeting_notes": 3,
+			"income_statement": 3,
+			"reimbursement_request": 2,
+			"audit": 2,
+			"programs": 1,
+			"honor_guard": 1,
+			"finance_menu": 1,
+			"reimbursement_payments": 1,
+			"form1728": 1,
+			"accounts": 1
+		},
+		"byUiMode": {
+			"classic": 84,
+			"overview": 25
+		},
+		"byPlatform": {
+			"android": 65,
+			"ios": 49
+		},
+		"featureByMode": {
+			"classic_menu": {
+				"classic": 15,
+				"overview": 0
+			},
+			"classic_home": {
+				"classic": 15,
+				"overview": 0
+			},
+			"financial_hub": {
+				"classic": 9,
+				"overview": 1
+			},
+			"volunteer_hours": {
+				"classic": 9,
+				"overview": 0
+			},
+			"menu_overview": {
+				"classic": 0,
+				"overview": 9
+			},
+			"programs_collect": {
+				"classic": 9,
+				"overview": 0
+			},
+			"profile": {
+				"classic": 5,
+				"overview": 3
+			},
+			"overview_shell": {
+				"classic": 0,
+				"overview": 6
+			},
+			"reports": {
+				"classic": 3,
+				"overview": 2
+			},
+			"organization_management": {
+				"classic": 3,
+				"overview": 1
+			},
+			"deposits": {
+				"classic": 1,
+				"overview": 2
+			},
+			"meeting_notes": {
+				"classic": 3,
+				"overview": 0
+			},
+			"income_statement": {
+				"classic": 3,
+				"overview": 0
+			}
+		},
+		"uiModeChangesDetail": {
+			"toClassic": 3,
+			"toOverview": 2
+		}
+	}
+]

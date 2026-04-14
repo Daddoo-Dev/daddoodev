@@ -3,7 +3,6 @@
     "rules": "firestore.rules"
   },
   "hosting": {
-    "predeploy": ["npm run build"],
     "public": "build",
     "ignore": [
       "firebase.json",
@@ -14,6 +13,10 @@
       {
         "source": "/ym/v2/**",
         "function": "ymApi"
+      },
+      {
+        "source": "/api/km-analytics",
+        "function": "kmAnalytics"
       },
       {
         "source": "/mm/chart",

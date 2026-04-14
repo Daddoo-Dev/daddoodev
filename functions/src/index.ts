@@ -6,6 +6,7 @@ admin.initializeApp();
 
 export { mmChart } from './mmChart.js';
 export { mmImport } from './mmImportHttp.js';
+export { kmAnalytics } from './kmAnalytics.js';
 
 const apiKey = defineSecret('YM_API_KEY');
 
