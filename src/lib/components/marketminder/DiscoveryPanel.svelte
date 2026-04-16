@@ -17,8 +17,9 @@
 
   function submitScan(e: Event) {
     e.preventDefault();
-    const lim = Math.max(10, Math.min(503, discLimit));
-    const raw = discMaxPrice.trim();
+    const lim = Math.max(10, Math.min(503, Number(discLimit) || 10));
+    /** `type="number"` bind can be number; never call string methods on it */
+    const raw = String(discMaxPrice ?? '').trim();
     let maxP: number | null = null;
     if (raw) {
       const n = parseFloat(raw);
@@ -41,7 +42,11 @@
     openBuy = { ...openBuy, [row.symbol]: false };
   }
 
-  $: maxFilter = filterMax.trim() === '' ? null : parseFloat(filterMax);
+  $: maxFilter = (() => {
+    const s = String(filterMax ?? '').trim();
+    if (s === '') return null;
+    return parseFloat(s);
+  })();
   $: filterValid = maxFilter != null && !Number.isNaN(maxFilter);
 
   function rowVisible(row: DiscoveryRow): boolean {
@@ -70,17 +75,29 @@
 
   <div class="card card-form">
     <form class="add-form discovery-scan-form" on:submit={submitScan}>
-      <label class="sr-only" for="discLimit">Symbols to scan after skipping your holdings and watchlist</label>
-      <input type="number" id="discLimit" min="10" max="503" bind:value={discLimit} title="How many tickers to evaluate" />
-      <label class="sr-only" for="discMaxPrice">Max price per share for scan</label>
-      <input
-        type="number"
-        id="discMaxPrice"
-        min="0"
-        step="0.01"
-        bind:value={discMaxPrice}
-        placeholder="Max $/share (scan)"
-        title="Optional. Only keeps rows priced at or below this (whole shares)." />
+      <div class="discovery-scan-fields">
+        <div class="discovery-scan-field">
+          <label for="discLimit">Tickers to evaluate</label>
+          <input
+            type="number"
+            id="discLimit"
+            min="10"
+            max="503"
+            bind:value={discLimit}
+            title="How many S&amp;P names to pull from today’s order, after skipping holdings and watchlist" />
+        </div>
+        <div class="discovery-scan-field">
+          <label for="discMaxPrice">Max $/share (scan)</label>
+          <input
+            type="number"
+            id="discMaxPrice"
+            min="0"
+            step="0.01"
+            bind:value={discMaxPrice}
+            placeholder="Optional"
+            title="Optional. Only keeps candidates priced at or below this (same quote as on each card)." />
+        </div>
+      </div>
       <button type="submit" class="action-button primary" disabled={scanBusy}>
         {scanBusy ? 'Scanning…' : 'Run scan'}
       </button>
