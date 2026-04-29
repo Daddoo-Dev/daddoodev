@@ -1,5 +1,5 @@
 /**
- * Weekly snapshot for Knights Management in-app analytics.
+ * Weekly snapshot for Conclavium in-app analytics (same app/report format as Knights Management).
  * Known fields are typed; additional keys may appear from future report versions.
  */
 export type KmFeatureByMode = Record<string, { classic: number; overview: number }>;

@@ -2171,7 +2171,7 @@ a.action-button {
 	margin: 0 auto;
 }
 
-/* ========== Knights Management analytics (internal) ========== */
+/* ========== Conclavium analytics (internal) ========== */
 .km-analytics {
 	/* Chart.js reads these via getComputedStyle (central theme for canvas) */
 	--km-chart-classic: #3b82f6;

@@ -85,7 +85,7 @@
         <p>Each product or service may have additional terms and conditions. Please refer to product-specific documentation:</p>
         <ul>
           <li>Zivora - See VS Code Marketplace listing for license terms</li>
-          <li>ToDoSync - See VS Code Marketplace listing for license terms</li>
+          <li>NotchList - See VS Code Marketplace and Open VSX listings for license terms</li>
           <li>AddASaint - See VS Code Marketplace listing for license terms</li>
         </ul>
       </section>

@@ -11,6 +11,8 @@
     technologies: string[];
     image: string;
     liveUrl?: string;
+    /** Second install link (e.g. Open VS X) when the primary `liveUrl` is VS Code Marketplace */
+    openVsxUrl?: string;
     internalUrl?: string;
     githubUrl?: string;
     store?: {
@@ -37,12 +39,14 @@
       featured: false
     },
     {
-      title: 'ToDoSync',
-      description: 'VS Code extension that syncs workspace tasks with Notion databases. Bi-directional sync, bulk import from markdown, and centralized project management.',
+      title: 'NotchList',
+      description:
+        'Local-first Explorer task list for VS Code and compatible editors (including Cursor): statuses, groups, filter and #tags, Quick Add, import/export, archive, Add to Chat, and MCP via `.notchlist`. No accounts, cloud sync, or telemetry.',
       status: 'Available Now',
-      technologies: ['VS Code', 'Notion API', 'TypeScript', 'Node.js'],
-      image: '/images/todosync.png',
-      liveUrl: 'https://marketplace.visualstudio.com/items?itemName=DaddooDev.todo-sync',
+      technologies: ['VS Code', 'TypeScript', 'MCP', 'Cursor'],
+      image: '/images/notchlist.png',
+      liveUrl: 'https://marketplace.visualstudio.com/items?itemName=DaddooDev.notchlist',
+      openVsxUrl: 'https://open-vsx.org/extension/DaddooDev/notchlist',
       size: 'medium',
       category: 'VS Code Extension',
       featured: false
@@ -105,17 +109,13 @@
       category: 'Web App'
     },
     {
-      title: 'Knights Management',
+      title: 'Conclavium',
       description:
-        'Financial and administrative tools for KofC councils and assemblies—finances, volunteer hours, programs (Form 1728P), reimbursements, audit-oriented reports (Forms 1295 & 1315), meeting notes, and council/assembly switching. Flutter and Supabase on web and mobile.',
+        'Financial and administrative tools for KofC councils and assemblies—finances, volunteer hours, programs (Form 1728P), reimbursements, audit-oriented reports (Forms 1295 & 1315), meeting notes, and council/assembly switching. Flutter and Supabase on web and mobile—the same stack as before, now under the Conclavium name. Web app at conclavium.app; Google Play and App Store listings for the rebranded app are in progress.',
       status: 'Available Now',
       technologies: ['Flutter', 'Supabase', 'iOS', 'Android', 'Web'],
-      image: '/images/knights1.png',
-      liveUrl: 'https://knightsmanagement.us',
-      store: {
-        googlePlay: 'https://play.google.com/store/apps/details?id=com.councilfinance.app',
-        appStore: 'https://apps.apple.com/us/app/knights-management/id6758227765'
-      },
+      image: '/images/conclavium.png',
+      liveUrl: 'https://conclavium.app',
       size: 'medium',
       category: 'Mobile App',
       featured: true
@@ -236,51 +236,109 @@
         {#each featuredProjects as project, i}
           {#if project.liveUrl || project.internalUrl || project.store?.googlePlay || project.store?.appStore}
             {#if (project.liveUrl || project.internalUrl) && !(project.store?.googlePlay || project.store?.appStore)}
-            <a 
-              href={project.liveUrl || project.internalUrl}
-              target={project.liveUrl ? '_blank' : '_self'}
-              rel={project.liveUrl ? 'noopener' : ''}
-              class="featured-card"
-              in:fly={{ y: 50, duration: 500, delay: i * 100 }}
-              out:fade
-            >
-              <div class="card-background">
-                <div class="card-image">
-                  <LazyImage src={project.image} alt={project.title} objectFit="contain" />
-                  <div class="image-overlay"></div>
+              {#if project.openVsxUrl}
+                <div
+                  class="featured-card"
+                  in:fly={{ y: 50, duration: 500, delay: i * 100 }}
+                  out:fade
+                >
+                  <div class="card-background">
+                    <div class="card-image">
+                      <LazyImage src={project.image} alt={project.title} objectFit="contain" />
+                      <div class="image-overlay"></div>
+                    </div>
+                    <div class="card-content">
+                      <div class="card-header">
+                        <span class="category-tag">{Array.isArray(project.category) ? project.category[0] : project.category}</span>
+                        <span class="status-badge {project.status.toLowerCase().replace(/\s+/g, '-')}">
+                          {project.status}
+                        </span>
+                      </div>
+                      <h3 class="card-title">{project.title}</h3>
+                      <p class="card-description">{project.description}</p>
+
+                      <div class="tech-stack">
+                        {#each project.technologies.slice(0, 3) as tech}
+                          <span class="tech-chip">{tech}</span>
+                        {/each}
+                        {#if project.technologies.length > 3}
+                          <span class="tech-chip more">+{project.technologies.length - 3}</span>
+                        {/if}
+                      </div>
+
+                      <div class="card-actions card-actions--marketplaces">
+                        <a
+                          href={project.liveUrl || project.internalUrl}
+                          class="action-button primary"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+                            <polyline points="15,3 21,3 21,9"/>
+                            <line x1="10" y1="14" x2="21" y2="3"/>
+                          </svg>
+                          VS Code Marketplace
+                        </a>
+                        <a
+                          href={project.openVsxUrl}
+                          class="action-button secondary"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          Open VSX
+                        </a>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-                <div class="card-content">
-                  <div class="card-header">
-                    <span class="category-tag">{Array.isArray(project.category) ? project.category[0] : project.category}</span>
-                    <span class="status-badge {project.status.toLowerCase().replace(/\s+/g, '-')}">
-                      {project.status}
-                    </span>
+              {:else}
+                <a 
+                  href={project.liveUrl || project.internalUrl}
+                  target={project.liveUrl ? '_blank' : '_self'}
+                  rel={project.liveUrl ? 'noopener' : ''}
+                  class="featured-card"
+                  in:fly={{ y: 50, duration: 500, delay: i * 100 }}
+                  out:fade
+                >
+                  <div class="card-background">
+                    <div class="card-image">
+                      <LazyImage src={project.image} alt={project.title} objectFit="contain" />
+                      <div class="image-overlay"></div>
+                    </div>
+                    <div class="card-content">
+                      <div class="card-header">
+                        <span class="category-tag">{Array.isArray(project.category) ? project.category[0] : project.category}</span>
+                        <span class="status-badge {project.status.toLowerCase().replace(/\s+/g, '-')}">
+                          {project.status}
+                        </span>
+                      </div>
+                      <h3 class="card-title">{project.title}</h3>
+                      <p class="card-description">{project.description}</p>
+                      
+                      <div class="tech-stack">
+                        {#each project.technologies.slice(0, 3) as tech}
+                          <span class="tech-chip">{tech}</span>
+                        {/each}
+                        {#if project.technologies.length > 3}
+                          <span class="tech-chip more">+{project.technologies.length - 3}</span>
+                        {/if}
+                      </div>
+                      
+                      <div class="card-actions">
+                        <span class="action-button primary">
+                          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+                            <polyline points="15,3 21,3 21,9"/>
+                            <line x1="10" y1="14" x2="21" y2="3"/>
+                          </svg>
+                          View Live
+                        </span>
+                      </div>
+                    </div>
                   </div>
-                  <h3 class="card-title">{project.title}</h3>
-                  <p class="card-description">{project.description}</p>
-                  
-                  <div class="tech-stack">
-                    {#each project.technologies.slice(0, 3) as tech}
-                      <span class="tech-chip">{tech}</span>
-                    {/each}
-                    {#if project.technologies.length > 3}
-                      <span class="tech-chip more">+{project.technologies.length - 3}</span>
-                    {/if}
-                  </div>
-                  
-                  <div class="card-actions">
-                    <span class="action-button primary">
-                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
-                        <polyline points="15,3 21,3 21,9"/>
-                        <line x1="10" y1="14" x2="21" y2="3"/>
-                      </svg>
-                      View Live
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </a>
+                </a>
+              {/if}
             {:else}
             <div
               class="featured-card"
@@ -361,62 +419,120 @@
     <div class="bento-grid">
       {#each filteredProjects as project, i}
         {#if (project.liveUrl || project.internalUrl) && !(project.store?.googlePlay || project.store?.appStore)}
-          <a 
-            href={project.liveUrl || project.internalUrl}
-            target={project.liveUrl ? '_blank' : '_self'}
-            rel={project.liveUrl ? 'noopener' : ''}
-            class="bento-card {project.size || 'small'}"
-            in:fly={{ y: 50, duration: 500, delay: i * 100 }}
-            out:fade
-          >
-            <div class="card-background">
-              <div class="card-image">
-                <LazyImage src={project.image} alt={project.title} objectFit="contain" />
-                <div class="image-overlay"></div>
-              </div>
-              <div class="card-content">
-                <div class="card-header">
-                  <span class="category-tag">{Array.isArray(project.category) ? project.category[0] : project.category}</span>
-                  <span class="status-badge {project.status.toLowerCase().replace(/\s+/g, '-')}">
-                    {project.status}
-                  </span>
+          {#if project.openVsxUrl}
+            <div
+              class="bento-card {project.size || 'small'}"
+              in:fly={{ y: 50, duration: 500, delay: i * 100 }}
+              out:fade
+            >
+              <div class="card-background">
+                <div class="card-image">
+                  <LazyImage src={project.image} alt={project.title} objectFit="contain" />
+                  <div class="image-overlay"></div>
                 </div>
-                <h3 class="card-title">{project.title}</h3>
-                <p class="card-description">{project.description}</p>
-                
-                <div class="tech-stack">
-                  {#each project.technologies.slice(0, 3) as tech}
-                    <span class="tech-chip">{tech}</span>
-                  {/each}
-                  {#if project.technologies.length > 3}
-                    <span class="tech-chip more">+{project.technologies.length - 3}</span>
-                  {/if}
-                </div>
-                
-                <div class="card-actions">
-                  <span class="action-button primary">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                      <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
-                      <polyline points="15,3 21,3 21,9"/>
-                      <line x1="10" y1="14" x2="21" y2="3"/>
-                    </svg>
-                    View Live
-                  </span>
-                  {#if project.githubUrl}
-                    <button 
-                      class="action-button secondary" 
-                      on:click={() => window.open(project.githubUrl, '_blank', 'noopener')}
+                <div class="card-content">
+                  <div class="card-header">
+                    <span class="category-tag">{Array.isArray(project.category) ? project.category[0] : project.category}</span>
+                    <span class="status-badge {project.status.toLowerCase().replace(/\s+/g, '-')}">
+                      {project.status}
+                    </span>
+                  </div>
+                  <h3 class="card-title">{project.title}</h3>
+                  <p class="card-description">{project.description}</p>
+
+                  <div class="tech-stack">
+                    {#each project.technologies.slice(0, 3) as tech}
+                      <span class="tech-chip">{tech}</span>
+                    {/each}
+                    {#if project.technologies.length > 3}
+                      <span class="tech-chip more">+{project.technologies.length - 3}</span>
+                    {/if}
+                  </div>
+
+                  <div class="card-actions card-actions--marketplaces">
+                    <a
+                      href={project.liveUrl || project.internalUrl}
+                      class="action-button primary"
+                      target="_blank"
+                      rel="noopener noreferrer"
                     >
                       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>
+                        <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+                        <polyline points="15,3 21,3 21,9"/>
+                        <line x1="10" y1="14" x2="21" y2="3"/>
                       </svg>
-                      Source
-                    </button>
-                  {/if}
+                      VS Code Marketplace
+                    </a>
+                    <a
+                      href={project.openVsxUrl}
+                      class="action-button secondary"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      Open VSX
+                    </a>
+                  </div>
                 </div>
               </div>
             </div>
-          </a>
+          {:else}
+            <a 
+              href={project.liveUrl || project.internalUrl}
+              target={project.liveUrl ? '_blank' : '_self'}
+              rel={project.liveUrl ? 'noopener' : ''}
+              class="bento-card {project.size || 'small'}"
+              in:fly={{ y: 50, duration: 500, delay: i * 100 }}
+              out:fade
+            >
+              <div class="card-background">
+                <div class="card-image">
+                  <LazyImage src={project.image} alt={project.title} objectFit="contain" />
+                  <div class="image-overlay"></div>
+                </div>
+                <div class="card-content">
+                  <div class="card-header">
+                    <span class="category-tag">{Array.isArray(project.category) ? project.category[0] : project.category}</span>
+                    <span class="status-badge {project.status.toLowerCase().replace(/\s+/g, '-')}">
+                      {project.status}
+                    </span>
+                  </div>
+                  <h3 class="card-title">{project.title}</h3>
+                  <p class="card-description">{project.description}</p>
+                  
+                  <div class="tech-stack">
+                    {#each project.technologies.slice(0, 3) as tech}
+                      <span class="tech-chip">{tech}</span>
+                    {/each}
+                    {#if project.technologies.length > 3}
+                      <span class="tech-chip more">+{project.technologies.length - 3}</span>
+                    {/if}
+                  </div>
+                  
+                  <div class="card-actions">
+                    <span class="action-button primary">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+                        <polyline points="15,3 21,3 21,9"/>
+                        <line x1="10" y1="14" x2="21" y2="3"/>
+                      </svg>
+                      View Live
+                    </span>
+                    {#if project.githubUrl}
+                      <button 
+                        class="action-button secondary" 
+                        on:click={() => window.open(project.githubUrl, '_blank', 'noopener')}
+                      >
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                          <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>
+                        </svg>
+                        Source
+                      </button>
+                    {/if}
+                  </div>
+                </div>
+              </div>
+            </a>
+          {/if}
         {:else if project.store?.googlePlay || project.store?.appStore}
           <div 
             class="bento-card {project.size || 'small'}"
@@ -767,7 +883,8 @@
     gap: 0.75rem;
   }
 
-  .card-actions--store-and-site {
+  .card-actions--store-and-site,
+  .card-actions--marketplaces {
     flex-wrap: wrap;
     align-items: center;
   }

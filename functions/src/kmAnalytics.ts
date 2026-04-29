@@ -29,7 +29,7 @@ function mergeSnapshot(list: KmWeeklySnapshot[], snapshot: KmWeeklySnapshot): Km
 }
 
 /**
- * GET/POST /api/km-analytics — Knights Management weekly analytics (Firestore-backed).
+ * GET/POST /api/km-analytics — Conclavium weekly analytics (Firestore-backed; same schema as Knights Management era).
  * Hosting rewrite maps this path from the SPA origin.
  */
 export const kmAnalytics = onRequest(

@@ -19,7 +19,14 @@
             Visual Studio Marketplace links work in VS Code. Cursor installs many extensions from Open VSX; SecretKeeper is listed there too.
           </p>
           <a href="{vscodeBase}.zivora" target="_blank" rel="noopener noreferrer">Zivora</a>
-          <a href="{vscodeBase}.todo-sync" target="_blank" rel="noopener noreferrer">ToDoSync</a>
+          <div class="footer-extension-block">
+            <a href="{vscodeBase}.notchlist" target="_blank" rel="noopener noreferrer">NotchList</a>
+            <a
+              class="footer-secondary-link"
+              href="https://open-vsx.org/extension/DaddooDev/notchlist"
+              target="_blank"
+              rel="noopener noreferrer">Open VSX (Cursor-friendly)</a>
+          </div>
           <a href="{vscodeBase}.addasaint" target="_blank" rel="noopener noreferrer">AddASaint</a>
           <div class="footer-extension-block">
             <a href="{vscodeBase}.secretkeeper" target="_blank" rel="noopener noreferrer">SecretKeeper</a>
@@ -35,7 +42,7 @@
           <h4>Apps &amp; tools</h4>
           <a href="https://ridewealthassistant.com/marketing/" target="_blank" rel="noopener noreferrer"
             >RideWealth Assistant</a>
-          <a href="https://knightsmanagement.us" target="_blank" rel="noopener noreferrer">Knights Management</a>
+          <a href="https://conclavium.app" target="_blank" rel="noopener noreferrer">Conclavium</a>
           <a href="/twistedfortunes">Twisted Fortunes</a>
           <a href="/clocks">ChronoCluster</a>
           <a href="/honorguard">Honor Guard sign-in</a>

@@ -7,7 +7,7 @@ function isoDatePrefix(isoLine: string): string {
 }
 
 /**
- * Parse the plain-text Knights Management usage report into a weekly snapshot object.
+ * Parse the plain-text Conclavium (rebrand of Knights Management) usage report into a weekly snapshot object.
  */
 export function parseKnightsManagementReport(raw: string): KmWeeklySnapshot {
 	const lines = raw.split(/\r?\n/);

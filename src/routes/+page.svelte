@@ -16,7 +16,7 @@
   title="Daddoo Dev | Software Developer & Creator of Developer Tools"
   description="Professional software developer creating intelligent developer tools, VS Code extensions, and applications. Specializing in Flutter, web development, and productivity tools."
   url="https://dadddodev.pro"
-  keywords="software developer, developer tools, VS Code extensions, Cursor, Flutter apps, web development, Zivora, ToDoSync, AddASaint, SecretKeeper, Sentry"
+  keywords="software developer, developer tools, VS Code extensions, Cursor, Flutter apps, web development, Zivora, NotchList, Conclavium, AddASaint, SecretKeeper, Sentry"
 />
 
 <Header />
