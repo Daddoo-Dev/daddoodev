@@ -7,7 +7,6 @@
   import Footer from '$lib/components/Footer.svelte';
   import SEO from '$lib/components/SEO.svelte';
   import Analytics from '$lib/components/Analytics.svelte';
-  import '$lib/styles/global.css';
 </script>
 
 <Analytics />

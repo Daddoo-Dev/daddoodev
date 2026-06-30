@@ -1,5 +1,4 @@
 <script lang="ts">
-  import '$lib/styles/global.css';
   import QRCode from 'qrcode';
 
   /** XML-escape attribute value (data URLs can contain &). */

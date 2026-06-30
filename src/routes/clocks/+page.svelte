@@ -1,5 +1,4 @@
 <script lang="ts">
-  import '$lib/styles/global.css';
   import WorldClocks from '$lib/components/clocks/WorldClocks.svelte';
   import StandardClock from '$lib/components/clocks/StandardClock.svelte';
   import DecimalClock from '$lib/components/clocks/DecimalClock.svelte';

@@ -11,7 +11,7 @@
   <meta name="description" content="Privacy Policy for Daddoo Dev - Learn how we collect, use, and protect your information." />
 </svelte:head>
 
-<div class="privacy-page">
+<div class="legal-page">
   <div class="container">
     <header class="page-header">
       <button class="back-button" on:click={goHome}>
@@ -22,7 +22,7 @@
       </button>
     </header>
 
-    <div class="privacy-content">
+    <div class="legal-content">
       <h1>Privacy Policy</h1>
       <p class="last-updated">Last updated: January 14, 2025</p>
 
@@ -157,133 +157,3 @@
     </div>
   </div>
 </div>
-
-<style>
-  .privacy-page {
-    min-height: 100vh;
-    color: #e0e0e0;
-    padding: 2rem 0;
-  }
-
-  .container {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 0 2rem;
-  }
-
-  .page-header {
-    margin-bottom: 3rem;
-  }
-
-  .back-button {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    background: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 8px;
-    padding: 0.75rem 1.5rem;
-    color: #fff;
-    text-decoration: none;
-    font-weight: 600;
-    transition: all 0.2s ease;
-    cursor: pointer;
-  }
-
-  .back-button:hover {
-    background: rgba(255, 255, 255, 0.15);
-    border-color: rgba(255, 255, 255, 0.3);
-    transform: translateY(-1px);
-  }
-
-  .privacy-content {
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 16px;
-    padding: 3rem;
-    backdrop-filter: blur(10px);
-  }
-
-  h1 {
-    font-family: var(--font-display);
-    font-size: 2.5rem;
-    font-weight: 700;
-    color: #fff;
-    margin-bottom: 1rem;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    text-align: center;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-  }
-
-  .last-updated {
-    text-align: center;
-    color: rgba(255, 255, 255, 0.6);
-    font-style: italic;
-    margin-bottom: 3rem;
-  }
-
-  section {
-    margin-bottom: 2.5rem;
-  }
-
-  h2 {
-    font-size: 1.5rem;
-    font-weight: 600;
-    color: #fff;
-    margin-bottom: 1rem;
-    border-bottom: 2px solid rgba(102, 126, 234, 0.3);
-    padding-bottom: 0.5rem;
-  }
-
-  h3 {
-    font-size: 1.2rem;
-    font-weight: 600;
-    color: var(--primary-lighter);
-    margin: 1.5rem 0 0.75rem 0;
-  }
-
-  p {
-    color: rgba(255, 255, 255, 0.9);
-    line-height: 1.6;
-    margin-bottom: 1rem;
-  }
-
-  ul {
-    color: rgba(255, 255, 255, 0.9);
-    margin-left: 1.5rem;
-    margin-bottom: 1rem;
-  }
-
-  li {
-    margin-bottom: 0.5rem;
-    line-height: 1.5;
-  }
-
-  strong {
-    color: #fff;
-    font-weight: 600;
-  }
-
-  @media (max-width: 768px) {
-    .container {
-      padding: 0 1rem;
-    }
-
-    .privacy-content {
-      padding: 2rem;
-    }
-
-    h1 {
-      font-size: 1.75rem;
-      letter-spacing: 0.03em;
-    }
-
-    h2 {
-      font-size: 1.3rem;
-    }
-  }
-</style>

@@ -2,7 +2,6 @@
   import { goto } from '$app/navigation';
   import SEO from '$lib/components/SEO.svelte';
   import StoreBadges from '$lib/components/StoreBadges.svelte';
-  import '$lib/styles/global.css';
 
   function goHome() {
     goto('/');

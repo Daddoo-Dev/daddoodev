@@ -1,5 +1,4 @@
 <script lang="ts">
-	import '$lib/styles/global.css';
 	import { browser } from '$app/environment';
 	import { invalidateAll } from '$app/navigation';
 	import type { KmWeeklySnapshot } from '$lib/km-analytics/types';

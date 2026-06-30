@@ -111,11 +111,15 @@
     {
       title: 'Conclavium',
       description:
-        'Financial and administrative tools for KofC councils and assemblies—finances, volunteer hours, programs (Form 1728P), reimbursements, audit-oriented reports (Forms 1295 & 1315), meeting notes, and council/assembly switching. Flutter and Supabase on web and mobile—the same stack as before, now under the Conclavium name. Web app at conclavium.app; Google Play and App Store listings for the rebranded app are in progress.',
+        'Financial and administrative tools for KofC councils and assemblies—finances, volunteer hours, programs (Form 1728P), reimbursements, audit-oriented reports (Forms 1295 & 1315), meeting notes, and council/assembly switching. Flutter and Supabase on web and mobile. Web app at conclavium.app with iOS and Android companions on the stores.',
       status: 'Available Now',
       technologies: ['Flutter', 'Supabase', 'iOS', 'Android', 'Web'],
       image: '/images/conclavium.png',
       liveUrl: 'https://conclavium.app',
+      store: {
+        googlePlay: 'https://play.google.com/store/apps/details?id=com.conclavium.app&hl=en_US',
+        appStore: 'https://apps.apple.com/us/app/conclavium/id6763437133'
+      },
       size: 'medium',
       category: 'Mobile App',
       featured: true
