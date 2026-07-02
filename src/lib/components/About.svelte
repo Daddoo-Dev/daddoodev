@@ -1,77 +1,32 @@
 <script lang="ts">
-  import SectionNav from './SectionNav.svelte';
+	function getYearsOfExperience(): number {
+		const startDate = new Date('2023-01-01');
+		const today = new Date();
+		let years = today.getFullYear() - startDate.getFullYear();
+		const monthsDiff = today.getMonth() - startDate.getMonth();
+		const daysDiff = today.getDate() - startDate.getDate();
+		if (monthsDiff < 0 || (monthsDiff === 0 && daysDiff < 0)) {
+			years -= 1;
+		}
+		return Math.max(years, 1);
+	}
 
-  function getYearsOfExperience(): number {
-    const startDate = new Date('2023-01-01');
-    const today = new Date();
-    const yearsDiff = today.getFullYear() - startDate.getFullYear();
-    
-    // Adjust for partial years
-    const monthsDiff = today.getMonth() - startDate.getMonth();
-    const daysDiff = today.getDate() - startDate.getDate();
-    
-    if (monthsDiff < 0 || (monthsDiff === 0 && daysDiff < 0)) {
-      return yearsDiff - 1;
-    }
-    
-    return yearsDiff;
-  }
-
-  const yearsOfExperience = getYearsOfExperience();
+	const yearsOfExperience = getYearsOfExperience();
+	const skills = ['Flutter', 'SvelteKit', 'TypeScript', 'Supabase', 'Firebase', 'Unity'];
 </script>
 
 <section class="about" id="about">
-  <div class="container">
-    <h2 class="section-title">About Me</h2>
-    <div class="about-content">
-      <div class="about-text">
-        <p class="hero-description">
-          I develop cross-platform solutions that work seamlessly across mobile and web, specializing in user-friendly applications with integrated payment systems.
-        </p>
-        <div class="skills">
-          <h3>Technical Skills</h3>
-          <div class="skill-categories">
-            <div class="skill-category">
-              <h4>Mobile & Web</h4>
-              <ul>
-                <li>Flutter (iOS/Android/Web)</li>
-                <li>Flutter Flame (2D games)</li>
-                <li>Kotlin Multiplatform</li>
-                <li>Svelte / SvelteKit</li>
-                <li>JavaScript / TypeScript</li>
-                <li>HTML5 / CSS3</li>
-              </ul>
-            </div>
-            <div class="skill-category">
-              <h4>Backend & Services</h4>
-              <ul>
-                <li>Firebase Authentication</li>
-                <li>Firebase Database</li>
-                <li>Supabase</li>
-                <li>RevenueCat (subscriptions)</li>
-                <li>Square Integration</li>
-                <li>E-commerce Solutions</li>
-              </ul>
-            </div>
-            <div class="skill-category">
-              <h4>Tools & Interests</h4>
-              <ul>
-                <li>Cross-platform Development</li>
-                <li>Git / GitHub</li>
-                <li class="parent-item">Development Environments:</li>
-                <ul class="sub-list">
-                  <li>VS Code</li>
-                  <li>Android Studio</li>
-                  <li>WebStorm</li>
-                  <li>Cursor</li>
-                </ul>
-                <li>Unity Game Development</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <SectionNav nextSection="projects" />
-</section> 
+	<div class="container">
+		<p class="section-label">ABOUT</p>
+		<p class="about-narrative">
+			I'm a solo developer who ships end to end — from first sketch through store submission and
+			ongoing updates. Over {yearsOfExperience} years I've focused on Flutter and SvelteKit with
+			TypeScript, backed by Supabase and Firebase when a project needs auth, data, or payments.
+		</p>
+		<div class="skill-chips">
+			{#each skills as skill}
+				<span class="skill-chip">{skill}</span>
+			{/each}
+		</div>
+	</div>
+</section>

@@ -11,7 +11,7 @@
 <SEO 
   title="Twisted Fortunes - Creepy Fortune Cookies Mobile App | Daddoo Dev"
   description="Break open a fortune cookie and discover your darkly twisted destiny. Download Twisted Fortunes for iOS and Android - a delightfully creepy fortune cookie experience."
-  url="https://dadddodev.pro/twistedfortunes"
+  url="https://daddoodev.pro/twistedfortunes"
   keywords="twisted fortunes, fortune cookie app, mobile app, iOS app, Android app, dark humor, creepy fortunes"
 />
 
@@ -117,7 +117,7 @@
         <p>If you have questions, feedback, or need support with the Twisted Fortunes app, please contact us:</p>
         <ul class="contact-list">
           <li>Email: <a href="mailto:daddoodev@proton.me">daddoodev@proton.me</a></li>
-          <li>Website: <a href="https://dadddodev.pro">https://dadddodev.pro</a></li>
+          <li>Website: <a href="https://daddoodev.pro">https://daddoodev.pro</a></li>
         </ul>
       </section>
 
@@ -132,7 +132,7 @@
       <section class="developer-section">
         <h2>About the Developer</h2>
         <p>
-          Twisted Fortunes is created by <a href="https://dadddodev.pro">Daddoo Dev</a>, a software developer 
+          Twisted Fortunes is created by <a href="https://daddoodev.pro">Daddoo Dev</a>, a software developer 
           specializing in mobile apps, web development, and developer tools.
         </p>
         <p>

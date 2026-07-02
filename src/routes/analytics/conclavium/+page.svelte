@@ -452,6 +452,7 @@
 
 <svelte:head>
 	<title>Conclavium — analytics</title>
+	<meta name="robots" content="noindex, nofollow" />
 </svelte:head>
 
 <div class="km-analytics container" bind:this={analyticsRoot}>

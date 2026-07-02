@@ -157,6 +157,11 @@
   }
 </script>
 
+<svelte:head>
+  <title>Honor Guard sign-in</title>
+  <meta name="robots" content="noindex, nofollow" />
+</svelte:head>
+
 <div class="honorguard-page">
   <div class="honorguard-container">
     <h1 class="honorguard-title">Honor Guard Sign In</h1>

@@ -1,11 +1,12 @@
 <script lang="ts">
   export let title: string;
   export let description: string;
-  export let url: string = 'https://dadddodev.pro';
-  export let image: string = 'https://dadddodev.pro/images/daddoodevheader.png';
+  export let url: string = 'https://daddoodev.pro';
+  export let image: string = 'https://daddoodev.pro/images/daddoodevheader.png';
   export let type: string = 'website';
   export let author: string = 'Daddoo Dev';
   export let keywords: string = 'software development, web development, mobile apps, developer tools';
+  export let noindex: boolean = false;
 </script>
 
 <svelte:head>
@@ -32,9 +33,8 @@
   <meta property="twitter:image" content={image} />
   
   <!-- Additional Meta -->
-  <meta name="robots" content="index, follow" />
+  <meta name="robots" content={noindex ? 'noindex, nofollow' : 'index, follow'} />
   <meta name="language" content="English" />
-  <meta name="revisit-after" content="7 days" />
   
   <!-- Canonical URL -->
   <link rel="canonical" href={url} />

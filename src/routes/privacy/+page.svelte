@@ -151,7 +151,7 @@
         <p>If you have questions about this Privacy Policy, please contact us:</p>
         <ul>
           <li>Email: daddoodev@proton.me</li>
-          <li>Website: https://dadddodev.pro</li>
+          <li>Website: https://daddoodev.pro</li>
         </ul>
       </section>
     </div>

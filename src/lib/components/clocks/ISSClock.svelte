@@ -1,8 +1,6 @@
 <script lang="ts">
   import { onMount, onDestroy } from 'svelte';
-
-  const ISS_WHERE = 'https://api.wheretheiss.at/v1/satellites/25544';
-  const ISS_OPEN_NOTIFY = 'https://api.open-notify.org/iss-now.json';
+  import { fetchIssPosition } from '$lib/clocks/issPosition';
 
   let now = new Date();
   let lat: number | null = null;
@@ -19,39 +17,14 @@
     loading = false;
   }
 
-  function fetchPosition() {
-    fetch(ISS_WHERE)
-      .then((r) => r.json())
-      .then((data: { latitude?: number; longitude?: number }) => {
-        if (typeof data?.latitude === 'number' && typeof data?.longitude === 'number') {
-          setPosition(data.latitude, data.longitude);
-          return;
-        }
-        throw new Error('Invalid response');
-      })
-      .catch(() => {
-        return fetch(ISS_OPEN_NOTIFY)
-          .then((r) => r.json())
-          .then((data: { iss_position?: { latitude?: string; longitude?: string } }) => {
-            const pos = data?.iss_position;
-            if (pos) {
-              const la = parseFloat(pos.latitude ?? '');
-              const lo = parseFloat(pos.longitude ?? '');
-              if (!Number.isNaN(la) && !Number.isNaN(lo)) setPosition(la, lo);
-              else loading = false;
-            } else {
-              loading = false;
-            }
-          })
-          .catch(() => {
-            error = true;
-            loading = false;
-          });
-      })
-      .catch(() => {
-        error = true;
-        loading = false;
-      });
+  async function fetchPosition() {
+    const position = await fetchIssPosition();
+    if (position) {
+      setPosition(position.lat, position.lon);
+      return;
+    }
+    error = true;
+    loading = false;
   }
 
   function tick() {

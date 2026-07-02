@@ -4,5 +4,27 @@ service cloud.firestore {
     match /users/{userId} {
       allow read, write: if request.auth != null && request.auth.uid == userId;
     }
+
+    match /bbs_meta/counter {
+      allow read: if true;
+      allow create: if request.resource.data.keys().hasOnly(['callerCount'])
+        && request.resource.data.callerCount == 1;
+      allow update: if request.resource.data.keys().hasOnly(['callerCount'])
+        && request.resource.data.callerCount == resource.data.callerCount + 1;
+      allow delete: if false;
+    }
+
+    match /guestbook/{entry} {
+      allow read: if true;
+      allow create: if request.resource.data.keys().hasOnly(['handle', 'message', 'createdAt'])
+        && request.resource.data.handle is string
+        && request.resource.data.handle.size() >= 2
+        && request.resource.data.handle.size() <= 24
+        && request.resource.data.message is string
+        && request.resource.data.message.size() >= 1
+        && request.resource.data.message.size() <= 140
+        && request.resource.data.createdAt == request.time;
+      allow update, delete: if false;
+    }
   }
 }

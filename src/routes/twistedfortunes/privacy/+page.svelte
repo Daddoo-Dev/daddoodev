@@ -10,7 +10,7 @@
 <SEO 
   title="Privacy Policy - Twisted Fortunes | Daddoo Dev"
   description="Privacy Policy for Twisted Fortunes mobile app. Learn how we handle your information when you use our app."
-  url="https://dadddodev.pro/twistedfortunes/privacy"
+  url="https://daddoodev.pro/twistedfortunes/privacy"
   keywords="twisted fortunes privacy policy, mobile app privacy, data collection, iOS privacy, Android privacy"
 />
 
@@ -138,8 +138,8 @@
         <p>If you have questions about this Privacy Policy, please contact us:</p>
         <ul>
           <li>Email: daddoodev@proton.me</li>
-          <li>Website: <a href="https://dadddodev.pro">https://dadddodev.pro</a></li>
-          <li>Twisted Fortunes Page: <a href="https://dadddodev.pro/twistedfortunes">https://dadddodev.pro/twistedfortunes</a></li>
+          <li>Website: <a href="https://daddoodev.pro">https://daddoodev.pro</a></li>
+          <li>Twisted Fortunes Page: <a href="https://daddoodev.pro/twistedfortunes">https://daddoodev.pro/twistedfortunes</a></li>
         </ul>
       </section>
 

@@ -1,12 +1,3 @@
-/* Custom Fonts */
-@font-face {
-	font-family: 'TR2N';
-	src: url('/fonts/Tr2n.ttf') format('truetype');
-	font-weight: normal;
-	font-style: normal;
-	font-display: swap;
-}
-
 /* Reset and base styles */
 * {
 	margin: 0;
@@ -21,28 +12,8 @@ html {
 body {
 	margin: 0;
 	padding: 0;
-	font-family: 'Inter Tight', 'Inter', sans-serif;
+	font-family: var(--font-body, 'Inter Tight', sans-serif);
 	line-height: 1.6;
-	color: #e0e0e0;
-	background-color: #000;
-	background-image: linear-gradient(rgba(0, 0, 0, 0.87), rgba(0, 0, 0, 0.87)),
-		url('/images/artemis-bg.jpg');
-	background-size: cover;
-	background-position: center;
-	background-repeat: no-repeat;
-	background-attachment: fixed;
-}
-
-@media (max-width: 768px) {
-	body {
-		background-attachment: scroll;
-	}
-}
-
-@media (prefers-reduced-motion: reduce) {
-	body {
-		background-attachment: scroll;
-	}
 }
 
 /* Layout */
@@ -634,26 +605,27 @@ a.action-button {
 }
 
 :root {
-	--primary-color: #340143;
-	--primary-light: #4a0161;
-	--primary-lighter: #8e3ba3; /* Lighter purple for text */
-	--primary-gradient: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-light) 100%);
-	
-	/* Typography */
-	--font-display: 'TR2N', 'Orbitron', sans-serif;
-	--font-body: 'Inter Tight', 'Inter', sans-serif;
+	/* Design tokens live in mission-control.css */
+	--primary-color: var(--accent, #ef9f27);
+	--primary-light: var(--accent-dim, #ba7517);
+	--primary-lighter: var(--accent-bright, #fac775);
+	--primary-gradient: none;
+	--font-display: 'Space Grotesk', 'Inter', sans-serif;
+	--font-body: 'Inter', system-ui, sans-serif;
 }
 
 .primary-button {
-	background: var(--primary-gradient);
-	color: white;
+	background: var(--accent, #ef9f27);
+	color: #14100a;
 	border: none;
-	transition: all 0.3s ease;
+	transition: background 0.2s ease, border-color 0.2s ease;
+	box-shadow: none;
 }
 
 .primary-button:hover {
-	transform: translateY(-2px);
-	box-shadow: 0 4px 12px rgba(52, 1, 67, 0.3);
+	background: var(--accent-dim, #ba7517);
+	transform: none;
+	box-shadow: none;
 }
 
 /* Mobile Menu Styles */
@@ -675,10 +647,11 @@ a.action-button {
 @media (max-width: 768px) {
 	.menu-button {
 		display: block;
+		color: var(--text-1, #e8eaf0);
 	}
 
 	.nav-list.mobile {
-		background: #000 !important;
+		background: var(--bg-0, #0b0e14) !important;
 		opacity: 1 !important;
 		position: fixed !important;
 		top: 0 !important;

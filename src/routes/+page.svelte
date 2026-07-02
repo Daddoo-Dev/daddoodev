@@ -1,5 +1,4 @@
 <script lang="ts">
-  import Header from '$lib/components/Header.svelte';
   import Hero from '$lib/components/Hero.svelte';
   import About from '$lib/components/About.svelte';
   import Projects from '$lib/components/Projects.svelte';
@@ -14,11 +13,9 @@
 <SEO 
   title="Daddoo Dev | Software Developer & Creator of Developer Tools"
   description="Professional software developer creating intelligent developer tools, VS Code extensions, and applications. Specializing in Flutter, web development, and productivity tools."
-  url="https://dadddodev.pro"
+  url="https://daddoodev.pro"
   keywords="software developer, developer tools, VS Code extensions, Cursor, Flutter apps, web development, Zivora, NotchList, Conclavium, AddASaint, SecretKeeper, Sentry"
 />
-
-<Header />
 
 <main>
   <Hero />
