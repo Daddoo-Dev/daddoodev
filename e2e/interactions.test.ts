@@ -12,6 +12,8 @@ test.describe('QR Generator', () => {
 		await expect(page.locator('.qr-result')).toBeVisible({ timeout: 10000 });
 		await expect(page.locator('.qr-code-container svg')).toBeVisible();
 		await expect(page.getByRole('heading', { name: 'Your QR Code' })).toBeVisible();
+		await expect(page.getByRole('button', { name: 'Save SVG' })).toBeVisible();
+		await expect(page.getByRole('button', { name: 'Save PNG' })).toBeVisible();
 	});
 });
 

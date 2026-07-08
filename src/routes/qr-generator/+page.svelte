@@ -38,8 +38,6 @@
   let imagePreviewUrl: string | undefined = '';
   let showImageUpload = false;
   let svgMarkup = '';
-  let qrCodeImageUrl = '';
-  let qrCodeContainer: HTMLDivElement;
 
   async function generateQRCode() {
     if (!urlInput.trim()) {
@@ -72,9 +70,6 @@
         svg = overlayLogoOnSvg(svg, imagePreviewUrl);
       }
       svgMarkup = svg;
-
-      const svgBlob = new Blob([svgMarkup], { type: 'image/svg+xml' });
-      qrCodeImageUrl = URL.createObjectURL(svgBlob);
     } catch (err) {
       console.error(err);
       errorMessage = 'Failed to generate QR code';
@@ -126,14 +121,67 @@
     if (fileInput) fileInput.value = '';
   }
 
-  function saveQRCode() {
-    if (!qrCodeImageUrl) return;
+  function downloadBlob(blob: Blob, filename: string) {
     const link = document.createElement('a');
-    link.download = 'qr-code.svg';
-    link.href = qrCodeImageUrl;
+    link.download = filename;
+    link.href = URL.createObjectURL(blob);
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
+    URL.revokeObjectURL(link.href);
+  }
+
+  function saveSvg() {
+    if (!svgMarkup) return;
+    const svgBlob = new Blob([svgMarkup], { type: 'image/svg+xml;charset=utf-8' });
+    downloadBlob(svgBlob, 'qr-code.svg');
+  }
+
+  async function savePng() {
+    if (!svgMarkup) return;
+
+    try {
+      const pngBlob = await svgMarkupToPng(svgMarkup, 300);
+      downloadBlob(pngBlob, 'qr-code.png');
+    } catch (err) {
+      console.error(err);
+      errorMessage = 'Failed to export PNG';
+    }
+  }
+
+  function svgMarkupToPng(svg: string, size: number): Promise<Blob> {
+    return new Promise((resolve, reject) => {
+      const url = URL.createObjectURL(new Blob([svg], { type: 'image/svg+xml;charset=utf-8' }));
+      const img = new Image();
+      img.onload = () => {
+        const canvas = document.createElement('canvas');
+        canvas.width = size;
+        canvas.height = size;
+        const ctx = canvas.getContext('2d');
+        if (!ctx) {
+          URL.revokeObjectURL(url);
+          reject(new Error('Canvas unavailable'));
+          return;
+        }
+        ctx.fillStyle = '#ffffff';
+        ctx.fillRect(0, 0, size, size);
+        ctx.drawImage(img, 0, 0, size, size);
+        canvas.toBlob(
+          (blob) => {
+            URL.revokeObjectURL(url);
+            if (blob) resolve(blob);
+            else reject(new Error('PNG export failed'));
+          },
+          'image/png',
+          1
+        );
+      };
+      img.onerror = () => {
+        URL.revokeObjectURL(url);
+        reject(new Error('Failed to load SVG for PNG export'));
+      };
+      img.src = url;
+    });
   }
 
   function handleKeyPress(event: KeyboardEvent) {
@@ -224,14 +272,19 @@
       {#if svgMarkup}
         <div class="qr-result">
           <h2 class="result-title">Your QR Code</h2>
-          <div class="qr-code-container" bind:this={qrCodeContainer}>
+          <div class="qr-code-container">
             {@html svgMarkup}
           </div>
           <div class="qr-actions">
-            <button class="primary-button save-button" on:click={saveQRCode}>
-              Save QR Code
-            </button>
-            <p class="save-hint">Right-click the image to save it directly</p>
+            <div class="qr-save-row">
+              <button type="button" class="primary-button save-button" on:click={saveSvg}>
+                Save SVG
+              </button>
+              <button type="button" class="secondary-button save-button" on:click={savePng}>
+                Save PNG
+              </button>
+            </div>
+            <p class="save-hint">SVG for print and scaling; PNG for slides, docs, and social.</p>
           </div>
         </div>
       {/if}
@@ -446,8 +499,16 @@
     gap: 1rem;
   }
 
-  .save-button {
+  .qr-actions .save-button {
     min-width: 200px;
+  }
+
+  .qr-save-row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.75rem;
+    width: 100%;
   }
 
   .save-hint {
