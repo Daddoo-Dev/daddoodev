@@ -1,0 +1,458 @@
+{
+  "id": "desert-father-quiz",
+  "title": "Which Desert Father Are You?",
+  "description": "Sixteen centuries ago, a handful of remarkable people walked into the Egyptian desert. Which one thinks like you?",
+  "categoryId": "who-am-i",
+  "questions": [
+    {
+      "id": "q1",
+      "text": "Your friends can't agree on weekend plans. You:",
+      "answers": [
+        {
+          "id": "q1a1",
+          "text": "Suggest the thing none of you have tried before",
+          "characterId": "antony"
+        },
+        {
+          "id": "q1a2",
+          "text": "Propose one simple plan and get everyone to commit",
+          "characterId": "pachomius"
+        },
+        {
+          "id": "q1a3",
+          "text": "Stay out of it and go along with whatever wins",
+          "characterId": "arsenius"
+        },
+        {
+          "id": "q1a4",
+          "text": "Ask each person what they actually want most",
+          "characterId": "poemen"
+        }
+      ]
+    },
+    {
+      "id": "q2",
+      "text": "You join a new team where nothing is written down. First move:",
+      "answers": [
+        {
+          "id": "q2a1",
+          "text": "Start a shared doc so everyone knows who does what",
+          "characterId": "pachomius"
+        },
+        {
+          "id": "q2a2",
+          "text": "Watch for two weeks before offering an opinion",
+          "characterId": "arsenius"
+        },
+        {
+          "id": "q2a3",
+          "text": "Make sure the newest person doesn't feel lost",
+          "characterId": "moses"
+        },
+        {
+          "id": "q2a4",
+          "text": "Take the smallest, dullest task and do it well",
+          "characterId": "john"
+        }
+      ]
+    },
+    {
+      "id": "q3",
+      "text": "Someone you know makes a big, public mistake. You:",
+      "answers": [
+        {
+          "id": "q3a1",
+          "text": "Stay out of the conversation about it entirely",
+          "characterId": "arsenius"
+        },
+        {
+          "id": "q3a2",
+          "text": "Sit with them so they're not alone in it",
+          "characterId": "moses"
+        },
+        {
+          "id": "q3a3",
+          "text": "Check in privately with one gentle question",
+          "characterId": "poemen"
+        },
+        {
+          "id": "q3a4",
+          "text": "Work out what led up to it, step by step",
+          "characterId": "evagrius"
+        }
+      ]
+    },
+    {
+      "id": "q4",
+      "text": "Which compliment would mean the most?",
+      "answers": [
+        {
+          "id": "q4a1",
+          "text": "'You never once made me feel small'",
+          "characterId": "moses"
+        },
+        {
+          "id": "q4a2",
+          "text": "'Talking to you made everything feel simpler'",
+          "characterId": "poemen"
+        },
+        {
+          "id": "q4a3",
+          "text": "'You kept going after it stopped being fun'",
+          "characterId": "john"
+        },
+        {
+          "id": "q4a4",
+          "text": "'You did it first, when nobody else would'",
+          "characterId": "antony"
+        }
+      ]
+    },
+    {
+      "id": "q5",
+      "text": "Your notes app is mostly full of:",
+      "answers": [
+        {
+          "id": "q5a1",
+          "text": "Things people told you that you don't want to forget",
+          "characterId": "poemen"
+        },
+        {
+          "id": "q5a2",
+          "text": "Reminders for tiny daily habits",
+          "characterId": "john"
+        },
+        {
+          "id": "q5a3",
+          "text": "Lists, categories, and patterns you've noticed",
+          "characterId": "evagrius"
+        },
+        {
+          "id": "q5a4",
+          "text": "Schedules and checklists for other people",
+          "characterId": "pachomius"
+        }
+      ]
+    },
+    {
+      "id": "q6",
+      "text": "A free Saturday, zero obligations. You:",
+      "answers": [
+        {
+          "id": "q6a1",
+          "text": "Do the chore you've put off, cheerfully",
+          "characterId": "john"
+        },
+        {
+          "id": "q6a2",
+          "text": "Finally read the thing you've meant to understand",
+          "characterId": "evagrius"
+        },
+        {
+          "id": "q6a3",
+          "text": "Drive somewhere far, alone, with no plan",
+          "characterId": "antony"
+        },
+        {
+          "id": "q6a4",
+          "text": "Stay home. No plans, no music, no talking.",
+          "characterId": "arsenius"
+        }
+      ]
+    },
+    {
+      "id": "q7",
+      "text": "You're completely overwhelmed. What actually helps?",
+      "answers": [
+        {
+          "id": "q7a1",
+          "text": "Naming exactly what you're feeling and why",
+          "characterId": "evagrius"
+        },
+        {
+          "id": "q7a2",
+          "text": "Getting away from everyone for a few days",
+          "characterId": "antony"
+        },
+        {
+          "id": "q7a3",
+          "text": "Writing a list and doing item one",
+          "characterId": "pachomius"
+        },
+        {
+          "id": "q7a4",
+          "text": "Helping someone else with theirs first",
+          "characterId": "moses"
+        }
+      ]
+    },
+    {
+      "id": "q8",
+      "text": "Group project. Which role do you take without being asked?",
+      "answers": [
+        {
+          "id": "q8a1",
+          "text": "Starting the part everyone else is avoiding",
+          "characterId": "antony"
+        },
+        {
+          "id": "q8a2",
+          "text": "Building the timeline everyone follows",
+          "characterId": "pachomius"
+        },
+        {
+          "id": "q8a3",
+          "text": "Making sure nobody gets blamed for the slow week",
+          "characterId": "moses"
+        },
+        {
+          "id": "q8a4",
+          "text": "Doing the tedious cleanup at the very end",
+          "characterId": "john"
+        }
+      ]
+    },
+    {
+      "id": "q9",
+      "text": "A party where you know almost nobody. You:",
+      "answers": [
+        {
+          "id": "q9a1",
+          "text": "Get a game going so people actually mix",
+          "characterId": "pachomius"
+        },
+        {
+          "id": "q9a2",
+          "text": "Find the porch and stay there",
+          "characterId": "arsenius"
+        },
+        {
+          "id": "q9a3",
+          "text": "End up in one long conversation with a stranger",
+          "characterId": "poemen"
+        },
+        {
+          "id": "q9a4",
+          "text": "Quietly map out who knows whom",
+          "characterId": "evagrius"
+        }
+      ]
+    },
+    {
+      "id": "q10",
+      "text": "Your idea of a genuinely good morning:",
+      "answers": [
+        {
+          "id": "q10a1",
+          "text": "Nobody speaks to you for the first hour",
+          "characterId": "arsenius"
+        },
+        {
+          "id": "q10a2",
+          "text": "Breakfast made for whoever happens to be around",
+          "characterId": "moses"
+        },
+        {
+          "id": "q10a3",
+          "text": "The same routine, same order, every single day",
+          "characterId": "john"
+        },
+        {
+          "id": "q10a4",
+          "text": "Out the door before sunrise, no destination",
+          "characterId": "antony"
+        }
+      ]
+    },
+    {
+      "id": "q11",
+      "text": "A friend keeps repeating the same mistake. You:",
+      "answers": [
+        {
+          "id": "q11a1",
+          "text": "Keep welcoming them exactly the same way",
+          "characterId": "moses"
+        },
+        {
+          "id": "q11a2",
+          "text": "Wait until they ask, then say one true thing",
+          "characterId": "poemen"
+        },
+        {
+          "id": "q11a3",
+          "text": "Point out the pattern you've been noticing",
+          "characterId": "evagrius"
+        },
+        {
+          "id": "q11a4",
+          "text": "Help them build a setup where it's harder to slip",
+          "characterId": "pachomius"
+        }
+      ]
+    },
+    {
+      "id": "q12",
+      "text": "What's genuinely hardest for you?",
+      "answers": [
+        {
+          "id": "q12a1",
+          "text": "Being asked for advice by someone not ready to hear it",
+          "characterId": "poemen"
+        },
+        {
+          "id": "q12a2",
+          "text": "Trusting something small matters when nothing's changed yet",
+          "characterId": "john"
+        },
+        {
+          "id": "q12a3",
+          "text": "Being needed by everyone right when you'd settled in",
+          "characterId": "antony"
+        },
+        {
+          "id": "q12a4",
+          "text": "Small talk you can't politely escape",
+          "characterId": "arsenius"
+        }
+      ]
+    },
+    {
+      "id": "q13",
+      "text": "Pick the book you'd actually finish:",
+      "answers": [
+        {
+          "id": "q13a1",
+          "text": "A short one, a page a night, for a whole year",
+          "characterId": "john"
+        },
+        {
+          "id": "q13a2",
+          "text": "A dense one you take notes on",
+          "characterId": "evagrius"
+        },
+        {
+          "id": "q13a3",
+          "text": "A practical guide you start using immediately",
+          "characterId": "pachomius"
+        },
+        {
+          "id": "q13a4",
+          "text": "The one a friend loved and lent to you",
+          "characterId": "moses"
+        }
+      ]
+    },
+    {
+      "id": "q14",
+      "text": "Your default reaction to a strong emotion:",
+      "answers": [
+        {
+          "id": "q14a1",
+          "text": "Trace where it came from before acting on it",
+          "characterId": "evagrius"
+        },
+        {
+          "id": "q14a2",
+          "text": "Face it head-on instead of distracting yourself",
+          "characterId": "antony"
+        },
+        {
+          "id": "q14a3",
+          "text": "Step outside and mention it to no one",
+          "characterId": "arsenius"
+        },
+        {
+          "id": "q14a4",
+          "text": "Talk it through with one trusted person",
+          "characterId": "poemen"
+        }
+      ]
+    }
+  ],
+  "results": [
+    {
+      "characterId": "antony",
+      "characterName": "Anthony the Great",
+      "description": "The one who went first. You're drawn to the hard, unmapped thing, you can outlast almost anyone, and people keep following you into places you only meant to explore alone.",
+      "traits": [
+        "Pioneering",
+        "Independent",
+        "Enduring",
+        "Courageous",
+        "Self-reliant"
+      ]
+    },
+    {
+      "characterId": "arsenius",
+      "characterName": "Arsenius the Great",
+      "description": "You walked away from the noise and never missed it. Few words, deep attention, and a stillness other people find steadying \u2014 which is why, when you do speak, everyone listens.",
+      "traits": [
+        "Reserved",
+        "Focused",
+        "Disciplined",
+        "Perceptive",
+        "Unhurried"
+      ]
+    },
+    {
+      "characterId": "evagrius",
+      "characterName": "Evagrius the Thinker",
+      "description": "You want to understand the machinery behind things \u2014 moods, motives, patterns. You can name what other people can only feel, and your clarity helps everyone else make sense of themselves.",
+      "traits": [
+        "Analytical",
+        "Insightful",
+        "Precise",
+        "Curious",
+        "Articulate"
+      ]
+    },
+    {
+      "characterId": "john",
+      "characterName": "John the Short",
+      "description": "Cheerful, stubborn faithfulness. You'll do the small unglamorous thing every single day long after everyone else has quit \u2014 and somehow you're still in a good mood about it.",
+      "traits": [
+        "Persistent",
+        "Humble",
+        "Reliable",
+        "Good-humored",
+        "Steady"
+      ]
+    },
+    {
+      "characterId": "moses",
+      "characterName": "Moses the Black",
+      "description": "You know what it costs to change, so you refuse to keep score on anyone else. Your welcome comes with no conditions, and people find it impossible to feel judged around you.",
+      "traits": [
+        "Merciful",
+        "Warm",
+        "Non-judgmental",
+        "Hospitable",
+        "Transformed"
+      ]
+    },
+    {
+      "characterId": "pachomius",
+      "characterName": "Pachomius the Organizer",
+      "description": "You turn scattered effort into something that actually works. Where others see chaos you see a workable plan, and the structures you quietly build end up holding everyone else up.",
+      "traits": [
+        "Organized",
+        "Practical",
+        "Community-minded",
+        "Dependable",
+        "Visionary"
+      ]
+    },
+    {
+      "characterId": "poemen",
+      "characterName": "Poemen the Shepherd",
+      "description": "People bring you their tangles and leave lighter. You ask better questions than you give answers, and your advice is short, kind, and disarmingly practical.",
+      "traits": [
+        "Gentle",
+        "Discerning",
+        "Patient",
+        "Trustworthy",
+        "Wise"
+      ]
+    }
+  ]
+}
