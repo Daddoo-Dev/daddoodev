@@ -1,0 +1,330 @@
+{
+  "id": "cozy-habit-quiz",
+  "title": "Which Cozy Habit Matches Your Soul?",
+  "description": "Somewhere out there is a small daily ritual with your name on it. Come find your cozy!",
+  "categoryId": "wellness-mindset",
+  "questions": [
+    {
+      "answers": [
+        {
+          "characterId": "tea-ritualist",
+          "id": "q1a1",
+          "text": "Mid-ceremony with the good mug"
+        },
+        {
+          "characterId": "journal-keeper",
+          "id": "q1a2",
+          "text": "Writing today into existence"
+        },
+        {
+          "text": "Architecturally arranging pillows",
+          "id": "q1a3",
+          "characterId": "blanket-nester"
+        },
+        {
+          "characterId": "slow-walker",
+          "id": "q1a4",
+          "text": "Out on the evening loop"
+        }
+      ],
+      "id": "q1",
+      "text": "It's 8 PM on a quiet night. You're:"
+    },
+    {
+      "answers": [
+        {
+          "id": "q2a1",
+          "characterId": "tea-ritualist",
+          "text": "Loose-leaf anything"
+        },
+        {
+          "id": "q2a2",
+          "characterId": "journal-keeper",
+          "text": "A pen that glides"
+        },
+        {
+          "text": "A truly excessive throw blanket",
+          "characterId": "blanket-nester",
+          "id": "q2a3"
+        },
+        {
+          "characterId": "kitchen-putterer",
+          "id": "q2a4",
+          "text": "A wooden spoon that just feels right"
+        }
+      ],
+      "id": "q2",
+      "text": "Pick a small luxury:"
+    },
+    {
+      "text": "Your friends' go-to gift for you:",
+      "answers": [
+        {
+          "text": "Another mug (correct choice)",
+          "id": "q3a1",
+          "characterId": "tea-ritualist"
+        },
+        {
+          "text": "Beautiful notebooks you're afraid to use",
+          "characterId": "journal-keeper",
+          "id": "q3a2"
+        },
+        {
+          "characterId": "slow-walker",
+          "id": "q3a3",
+          "text": "Wool socks, appreciated deeply"
+        },
+        {
+          "id": "q3a4",
+          "characterId": "kitchen-putterer",
+          "text": "A cookbook you'll actually cook from"
+        }
+      ],
+      "id": "q3"
+    },
+    {
+      "text": "Sunday afternoon sounds like:",
+      "answers": [
+        {
+          "text": "A kettle reaching a boil",
+          "id": "q4a1",
+          "characterId": "tea-ritualist"
+        },
+        {
+          "text": "A page turning under a blanket",
+          "id": "q4a2",
+          "characterId": "blanket-nester"
+        },
+        {
+          "text": "Gravel underfoot",
+          "characterId": "slow-walker",
+          "id": "q4a3"
+        },
+        {
+          "text": "Something simmering, low and slow",
+          "characterId": "kitchen-putterer",
+          "id": "q4a4"
+        }
+      ],
+      "id": "q4"
+    },
+    {
+      "answers": [
+        {
+          "id": "q5a1",
+          "characterId": "journal-keeper",
+          "text": "Turning any day into a good story"
+        },
+        {
+          "characterId": "blanket-nester",
+          "id": "q5a2",
+          "text": "Making any corner feel like home"
+        },
+        {
+          "id": "q5a3",
+          "characterId": "slow-walker",
+          "text": "Knowing every pretty street in town"
+        },
+        {
+          "characterId": "kitchen-putterer",
+          "id": "q5a4",
+          "text": "Making the whole house smell incredible"
+        }
+      ],
+      "id": "q5",
+      "text": "Your cozy superpower:"
+    },
+    {
+      "id": "q6",
+      "answers": [
+        {
+          "id": "q6a1",
+          "characterId": "tea-ritualist",
+          "text": "Have the kettle on within ninety seconds"
+        },
+        {
+          "text": "Declare it the best writing weather of the year",
+          "characterId": "journal-keeper",
+          "id": "q6a2"
+        },
+        {
+          "text": "Assume final blanket formation",
+          "characterId": "blanket-nester",
+          "id": "q6a3"
+        },
+        {
+          "id": "q6a4",
+          "characterId": "slow-walker",
+          "text": "Grab the good rain jacket — still going"
+        }
+      ],
+      "text": "Rain starts. You:"
+    },
+    {
+      "text": "Pick a lamp:",
+      "answers": [
+        {
+          "text": "A soft glow beside the reading chair",
+          "characterId": "tea-ritualist",
+          "id": "q7a1"
+        },
+        {
+          "characterId": "journal-keeper",
+          "id": "q7a2",
+          "text": "A desk lamp with some history"
+        },
+        {
+          "characterId": "blanket-nester",
+          "id": "q7a3",
+          "text": "String lights. Everywhere. Always."
+        },
+        {
+          "text": "The warm one over the stove",
+          "characterId": "kitchen-putterer",
+          "id": "q7a4"
+        }
+      ],
+      "id": "q7"
+    },
+    {
+      "answers": [
+        {
+          "text": "Tea collection (organized by mood)",
+          "id": "q8a1",
+          "characterId": "tea-ritualist"
+        },
+        {
+          "characterId": "journal-keeper",
+          "id": "q8a2",
+          "text": "Shelf of matching filled notebooks"
+        },
+        {
+          "id": "q8a3",
+          "characterId": "slow-walker",
+          "text": "Photos of the same tree in four seasons"
+        },
+        {
+          "text": "Kitchen that smells like a bakery",
+          "id": "q8a4",
+          "characterId": "kitchen-putterer"
+        }
+      ],
+      "id": "q8",
+      "text": "Guests always comment on your:"
+    },
+    {
+      "text": "Cold morning. First move:",
+      "id": "q9",
+      "answers": [
+        {
+          "text": "Warm hands around a warm mug",
+          "characterId": "tea-ritualist",
+          "id": "q9a1"
+        },
+        {
+          "characterId": "blanket-nester",
+          "id": "q9a2",
+          "text": "Drag the entire duvet to the couch"
+        },
+        {
+          "text": "A brisk walk while the world's still frosty",
+          "characterId": "slow-walker",
+          "id": "q9a3"
+        },
+        {
+          "text": "Preheat the oven — muffins fix mornings",
+          "characterId": "kitchen-putterer",
+          "id": "q9a4"
+        }
+      ]
+    },
+    {
+      "text": "Your cozy motto:",
+      "answers": [
+        {
+          "text": "'Write it down, keep it forever'",
+          "id": "q10a1",
+          "characterId": "journal-keeper"
+        },
+        {
+          "text": "'Soft everything'",
+          "characterId": "blanket-nester",
+          "id": "q10a2"
+        },
+        {
+          "id": "q10a3",
+          "characterId": "slow-walker",
+          "text": "'Slow miles, quiet mind'"
+        },
+        {
+          "characterId": "kitchen-putterer",
+          "id": "q10a4",
+          "text": "'Home is where the simmer is'"
+        }
+      ],
+      "id": "q10"
+    }
+  ],
+  "results": [
+    {
+      "characterId": "blanket-nester",
+      "characterName": "The Blanket Nester",
+      "traits": [
+        "Cozy",
+        "Homey",
+        "Comforting",
+        "Soft-hearted",
+        "Welcoming"
+      ],
+      "description": "Your soul's habit is the perfect nest. Pillows, throws, string lights — you build softness the way birds build homes, and everyone wants an invitation."
+    },
+    {
+      "characterId": "journal-keeper",
+      "characterName": "The Journal Keeper",
+      "traits": [
+        "Reflective",
+        "Observant",
+        "Thoughtful",
+        "Expressive",
+        "Sentimental"
+      ],
+      "description": "Your soul's habit is the written word. A good pen, a quiet page, and today's small moments made permanent — your life is a library and you're its loving archivist."
+    },
+    {
+      "traits": [
+        "Nurturing",
+        "Warm",
+        "Generous",
+        "Homely",
+        "Comforting"
+      ],
+      "description": "Your soul's habit is the gentle art of puttering. Something's always simmering, something's always baking, and your kitchen is the warmest room in any house.",
+      "characterId": "kitchen-putterer",
+      "characterName": "The Kitchen Putterer"
+    },
+    {
+      "characterName": "The Slow Walker",
+      "characterId": "slow-walker",
+      "description": "Your soul's habit is the unhurried stroll. No destination, no podcast required — just quiet streets, changing seasons, and the best thinking of your whole day.",
+      "traits": [
+        "Peaceful",
+        "Observant",
+        "Steady",
+        "Present",
+        "Refreshed"
+      ]
+    },
+    {
+      "traits": [
+        "Ritualistic",
+        "Serene",
+        "Particular",
+        "Mindful",
+        "Warm"
+      ],
+      "description": "Your soul's habit is the perfect cup, made properly. The kettle, the steam, the first sip — you've turned five quiet minutes into a daily ceremony of calm.",
+      "characterId": "tea-ritualist",
+      "characterName": "The Tea Ritualist"
+    }
+  ]
+}

@@ -1,0 +1,382 @@
+{
+  "id": "elemental-companion-quiz",
+  "title": "Which Elemental Creature Is Your Companion?",
+  "description": "Somewhere out there, a tiny elemental spirit shares your exact personality. Time to meet yours!",
+  "categoryId": "pop-culture-fandom",
+  "questions": [
+    {
+      "text": "How do you start a big new project?",
+      "id": "q1",
+      "answers": [
+        {
+          "characterId": "emberling",
+          "id": "q1a1",
+          "text": "All in, day one, full intensity"
+        },
+        {
+          "text": "Ease in and let it take shape naturally",
+          "id": "q1a2",
+          "characterId": "ripplefin"
+        },
+        {
+          "characterId": "zapkit",
+          "id": "q1a3",
+          "text": "Start five parts at once and see what sticks"
+        },
+        {
+          "text": "Daydream about it until the vision is perfect",
+          "characterId": "glimmerwing",
+          "id": "q1a4"
+        }
+      ]
+    },
+    {
+      "text": "Your reaction to sudden plan changes:",
+      "answers": [
+        {
+          "text": "Frustrating — you had momentum going",
+          "characterId": "emberling",
+          "id": "q2a1"
+        },
+        {
+          "text": "Honestly? You barely notice",
+          "id": "q2a2",
+          "characterId": "ripplefin"
+        },
+        {
+          "characterId": "thornsprout",
+          "id": "q2a3",
+          "text": "Fine, as long as someone updates the calendar"
+        },
+        {
+          "characterId": "zapkit",
+          "id": "q2a4",
+          "text": "New plans are just bonus adventures"
+        }
+      ],
+      "id": "q2"
+    },
+    {
+      "answers": [
+        {
+          "text": "No plans. See where the day goes.",
+          "id": "q3a1",
+          "characterId": "ripplefin"
+        },
+        {
+          "id": "q3a2",
+          "characterId": "thornsprout",
+          "text": "Finally finishing that shelf project, then a good dinner"
+        },
+        {
+          "id": "q3a3",
+          "characterId": "zapkit",
+          "text": "Three activities before noon"
+        },
+        {
+          "text": "An art museum, then sketching in a café",
+          "characterId": "glimmerwing",
+          "id": "q3a4"
+        }
+      ],
+      "id": "q3",
+      "text": "Pick an ideal Saturday:"
+    },
+    {
+      "text": "What annoys you — just a little?",
+      "answers": [
+        {
+          "characterId": "emberling",
+          "id": "q4a1",
+          "text": "Slow walkers when you're on a mission"
+        },
+        {
+          "characterId": "thornsprout",
+          "id": "q4a2",
+          "text": "People who don't RSVP"
+        },
+        {
+          "id": "q4a3",
+          "characterId": "zapkit",
+          "text": "Long meetings that could've been a text"
+        },
+        {
+          "characterId": "glimmerwing",
+          "id": "q4a4",
+          "text": "Being interrupted mid-daydream"
+        }
+      ],
+      "id": "q4"
+    },
+    {
+      "text": "Your friends rely on you for:",
+      "answers": [
+        {
+          "characterId": "emberling",
+          "id": "q5a1",
+          "text": "The push to actually go for it"
+        },
+        {
+          "text": "Keeping the peace when tensions rise",
+          "characterId": "ripplefin",
+          "id": "q5a2"
+        },
+        {
+          "text": "Being exactly where you said you'd be",
+          "characterId": "thornsprout",
+          "id": "q5a3"
+        },
+        {
+          "text": "Seeing the magic in ordinary days",
+          "characterId": "glimmerwing",
+          "id": "q5a4"
+        }
+      ],
+      "id": "q5"
+    },
+    {
+      "text": "Choose a way to recharge:",
+      "answers": [
+        {
+          "text": "A hard workout that empties the tank",
+          "characterId": "emberling",
+          "id": "q6a1"
+        },
+        {
+          "id": "q6a2",
+          "characterId": "ripplefin",
+          "text": "A long bath and zero obligations"
+        },
+        {
+          "characterId": "zapkit",
+          "id": "q6a3",
+          "text": "A power nap — twenty minutes, good as new"
+        },
+        {
+          "id": "q6a4",
+          "characterId": "glimmerwing",
+          "text": "Getting completely lost in a story"
+        }
+      ],
+      "id": "q6"
+    },
+    {
+      "answers": [
+        {
+          "characterId": "emberling",
+          "id": "q7a1",
+          "text": "Conviction. You believe it fully, and it shows"
+        },
+        {
+          "text": "Somehow it stops being an argument and becomes a chat",
+          "characterId": "ripplefin",
+          "id": "q7a2"
+        },
+        {
+          "text": "Receipts. You remember exactly what was said",
+          "characterId": "thornsprout",
+          "id": "q7a3"
+        },
+        {
+          "text": "A joke so good the argument ends itself",
+          "id": "q7a4",
+          "characterId": "zapkit"
+        }
+      ],
+      "id": "q7",
+      "text": "How do you win an argument?"
+    },
+    {
+      "answers": [
+        {
+          "id": "q8a1",
+          "characterId": "ripplefin",
+          "text": "Music — it made time disappear"
+        },
+        {
+          "text": "History — everything making sense in order",
+          "characterId": "thornsprout",
+          "id": "q8a2"
+        },
+        {
+          "id": "q8a3",
+          "characterId": "zapkit",
+          "text": "Science — especially the experiments"
+        },
+        {
+          "text": "Art. Obviously.",
+          "id": "q8a4",
+          "characterId": "glimmerwing"
+        }
+      ],
+      "id": "q8",
+      "text": "Pick a school subject you secretly loved:"
+    },
+    {
+      "text": "Your text message style:",
+      "id": "q9",
+      "answers": [
+        {
+          "id": "q9a1",
+          "characterId": "emberling",
+          "text": "Short. Direct. Sent before you finished thinking"
+        },
+        {
+          "text": "Full sentences, proper punctuation, reasonable hours",
+          "characterId": "thornsprout",
+          "id": "q9a2"
+        },
+        {
+          "characterId": "zapkit",
+          "id": "q9a3",
+          "text": "Seventeen rapid-fire messages that are one thought"
+        },
+        {
+          "id": "q9a4",
+          "characterId": "glimmerwing",
+          "text": "Voice memos and the occasional poem"
+        }
+      ]
+    },
+    {
+      "text": "A perfect gift for you would be:",
+      "id": "q10",
+      "answers": [
+        {
+          "text": "Tickets to something with a countdown clock",
+          "id": "q10a1",
+          "characterId": "emberling"
+        },
+        {
+          "text": "A hammock",
+          "characterId": "ripplefin",
+          "id": "q10a2"
+        },
+        {
+          "characterId": "thornsprout",
+          "id": "q10a3",
+          "text": "Something practical you'll use for a decade"
+        },
+        {
+          "characterId": "glimmerwing",
+          "id": "q10a4",
+          "text": "Something handmade, clearly chosen with care"
+        }
+      ]
+    },
+    {
+      "id": "q11",
+      "answers": [
+        {
+          "id": "q11a1",
+          "characterId": "emberling",
+          "text": "Head of operations — this WILL be perfect"
+        },
+        {
+          "id": "q11a2",
+          "characterId": "ripplefin",
+          "text": "Distraction duty. You're unsuspicious by nature"
+        },
+        {
+          "id": "q11a3",
+          "characterId": "zapkit",
+          "text": "Decorations, done at improbable speed"
+        },
+        {
+          "characterId": "glimmerwing",
+          "id": "q11a4",
+          "text": "Designing the theme down to the napkins"
+        }
+      ],
+      "text": "Pick your role in a surprise party plot:"
+    },
+    {
+      "id": "q12",
+      "answers": [
+        {
+          "characterId": "emberling",
+          "id": "q12a1",
+          "text": "'Your energy is contagious'"
+        },
+        {
+          "id": "q12a2",
+          "characterId": "ripplefin",
+          "text": "'You're so easy to be around'"
+        },
+        {
+          "id": "q12a3",
+          "characterId": "thornsprout",
+          "text": "'I knew I could count on you'"
+        },
+        {
+          "text": "'I can't keep up with you — in a good way'",
+          "characterId": "zapkit",
+          "id": "q12a4"
+        }
+      ],
+      "text": "The best compliment you could receive:"
+    }
+  ],
+  "results": [
+    {
+      "characterId": "emberling",
+      "characterName": "The Emberling",
+      "traits": [
+        "Passionate",
+        "Driven",
+        "Energetic",
+        "Fearless",
+        "Warm-hearted"
+      ],
+      "description": "Your companion is the Emberling — a small flame spirit with your exact intensity. Like you, it's all-in on everything: passionate, driven, and impossible to ignore."
+    },
+    {
+      "characterId": "glimmerwing",
+      "characterName": "The Glimmerwing",
+      "traits": [
+        "Imaginative",
+        "Gentle",
+        "Creative",
+        "Dreamy",
+        "Kind"
+      ],
+      "description": "Your companion is the Glimmerwing — a shimmering dream-moth drawn to beauty and wonder. Like you, it sees magic in ordinary places and makes the whole world feel softer."
+    },
+    {
+      "traits": [
+        "Easygoing",
+        "Adaptable",
+        "Peaceful",
+        "Patient",
+        "Soothing"
+      ],
+      "description": "Your companion is the Ripplefin — a serene water sprite that flows around every obstacle. Like you, it stays calm in chaos and somehow makes everything feel easier.",
+      "characterId": "ripplefin",
+      "characterName": "The Ripplefin"
+    },
+    {
+      "traits": [
+        "Dependable",
+        "Steady",
+        "Loyal",
+        "Practical",
+        "Nurturing"
+      ],
+      "description": "Your companion is the Thornsprout — a sturdy little leaf guardian that never wavers. Like you, it's deeply rooted: dependable, protective, and built to last.",
+      "characterId": "thornsprout",
+      "characterName": "The Thornsprout"
+    },
+    {
+      "description": "Your companion is the Zapkit — a crackling bundle of pure curiosity and speed. Like you, it's already three ideas ahead and having fun with all of them.",
+      "traits": [
+        "Quick",
+        "Playful",
+        "Curious",
+        "Energetic",
+        "Clever"
+      ],
+      "characterName": "The Zapkit",
+      "characterId": "zapkit"
+    }
+  ]
+}

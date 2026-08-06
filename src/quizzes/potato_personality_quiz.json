@@ -1,0 +1,383 @@
+{
+  "id": "potato-personality-quiz",
+  "title": "What Potato Are You?",
+  "description": "Spiraled, stacked, stuffed, or sweet — answer some deeply silly questions and find out which potato lives in your soul.",
+  "categoryId": "fun-entertainment",
+  "questions": [
+    {
+      "text": "A wizard offers to turn you into any household object for a day. You pick:",
+      "answers": [
+        {
+          "text": "A disco ball — pure chaos and sparkle",
+          "id": "q1a1",
+          "characterId": "curly-fries"
+        },
+        {
+          "text": "A well-worn reading chair",
+          "characterId": "twice-baked-potato",
+          "id": "q1a2"
+        },
+        {
+          "characterId": "french-fries",
+          "id": "q1a3",
+          "text": "The TV remote — always in demand"
+        },
+        {
+          "text": "A string of warm patio lights",
+          "characterId": "sweet-potato-fries",
+          "id": "q1a4"
+        }
+      ],
+      "id": "q1"
+    },
+    {
+      "id": "q2",
+      "answers": [
+        {
+          "characterId": "curly-fries",
+          "id": "q2a1",
+          "text": "Press it immediately. No thoughts, just curiosity"
+        },
+        {
+          "id": "q2a2",
+          "characterId": "twice-baked-potato",
+          "text": "Research who made it first, then decide"
+        },
+        {
+          "characterId": "french-fries",
+          "id": "q2a3",
+          "text": "Press it once. What's the worst that could happen?"
+        },
+        {
+          "text": "Gather a crowd first so everyone can watch",
+          "id": "q2a4",
+          "characterId": "loaded-fries"
+        }
+      ],
+      "text": "You find a mysterious button labeled 'DO NOT PRESS.' What do you do?"
+    },
+    {
+      "id": "q3",
+      "answers": [
+        {
+          "instantResult": true,
+          "id": "q3a1",
+          "characterId": "french-fries",
+          "text": "Yes. Absolutely. Fetch my castle at once."
+        },
+        {
+          "text": "Only if I can do it in a ridiculous accent",
+          "characterId": "curly-fries",
+          "id": "q3a2"
+        },
+        {
+          "text": "I'd rather compliment the king until he leaves",
+          "id": "q3a3",
+          "characterId": "sweet-potato-fries"
+        },
+        {
+          "text": "Yes, and I'm bringing snacks for the whole crowd",
+          "id": "q3a4",
+          "characterId": "loaded-fries"
+        }
+      ],
+      "text": "Would you like to sit on top of a castle and yell taunts at a British king?"
+    },
+    {
+      "text": "Your ideal weekend soundtrack is:",
+      "id": "q4",
+      "answers": [
+        {
+          "id": "q4a1",
+          "characterId": "curly-fries",
+          "text": "Whatever shuffle decides — surprise me"
+        },
+        {
+          "text": "The same beloved album, start to finish",
+          "id": "q4a2",
+          "characterId": "twice-baked-potato"
+        },
+        {
+          "text": "Something upbeat that makes the neighbors smile",
+          "characterId": "sweet-potato-fries",
+          "id": "q4a3"
+        },
+        {
+          "id": "q4a4",
+          "characterId": "loaded-fries",
+          "text": "Three playlists queued and a backup speaker"
+        }
+      ]
+    },
+    {
+      "text": "You're handed a treasure map with a big X on it. What's the treasure?",
+      "answers": [
+        {
+          "id": "q5a1",
+          "characterId": "twice-baked-potato",
+          "text": "A key to a hidden room that's all yours"
+        },
+        {
+          "id": "q5a2",
+          "characterId": "french-fries",
+          "text": "Gold. Classic, dependable, iconic gold"
+        },
+        {
+          "characterId": "sweet-potato-fries",
+          "id": "q5a3",
+          "text": "A note that says 'the real treasure was the journey' — plus twenty bucks"
+        },
+        {
+          "characterId": "loaded-fries",
+          "id": "q5a4",
+          "text": "A chest that keeps opening into more chests"
+        }
+      ],
+      "id": "q5"
+    },
+    {
+      "id": "q6",
+      "answers": [
+        {
+          "id": "q6a1",
+          "characterId": "curly-fries",
+          "text": "Teleporting, but only to totally random locations"
+        },
+        {
+          "id": "q6a2",
+          "characterId": "twice-baked-potato",
+          "text": "Perfect memory of every good moment"
+        },
+        {
+          "characterId": "french-fries",
+          "id": "q6a3",
+          "text": "Being instantly liked by everyone you meet"
+        },
+        {
+          "text": "Cheering anyone up with a single sentence",
+          "characterId": "sweet-potato-fries",
+          "id": "q6a4"
+        }
+      ],
+      "text": "Pick a completely impractical superpower:"
+    },
+    {
+      "answers": [
+        {
+          "text": "Teach it to breakdance immediately",
+          "characterId": "curly-fries",
+          "id": "q7a1"
+        },
+        {
+          "text": "Let it in, but quietly — you have a routine",
+          "id": "q7a2",
+          "characterId": "twice-baked-potato"
+        },
+        {
+          "id": "q7a3",
+          "characterId": "french-fries",
+          "text": "Calmly ask what it needs, like this happens all the time"
+        },
+        {
+          "id": "q7a4",
+          "characterId": "loaded-fries",
+          "text": "Invite its entire colony in for a party"
+        }
+      ],
+      "id": "q7",
+      "text": "A penguin knocks on your door at 3 AM. You:"
+    },
+    {
+      "answers": [
+        {
+          "characterId": "curly-fries",
+          "id": "q8a1",
+          "text": "A jester hat with bells, worn with total confidence"
+        },
+        {
+          "text": "A timeless, goes-with-everything baseball cap",
+          "characterId": "french-fries",
+          "id": "q8a2"
+        },
+        {
+          "id": "q8a3",
+          "characterId": "sweet-potato-fries",
+          "text": "A hand-knitted beanie from someone who loves you"
+        },
+        {
+          "characterId": "loaded-fries",
+          "id": "q8a4",
+          "text": "Seventeen hats stacked on top of each other"
+        }
+      ],
+      "id": "q8",
+      "text": "You must wear one hat for the rest of the year. Choose:"
+    },
+    {
+      "text": "Your dream house has one weird feature. It's:",
+      "id": "q9",
+      "answers": [
+        {
+          "text": "A slide instead of stairs",
+          "characterId": "curly-fries",
+          "id": "q9a1"
+        },
+        {
+          "text": "A secret room behind a bookshelf",
+          "characterId": "twice-baked-potato",
+          "id": "q9a2"
+        },
+        {
+          "text": "A porch swing that's always the perfect temperature",
+          "characterId": "sweet-potato-fries",
+          "id": "q9a3"
+        },
+        {
+          "text": "A fridge with a smaller fridge inside, both full",
+          "characterId": "loaded-fries",
+          "id": "q9a4"
+        }
+      ]
+    },
+    {
+      "answers": [
+        {
+          "id": "q10a1",
+          "characterId": "twice-baked-potato",
+          "text": "Perfect naps"
+        },
+        {
+          "text": "High-fives from friendly strangers",
+          "characterId": "french-fries",
+          "id": "q10a2"
+        },
+        {
+          "id": "q10a3",
+          "characterId": "sweet-potato-fries",
+          "text": "Handwritten thank-you notes"
+        },
+        {
+          "text": "Birthday-party energy, every single day",
+          "id": "q10a4",
+          "characterId": "loaded-fries"
+        }
+      ],
+      "id": "q10",
+      "text": "You win a lifetime supply of one thing. You choose:"
+    },
+    {
+      "text": "You're in a talent show tomorrow. Your act is:",
+      "answers": [
+        {
+          "characterId": "curly-fries",
+          "id": "q11a1",
+          "text": "Improvised interpretive dance. No plan. All heart."
+        },
+        {
+          "characterId": "french-fries",
+          "id": "q11a2",
+          "text": "A flawless rendition of a song everyone knows"
+        },
+        {
+          "text": "A heartfelt poem about clouds",
+          "id": "q11a3",
+          "characterId": "sweet-potato-fries"
+        },
+        {
+          "id": "q11a4",
+          "characterId": "loaded-fries",
+          "text": "Fireworks, confetti cannons, a llama, and a big finale"
+        }
+      ],
+      "id": "q11"
+    },
+    {
+      "text": "Time travel is real. Your first stop:",
+      "id": "q12",
+      "answers": [
+        {
+          "id": "q12a1",
+          "characterId": "curly-fries",
+          "text": "Somewhere random — spin the globe and go"
+        },
+        {
+          "id": "q12a2",
+          "characterId": "twice-baked-potato",
+          "text": "Back to relive your favorite day, slower this time"
+        },
+        {
+          "text": "Medieval France. No reason. Definitely no reason.",
+          "id": "q12a3",
+          "characterId": "french-fries"
+        },
+        {
+          "id": "q12a4",
+          "characterId": "loaded-fries",
+          "text": "Every era at once, somehow"
+        }
+      ]
+    }
+  ],
+  "results": [
+    {
+      "characterId": "curly-fries",
+      "characterName": "Curly Fries",
+      "traits": [
+        "Playful",
+        "Spontaneous",
+        "Creative",
+        "Quirky",
+        "Energetic"
+      ],
+      "description": "You're the fun one — unpredictable, twisty, and impossible not to smile around. Life with you never goes in a straight line, and honestly, that's the whole point."
+    },
+    {
+      "description": "A timeless icon. You're the classic everyone agrees on — reliable, effortlessly likable, and welcome at absolutely any table. Simple? Maybe. Legendary? Definitely.",
+      "traits": [
+        "Classic",
+        "Dependable",
+        "Universally loved",
+        "Confident",
+        "Easygoing"
+      ],
+      "characterName": "French Fries",
+      "characterId": "french-fries"
+    },
+    {
+      "traits": [
+        "Warm",
+        "Thoughtful",
+        "Layered",
+        "Nurturing",
+        "Detail-oriented"
+      ],
+      "description": "You're cozy comfort with hidden depths. You put real care into everything you do, and people who take the time to know you discover there's so much more inside.",
+      "characterId": "twice-baked-potato",
+      "characterName": "Twice-Baked Potato"
+    },
+    {
+      "description": "Sweet, sunny, and refreshingly different. You bring warmth wherever you go and aren't afraid to stand out from the crowd — people leave your company feeling better.",
+      "traits": [
+        "Kind",
+        "Optimistic",
+        "Unique",
+        "Gentle",
+        "Uplifting"
+      ],
+      "characterName": "Sweet Potato Fries",
+      "characterId": "sweet-potato-fries"
+    },
+    {
+      "characterId": "loaded-fries",
+      "characterName": "Fully Loaded Fries",
+      "traits": [
+        "Bold",
+        "Generous",
+        "Maximalist",
+        "Fun-loving",
+        "Unforgettable"
+      ],
+      "description": "More is more, and you're proof it works. Bold, generous, and gloriously extra, you pile on the fun and make every moment feel like a celebration."
+    }
+  ]
+}

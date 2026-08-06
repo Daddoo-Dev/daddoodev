@@ -1,0 +1,330 @@
+{
+  "id": "lovable-villain-quiz",
+  "title": "Which Lovable Villain Are You?",
+  "description": "Every story needs a delightful troublemaker. Discover your (harmless) villainous alter ego!",
+  "categoryId": "pop-culture-fandom",
+  "questions": [
+    {
+      "text": "Your group is planning a picnic. Your secret role:",
+      "id": "q1",
+      "answers": [
+        {
+          "id": "q1a1",
+          "characterId": "mastermind",
+          "text": "You planned it three weeks ago. They just don't know yet."
+        },
+        {
+          "text": "Swapping the sugar and salt, just to see",
+          "characterId": "trickster",
+          "id": "q1a2"
+        },
+        {
+          "characterId": "diva",
+          "id": "q1a3",
+          "text": "Arriving last so everyone notices"
+        },
+        {
+          "text": "Attending, but bringing your own better snacks",
+          "id": "q1a4",
+          "characterId": "lone-genius"
+        }
+      ]
+    },
+    {
+      "id": "q2",
+      "answers": [
+        {
+          "id": "q2a1",
+          "characterId": "mastermind",
+          "text": "A study with maps and a very large chair"
+        },
+        {
+          "text": "A treehouse with trapdoors",
+          "characterId": "trickster",
+          "id": "q2a2"
+        },
+        {
+          "id": "q2a3",
+          "characterId": "diva",
+          "text": "A penthouse with dramatic lighting"
+        },
+        {
+          "characterId": "chaos-agent",
+          "id": "q2a4",
+          "text": "Lair? The world is your lair"
+        }
+      ],
+      "text": "Pick a lair (hypothetically):"
+    },
+    {
+      "text": "Your signature entrance:",
+      "id": "q3",
+      "answers": [
+        {
+          "id": "q3a1",
+          "characterId": "mastermind",
+          "text": "Already seated when everyone arrives"
+        },
+        {
+          "id": "q3a2",
+          "characterId": "diva",
+          "text": "Fashionably late, impeccably dressed"
+        },
+        {
+          "text": "Nobody saw you come in, yet here you are",
+          "id": "q3a3",
+          "characterId": "lone-genius"
+        },
+        {
+          "text": "Through the wrong door, loudly",
+          "characterId": "chaos-agent",
+          "id": "q3a4"
+        }
+      ]
+    },
+    {
+      "text": "Board game night. Your reputation:",
+      "answers": [
+        {
+          "text": "Wins in the last round, planned since the first",
+          "characterId": "mastermind",
+          "id": "q4a1"
+        },
+        {
+          "text": "Invents house rules mid-game",
+          "characterId": "trickster",
+          "id": "q4a2"
+        },
+        {
+          "text": "Plays once, wins, retires undefeated",
+          "characterId": "lone-genius",
+          "id": "q4a3"
+        },
+        {
+          "characterId": "chaos-agent",
+          "id": "q4a4",
+          "text": "Flips strategy every turn for fun"
+        }
+      ],
+      "id": "q4"
+    },
+    {
+      "text": "Choose a (harmless) evil scheme:",
+      "answers": [
+        {
+          "text": "Setting every clock five minutes fast",
+          "id": "q5a1",
+          "characterId": "trickster"
+        },
+        {
+          "id": "q5a2",
+          "characterId": "diva",
+          "text": "Making your birthday a week-long event"
+        },
+        {
+          "text": "A group project done entirely alone, perfectly",
+          "characterId": "lone-genius",
+          "id": "q5a3"
+        },
+        {
+          "text": "Alphabetizing a friend's spice rack... backwards",
+          "id": "q5a4",
+          "characterId": "chaos-agent"
+        }
+      ],
+      "id": "q5"
+    },
+    {
+      "text": "Your ideal minion would be:",
+      "id": "q6",
+      "answers": [
+        {
+          "text": "Efficient, punctual, asks no questions",
+          "characterId": "mastermind",
+          "id": "q6a1"
+        },
+        {
+          "characterId": "trickster",
+          "id": "q6a2",
+          "text": "A partner in pranks"
+        },
+        {
+          "text": "A personal hype squad",
+          "characterId": "diva",
+          "id": "q6a3"
+        },
+        {
+          "text": "Minions? You ARE the minion. And the boss.",
+          "id": "q6a4",
+          "characterId": "chaos-agent"
+        }
+      ]
+    },
+    {
+      "text": "Someone takes the last slice of pizza. You:",
+      "answers": [
+        {
+          "text": "Expected this. A second pizza arrives in six minutes.",
+          "characterId": "mastermind",
+          "id": "q7a1"
+        },
+        {
+          "id": "q7a2",
+          "characterId": "diva",
+          "text": "Deliver a monologue about betrayal"
+        },
+        {
+          "text": "Ordered your own pizza from the start",
+          "id": "q7a3",
+          "characterId": "lone-genius"
+        },
+        {
+          "id": "q7a4",
+          "characterId": "chaos-agent",
+          "text": "Declare pizza anarchy and split every slice in half"
+        }
+      ],
+      "id": "q7"
+    },
+    {
+      "id": "q8",
+      "answers": [
+        {
+          "id": "q8a1",
+          "characterId": "mastermind",
+          "text": "A slow, satisfied 'excellent'"
+        },
+        {
+          "id": "q8a2",
+          "characterId": "trickster",
+          "text": "A giggle you can't quite suppress"
+        },
+        {
+          "text": "Theatrical, head thrown back, full commitment",
+          "characterId": "diva",
+          "id": "q8a3"
+        },
+        {
+          "characterId": "lone-genius",
+          "id": "q8a4",
+          "text": "A single smirk. That's all anyone gets."
+        }
+      ],
+      "text": "Your villain laugh would be:"
+    },
+    {
+      "id": "q9",
+      "answers": [
+        {
+          "id": "q9a1",
+          "characterId": "trickster",
+          "text": "If the heroes had better pranks"
+        },
+        {
+          "text": "A better costume",
+          "id": "q9a2",
+          "characterId": "diva"
+        },
+        {
+          "text": "If someone genuinely, patiently asked",
+          "id": "q9a3",
+          "characterId": "lone-genius"
+        },
+        {
+          "text": "You switch sides hourly anyway",
+          "id": "q9a4",
+          "characterId": "chaos-agent"
+        }
+      ],
+      "text": "What would actually make you switch to the hero side?"
+    },
+    {
+      "text": "Your weakness (every villain has one):",
+      "answers": [
+        {
+          "id": "q10a1",
+          "characterId": "mastermind",
+          "text": "Explaining the whole plan when someone asks nicely"
+        },
+        {
+          "text": "Laughing before the prank lands",
+          "id": "q10a2",
+          "characterId": "trickster"
+        },
+        {
+          "id": "q10a3",
+          "characterId": "lone-genius",
+          "text": "Someone remembering one small detail about you. Instant melt."
+        },
+        {
+          "text": "Puppies. Immediate surrender.",
+          "id": "q10a4",
+          "characterId": "chaos-agent"
+        }
+      ],
+      "id": "q10"
+    }
+  ],
+  "results": [
+    {
+      "description": "Gloriously unpredictable and having the most fun in any room. Your schemes have no motive beyond delight, and honestly? The world is better for it.",
+      "traits": [
+        "Spontaneous",
+        "Playful",
+        "Fearless",
+        "Unpredictable",
+        "Joyful"
+      ],
+      "characterName": "The Chaos Agent",
+      "characterId": "chaos-agent"
+    },
+    {
+      "characterId": "diva",
+      "characterName": "The Diva",
+      "traits": [
+        "Confident",
+        "Dramatic",
+        "Stylish",
+        "Magnetic",
+        "Bold"
+      ],
+      "description": "Dramatic, dazzling, and unapologetically iconic. You don't cause trouble — you cause moments. Every room is a stage and you are its rightful star."
+    },
+    {
+      "traits": [
+        "Independent",
+        "Brilliant",
+        "Reserved",
+        "Loyal",
+        "Perceptive"
+      ],
+      "description": "Mysterious, brilliant, and perfectly content in your own company. People call it brooding; you call it quality control. Secretly, you're the softest one here.",
+      "characterId": "lone-genius",
+      "characterName": "The Lone Genius"
+    },
+    {
+      "characterName": "The Mastermind",
+      "characterId": "mastermind",
+      "description": "Always ten steps ahead with a plan inside the plan. Your schemes are elegant, your patience is legendary, and losing simply isn't on your agenda.",
+      "traits": [
+        "Strategic",
+        "Patient",
+        "Meticulous",
+        "Clever",
+        "Composed"
+      ]
+    },
+    {
+      "traits": [
+        "Mischievous",
+        "Witty",
+        "Playful",
+        "Quick",
+        "Charming"
+      ],
+      "description": "Mischief is your love language. Your pranks are harmless, your grin is permanent, and everyone secretly hopes they're your next target.",
+      "characterId": "trickster",
+      "characterName": "The Trickster"
+    }
+  ]
+}

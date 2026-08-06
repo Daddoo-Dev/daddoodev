@@ -1,0 +1,330 @@
+{
+  "id": "inner-motivator-quiz",
+  "title": "What's Your Inner Motivator?",
+  "description": "Something gets you moving when things get hard. Meet the voice behind your best days!",
+  "categoryId": "wellness-mindset",
+  "questions": [
+    {
+      "id": "q1",
+      "answers": [
+        {
+          "text": "Tell everyone — accountability by hype",
+          "characterId": "inner-cheerleader",
+          "id": "q1a1"
+        },
+        {
+          "characterId": "master-planner",
+          "id": "q1a2",
+          "text": "Break it into steps with dates"
+        },
+        {
+          "characterId": "big-dreamer",
+          "id": "q1a3",
+          "text": "Picture the finished version, vividly"
+        },
+        {
+          "text": "Find someone who said it can't be done",
+          "id": "q1a4",
+          "characterId": "bold-challenger"
+        }
+      ],
+      "text": "A new goal appears. Your first move:"
+    },
+    {
+      "answers": [
+        {
+          "text": "Photos of your people",
+          "id": "q2a1",
+          "characterId": "inner-cheerleader"
+        },
+        {
+          "characterId": "master-planner",
+          "id": "q2a2",
+          "text": "A beautiful, color-coded calendar"
+        },
+        {
+          "id": "q2a3",
+          "characterId": "big-dreamer",
+          "text": "A vision board, obviously"
+        },
+        {
+          "id": "q2a4",
+          "characterId": "steady-builder",
+          "text": "A streak tracker with zero gaps"
+        }
+      ],
+      "id": "q2",
+      "text": "Your workspace wall would feature:"
+    },
+    {
+      "id": "q3",
+      "answers": [
+        {
+          "characterId": "inner-cheerleader",
+          "id": "q3a1",
+          "text": "Recruit a buddy to work alongside"
+        },
+        {
+          "text": "Revisit the plan and shrink today's step",
+          "characterId": "master-planner",
+          "id": "q3a2"
+        },
+        {
+          "text": "Set a deadline that scares you a little",
+          "characterId": "bold-challenger",
+          "id": "q3a3"
+        },
+        {
+          "characterId": "steady-builder",
+          "id": "q3a4",
+          "text": "Just do ten minutes. Then ten more."
+        }
+      ],
+      "text": "A mid-project slump hits. You:"
+    },
+    {
+      "text": "Pick a motivational poster style:",
+      "answers": [
+        {
+          "characterId": "inner-cheerleader",
+          "id": "q4a1",
+          "text": "'You've got this!' with confetti"
+        },
+        {
+          "text": "'Imagine it done'",
+          "id": "q4a2",
+          "characterId": "big-dreamer"
+        },
+        {
+          "text": "'Records exist to be broken'",
+          "id": "q4a3",
+          "characterId": "bold-challenger"
+        },
+        {
+          "characterId": "steady-builder",
+          "id": "q4a4",
+          "text": "'Little by little becomes a lot'"
+        }
+      ],
+      "id": "q4"
+    },
+    {
+      "text": "Gym motivation looks like:",
+      "id": "q5",
+      "answers": [
+        {
+          "text": "A program, printed, followed",
+          "characterId": "master-planner",
+          "id": "q5a1"
+        },
+        {
+          "id": "q5a2",
+          "characterId": "big-dreamer",
+          "text": "Future-you's highlight reel, playing mentally"
+        },
+        {
+          "characterId": "bold-challenger",
+          "id": "q5a3",
+          "text": "Quietly racing the stranger on the next treadmill"
+        },
+        {
+          "text": "Same time, same days, rain or shine",
+          "id": "q5a4",
+          "characterId": "steady-builder"
+        }
+      ]
+    },
+    {
+      "text": "You finish something big. First feeling:",
+      "answers": [
+        {
+          "characterId": "inner-cheerleader",
+          "id": "q6a1",
+          "text": "Can't wait to celebrate with everyone"
+        },
+        {
+          "text": "Deep satisfaction as the last box gets checked",
+          "characterId": "master-planner",
+          "id": "q6a2"
+        },
+        {
+          "characterId": "big-dreamer",
+          "id": "q6a3",
+          "text": "Already dreaming up the sequel"
+        },
+        {
+          "characterId": "bold-challenger",
+          "id": "q6a4",
+          "text": "'Okay. Bigger one now.'"
+        }
+      ],
+      "id": "q6"
+    },
+    {
+      "text": "A friend doubts your idea. You:",
+      "answers": [
+        {
+          "characterId": "inner-cheerleader",
+          "id": "q7a1",
+          "text": "Win them over with pure enthusiasm"
+        },
+        {
+          "text": "Show them the spreadsheet",
+          "id": "q7a2",
+          "characterId": "master-planner"
+        },
+        {
+          "text": "Describe the vision until they see it too",
+          "characterId": "big-dreamer",
+          "id": "q7a3"
+        },
+        {
+          "id": "q7a4",
+          "characterId": "steady-builder",
+          "text": "Say nothing. Show them in six months."
+        }
+      ],
+      "id": "q7"
+    },
+    {
+      "answers": [
+        {
+          "text": "Shared lists — everything's better together",
+          "id": "q8a1",
+          "characterId": "inner-cheerleader"
+        },
+        {
+          "id": "q8a2",
+          "characterId": "master-planner",
+          "text": "Categorized, prioritized, gorgeous"
+        },
+        {
+          "text": "It's basically a dare list",
+          "characterId": "bold-challenger",
+          "id": "q8a3"
+        },
+        {
+          "characterId": "steady-builder",
+          "id": "q8a4",
+          "text": "Three items. Done daily. Repeat."
+        }
+      ],
+      "id": "q8",
+      "text": "Your to-do list style:"
+    },
+    {
+      "id": "q9",
+      "answers": [
+        {
+          "text": "Meeting a friend who's counting on you",
+          "characterId": "inner-cheerleader",
+          "id": "q9a1"
+        },
+        {
+          "id": "q9a2",
+          "characterId": "big-dreamer",
+          "text": "The person you're becoming"
+        },
+        {
+          "characterId": "bold-challenger",
+          "id": "q9a3",
+          "text": "Yesterday-you's record"
+        },
+        {
+          "characterId": "steady-builder",
+          "id": "q9a4",
+          "text": "The streak. Never break the streak."
+        }
+      ],
+      "text": "What gets you out the door on cold mornings?"
+    },
+    {
+      "text": "Your motivation motto:",
+      "id": "q10",
+      "answers": [
+        {
+          "id": "q10a1",
+          "characterId": "master-planner",
+          "text": "'Plans turn wishes into schedules'"
+        },
+        {
+          "characterId": "big-dreamer",
+          "id": "q10a2",
+          "text": "'See it first'"
+        },
+        {
+          "text": "'Growth lives just outside comfort'",
+          "id": "q10a3",
+          "characterId": "bold-challenger"
+        },
+        {
+          "id": "q10a4",
+          "characterId": "steady-builder",
+          "text": "'Show up. Repeat.'"
+        }
+      ]
+    }
+  ],
+  "results": [
+    {
+      "characterId": "big-dreamer",
+      "characterName": "The Big Dreamer",
+      "traits": [
+        "Visionary",
+        "Imaginative",
+        "Hopeful",
+        "Inspiring",
+        "Future-focused"
+      ],
+      "description": "Your fuel is the vision. You see the finished masterpiece before the first brushstroke, and that picture pulls you forward on days when nothing else could."
+    },
+    {
+      "description": "Nothing motivates you like a worthy opponent — even if it's just yesterday's you. Doubt is your favorite fuel, and 'impossible' is basically an invitation.",
+      "traits": [
+        "Competitive",
+        "Fearless",
+        "Determined",
+        "Spirited",
+        "Unstoppable"
+      ],
+      "characterName": "The Bold Challenger",
+      "characterId": "bold-challenger"
+    },
+    {
+      "characterName": "The Inner Cheerleader",
+      "characterId": "inner-cheerleader",
+      "description": "Your motivation runs on connection and joy. You lift others, they lift you back, and together everyone goes further — with considerably more confetti involved.",
+      "traits": [
+        "Encouraging",
+        "Enthusiastic",
+        "Loyal",
+        "Joyful",
+        "Team-hearted"
+      ]
+    },
+    {
+      "characterName": "The Master Planner",
+      "characterId": "master-planner",
+      "description": "Your motivation lives in a well-built plan. Clear steps, real dates, visible progress — when the path is mapped, you are absolutely unstoppable on it.",
+      "traits": [
+        "Organized",
+        "Strategic",
+        "Reliable",
+        "Clear-eyed",
+        "Thorough"
+      ]
+    },
+    {
+      "traits": [
+        "Consistent",
+        "Patient",
+        "Humble",
+        "Disciplined",
+        "Quietly mighty"
+      ],
+      "description": "You are powered by consistency. No drama, no waiting for inspiration — just showing up, again and again, until the small daily bricks become something remarkable.",
+      "characterId": "steady-builder",
+      "characterName": "The Steady Builder"
+    }
+  ]
+}

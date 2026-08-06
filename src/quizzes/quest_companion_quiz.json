@@ -1,0 +1,446 @@
+{
+  "id": "quest-companion-quiz",
+  "title": "Which Fantasy Quest Companion Are You?",
+  "description": "Every legendary party needs six kinds of hero. When the quest calls, which one are you?",
+  "categoryId": "pop-culture-fandom",
+  "questions": [
+    {
+      "id": "q1",
+      "answers": [
+        {
+          "text": "Say the honest thing everyone's avoiding",
+          "id": "q1a1",
+          "characterId": "warrior"
+        },
+        {
+          "text": "Crack the joke that finally breaks the tension",
+          "id": "q1a2",
+          "characterId": "bard"
+        },
+        {
+          "text": "Hear both sides out fully, no rushing",
+          "id": "q1a3",
+          "characterId": "healer"
+        },
+        {
+          "characterId": "ranger",
+          "id": "q1a4",
+          "text": "Give it space — some storms pass on their own"
+        }
+      ],
+      "text": "How do you handle a disagreement between friends?"
+    },
+    {
+      "id": "q2",
+      "answers": [
+        {
+          "text": "Firefighter",
+          "id": "q2a1",
+          "characterId": "warrior"
+        },
+        {
+          "text": "Museum curator with keys to the archive",
+          "id": "q2a2",
+          "characterId": "mage"
+        },
+        {
+          "text": "Undercover restaurant critic",
+          "id": "q2a3",
+          "characterId": "rogue"
+        },
+        {
+          "characterId": "bard",
+          "id": "q2a4",
+          "text": "Late-night talk show host"
+        }
+      ],
+      "text": "Pick your dream job for a day:"
+    },
+    {
+      "text": "Your packing style for a trip:",
+      "answers": [
+        {
+          "text": "Researched, listed, and packed days ahead",
+          "characterId": "mage",
+          "id": "q3a1"
+        },
+        {
+          "text": "One bag, carry-on only, always",
+          "id": "q3a2",
+          "characterId": "rogue"
+        },
+        {
+          "text": "Half your bag is stuff others might forget",
+          "characterId": "healer",
+          "id": "q3a3"
+        },
+        {
+          "id": "q3a4",
+          "characterId": "ranger",
+          "text": "Light, practical, ready for any weather"
+        }
+      ],
+      "id": "q3"
+    },
+    {
+      "answers": [
+        {
+          "text": "Attacking the leader, openly and proudly",
+          "id": "q4a1",
+          "characterId": "warrior"
+        },
+        {
+          "characterId": "rogue",
+          "id": "q4a2",
+          "text": "Winning quietly while everyone watches someone else"
+        },
+        {
+          "text": "Making alliances you may or may not honor",
+          "characterId": "bard",
+          "id": "q4a3"
+        },
+        {
+          "id": "q4a4",
+          "characterId": "ranger",
+          "text": "Playing your own long game in the corner"
+        }
+      ],
+      "id": "q4",
+      "text": "In a board game, you are:"
+    },
+    {
+      "id": "q5",
+      "answers": [
+        {
+          "id": "q5a1",
+          "characterId": "warrior",
+          "text": "Push forward anyway — momentum fixes things"
+        },
+        {
+          "text": "Pull out the backup plan you drafted quietly",
+          "id": "q5a2",
+          "characterId": "mage"
+        },
+        {
+          "id": "q5a3",
+          "characterId": "bard",
+          "text": "Keep spirits high so nobody gives up"
+        },
+        {
+          "text": "Make sure everyone's okay before regrouping",
+          "id": "q5a4",
+          "characterId": "healer"
+        }
+      ],
+      "text": "The group's plan is falling apart. You:"
+    },
+    {
+      "text": "Pick your spot at the campfire:",
+      "id": "q6",
+      "answers": [
+        {
+          "id": "q6a1",
+          "characterId": "rogue",
+          "text": "Near the edge, where you can see everything"
+        },
+        {
+          "characterId": "bard",
+          "id": "q6a2",
+          "text": "Dead center, mid-story, everyone leaning in"
+        },
+        {
+          "text": "Next to whoever seems cold, sharing your blanket",
+          "characterId": "healer",
+          "id": "q6a3"
+        },
+        {
+          "id": "q6a4",
+          "characterId": "ranger",
+          "text": "Tending the fire itself"
+        }
+      ]
+    },
+    {
+      "text": "A locked chest with no key. You:",
+      "answers": [
+        {
+          "text": "There's always the direct approach",
+          "characterId": "warrior",
+          "id": "q7a1"
+        },
+        {
+          "id": "q7a2",
+          "characterId": "mage",
+          "text": "Somewhere, there's a manual for this"
+        },
+        {
+          "text": "Locks are just puzzles with attitude",
+          "id": "q7a3",
+          "characterId": "rogue"
+        },
+        {
+          "text": "Leave it. If it wanted opening, it'd be open.",
+          "id": "q7a4",
+          "characterId": "ranger"
+        }
+      ],
+      "id": "q7"
+    },
+    {
+      "text": "Friends describe your advice as:",
+      "id": "q8",
+      "answers": [
+        {
+          "id": "q8a1",
+          "characterId": "warrior",
+          "text": "Blunt, but exactly what you needed"
+        },
+        {
+          "text": "Thorough. Possibly with sources.",
+          "characterId": "mage",
+          "id": "q8a2"
+        },
+        {
+          "characterId": "bard",
+          "id": "q8a3",
+          "text": "Somehow a pep talk every time"
+        },
+        {
+          "text": "Gentle, patient, and always kind",
+          "characterId": "healer",
+          "id": "q8a4"
+        }
+      ]
+    },
+    {
+      "text": "Choose a mysterious door prize:",
+      "id": "q9",
+      "answers": [
+        {
+          "id": "q9a1",
+          "characterId": "mage",
+          "text": "A book that answers one question per day"
+        },
+        {
+          "characterId": "rogue",
+          "id": "q9a2",
+          "text": "A coin that always wins the toss"
+        },
+        {
+          "text": "A mirror that laughs at your jokes",
+          "id": "q9a3",
+          "characterId": "bard"
+        },
+        {
+          "text": "Boots that never wear out",
+          "characterId": "ranger",
+          "id": "q9a4"
+        }
+      ]
+    },
+    {
+      "id": "q10",
+      "answers": [
+        {
+          "id": "q10a1",
+          "characterId": "warrior",
+          "text": "Charge to the summit anyway — you're already wet"
+        },
+        {
+          "text": "Somehow you're the only one who stayed dry",
+          "id": "q10a2",
+          "characterId": "rogue"
+        },
+        {
+          "characterId": "healer",
+          "id": "q10a3",
+          "text": "Hand out the ponchos you packed for everyone"
+        },
+        {
+          "text": "Read the clouds and call the safest route down",
+          "id": "q10a4",
+          "characterId": "ranger"
+        }
+      ],
+      "text": "It starts pouring rain mid-hike. You:"
+    },
+    {
+      "text": "Your karaoke strategy:",
+      "id": "q11",
+      "answers": [
+        {
+          "text": "Pick the loudest anthem and leave it all on stage",
+          "characterId": "warrior",
+          "id": "q11a1"
+        },
+        {
+          "characterId": "mage",
+          "id": "q11a2",
+          "text": "A niche song chosen for your exact vocal range"
+        },
+        {
+          "text": "You have a signature song and it destroys every time",
+          "id": "q11a3",
+          "characterId": "bard"
+        },
+        {
+          "text": "Duets only — you're there to make partners shine",
+          "characterId": "healer",
+          "id": "q11a4"
+        }
+      ]
+    },
+    {
+      "text": "Pick a small daily luxury:",
+      "id": "q12",
+      "answers": [
+        {
+          "text": "Sleeping in past everyone",
+          "id": "q12a1",
+          "characterId": "rogue"
+        },
+        {
+          "characterId": "bard",
+          "id": "q12a2",
+          "text": "A long lunch with good company"
+        },
+        {
+          "text": "Tea made properly, no shortcuts",
+          "characterId": "healer",
+          "id": "q12a3"
+        },
+        {
+          "text": "The first quiet hour of the morning, outside",
+          "characterId": "ranger",
+          "id": "q12a4"
+        }
+      ]
+    },
+    {
+      "text": "How do you learn something new?",
+      "answers": [
+        {
+          "text": "Jump in and learn by losing a few rounds",
+          "id": "q13a1",
+          "characterId": "warrior"
+        },
+        {
+          "text": "Read everything first. Everything.",
+          "id": "q13a2",
+          "characterId": "mage"
+        },
+        {
+          "id": "q13a3",
+          "characterId": "rogue",
+          "text": "Find the tricks the tutorials don't teach"
+        },
+        {
+          "id": "q13a4",
+          "characterId": "ranger",
+          "text": "Trial, error, and patience — alone, thanks"
+        }
+      ],
+      "id": "q13"
+    },
+    {
+      "text": "The quest is complete. Your reward of choice:",
+      "answers": [
+        {
+          "text": "The next quest",
+          "id": "q14a1",
+          "characterId": "warrior"
+        },
+        {
+          "characterId": "mage",
+          "id": "q14a2",
+          "text": "Access to the royal library"
+        },
+        {
+          "text": "A feast where you retell the whole story",
+          "characterId": "bard",
+          "id": "q14a3"
+        },
+        {
+          "text": "Everyone home safe. That was the reward.",
+          "id": "q14a4",
+          "characterId": "healer"
+        }
+      ],
+      "id": "q14"
+    }
+  ],
+  "results": [
+    {
+      "characterName": "The Bard",
+      "characterId": "bard",
+      "description": "The spark of every party and the glue of every group. You turn hard days into good stories, and good stories into legend. Adventures are simply better with you along.",
+      "traits": [
+        "Charismatic",
+        "Creative",
+        "Uplifting",
+        "Expressive",
+        "Social"
+      ]
+    },
+    {
+      "characterId": "healer",
+      "characterName": "The Healer",
+      "traits": [
+        "Nurturing",
+        "Patient",
+        "Selfless",
+        "Gentle",
+        "Steady"
+      ],
+      "description": "The quiet strength of the party. You notice what everyone needs, give more than you take, and no one gets left behind on your watch. Every quest survives because of you."
+    },
+    {
+      "characterName": "The Mage",
+      "characterId": "mage",
+      "description": "Knowledge is your power source. Prepared, strategic, and quietly brilliant, you're the one with the plan — and the backup plan, footnoted. The party thinks because you do.",
+      "traits": [
+        "Wise",
+        "Strategic",
+        "Studious",
+        "Insightful",
+        "Prepared"
+      ]
+    },
+    {
+      "characterName": "The Ranger",
+      "characterId": "ranger",
+      "description": "Self-reliant and sharp-eyed. You're at home where the path ends, comfortable with quiet, and somehow always know the way — even without a map.",
+      "traits": [
+        "Self-reliant",
+        "Observant",
+        "Calm",
+        "Practical",
+        "Adventurous"
+      ]
+    },
+    {
+      "description": "Quick wit, quicker hands. You find the angle nobody else sees and slip through problems that stop everyone else cold — usually with a grin.",
+      "traits": [
+        "Clever",
+        "Independent",
+        "Witty",
+        "Adaptable",
+        "Bold"
+      ],
+      "characterName": "The Rogue",
+      "characterId": "rogue"
+    },
+    {
+      "description": "Head-on and whole-hearted. You face what others avoid, say what others won't, and shield the people you love without a second thought.",
+      "traits": [
+        "Brave",
+        "Direct",
+        "Protective",
+        "Determined",
+        "Honest"
+      ],
+      "characterName": "The Warrior",
+      "characterId": "warrior"
+    }
+  ]
+}

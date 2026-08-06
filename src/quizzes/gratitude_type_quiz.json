@@ -1,0 +1,318 @@
+{
+  "id": "gratitude-type-quiz",
+  "title": "Which Gratitude Type Are You?",
+  "description": "Everyone appreciates life a little differently. Discover your signature way of saying thanks!",
+  "categoryId": "wellness-mindset",
+  "questions": [
+    {
+      "text": "A friend does something kind. You:",
+      "id": "q1",
+      "answers": [
+        {
+          "text": "Send a proper thank-you text, drafted twice",
+          "id": "q1a1",
+          "characterId": "note-writer"
+        },
+        {
+          "text": "Pause and let it really land",
+          "characterId": "moment-savorer",
+          "id": "q1a2"
+        },
+        {
+          "id": "q1a3",
+          "characterId": "loud-appreciator",
+          "text": "Tell them on the spot, enthusiastically"
+        },
+        {
+          "text": "Add it to your private tally of good things",
+          "characterId": "quiet-counter",
+          "id": "q1a4"
+        }
+      ]
+    },
+    {
+      "text": "Your camera roll's hidden theme:",
+      "id": "q2",
+      "answers": [
+        {
+          "text": "Screenshots of nice messages",
+          "characterId": "note-writer",
+          "id": "q2a1"
+        },
+        {
+          "id": "q2a2",
+          "characterId": "moment-savorer",
+          "text": "Golden-hour everything"
+        },
+        {
+          "id": "q2a3",
+          "characterId": "loud-appreciator",
+          "text": "Photos taken to show people later"
+        },
+        {
+          "text": "One photo a day, quietly, for years",
+          "characterId": "quiet-counter",
+          "id": "q2a4"
+        }
+      ]
+    },
+    {
+      "answers": [
+        {
+          "id": "q3a1",
+          "characterId": "note-writer",
+          "text": "Read the thing you actually wrote down"
+        },
+        {
+          "text": "Mention one tiny moment in loving detail",
+          "id": "q3a2",
+          "characterId": "moment-savorer"
+        },
+        {
+          "id": "q3a3",
+          "characterId": "loud-appreciator",
+          "text": "Give a toast. An actual toast."
+        },
+        {
+          "id": "q3a4",
+          "characterId": "quiet-counter",
+          "text": "Keep it short — the list in your head is long"
+        }
+      ],
+      "id": "q3",
+      "text": "'Say what you're grateful for' at dinner. You:"
+    },
+    {
+      "id": "q4",
+      "answers": [
+        {
+          "text": "Stationery and stamps",
+          "characterId": "note-writer",
+          "id": "q4a1"
+        },
+        {
+          "id": "q4a2",
+          "characterId": "moment-savorer",
+          "text": "No tool. Just slower mornings."
+        },
+        {
+          "text": "A dinner party thrown in someone's honor",
+          "id": "q4a3",
+          "characterId": "loud-appreciator"
+        },
+        {
+          "text": "A one-line-a-day journal",
+          "id": "q4a4",
+          "characterId": "quiet-counter"
+        }
+      ],
+      "text": "Pick a gratitude tool:"
+    },
+    {
+      "text": "Someone compliments you. You:",
+      "answers": [
+        {
+          "characterId": "note-writer",
+          "id": "q5a1",
+          "text": "Remember it word for word, forever"
+        },
+        {
+          "text": "Actually receive it, warm and slow",
+          "characterId": "moment-savorer",
+          "id": "q5a2"
+        },
+        {
+          "characterId": "loud-appreciator",
+          "id": "q5a3",
+          "text": "Return it doubled, immediately"
+        },
+        {
+          "characterId": "quiet-counter",
+          "id": "q5a4",
+          "text": "Bank it for a rainy day"
+        }
+      ],
+      "id": "q5"
+    },
+    {
+      "answers": [
+        {
+          "text": "Postcards, sent before you even leave",
+          "id": "q6a1",
+          "characterId": "note-writer"
+        },
+        {
+          "id": "q6a2",
+          "characterId": "moment-savorer",
+          "text": "One last slow look before the airport"
+        },
+        {
+          "text": "Thanking the hosts until it's almost weird",
+          "characterId": "loud-appreciator",
+          "id": "q6a3"
+        },
+        {
+          "text": "Listing the top ten moments on the plane",
+          "id": "q6a4",
+          "characterId": "quiet-counter"
+        }
+      ],
+      "id": "q6",
+      "text": "Your ideal way to end a trip:"
+    },
+    {
+      "answers": [
+        {
+          "characterId": "note-writer",
+          "id": "q7a1",
+          "text": "Something worth telling someone about"
+        },
+        {
+          "text": "How good the coffee smells, fully",
+          "characterId": "moment-savorer",
+          "id": "q7a2"
+        },
+        {
+          "characterId": "loud-appreciator",
+          "id": "q7a3",
+          "text": "The barista's effort — and you say so"
+        },
+        {
+          "text": "Three small wins before lunch",
+          "id": "q7a4",
+          "characterId": "quiet-counter"
+        }
+      ],
+      "id": "q7",
+      "text": "A perfectly ordinary Tuesday. You notice:"
+    },
+    {
+      "text": "An old friend's birthday. Your move:",
+      "id": "q8",
+      "answers": [
+        {
+          "characterId": "note-writer",
+          "id": "q8a1",
+          "text": "A long handwritten card, mailed early"
+        },
+        {
+          "characterId": "moment-savorer",
+          "id": "q8a2",
+          "text": "Recreating an old favorite memory together"
+        },
+        {
+          "id": "q8a3",
+          "characterId": "loud-appreciator",
+          "text": "Calling to tell them exactly why they matter"
+        },
+        {
+          "characterId": "quiet-counter",
+          "id": "q8a4",
+          "text": "A list: '34 things I appreciate about you'"
+        }
+      ]
+    },
+    {
+      "id": "q9",
+      "answers": [
+        {
+          "characterId": "note-writer",
+          "id": "q9a1",
+          "text": "Written down, made permanent"
+        },
+        {
+          "characterId": "moment-savorer",
+          "id": "q9a2",
+          "text": "Slowed down, felt fully"
+        },
+        {
+          "text": "Said out loud, right away",
+          "id": "q9a3",
+          "characterId": "loud-appreciator"
+        },
+        {
+          "characterId": "quiet-counter",
+          "id": "q9a4",
+          "text": "Counted daily, compounding quietly"
+        }
+      ],
+      "text": "Gratitude, in your experience, works best:"
+    },
+    {
+      "text": "Your gratitude motto:",
+      "answers": [
+        {
+          "text": "'If you thought it, send it'",
+          "characterId": "note-writer",
+          "id": "q10a1"
+        },
+        {
+          "text": "'Don't rush the good parts'",
+          "characterId": "moment-savorer",
+          "id": "q10a2"
+        },
+        {
+          "text": "'Appreciation is meant to be heard'",
+          "id": "q10a3",
+          "characterId": "loud-appreciator"
+        },
+        {
+          "characterId": "quiet-counter",
+          "id": "q10a4",
+          "text": "'Count it all'"
+        }
+      ],
+      "id": "q10"
+    }
+  ],
+  "results": [
+    {
+      "characterId": "loud-appreciator",
+      "characterName": "The Loud Appreciator",
+      "traits": [
+        "Expressive",
+        "Generous",
+        "Warm",
+        "Immediate",
+        "Heartfelt"
+      ],
+      "description": "Your gratitude is out loud and on time. You thank people to their faces, toast at every dinner, and make sure no kindness ever goes unnoticed on your watch."
+    },
+    {
+      "characterId": "moment-savorer",
+      "characterName": "The Moment Savorer",
+      "traits": [
+        "Present",
+        "Mindful",
+        "Appreciative",
+        "Sensory",
+        "Peaceful"
+      ],
+      "description": "Your gratitude is a way of paying attention. You slow down for the good parts — the light, the laugh, the last bite — and squeeze every drop of joy from ordinary days."
+    },
+    {
+      "description": "Your gratitude has a paper trail. Cards, texts, and postcards flow from you constantly, and somewhere out there is a drawer of your notes someone treasures.",
+      "traits": [
+        "Thoughtful",
+        "Articulate",
+        "Sentimental",
+        "Devoted",
+        "Kind"
+      ],
+      "characterName": "The Note Writer",
+      "characterId": "note-writer"
+    },
+    {
+      "characterId": "quiet-counter",
+      "characterName": "The Quiet Counter",
+      "traits": [
+        "Reflective",
+        "Steady",
+        "Observant",
+        "Humble",
+        "Content"
+      ],
+      "description": "Your gratitude is a private practice. You keep a running count of good things — in a journal or just in your head — and it quietly makes you one of the richest people around."
+    }
+  ]
+}

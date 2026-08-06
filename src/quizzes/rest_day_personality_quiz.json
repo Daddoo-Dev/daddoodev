@@ -1,0 +1,318 @@
+{
+  "id": "rest-day-personality-quiz",
+  "title": "Which Rest Day Personality Are You?",
+  "description": "A whole day off, zero obligations. What you do next reveals everything!",
+  "categoryId": "wellness-mindset",
+  "questions": [
+    {
+      "text": "The rest day begins. Your uniform:",
+      "id": "q1",
+      "answers": [
+        {
+          "text": "The same pajamas, recommitted",
+          "id": "q1a1",
+          "characterId": "blanket-burrito"
+        },
+        {
+          "text": "Comfy layers and walkable shoes",
+          "id": "q1a2",
+          "characterId": "gentle-adventurer"
+        },
+        {
+          "id": "q1a3",
+          "characterId": "hobby-hopper",
+          "text": "Clothes you're allowed to ruin"
+        },
+        {
+          "text": "Effortless brunch-casual",
+          "id": "q1a4",
+          "characterId": "brunch-socialite"
+        }
+      ]
+    },
+    {
+      "text": "Your rest day headquarters:",
+      "id": "q2",
+      "answers": [
+        {
+          "text": "The couch. The load-bearing couch.",
+          "characterId": "blanket-burrito",
+          "id": "q2a1"
+        },
+        {
+          "text": "Somewhere new within an hour's drive",
+          "characterId": "gentle-adventurer",
+          "id": "q2a2"
+        },
+        {
+          "characterId": "hobby-hopper",
+          "id": "q2a3",
+          "text": "Your hobby corner (it's expanding)"
+        },
+        {
+          "text": "A café with outdoor seating",
+          "characterId": "brunch-socialite",
+          "id": "q2a4"
+        }
+      ]
+    },
+    {
+      "text": "Rest day food philosophy:",
+      "answers": [
+        {
+          "id": "q3a1",
+          "characterId": "blanket-burrito",
+          "text": "Delivery, eaten horizontally"
+        },
+        {
+          "text": "A picnic somewhere scenic",
+          "id": "q3a2",
+          "characterId": "gentle-adventurer"
+        },
+        {
+          "text": "An ambitious recipe, as entertainment",
+          "characterId": "hobby-hopper",
+          "id": "q3a3"
+        },
+        {
+          "text": "Whatever the group decides — it's about the table",
+          "characterId": "brunch-socialite",
+          "id": "q3a4"
+        }
+      ],
+      "id": "q3"
+    },
+    {
+      "answers": [
+        {
+          "id": "q4a1",
+          "characterId": "blanket-burrito",
+          "text": "Streaming remote and nothing else"
+        },
+        {
+          "id": "q4a2",
+          "characterId": "gentle-adventurer",
+          "text": "Camera and maps only"
+        },
+        {
+          "text": "Tutorials queued for days",
+          "id": "q4a3",
+          "characterId": "hobby-hopper"
+        },
+        {
+          "text": "Coordinating hangouts, blissfully",
+          "characterId": "brunch-socialite",
+          "id": "q4a4"
+        }
+      ],
+      "id": "q4",
+      "text": "Your phone on a rest day:"
+    },
+    {
+      "text": "Pick a rest day victory:",
+      "answers": [
+        {
+          "text": "Finishing an entire series",
+          "id": "q5a1",
+          "characterId": "blanket-burrito"
+        },
+        {
+          "characterId": "gentle-adventurer",
+          "id": "q5a2",
+          "text": "Finding a view you didn't know existed"
+        },
+        {
+          "text": "Actually completing a project",
+          "characterId": "hobby-hopper",
+          "id": "q5a3"
+        },
+        {
+          "text": "A three-hour lunch that felt like ten minutes",
+          "id": "q5a4",
+          "characterId": "brunch-socialite"
+        }
+      ],
+      "id": "q5"
+    },
+    {
+      "text": "Someone invites you out mid-rest-day:",
+      "answers": [
+        {
+          "text": "'Counteroffer: come here. Bring snacks.'",
+          "characterId": "blanket-burrito",
+          "id": "q6a1"
+        },
+        {
+          "id": "q6a2",
+          "characterId": "gentle-adventurer",
+          "text": "Yes, if it involves being outside"
+        },
+        {
+          "text": "Yes, right after this one last step dries",
+          "id": "q6a3",
+          "characterId": "hobby-hopper"
+        },
+        {
+          "text": "Already dressed. Address, please.",
+          "id": "q6a4",
+          "characterId": "brunch-socialite"
+        }
+      ],
+      "id": "q6"
+    },
+    {
+      "text": "Your rest day energy curve:",
+      "answers": [
+        {
+          "text": "Flat. Beautifully, intentionally flat.",
+          "characterId": "blanket-burrito",
+          "id": "q7a1"
+        },
+        {
+          "text": "Peaks at golden hour",
+          "characterId": "gentle-adventurer",
+          "id": "q7a2"
+        },
+        {
+          "text": "Bursts of intense creative focus",
+          "characterId": "hobby-hopper",
+          "id": "q7a3"
+        },
+        {
+          "characterId": "brunch-socialite",
+          "id": "q7a4",
+          "text": "Rises with every friend who arrives"
+        }
+      ],
+      "id": "q7"
+    },
+    {
+      "text": "The end-of-day feeling you chase:",
+      "id": "q8",
+      "answers": [
+        {
+          "text": "Fully recharged, deliciously unproductive",
+          "id": "q8a1",
+          "characterId": "blanket-burrito"
+        },
+        {
+          "characterId": "gentle-adventurer",
+          "id": "q8a2",
+          "text": "Pleasantly tired legs"
+        },
+        {
+          "id": "q8a3",
+          "characterId": "hobby-hopper",
+          "text": "'Look what I made'"
+        },
+        {
+          "text": "Cheeks sore from laughing",
+          "id": "q8a4",
+          "characterId": "brunch-socialite"
+        }
+      ]
+    },
+    {
+      "text": "Pick a rest day accessory:",
+      "id": "q9",
+      "answers": [
+        {
+          "id": "q9a1",
+          "characterId": "blanket-burrito",
+          "text": "A blanket with sleeves"
+        },
+        {
+          "id": "q9a2",
+          "characterId": "gentle-adventurer",
+          "text": "A thermos of something warm"
+        },
+        {
+          "text": "A glue gun, fully loaded",
+          "id": "q9a3",
+          "characterId": "hobby-hopper"
+        },
+        {
+          "id": "q9a4",
+          "characterId": "brunch-socialite",
+          "text": "Sunglasses for the patio"
+        }
+      ]
+    },
+    {
+      "text": "Your rest day motto:",
+      "answers": [
+        {
+          "text": "'Do less. Then less than that.'",
+          "id": "q10a1",
+          "characterId": "blanket-burrito"
+        },
+        {
+          "text": "'Rest is a change of scenery'",
+          "characterId": "gentle-adventurer",
+          "id": "q10a2"
+        },
+        {
+          "characterId": "hobby-hopper",
+          "id": "q10a3",
+          "text": "'Rest is making things for fun'"
+        },
+        {
+          "id": "q10a4",
+          "characterId": "brunch-socialite",
+          "text": "'Rest is people you love'"
+        }
+      ],
+      "id": "q10"
+    }
+  ],
+  "results": [
+    {
+      "characterId": "blanket-burrito",
+      "characterName": "The Blanket Burrito",
+      "traits": [
+        "Restful",
+        "Unbothered",
+        "Cozy",
+        "Content",
+        "Recharged"
+      ],
+      "description": "You have mastered the deepest form of rest: doing gloriously nothing, on purpose, without a shred of guilt. Your couch has a you-shaped spot and you've earned it."
+    },
+    {
+      "traits": [
+        "Social",
+        "Warm",
+        "Fun",
+        "Generous",
+        "Radiant"
+      ],
+      "description": "Your rest has a guest list. Long meals, longer laughs, and the gentle art of turning a day off into a small festival of your favorite people.",
+      "characterId": "brunch-socialite",
+      "characterName": "The Brunch Socialite"
+    },
+    {
+      "traits": [
+        "Curious",
+        "Refreshed",
+        "Easygoing",
+        "Outdoorsy",
+        "Free"
+      ],
+      "description": "You rest by wandering. Nothing extreme — just fresh air, a new view, and legs pleasantly tired by sunset. Your best souvenirs are places you found by accident.",
+      "characterId": "gentle-adventurer",
+      "characterName": "The Gentle Adventurer"
+    },
+    {
+      "characterId": "hobby-hopper",
+      "characterName": "The Hobby Hopper",
+      "traits": [
+        "Creative",
+        "Playful",
+        "Hands-on",
+        "Absorbed",
+        "Delighted"
+      ],
+      "description": "Rest, for you, means making things nobody asked for. A day off is a workshop day, and you end it covered in glue, paint, or flour — completely restored."
+    }
+  ]
+}

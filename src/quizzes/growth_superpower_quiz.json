@@ -1,0 +1,330 @@
+{
+  "id": "growth-superpower-quiz",
+  "title": "What's Your Growth Mindset Superpower?",
+  "description": "Everyone grows differently — and everyone has one move they're secretly great at. What's yours?",
+  "categoryId": "wellness-mindset",
+  "questions": [
+    {
+      "id": "q1",
+      "answers": [
+        {
+          "text": "Sting for an hour, come back stronger by dinner",
+          "characterId": "bounce-back",
+          "id": "q1a1"
+        },
+        {
+          "text": "Ask three follow-up questions",
+          "characterId": "curious-questioner",
+          "id": "q1a2"
+        },
+        {
+          "text": "Pick one small thing to fix this week",
+          "id": "q1a3",
+          "characterId": "tiny-stepper"
+        },
+        {
+          "text": "Zoom out — it's one scene, not the movie",
+          "id": "q1a4",
+          "characterId": "big-picture-seer"
+        }
+      ],
+      "text": "You get tough feedback. You:"
+    },
+    {
+      "id": "q2",
+      "answers": [
+        {
+          "characterId": "bounce-back",
+          "id": "q2a1",
+          "text": "Enjoy being bad at it — that's day one"
+        },
+        {
+          "text": "Research why it works the way it does",
+          "id": "q2a2",
+          "characterId": "curious-questioner"
+        },
+        {
+          "characterId": "tiny-stepper",
+          "id": "q2a3",
+          "text": "Practice five minutes daily, no more"
+        },
+        {
+          "id": "q2a4",
+          "characterId": "encourager",
+          "text": "Join a beginner group and cheer everyone on"
+        }
+      ],
+      "text": "A new skill you're bad at (for now). You:"
+    },
+    {
+      "text": "Your favorite word:",
+      "id": "q3",
+      "answers": [
+        {
+          "text": "'Again'",
+          "id": "q3a1",
+          "characterId": "bounce-back"
+        },
+        {
+          "text": "'Why'",
+          "id": "q3a2",
+          "characterId": "curious-questioner"
+        },
+        {
+          "text": "'Imagine'",
+          "id": "q3a3",
+          "characterId": "big-picture-seer"
+        },
+        {
+          "id": "q3a4",
+          "characterId": "encourager",
+          "text": "'You can'"
+        }
+      ]
+    },
+    {
+      "text": "A friend stumbles at something. You say:",
+      "answers": [
+        {
+          "id": "q4a1",
+          "characterId": "bounce-back",
+          "text": "'Great — the first try is just data'"
+        },
+        {
+          "characterId": "tiny-stepper",
+          "id": "q4a2",
+          "text": "'What's the smallest next step?'"
+        },
+        {
+          "text": "'Where does this fit in the bigger story?'",
+          "id": "q4a3",
+          "characterId": "big-picture-seer"
+        },
+        {
+          "text": "'I've seen you do harder things'",
+          "characterId": "encourager",
+          "id": "q4a4"
+        }
+      ],
+      "id": "q4"
+    },
+    {
+      "text": "Pick a plant that matches your growth style:",
+      "answers": [
+        {
+          "id": "q5a1",
+          "characterId": "curious-questioner",
+          "text": "A vine exploring every direction"
+        },
+        {
+          "text": "Moss. Slow, steady, unstoppable.",
+          "id": "q5a2",
+          "characterId": "tiny-stepper"
+        },
+        {
+          "text": "An oak thinking in centuries",
+          "id": "q5a3",
+          "characterId": "big-picture-seer"
+        },
+        {
+          "id": "q5a4",
+          "characterId": "encourager",
+          "text": "A sunflower turning everyone toward the light"
+        }
+      ],
+      "id": "q5"
+    },
+    {
+      "text": "Your reaction to 'we've always done it this way':",
+      "id": "q6",
+      "answers": [
+        {
+          "text": "'And how's that going?' (kindly)",
+          "characterId": "bounce-back",
+          "id": "q6a1"
+        },
+        {
+          "characterId": "curious-questioner",
+          "id": "q6a2",
+          "text": "'Interesting — why, though?'"
+        },
+        {
+          "text": "'Could we change just one small part?'",
+          "id": "q6a3",
+          "characterId": "tiny-stepper"
+        },
+        {
+          "characterId": "big-picture-seer",
+          "id": "q6a4",
+          "text": "'Here's where that road eventually leads'"
+        }
+      ]
+    },
+    {
+      "answers": [
+        {
+          "text": "Speak badly to strangers immediately",
+          "id": "q7a1",
+          "characterId": "bounce-back"
+        },
+        {
+          "characterId": "curious-questioner",
+          "id": "q7a2",
+          "text": "Fall down grammar rabbit holes, happily"
+        },
+        {
+          "text": "Learn ten words a day, every day",
+          "id": "q7a3",
+          "characterId": "tiny-stepper"
+        },
+        {
+          "id": "q7a4",
+          "characterId": "encourager",
+          "text": "Start a study group by week two"
+        }
+      ],
+      "id": "q7",
+      "text": "Learning a new language, you'd:"
+    },
+    {
+      "text": "Your notebook margins are full of:",
+      "id": "q8",
+      "answers": [
+        {
+          "text": "Crossed-out attempts, kept proudly",
+          "characterId": "bounce-back",
+          "id": "q8a1"
+        },
+        {
+          "id": "q8a2",
+          "characterId": "curious-questioner",
+          "text": "Question marks and arrows"
+        },
+        {
+          "characterId": "big-picture-seer",
+          "id": "q8a3",
+          "text": "Maps of where this all leads"
+        },
+        {
+          "text": "Notes to share with someone later",
+          "characterId": "encourager",
+          "id": "q8a4"
+        }
+      ]
+    },
+    {
+      "answers": [
+        {
+          "characterId": "bounce-back",
+          "id": "q9a1",
+          "text": "Are first to say 'okay, round two'"
+        },
+        {
+          "text": "Find the one piece still salvageable",
+          "characterId": "tiny-stepper",
+          "id": "q9a2"
+        },
+        {
+          "characterId": "big-picture-seer",
+          "id": "q9a3",
+          "text": "Remind everyone what it's all for"
+        },
+        {
+          "text": "Check on the person taking it hardest",
+          "characterId": "encourager",
+          "id": "q9a4"
+        }
+      ],
+      "id": "q9",
+      "text": "A setback strikes the group project. You:"
+    },
+    {
+      "id": "q10",
+      "answers": [
+        {
+          "characterId": "curious-questioner",
+          "id": "q10a1",
+          "text": "'Stay curious'"
+        },
+        {
+          "characterId": "tiny-stepper",
+          "id": "q10a2",
+          "text": "'Inch by inch'"
+        },
+        {
+          "text": "'Play the long game'",
+          "id": "q10a3",
+          "characterId": "big-picture-seer"
+        },
+        {
+          "id": "q10a4",
+          "characterId": "encourager",
+          "text": "'We grow better together'"
+        }
+      ],
+      "text": "Your growth motto:"
+    }
+  ],
+  "results": [
+    {
+      "characterName": "The Big-Picture Seer",
+      "characterId": "big-picture-seer",
+      "description": "Your superpower is perspective. Setbacks shrink when you zoom out, and you help everyone remember that today's stumble is one paragraph in a very long, very good story.",
+      "traits": [
+        "Wise",
+        "Visionary",
+        "Calm",
+        "Perspective-rich",
+        "Steadying"
+      ]
+    },
+    {
+      "characterId": "bounce-back",
+      "characterName": "The Bounce-Back",
+      "traits": [
+        "Resilient",
+        "Brave",
+        "Persistent",
+        "Upbeat",
+        "Tough"
+      ],
+      "description": "Your superpower is resilience. Falling doesn't scare you because getting up is your signature move — every 'again' makes you a little harder to stop."
+    },
+    {
+      "characterName": "The Curious Questioner",
+      "characterId": "curious-questioner",
+      "description": "Your superpower is wonder. 'Why' is your favorite tool, rabbit holes are your natural habitat, and your questions unlock doors other people walk straight past.",
+      "traits": [
+        "Curious",
+        "Open-minded",
+        "Inquisitive",
+        "Sharp",
+        "Explorative"
+      ]
+    },
+    {
+      "traits": [
+        "Supportive",
+        "Generous",
+        "Warm",
+        "Believing",
+        "Uplifting"
+      ],
+      "description": "Your superpower is lifting others. You grow by helping people believe in themselves, and everything you touch — teams, friendships, group chats — grows with you.",
+      "characterId": "encourager",
+      "characterName": "The Encourager"
+    },
+    {
+      "description": "Your superpower is the small, doable next thing. While others wait for motivation, you quietly stack tiny wins — and tiny wins, it turns out, build mountains.",
+      "traits": [
+        "Consistent",
+        "Practical",
+        "Patient",
+        "Focused",
+        "Quietly powerful"
+      ],
+      "characterName": "The Tiny Stepper",
+      "characterId": "tiny-stepper"
+    }
+  ]
+}

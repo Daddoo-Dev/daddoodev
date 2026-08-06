@@ -1,0 +1,382 @@
+{
+  "id": "starship-crew-quiz",
+  "title": "Which Starship Crew Role Are You?",
+  "description": "The galaxy needs you — but where on the bridge do you belong? Find your post among the stars.",
+  "categoryId": "pop-culture-fandom",
+  "questions": [
+    {
+      "text": "Your alarm goes off an hour early by mistake. You:",
+      "answers": [
+        {
+          "id": "q1a1",
+          "characterId": "captain",
+          "text": "Get up anyway — the day just got longer, use it"
+        },
+        {
+          "text": "Roll out smoothly — you can be ready in four minutes",
+          "characterId": "pilot",
+          "id": "q1a2"
+        },
+        {
+          "characterId": "medic",
+          "id": "q1a3",
+          "text": "First check that it didn't wake anyone else"
+        },
+        {
+          "characterId": "science-officer",
+          "id": "q1a4",
+          "text": "Investigate why it happened before anything else"
+        }
+      ],
+      "id": "q1"
+    },
+    {
+      "text": "Your friends are planning a road trip. You're the one who:",
+      "id": "q2",
+      "answers": [
+        {
+          "id": "q2a1",
+          "characterId": "captain",
+          "text": "Decides the destination when the debate stalls"
+        },
+        {
+          "text": "Quietly checks the tires and oil before anyone asks",
+          "characterId": "engineer",
+          "id": "q2a2"
+        },
+        {
+          "text": "Insists on taking the fun winding route",
+          "id": "q2a3",
+          "characterId": "pilot"
+        },
+        {
+          "characterId": "science-officer",
+          "id": "q2a4",
+          "text": "Builds a spreadsheet of stops nobody asked for"
+        }
+      ]
+    },
+    {
+      "text": "You win a prize — pick one experience:",
+      "id": "q3",
+      "answers": [
+        {
+          "text": "A workshop where you build something you keep",
+          "characterId": "engineer",
+          "id": "q3a1"
+        },
+        {
+          "text": "Skydiving",
+          "characterId": "pilot",
+          "id": "q3a2"
+        },
+        {
+          "text": "A spa weekend for someone who deserves it",
+          "id": "q3a3",
+          "characterId": "medic"
+        },
+        {
+          "id": "q3a4",
+          "characterId": "science-officer",
+          "text": "A behind-the-scenes laboratory tour"
+        }
+      ]
+    },
+    {
+      "text": "In an escape room, you:",
+      "id": "q4",
+      "answers": [
+        {
+          "id": "q4a1",
+          "characterId": "captain",
+          "text": "Assign puzzles so nobody doubles up"
+        },
+        {
+          "text": "Take the padlock apart. It's faster.",
+          "characterId": "engineer",
+          "id": "q4a2"
+        },
+        {
+          "text": "Trust the gut guess before the clock runs out",
+          "id": "q4a3",
+          "characterId": "pilot"
+        },
+        {
+          "id": "q4a4",
+          "characterId": "medic",
+          "text": "Keep morale up when the countdown gets scary"
+        }
+      ]
+    },
+    {
+      "id": "q5",
+      "answers": [
+        {
+          "text": "Direct foot traffic around them while others help",
+          "id": "q5a1",
+          "characterId": "captain"
+        },
+        {
+          "characterId": "engineer",
+          "id": "q5a2",
+          "text": "Fashion a new bag out of whatever's handy"
+        },
+        {
+          "id": "q5a3",
+          "characterId": "medic",
+          "text": "Drop everything and start gathering oranges"
+        },
+        {
+          "text": "Wonder briefly about bag design flaws — while helping",
+          "characterId": "science-officer",
+          "id": "q5a4"
+        }
+      ],
+      "text": "A stranger's grocery bag rips open on the sidewalk. You:"
+    },
+    {
+      "text": "Pick the compliment you'd most like to receive:",
+      "answers": [
+        {
+          "characterId": "captain",
+          "id": "q6a1",
+          "text": "'I'd follow you anywhere'"
+        },
+        {
+          "text": "'You make hard things look easy'",
+          "id": "q6a2",
+          "characterId": "pilot"
+        },
+        {
+          "characterId": "medic",
+          "id": "q6a3",
+          "text": "'You always know exactly what I need'"
+        },
+        {
+          "text": "'I never thought of it that way'",
+          "characterId": "science-officer",
+          "id": "q6a4"
+        }
+      ],
+      "id": "q6"
+    },
+    {
+      "id": "q7",
+      "answers": [
+        {
+          "characterId": "captain",
+          "id": "q7a1",
+          "text": "Strategy — you play the long game"
+        },
+        {
+          "id": "q7a2",
+          "characterId": "engineer",
+          "text": "Anything where you get to build things"
+        },
+        {
+          "id": "q7a3",
+          "characterId": "pilot",
+          "text": "Racing — pure reflexes"
+        },
+        {
+          "id": "q7a4",
+          "characterId": "science-officer",
+          "text": "Puzzles and mysteries"
+        }
+      ],
+      "text": "Your favorite kind of game:"
+    },
+    {
+      "text": "Something breaks at the worst possible moment. Your instinct:",
+      "answers": [
+        {
+          "id": "q8a1",
+          "characterId": "engineer",
+          "text": "Grab it. You can probably fix it."
+        },
+        {
+          "text": "Improvise around it and keep moving",
+          "id": "q8a2",
+          "characterId": "pilot"
+        },
+        {
+          "characterId": "medic",
+          "id": "q8a3",
+          "text": "Make sure no one's hurt first"
+        },
+        {
+          "text": "Ask what caused it before touching anything",
+          "id": "q8a4",
+          "characterId": "science-officer"
+        }
+      ],
+      "id": "q8"
+    },
+    {
+      "text": "Your friends call you when:",
+      "answers": [
+        {
+          "characterId": "captain",
+          "id": "q9a1",
+          "text": "A tough decision needs a tiebreaker"
+        },
+        {
+          "text": "Something's rattling and they don't know why",
+          "characterId": "engineer",
+          "id": "q9a2"
+        },
+        {
+          "id": "q9a3",
+          "characterId": "pilot",
+          "text": "They need someone up for anything, right now"
+        },
+        {
+          "text": "They've had the worst day and need to talk",
+          "id": "q9a4",
+          "characterId": "medic"
+        }
+      ],
+      "id": "q9"
+    },
+    {
+      "text": "You get one sentence on a billboard. It says:",
+      "id": "q10",
+      "answers": [
+        {
+          "text": "'Someone has to decide. Might as well be you.'",
+          "characterId": "captain",
+          "id": "q10a1"
+        },
+        {
+          "id": "q10a2",
+          "characterId": "engineer",
+          "text": "'It's not broken forever.'"
+        },
+        {
+          "characterId": "medic",
+          "id": "q10a3",
+          "text": "'Have you eaten today? Eat something.'"
+        },
+        {
+          "text": "'Look closer.'",
+          "id": "q10a4",
+          "characterId": "science-officer"
+        }
+      ]
+    },
+    {
+      "text": "Your ideal vacation pace:",
+      "answers": [
+        {
+          "text": "An itinerary with clear priorities — and backup plans",
+          "characterId": "captain",
+          "id": "q11a1"
+        },
+        {
+          "text": "Book the flight, figure out the rest on landing",
+          "characterId": "pilot",
+          "id": "q11a2"
+        },
+        {
+          "text": "Slow mornings, everyone well-fed and happy",
+          "characterId": "medic",
+          "id": "q11a3"
+        },
+        {
+          "characterId": "science-officer",
+          "id": "q11a4",
+          "text": "Museums until your feet give out"
+        }
+      ],
+      "id": "q11"
+    },
+    {
+      "answers": [
+        {
+          "characterId": "captain",
+          "id": "q12a1",
+          "text": "Take charge: water check, daylight check, decision"
+        },
+        {
+          "characterId": "engineer",
+          "id": "q12a2",
+          "text": "Rig trail markers so it can't happen twice"
+        },
+        {
+          "id": "q12a3",
+          "characterId": "pilot",
+          "text": "Climb something tall and get your bearings by feel"
+        },
+        {
+          "text": "Recall the trail map from memory — mostly",
+          "characterId": "science-officer",
+          "id": "q12a4"
+        }
+      ],
+      "id": "q12",
+      "text": "The group gets turned around on a hike. You:"
+    }
+  ],
+  "results": [
+    {
+      "characterId": "captain",
+      "characterName": "The Captain",
+      "traits": [
+        "Decisive",
+        "Responsible",
+        "Steady",
+        "Inspiring",
+        "Fair"
+      ],
+      "description": "You carry the weight so others don't have to. Decisive and steady, you make the hard calls and own the outcomes — and your crew would follow you into any storm."
+    },
+    {
+      "characterId": "engineer",
+      "characterName": "The Engineer",
+      "traits": [
+        "Practical",
+        "Resourceful",
+        "Hands-on",
+        "Reliable",
+        "Ingenious"
+      ],
+      "description": "Nothing stays broken around you. Practical, patient, and endlessly resourceful, you keep everything running while making it look easy. The ship flies because of you."
+    },
+    {
+      "description": "The heart of the crew. You notice who's struggling before they say a word, and you hold everyone together when things get rough. Every mission needs you most.",
+      "traits": [
+        "Caring",
+        "Perceptive",
+        "Calm",
+        "Nurturing",
+        "Dependable"
+      ],
+      "characterName": "The Medic",
+      "characterId": "medic"
+    },
+    {
+      "description": "Cool head, quick hands, zero panic. You trust your instincts because they've earned it, and you make the impossible maneuver look routine. Buckle up, everyone.",
+      "traits": [
+        "Confident",
+        "Instinctive",
+        "Bold",
+        "Calm",
+        "Quick"
+      ],
+      "characterName": "The Pilot",
+      "characterId": "pilot"
+    },
+    {
+      "characterId": "science-officer",
+      "characterName": "The Science Officer",
+      "traits": [
+        "Curious",
+        "Analytical",
+        "Observant",
+        "Open-minded",
+        "Brilliant"
+      ],
+      "description": "Powered by pure wonder. You ask the questions nobody thought of and find the answers nobody expected. Every strange new world is your favorite place."
+    }
+  ]
+}

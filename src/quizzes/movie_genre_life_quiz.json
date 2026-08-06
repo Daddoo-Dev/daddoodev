@@ -1,0 +1,394 @@
+{
+  "id": "movie-genre-life-quiz",
+  "title": "Which Movie Genre Is Your Life?",
+  "description": "If cameras followed you around, what kind of movie would they be making? Roll film and find out!",
+  "categoryId": "pop-culture-fandom",
+  "questions": [
+    {
+      "text": "Monday morning. Your opening scene:",
+      "id": "q1",
+      "answers": [
+        {
+          "id": "q1a1",
+          "characterId": "mystery",
+          "text": "Squinting at a note you left yourself Friday"
+        },
+        {
+          "text": "Singing in the shower like it's the finale",
+          "characterId": "musical",
+          "id": "q1a2"
+        },
+        {
+          "id": "q1a3",
+          "characterId": "documentary",
+          "text": "Podcast in, learning something before 8 AM"
+        },
+        {
+          "text": "Watching the light move across the ceiling, five more minutes",
+          "id": "q1a4",
+          "characterId": "indie"
+        }
+      ]
+    },
+    {
+      "answers": [
+        {
+          "id": "q2a1",
+          "characterId": "romcom",
+          "text": "A farmers market run-in that becomes a whole thing"
+        },
+        {
+          "characterId": "action",
+          "id": "q2a2",
+          "text": "Something with waivers"
+        },
+        {
+          "id": "q2a3",
+          "characterId": "documentary",
+          "text": "A deep-dive into your latest obsession"
+        },
+        {
+          "characterId": "indie",
+          "id": "q2a4",
+          "text": "A long aimless walk that fixes everything"
+        }
+      ],
+      "id": "q2",
+      "text": "Your ideal weekend plot:"
+    },
+    {
+      "text": "How do you tell a story to friends?",
+      "answers": [
+        {
+          "text": "With all the feelings included",
+          "characterId": "romcom",
+          "id": "q3a1"
+        },
+        {
+          "characterId": "action",
+          "id": "q3a2",
+          "text": "Standing up, acting out the stunts"
+        },
+        {
+          "characterId": "mystery",
+          "id": "q3a3",
+          "text": "Saving the twist for the very end"
+        },
+        {
+          "characterId": "musical",
+          "id": "q3a4",
+          "text": "With sound effects and a big finish"
+        }
+      ],
+      "id": "q3"
+    },
+    {
+      "id": "q4",
+      "answers": [
+        {
+          "text": "Order to go. You're already in motion.",
+          "characterId": "action",
+          "id": "q4a1"
+        },
+        {
+          "characterId": "musical",
+          "id": "q4a2",
+          "text": "Complimenting the barista's playlist, loudly"
+        },
+        {
+          "text": "Interviewing the owner about bean origins, accidentally",
+          "id": "q4a3",
+          "characterId": "documentary"
+        },
+        {
+          "characterId": "indie",
+          "id": "q4a4",
+          "text": "Window seat, notebook, three hours"
+        }
+      ],
+      "text": "Pick a coffee shop moment:"
+    },
+    {
+      "id": "q5",
+      "answers": [
+        {
+          "text": "'This is my origin story'",
+          "id": "q5a1",
+          "characterId": "romcom"
+        },
+        {
+          "characterId": "mystery",
+          "id": "q5a2",
+          "text": "'I actually saw this coming'"
+        },
+        {
+          "id": "q5a3",
+          "characterId": "musical",
+          "text": "An audible gasp with hand to chest"
+        },
+        {
+          "text": "A long thoughtful look out a rainy window",
+          "characterId": "indie",
+          "id": "q5a4"
+        }
+      ],
+      "text": "Your reaction to a plot twist in real life:"
+    },
+    {
+      "id": "q6",
+      "answers": [
+        {
+          "id": "q6a1",
+          "characterId": "romcom",
+          "text": "Chemistry. You can feel it across a room."
+        },
+        {
+          "text": "Whether they can keep up",
+          "characterId": "action",
+          "id": "q6a2"
+        },
+        {
+          "text": "The thing they're not saying",
+          "characterId": "mystery",
+          "id": "q6a3"
+        },
+        {
+          "id": "q6a4",
+          "characterId": "documentary",
+          "text": "Their story — everyone has a fascinating one"
+        }
+      ],
+      "text": "What do you notice about people first?"
+    },
+    {
+      "text": "Your camera roll's supporting cast:",
+      "answers": [
+        {
+          "text": "Blurry shots of you mid-activity",
+          "characterId": "action",
+          "id": "q7a1"
+        },
+        {
+          "text": "Photos of weird things you need to identify later",
+          "id": "q7a2",
+          "characterId": "mystery"
+        },
+        {
+          "id": "q7a3",
+          "characterId": "documentary",
+          "text": "Screenshots of articles for later"
+        },
+        {
+          "characterId": "indie",
+          "id": "q7a4",
+          "text": "Empty streets at golden hour"
+        }
+      ],
+      "id": "q7"
+    },
+    {
+      "answers": [
+        {
+          "text": "Something hopeful with strings",
+          "characterId": "romcom",
+          "id": "q8a1"
+        },
+        {
+          "characterId": "mystery",
+          "id": "q8a2",
+          "text": "A podcast about an unsolved anything"
+        },
+        {
+          "characterId": "musical",
+          "id": "q8a3",
+          "text": "Showtunes, performed along with, fully"
+        },
+        {
+          "text": "An interview with someone brilliant",
+          "characterId": "documentary",
+          "id": "q8a4"
+        }
+      ],
+      "id": "q8",
+      "text": "Pick a soundtrack for your commute:"
+    },
+    {
+      "answers": [
+        {
+          "id": "q9a1",
+          "characterId": "romcom",
+          "text": "The one rooting hardest for everyone's love life"
+        },
+        {
+          "id": "q9a2",
+          "characterId": "action",
+          "text": "The one who says 'let's just do it'"
+        },
+        {
+          "text": "The one who makes everything An Event",
+          "id": "q9a3",
+          "characterId": "musical"
+        },
+        {
+          "id": "q9a4",
+          "characterId": "indie",
+          "text": "The one with the interesting take nobody expected"
+        }
+      ],
+      "id": "q9",
+      "text": "Your friends cast you as:"
+    },
+    {
+      "answers": [
+        {
+          "text": "Walking away from something (safely) dramatic",
+          "characterId": "action",
+          "id": "q10a1"
+        },
+        {
+          "id": "q10a2",
+          "characterId": "mystery",
+          "text": "One last detail that recontextualizes everything"
+        },
+        {
+          "text": "Full ensemble number in the street",
+          "id": "q10a3",
+          "characterId": "musical"
+        },
+        {
+          "id": "q10a4",
+          "characterId": "indie",
+          "text": "An ambiguous smile. Cut to black. Critics rave."
+        }
+      ],
+      "id": "q10",
+      "text": "A perfect ending to your movie:"
+    },
+    {
+      "id": "q11",
+      "answers": [
+        {
+          "text": "You just know when it's the one",
+          "characterId": "romcom",
+          "id": "q11a1"
+        },
+        {
+          "text": "Cross-referencing reviews for inconsistencies",
+          "characterId": "mystery",
+          "id": "q11a2"
+        },
+        {
+          "text": "Three-tab minimum, one spreadsheet, expert opinions",
+          "characterId": "documentary",
+          "id": "q11a3"
+        },
+        {
+          "text": "Whatever the small shop with character sells",
+          "id": "q11a4",
+          "characterId": "indie"
+        }
+      ],
+      "text": "How do you research a big purchase?"
+    },
+    {
+      "text": "Your life's genre tagline:",
+      "id": "q12",
+      "answers": [
+        {
+          "characterId": "romcom",
+          "id": "q12a1",
+          "text": "'Love finds a way'"
+        },
+        {
+          "id": "q12a2",
+          "characterId": "action",
+          "text": "'No time to explain'"
+        },
+        {
+          "text": "'Why say it when you can sing it?'",
+          "id": "q12a3",
+          "characterId": "musical"
+        },
+        {
+          "characterId": "documentary",
+          "id": "q12a4",
+          "text": "'The truth is fascinating'"
+        }
+      ]
+    }
+  ],
+  "results": [
+    {
+      "traits": [
+        "Bold",
+        "Decisive",
+        "Energetic",
+        "Fearless",
+        "Unstoppable"
+      ],
+      "description": "High energy, quick decisions, zero hesitation. Your life moves at full throttle and you like it that way — there's always another sequel in production.",
+      "characterId": "action",
+      "characterName": "The Action Movie"
+    },
+    {
+      "characterName": "The Documentary",
+      "characterId": "documentary",
+      "description": "Endlessly curious about how the world actually works. You collect fascinating truths the way others collect souvenirs, and talking to you is an education.",
+      "traits": [
+        "Curious",
+        "Informed",
+        "Thoughtful",
+        "Honest",
+        "Fascinating"
+      ]
+    },
+    {
+      "description": "Quietly original with impeccable taste. You find meaning in small moments others rush past, and your perspective is the one people remember later.",
+      "traits": [
+        "Original",
+        "Introspective",
+        "Artistic",
+        "Authentic",
+        "Subtle"
+      ],
+      "characterName": "The Indie Film",
+      "characterId": "indie"
+    },
+    {
+      "characterId": "musical",
+      "characterName": "The Musical",
+      "traits": [
+        "Expressive",
+        "Joyful",
+        "Dramatic",
+        "Enthusiastic",
+        "Vibrant"
+      ],
+      "description": "Life at full volume, feelings fully expressed. You bring theatrical joy to ordinary days, and around you, even a Tuesday can become a showstopper."
+    },
+    {
+      "characterId": "mystery",
+      "characterName": "The Mystery",
+      "traits": [
+        "Perceptive",
+        "Analytical",
+        "Intuitive",
+        "Sharp",
+        "Intriguing"
+      ],
+      "description": "Sharp-eyed and three clues ahead. You notice what others miss, love a good puzzle, and your instincts about people are almost unsettlingly accurate."
+    },
+    {
+      "characterId": "romcom",
+      "characterName": "The Rom-Com",
+      "traits": [
+        "Romantic",
+        "Optimistic",
+        "Warm",
+        "Charming",
+        "Hopeful"
+      ],
+      "description": "Warm-hearted and quietly convinced the universe is conspiring in everyone's favor. You believe in great timing, grand gestures, and happy endings — and you're usually right."
+    }
+  ]
+}

@@ -1,0 +1,318 @@
+{
+  "id": "stress-melting-style-quiz",
+  "title": "What's Your Stress-Melting Style?",
+  "description": "When the pressure rises, your instincts kick in. Discover your natural way back to calm!",
+  "categoryId": "wellness-mindset",
+  "questions": [
+    {
+      "text": "Stress hits. Your body's first request:",
+      "answers": [
+        {
+          "id": "q1a1",
+          "characterId": "mover",
+          "text": "Move. Anywhere. Now."
+        },
+        {
+          "text": "One slow breath, then another",
+          "id": "q1a2",
+          "characterId": "breather"
+        },
+        {
+          "id": "q1a3",
+          "characterId": "talker",
+          "text": "Find a person, immediately"
+        },
+        {
+          "text": "Clear the desk. Then the room.",
+          "id": "q1a4",
+          "characterId": "tidier"
+        }
+      ],
+      "id": "q1"
+    },
+    {
+      "text": "Pick a five-minute reset:",
+      "answers": [
+        {
+          "characterId": "mover",
+          "id": "q2a1",
+          "text": "Stairs, twice, fast"
+        },
+        {
+          "text": "A quiet corner and closed eyes",
+          "characterId": "breather",
+          "id": "q2a2"
+        },
+        {
+          "text": "A voice memo to your best friend",
+          "id": "q2a3",
+          "characterId": "talker"
+        },
+        {
+          "text": "Inbox zero, even just visually",
+          "id": "q2a4",
+          "characterId": "tidier"
+        }
+      ],
+      "id": "q2"
+    },
+    {
+      "text": "Your unwind playlist is:",
+      "id": "q3",
+      "answers": [
+        {
+          "id": "q3a1",
+          "characterId": "mover",
+          "text": "High energy — shake it out"
+        },
+        {
+          "text": "Ambient, barely there",
+          "id": "q3a2",
+          "characterId": "breather"
+        },
+        {
+          "text": "A chatty podcast — voices help",
+          "id": "q3a3",
+          "characterId": "talker"
+        },
+        {
+          "text": "Upbeat cleaning anthems",
+          "id": "q3a4",
+          "characterId": "tidier"
+        }
+      ]
+    },
+    {
+      "answers": [
+        {
+          "characterId": "mover",
+          "id": "q4a1",
+          "text": "Walking until the answer appears"
+        },
+        {
+          "text": "Sitting with it, unhurried",
+          "characterId": "breather",
+          "id": "q4a2"
+        },
+        {
+          "id": "q4a3",
+          "characterId": "talker",
+          "text": "Saying it out loud until it makes sense"
+        },
+        {
+          "characterId": "tidier",
+          "id": "q4a4",
+          "text": "A pros and cons list, nicely formatted"
+        }
+      ],
+      "id": "q4",
+      "text": "Big decision looming. You process by:"
+    },
+    {
+      "answers": [
+        {
+          "characterId": "mover",
+          "id": "q5a1",
+          "text": "Mid-run, mile three"
+        },
+        {
+          "text": "A sunny patch of floor",
+          "id": "q5a2",
+          "characterId": "breather"
+        },
+        {
+          "text": "A long phone call with an old friend",
+          "id": "q5a3",
+          "characterId": "talker"
+        },
+        {
+          "text": "A freshly organized closet",
+          "characterId": "tidier",
+          "id": "q5a4"
+        }
+      ],
+      "id": "q5",
+      "text": "Your happy place when tension melts:"
+    },
+    {
+      "text": "Stuck in slow traffic. You:",
+      "answers": [
+        {
+          "id": "q6a1",
+          "characterId": "mover",
+          "text": "Drum the wheel and plan a workout"
+        },
+        {
+          "id": "q6a2",
+          "characterId": "breather",
+          "text": "Practice the patience thing. Actually well."
+        },
+        {
+          "id": "q6a3",
+          "characterId": "talker",
+          "text": "Call someone — found time!"
+        },
+        {
+          "text": "Mentally reorganize the pantry",
+          "id": "q6a4",
+          "characterId": "tidier"
+        }
+      ],
+      "id": "q6"
+    },
+    {
+      "text": "After a hard conversation, you need:",
+      "id": "q7",
+      "answers": [
+        {
+          "id": "q7a1",
+          "characterId": "mover",
+          "text": "A walk around the block, minimum"
+        },
+        {
+          "id": "q7a2",
+          "characterId": "breather",
+          "text": "Ten minutes of pure quiet"
+        },
+        {
+          "id": "q7a3",
+          "characterId": "talker",
+          "text": "To debrief with someone safe"
+        },
+        {
+          "id": "q7a4",
+          "characterId": "tidier",
+          "text": "To straighten something. Anything."
+        }
+      ]
+    },
+    {
+      "id": "q8",
+      "answers": [
+        {
+          "text": "The post-workout glow",
+          "characterId": "mover",
+          "id": "q8a1"
+        },
+        {
+          "text": "Deeply rested, mind gone quiet",
+          "id": "q8a2",
+          "characterId": "breather"
+        },
+        {
+          "characterId": "talker",
+          "id": "q8a3",
+          "text": "Hoarse from laughing"
+        },
+        {
+          "text": "The good ache of a finished chore day",
+          "characterId": "tidier",
+          "id": "q8a4"
+        }
+      ],
+      "text": "Your favorite kind of tired:"
+    },
+    {
+      "answers": [
+        {
+          "characterId": "mover",
+          "id": "q9a1",
+          "text": "A long stretch or an easy jog"
+        },
+        {
+          "text": "Screens off an hour early",
+          "id": "q9a2",
+          "characterId": "breather"
+        },
+        {
+          "text": "The weekly family call marathon",
+          "id": "q9a3",
+          "characterId": "talker"
+        },
+        {
+          "text": "Resetting the house for Monday",
+          "characterId": "tidier",
+          "id": "q9a4"
+        }
+      ],
+      "id": "q9",
+      "text": "Sunday evening, pre-week ritual:"
+    },
+    {
+      "id": "q10",
+      "answers": [
+        {
+          "characterId": "mover",
+          "id": "q10a1",
+          "text": "'Motion changes emotion'"
+        },
+        {
+          "text": "'Slow is smooth'",
+          "characterId": "breather",
+          "id": "q10a2"
+        },
+        {
+          "text": "'Shared weight is lighter'",
+          "id": "q10a3",
+          "characterId": "talker"
+        },
+        {
+          "characterId": "tidier",
+          "id": "q10a4",
+          "text": "'Clear space, clear head'"
+        }
+      ],
+      "text": "Your stress-melting motto:"
+    }
+  ],
+  "results": [
+    {
+      "characterName": "The Breather",
+      "characterId": "breather",
+      "description": "Your calm lives in stillness. While others scramble, you pause — and somehow that pause fixes things. Quiet is not empty for you; it's where the answers are.",
+      "traits": [
+        "Centered",
+        "Patient",
+        "Mindful",
+        "Composed",
+        "Serene"
+      ]
+    },
+    {
+      "description": "Your stress has one natural enemy: motion. A walk, a run, a dance in the kitchen — the moment you start moving, the knots start loosening. Your body knows the way.",
+      "traits": [
+        "Active",
+        "Energetic",
+        "Instinctive",
+        "Resilient",
+        "Vibrant"
+      ],
+      "characterName": "The Mover",
+      "characterId": "mover"
+    },
+    {
+      "description": "You untangle stress out loud. One good conversation and the impossible becomes manageable — because for you, connection isn't a distraction from the problem, it's the solution.",
+      "traits": [
+        "Connected",
+        "Open",
+        "Expressive",
+        "Trusting",
+        "Warm"
+      ],
+      "characterName": "The Talker",
+      "characterId": "talker"
+    },
+    {
+      "characterId": "tidier",
+      "characterName": "The Tidier",
+      "traits": [
+        "Orderly",
+        "Practical",
+        "Grounded",
+        "Satisfying",
+        "Capable"
+      ],
+      "description": "Your calm is buildable. When life feels messy, you make something — anything — orderly, and the peace spreads outward from there. A clear counter is your deep breath."
+    }
+  ]
+}

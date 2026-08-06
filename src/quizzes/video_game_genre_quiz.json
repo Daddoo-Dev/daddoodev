@@ -1,0 +1,394 @@
+{
+  "id": "video-game-genre-quiz",
+  "title": "Which Video Game Genre Are You?",
+  "description": "If your personality were a video game, what would be on the box? Press start to find out!",
+  "categoryId": "pop-culture-fandom",
+  "questions": [
+    {
+      "id": "q1",
+      "answers": [
+        {
+          "text": "Break it into pieces and solve them in order",
+          "id": "q1a1",
+          "characterId": "puzzle"
+        },
+        {
+          "characterId": "racing",
+          "id": "q1a2",
+          "text": "Set a timer and beat it"
+        },
+        {
+          "characterId": "sim",
+          "id": "q1a3",
+          "text": "Reorganize everything first, then begin"
+        },
+        {
+          "text": "Recruit friends — everything's easier together",
+          "id": "q1a4",
+          "characterId": "party"
+        }
+      ],
+      "text": "You hit a hard problem at work or school. You:"
+    },
+    {
+      "id": "q2",
+      "answers": [
+        {
+          "id": "q2a1",
+          "characterId": "platformer",
+          "text": "Trying that new climbing gym"
+        },
+        {
+          "text": "Four hours deep in a series you love",
+          "id": "q2a2",
+          "characterId": "rpg"
+        },
+        {
+          "characterId": "sim",
+          "id": "q2a3",
+          "text": "Meal prepping while a show plays"
+        },
+        {
+          "characterId": "party",
+          "id": "q2a4",
+          "text": "Friends over, snacks out, no agenda"
+        }
+      ],
+      "text": "Pick a perfect evening:"
+    },
+    {
+      "answers": [
+        {
+          "text": "Immediately try again. And again. Got it.",
+          "characterId": "platformer",
+          "id": "q3a1"
+        },
+        {
+          "characterId": "rpg",
+          "id": "q3a2",
+          "text": "Treat it as character development"
+        },
+        {
+          "text": "Study exactly what went wrong first",
+          "id": "q3a3",
+          "characterId": "puzzle"
+        },
+        {
+          "text": "Fail faster next time — speed teaches",
+          "characterId": "racing",
+          "id": "q3a4"
+        }
+      ],
+      "id": "q3",
+      "text": "How do you handle failure?"
+    },
+    {
+      "text": "Your grocery shopping style:",
+      "id": "q4",
+      "answers": [
+        {
+          "characterId": "rpg",
+          "id": "q4a1",
+          "text": "A wandering journey with side quests"
+        },
+        {
+          "text": "Speedrun. Personal best: eleven minutes",
+          "characterId": "racing",
+          "id": "q4a2"
+        },
+        {
+          "text": "A list organized by aisle",
+          "characterId": "sim",
+          "id": "q4a3"
+        },
+        {
+          "id": "q4a4",
+          "characterId": "party",
+          "text": "Whatever looks fun for this weekend"
+        }
+      ]
+    },
+    {
+      "id": "q5",
+      "answers": [
+        {
+          "text": "Ropes course",
+          "characterId": "platformer",
+          "id": "q5a1"
+        },
+        {
+          "characterId": "puzzle",
+          "id": "q5a2",
+          "text": "Escape room"
+        },
+        {
+          "text": "Go-karts",
+          "id": "q5a3",
+          "characterId": "racing"
+        },
+        {
+          "characterId": "party",
+          "id": "q5a4",
+          "text": "Anywhere, as long as the whole class goes"
+        }
+      ],
+      "text": "Choose a school field trip:"
+    },
+    {
+      "text": "Your camera roll is mostly:",
+      "id": "q6",
+      "answers": [
+        {
+          "characterId": "platformer",
+          "id": "q6a1",
+          "text": "Action shots and places you climbed"
+        },
+        {
+          "id": "q6a2",
+          "characterId": "rpg",
+          "text": "A documented saga of your whole year"
+        },
+        {
+          "id": "q6a3",
+          "characterId": "puzzle",
+          "text": "Screenshots of things to figure out later"
+        },
+        {
+          "characterId": "sim",
+          "id": "q6a4",
+          "text": "Before-and-after pictures of projects"
+        }
+      ]
+    },
+    {
+      "answers": [
+        {
+          "id": "q7a1",
+          "characterId": "rpg",
+          "text": "Most Invested In The Group Lore"
+        },
+        {
+          "characterId": "puzzle",
+          "id": "q7a2",
+          "text": "Most Likely To Actually Read Instructions"
+        },
+        {
+          "id": "q7a3",
+          "characterId": "sim",
+          "text": "Most Organized Life"
+        },
+        {
+          "id": "q7a4",
+          "characterId": "party",
+          "text": "Most Fun At Gatherings"
+        }
+      ],
+      "id": "q7",
+      "text": "Pick a superlative you'd win:"
+    },
+    {
+      "id": "q8",
+      "answers": [
+        {
+          "characterId": "platformer",
+          "id": "q8a1",
+          "text": "Get restless by 10 AM, go out anyway"
+        },
+        {
+          "id": "q8a2",
+          "characterId": "puzzle",
+          "text": "Crossword, then a jigsaw, bliss"
+        },
+        {
+          "text": "Finally beat your own errand record",
+          "id": "q8a3",
+          "characterId": "racing"
+        },
+        {
+          "text": "Deep-clean one closet, feel invincible",
+          "id": "q8a4",
+          "characterId": "sim"
+        }
+      ],
+      "text": "Rainy Sunday. You:"
+    },
+    {
+      "id": "q9",
+      "answers": [
+        {
+          "id": "q9a1",
+          "characterId": "platformer",
+          "text": "Never stays down long"
+        },
+        {
+          "text": "Remembers everyone's whole story",
+          "id": "q9a2",
+          "characterId": "rpg"
+        },
+        {
+          "text": "Does everything at double speed",
+          "id": "q9a3",
+          "characterId": "racing"
+        },
+        {
+          "text": "Turns any plan into an event",
+          "id": "q9a4",
+          "characterId": "party"
+        }
+      ],
+      "text": "Your friends would say you're the one who:"
+    },
+    {
+      "id": "q10",
+      "answers": [
+        {
+          "text": "A library with a reading nook",
+          "id": "q10a1",
+          "characterId": "rpg"
+        },
+        {
+          "id": "q10a2",
+          "characterId": "puzzle",
+          "text": "A hidden room behind a bookcase"
+        },
+        {
+          "characterId": "racing",
+          "id": "q10a3",
+          "text": "A very long, very smooth driveway"
+        },
+        {
+          "characterId": "party",
+          "id": "q10a4",
+          "text": "A backyard built for twenty guests"
+        }
+      ],
+      "text": "Pick a dream house feature:"
+    },
+    {
+      "answers": [
+        {
+          "text": "Jump in, fall down, jump in again",
+          "characterId": "platformer",
+          "id": "q11a1"
+        },
+        {
+          "characterId": "puzzle",
+          "id": "q11a2",
+          "text": "Watch tutorials until it clicks"
+        },
+        {
+          "text": "Buy the organizer for the supplies first",
+          "id": "q11a3",
+          "characterId": "sim"
+        },
+        {
+          "characterId": "party",
+          "id": "q11a4",
+          "text": "Join a club so it comes with people"
+        }
+      ],
+      "id": "q11",
+      "text": "How do you approach a new hobby?"
+    },
+    {
+      "text": "Your life motto (video game edition):",
+      "answers": [
+        {
+          "text": "One more try",
+          "characterId": "platformer",
+          "id": "q12a1"
+        },
+        {
+          "id": "q12a2",
+          "characterId": "rpg",
+          "text": "It's about the journey"
+        },
+        {
+          "id": "q12a3",
+          "characterId": "racing",
+          "text": "Full speed ahead"
+        },
+        {
+          "text": "Everything in its place",
+          "id": "q12a4",
+          "characterId": "sim"
+        }
+      ],
+      "id": "q12"
+    }
+  ],
+  "results": [
+    {
+      "description": "You exist to bring people together. Rules are loose, laughter is mandatory, and nobody remembers who won — they remember how much fun it was.",
+      "traits": [
+        "Social",
+        "Fun-loving",
+        "Inclusive",
+        "Energetic",
+        "Warm"
+      ],
+      "characterName": "The Party Game",
+      "characterId": "party"
+    },
+    {
+      "description": "Bouncy, persistent, and impossible to keep down. Every setback is just a reset, and you always come back with better timing. One more try, always.",
+      "traits": [
+        "Persistent",
+        "Energetic",
+        "Resilient",
+        "Optimistic",
+        "Agile"
+      ],
+      "characterName": "The Platformer",
+      "characterId": "platformer"
+    },
+    {
+      "characterName": "The Puzzle Game",
+      "characterId": "puzzle",
+      "description": "Methodical and satisfying, you see patterns everywhere and solve what others skip. Your brain is the main attraction, and it never stops clicking.",
+      "traits": [
+        "Logical",
+        "Patient",
+        "Clever",
+        "Focused",
+        "Curious"
+      ]
+    },
+    {
+      "description": "Life has a speed limit; you consider it a suggestion — a personal best waiting to be beaten. Fast, focused, and first across every finish line.",
+      "traits": [
+        "Fast",
+        "Competitive",
+        "Focused",
+        "Bold",
+        "Driven"
+      ],
+      "characterName": "The Racing Game",
+      "characterId": "racing"
+    },
+    {
+      "characterName": "The RPG",
+      "characterId": "rpg",
+      "description": "Deep, story-driven, and in it for the long haul. You invest fully — in people, projects, and epic multi-year journeys. Your lore runs deep.",
+      "traits": [
+        "Devoted",
+        "Imaginative",
+        "Thorough",
+        "Loyal",
+        "Thoughtful"
+      ]
+    },
+    {
+      "characterId": "sim",
+      "characterName": "The Sim",
+      "traits": [
+        "Organized",
+        "Nurturing",
+        "Practical",
+        "Creative",
+        "Content"
+      ],
+      "description": "Builder of ordered, thriving little worlds. You find genuine joy in organizing, improving, and watching things grow — and your life runs beautifully because of it."
+    }
+  ]
+}

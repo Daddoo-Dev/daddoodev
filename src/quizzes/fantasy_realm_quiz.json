@@ -1,0 +1,330 @@
+{
+  "id": "fantasy-realm-quiz",
+  "title": "Which Fantasy Realm Would You Rule?",
+  "description": "Five wondrous kingdoms await a ruler. Your personality holds the key to your rightful throne!",
+  "categoryId": "pop-culture-fandom",
+  "questions": [
+    {
+      "id": "q1",
+      "answers": [
+        {
+          "text": "Imagine the boldest version and work backward",
+          "characterId": "skyhold",
+          "id": "q1a1"
+        },
+        {
+          "id": "q1a2",
+          "characterId": "tidereach",
+          "text": "Sleep on it. Clarity comes with calm."
+        },
+        {
+          "id": "q1a3",
+          "characterId": "everbloom",
+          "text": "Ask the people it affects first"
+        },
+        {
+          "characterId": "emberpeak",
+          "id": "q1a4",
+          "text": "Decide fast, commit fully, never look back"
+        }
+      ],
+      "text": "How do you make big decisions?"
+    },
+    {
+      "answers": [
+        {
+          "text": "Big vision, someone else handles the spreadsheet",
+          "characterId": "skyhold",
+          "id": "q2a1"
+        },
+        {
+          "id": "q2a2",
+          "characterId": "tidereach",
+          "text": "Steady presence that keeps everyone level"
+        },
+        {
+          "id": "q2a3",
+          "characterId": "everbloom",
+          "text": "Making sure every voice gets heard"
+        },
+        {
+          "text": "Perfecting the details everyone else missed",
+          "characterId": "glimmerdeep",
+          "id": "q2a4"
+        }
+      ],
+      "id": "q2",
+      "text": "Your leadership style in group projects:"
+    },
+    {
+      "text": "Pick a morning ritual:",
+      "answers": [
+        {
+          "id": "q3a1",
+          "characterId": "skyhold",
+          "text": "Coffee somewhere with a view"
+        },
+        {
+          "id": "q3a2",
+          "characterId": "everbloom",
+          "text": "Watering the plants, greeting each one"
+        },
+        {
+          "id": "q3a3",
+          "characterId": "emberpeak",
+          "text": "A workout before the world wakes up"
+        },
+        {
+          "text": "Journaling by lamplight",
+          "id": "q3a4",
+          "characterId": "glimmerdeep"
+        }
+      ],
+      "id": "q3"
+    },
+    {
+      "id": "q4",
+      "answers": [
+        {
+          "text": "Peace treaties. Everyone negotiates here.",
+          "id": "q4a1",
+          "characterId": "tidereach"
+        },
+        {
+          "text": "Festivals where every village is invited",
+          "characterId": "everbloom",
+          "id": "q4a2"
+        },
+        {
+          "text": "Champions, forges, and unbreakable will",
+          "characterId": "emberpeak",
+          "id": "q4a3"
+        },
+        {
+          "id": "q4a4",
+          "characterId": "glimmerdeep",
+          "text": "Art and treasures found nowhere else"
+        }
+      ],
+      "text": "What would your kingdom be famous for?"
+    },
+    {
+      "text": "Your friends come to you when they need:",
+      "answers": [
+        {
+          "id": "q5a1",
+          "characterId": "skyhold",
+          "text": "Permission to dream bigger"
+        },
+        {
+          "id": "q5a2",
+          "characterId": "tidereach",
+          "text": "To feel calm again"
+        },
+        {
+          "text": "A fire lit under them",
+          "characterId": "emberpeak",
+          "id": "q5a3"
+        },
+        {
+          "text": "Help finding the beauty in a mess",
+          "id": "q5a4",
+          "characterId": "glimmerdeep"
+        }
+      ],
+      "id": "q5"
+    },
+    {
+      "id": "q6",
+      "answers": [
+        {
+          "text": "A falcon that rides the wind",
+          "characterId": "skyhold",
+          "id": "q6a1"
+        },
+        {
+          "text": "A wise old turtle",
+          "characterId": "tidereach",
+          "id": "q6a2"
+        },
+        {
+          "characterId": "glimmerdeep",
+          "id": "q6a3",
+          "text": "A quiet owl that notices everything"
+        },
+        {
+          "id": "q6a4",
+          "characterId": "emberpeak",
+          "text": "A salamander with attitude"
+        }
+      ],
+      "text": "Pick a royal pet:"
+    },
+    {
+      "text": "An unexpected free afternoon. You:",
+      "answers": [
+        {
+          "characterId": "skyhold",
+          "id": "q7a1",
+          "text": "Drive somewhere new with no destination"
+        },
+        {
+          "text": "Do absolutely nothing, masterfully",
+          "characterId": "tidereach",
+          "id": "q7a2"
+        },
+        {
+          "characterId": "everbloom",
+          "id": "q7a3",
+          "text": "Call someone you've been missing"
+        },
+        {
+          "text": "Finally work on your personal project",
+          "id": "q7a4",
+          "characterId": "glimmerdeep"
+        }
+      ],
+      "id": "q7"
+    },
+    {
+      "answers": [
+        {
+          "id": "q8a1",
+          "characterId": "tidereach",
+          "text": "Let tempers cool before any talks begin"
+        },
+        {
+          "text": "A shared meal solves most wars",
+          "id": "q8a2",
+          "characterId": "everbloom"
+        },
+        {
+          "text": "Address it directly, today, at full volume",
+          "id": "q8a3",
+          "characterId": "emberpeak"
+        },
+        {
+          "characterId": "glimmerdeep",
+          "id": "q8a4",
+          "text": "Understand the hidden cause first"
+        }
+      ],
+      "id": "q8",
+      "text": "Your approach to conflict in the realm:"
+    },
+    {
+      "id": "q9",
+      "answers": [
+        {
+          "text": "Change IS the plan",
+          "id": "q9a1",
+          "characterId": "skyhold"
+        },
+        {
+          "id": "q9a2",
+          "characterId": "tidereach",
+          "text": "Flow with it — resisting is exhausting"
+        },
+        {
+          "characterId": "everbloom",
+          "id": "q9a3",
+          "text": "Growth is good, roots matter too"
+        },
+        {
+          "characterId": "emberpeak",
+          "id": "q9a4",
+          "text": "You don't wait for change. You cause it."
+        }
+      ],
+      "text": "What's your relationship with change?"
+    },
+    {
+      "answers": [
+        {
+          "text": "'Higher still'",
+          "id": "q10a1",
+          "characterId": "skyhold"
+        },
+        {
+          "text": "'All are welcome'",
+          "id": "q10a2",
+          "characterId": "everbloom"
+        },
+        {
+          "characterId": "emberpeak",
+          "id": "q10a3",
+          "text": "'Forged, not found'"
+        },
+        {
+          "text": "'Look deeper'",
+          "id": "q10a4",
+          "characterId": "glimmerdeep"
+        }
+      ],
+      "id": "q10",
+      "text": "Choose a royal motto:"
+    }
+  ],
+  "results": [
+    {
+      "characterName": "Emberpeak",
+      "characterId": "emberpeak",
+      "description": "You'd rule the volcano fortress of Emberpeak — realm of drive and unbreakable will. Like its forges, you turn pressure into strength and inspire everyone to burn brighter.",
+      "traits": [
+        "Driven",
+        "Passionate",
+        "Resilient",
+        "Bold",
+        "Inspiring"
+      ]
+    },
+    {
+      "characterId": "everbloom",
+      "characterName": "Everbloom",
+      "traits": [
+        "Nurturing",
+        "Welcoming",
+        "Patient",
+        "Generous",
+        "Grounded"
+      ],
+      "description": "You'd rule the living forest of Everbloom — realm of community and growth. Under your care, everything and everyone flourishes, and no one ever feels left outside the canopy."
+    },
+    {
+      "description": "You'd rule the crystal caverns of Glimmerdeep — realm of hidden wonders. You see brilliance where others see rock, and your kingdom's depths hold the world's most beautiful secrets.",
+      "traits": [
+        "Perceptive",
+        "Creative",
+        "Thoughtful",
+        "Meticulous",
+        "Deep"
+      ],
+      "characterName": "Glimmerdeep",
+      "characterId": "glimmerdeep"
+    },
+    {
+      "characterId": "skyhold",
+      "characterName": "Skyhold",
+      "traits": [
+        "Visionary",
+        "Free-spirited",
+        "Optimistic",
+        "Ambitious",
+        "Imaginative"
+      ],
+      "description": "You'd rule the cloud kingdom of Skyhold — realm of vision and open horizons. You dream in wide skies, think in possibilities, and lift everyone's gaze a little higher."
+    },
+    {
+      "characterId": "tidereach",
+      "characterName": "Tidereach",
+      "traits": [
+        "Calm",
+        "Wise",
+        "Adaptable",
+        "Peaceful",
+        "Steady"
+      ],
+      "description": "You'd rule the underwater city of Tidereach — realm of calm and deep currents. Your steady presence settles storms, and your wisdom runs quieter and deeper than anyone knows."
+    }
+  ]
+}

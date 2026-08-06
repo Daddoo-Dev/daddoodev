@@ -1,0 +1,330 @@
+{
+  "id": "reality-show-winner-quiz",
+  "title": "Which Reality Show Would You Win?",
+  "description": "Somewhere out there is a trophy with your name on it. Which competition crowns you champion?",
+  "categoryId": "pop-culture-fandom",
+  "questions": [
+    {
+      "id": "q1",
+      "answers": [
+        {
+          "text": "Whip up appetizers from whatever exists. Somehow gourmet.",
+          "id": "q1a1",
+          "characterId": "cooking-competition"
+        },
+        {
+          "characterId": "wilderness-survival",
+          "id": "q1a2",
+          "text": "Prioritize ruthlessly: bathroom, entryway, done"
+        },
+        {
+          "text": "Light candles, dim lamps, call it ambiance",
+          "id": "q1a3",
+          "characterId": "talent-showcase"
+        },
+        {
+          "text": "Full transformation. Guests can wait.",
+          "id": "q1a4",
+          "characterId": "home-makeover"
+        }
+      ],
+      "text": "Twenty minutes until guests arrive and the house is chaos. You:"
+    },
+    {
+      "answers": [
+        {
+          "text": "A timer, limited ingredients, and judges",
+          "id": "q2a1",
+          "characterId": "cooking-competition"
+        },
+        {
+          "characterId": "wilderness-survival",
+          "id": "q2a2",
+          "text": "Rain, a tarp, and figuring it out"
+        },
+        {
+          "text": "A stage, a spotlight, one shot",
+          "characterId": "talent-showcase",
+          "id": "q2a3"
+        },
+        {
+          "id": "q2a4",
+          "characterId": "trivia-gauntlet",
+          "text": "Rapid-fire questions, buzzer in hand"
+        }
+      ],
+      "id": "q2",
+      "text": "Pick a pressure situation you'd secretly enjoy:"
+    },
+    {
+      "id": "q3",
+      "answers": [
+        {
+          "characterId": "cooking-competition",
+          "id": "q3a1",
+          "text": "Building tonight's menu from the discount shelf"
+        },
+        {
+          "text": "In and out with the essentials in record time",
+          "characterId": "wilderness-survival",
+          "id": "q3a2"
+        },
+        {
+          "text": "Spotting the display-worthy finds on any budget",
+          "id": "q3a3",
+          "characterId": "home-makeover"
+        },
+        {
+          "id": "q3a4",
+          "characterId": "trivia-gauntlet",
+          "text": "Knowing the origin story of every ingredient"
+        }
+      ],
+      "text": "Your grocery store superpower:"
+    },
+    {
+      "id": "q4",
+      "answers": [
+        {
+          "characterId": "cooking-competition",
+          "id": "q4a1",
+          "text": "The place where the good meals happen"
+        },
+        {
+          "text": "Where the fun somehow always ends up",
+          "id": "q4a2",
+          "characterId": "talent-showcase"
+        },
+        {
+          "text": "Suspiciously well-decorated for the budget",
+          "id": "q4a3",
+          "characterId": "home-makeover"
+        },
+        {
+          "text": "Full of books and fascinating objects",
+          "characterId": "trivia-gauntlet",
+          "id": "q4a4"
+        }
+      ],
+      "text": "Friends describe your home as:"
+    },
+    {
+      "answers": [
+        {
+          "text": "Days long, endurance-based, elements involved",
+          "id": "q5a1",
+          "characterId": "wilderness-survival"
+        },
+        {
+          "text": "Ninety seconds to amaze",
+          "characterId": "talent-showcase",
+          "id": "q5a2"
+        },
+        {
+          "text": "A before, an after, and a big reveal",
+          "id": "q5a3",
+          "characterId": "home-makeover"
+        },
+        {
+          "text": "Head-to-head, categories escalating",
+          "characterId": "trivia-gauntlet",
+          "id": "q5a4"
+        }
+      ],
+      "id": "q5",
+      "text": "Your ideal challenge format:"
+    },
+    {
+      "text": "Something breaks the night before a big event. You:",
+      "answers": [
+        {
+          "text": "Improvise a substitute nobody will detect",
+          "id": "q6a1",
+          "characterId": "cooking-competition"
+        },
+        {
+          "text": "Duct tape. Next problem.",
+          "characterId": "wilderness-survival",
+          "id": "q6a2"
+        },
+        {
+          "id": "q6a3",
+          "characterId": "talent-showcase",
+          "text": "Make the flaw part of the show"
+        },
+        {
+          "id": "q6a4",
+          "characterId": "home-makeover",
+          "text": "Rebuild it better than the original"
+        }
+      ],
+      "id": "q6"
+    },
+    {
+      "text": "Your victory speech style:",
+      "answers": [
+        {
+          "characterId": "cooking-competition",
+          "id": "q7a1",
+          "text": "Thanking your grandmother's recipes, tearfully"
+        },
+        {
+          "text": "Short. You're mostly just hungry.",
+          "characterId": "wilderness-survival",
+          "id": "q7a2"
+        },
+        {
+          "characterId": "talent-showcase",
+          "id": "q7a3",
+          "text": "A speech? You prepared a whole encore."
+        },
+        {
+          "id": "q7a4",
+          "characterId": "trivia-gauntlet",
+          "text": "Graciously correcting the host's pronunciation"
+        }
+      ],
+      "id": "q7"
+    },
+    {
+      "id": "q8",
+      "answers": [
+        {
+          "text": "The kid whose lunch everyone wanted to trade for",
+          "characterId": "cooking-competition",
+          "id": "q8a1"
+        },
+        {
+          "id": "q8a2",
+          "characterId": "wilderness-survival",
+          "text": "Built the neighborhood's best fort"
+        },
+        {
+          "text": "Rearranged your room monthly, flawlessly",
+          "characterId": "home-makeover",
+          "id": "q8a3"
+        },
+        {
+          "characterId": "trivia-gauntlet",
+          "id": "q8a4",
+          "text": "The one teachers couldn't stump"
+        }
+      ],
+      "text": "Pick a childhood claim to fame:"
+    },
+    {
+      "text": "Your secret competitive edge:",
+      "id": "q9",
+      "answers": [
+        {
+          "text": "You genuinely don't mind being uncomfortable",
+          "id": "q9a1",
+          "characterId": "wilderness-survival"
+        },
+        {
+          "text": "Nerves make you better, not worse",
+          "characterId": "talent-showcase",
+          "id": "q9a2"
+        },
+        {
+          "characterId": "home-makeover",
+          "id": "q9a3",
+          "text": "You see the finished version before you start"
+        },
+        {
+          "text": "You remember everything. Everything.",
+          "characterId": "trivia-gauntlet",
+          "id": "q9a4"
+        }
+      ]
+    },
+    {
+      "id": "q10",
+      "answers": [
+        {
+          "text": "A wooden spoon with history",
+          "id": "q10a1",
+          "characterId": "cooking-competition"
+        },
+        {
+          "id": "q10a2",
+          "characterId": "talent-showcase",
+          "text": "A framed photo of the crowd mid-cheer"
+        },
+        {
+          "characterId": "home-makeover",
+          "id": "q10a3",
+          "text": "It IS the shelf. You built it."
+        },
+        {
+          "text": "The dictionary you read for fun. Twice.",
+          "characterId": "trivia-gauntlet",
+          "id": "q10a4"
+        }
+      ],
+      "text": "The trophy goes on your shelf. Next to it:"
+    }
+  ],
+  "results": [
+    {
+      "description": "Give you a timer, a mystery basket, and a skeptical judge, and you thrive. You create under pressure, improvise like a legend, and feed people victory.",
+      "traits": [
+        "Creative",
+        "Resourceful",
+        "Calm under pressure",
+        "Skilled",
+        "Generous"
+      ],
+      "characterName": "The Cooking Champion",
+      "characterId": "cooking-competition"
+    },
+    {
+      "traits": [
+        "Visionary",
+        "Hardworking",
+        "Stylish",
+        "Transformative",
+        "Detail-driven"
+      ],
+      "description": "You see the 'after' while everyone's still staring at the 'before.' Vision, hustle, and an eye for transformation — the big reveal is your natural habitat.",
+      "characterId": "home-makeover",
+      "characterName": "The Makeover Master"
+    },
+    {
+      "description": "Spotlights were invented for you. One shot, big stage, zero fear — you don't just perform under pressure, you're better because of it.",
+      "traits": [
+        "Confident",
+        "Talented",
+        "Fearless",
+        "Magnetic",
+        "Show-ready"
+      ],
+      "characterName": "The Showcase Star",
+      "characterId": "talent-showcase"
+    },
+    {
+      "characterId": "trivia-gauntlet",
+      "characterName": "The Trivia Titan",
+      "traits": [
+        "Knowledgeable",
+        "Quick",
+        "Sharp",
+        "Curious",
+        "Unbeatable"
+      ],
+      "description": "Your brain is the trophy case. Facts stick to you, recall is instant, and buzzer speed is your love language. Final answer: champion."
+    },
+    {
+      "characterId": "wilderness-survival",
+      "characterName": "The Survivalist",
+      "traits": [
+        "Resilient",
+        "Resourceful",
+        "Tough",
+        "Adaptable",
+        "Unshakeable"
+      ],
+      "description": "Rain, mud, and a broken tent are just Tuesday to you. Resourceful, resilient, and unbothered by discomfort, you'd outlast everyone — cheerfully."
+    }
+  ]
+}

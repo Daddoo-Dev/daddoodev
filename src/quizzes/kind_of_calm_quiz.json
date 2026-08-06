@@ -1,0 +1,330 @@
+{
+  "id": "kind-of-calm-quiz",
+  "title": "What Kind of Calm Are You?",
+  "description": "Calm comes in many forms — waves, rain, mountains, glow. Which one lives in you?",
+  "categoryId": "wellness-mindset",
+  "questions": [
+    {
+      "id": "q1",
+      "answers": [
+        {
+          "text": "Waves rolling in",
+          "characterId": "ocean-calm",
+          "id": "q1a1"
+        },
+        {
+          "characterId": "forest-calm",
+          "id": "q1a2",
+          "text": "Leaves and distant birdsong"
+        },
+        {
+          "id": "q1a3",
+          "characterId": "rain-calm",
+          "text": "A steady downpour on the roof"
+        },
+        {
+          "text": "Absolute high-altitude silence",
+          "characterId": "mountain-calm",
+          "id": "q1a4"
+        }
+      ],
+      "text": "Pick a sound to fall asleep to:"
+    },
+    {
+      "text": "Your wind-down move after a long day:",
+      "answers": [
+        {
+          "text": "A long bath, submerged past the ears",
+          "id": "q2a1",
+          "characterId": "ocean-calm"
+        },
+        {
+          "id": "q2a2",
+          "characterId": "forest-calm",
+          "text": "A walk under trees, phone in pocket"
+        },
+        {
+          "text": "Watching the weather from the window",
+          "characterId": "rain-calm",
+          "id": "q2a3"
+        },
+        {
+          "characterId": "candlelight-calm",
+          "id": "q2a4",
+          "text": "Dim the lights, one warm glow, done"
+        }
+      ],
+      "id": "q2"
+    },
+    {
+      "answers": [
+        {
+          "text": "The horizon over open water",
+          "id": "q3a1",
+          "characterId": "ocean-calm"
+        },
+        {
+          "characterId": "forest-calm",
+          "id": "q3a2",
+          "text": "Green in every direction"
+        },
+        {
+          "text": "Peaks above the clouds",
+          "id": "q3a3",
+          "characterId": "mountain-calm"
+        },
+        {
+          "id": "q3a4",
+          "characterId": "candlelight-calm",
+          "text": "A fireplace in a stone inn"
+        }
+      ],
+      "id": "q3",
+      "text": "Choose a vacation view:"
+    },
+    {
+      "id": "q4",
+      "answers": [
+        {
+          "id": "q4a1",
+          "characterId": "ocean-calm",
+          "text": "Stay fluid and flow around it"
+        },
+        {
+          "text": "Let it pass — everything does",
+          "characterId": "rain-calm",
+          "id": "q4a2"
+        },
+        {
+          "text": "Stand still until it settles",
+          "characterId": "mountain-calm",
+          "id": "q4a3"
+        },
+        {
+          "text": "Create one small pocket of warmth in it",
+          "characterId": "candlelight-calm",
+          "id": "q4a4"
+        }
+      ],
+      "text": "How do you handle chaos around you?"
+    },
+    {
+      "id": "q5",
+      "answers": [
+        {
+          "characterId": "forest-calm",
+          "id": "q5a1",
+          "text": "Gardening, hands in the dirt"
+        },
+        {
+          "id": "q5a2",
+          "characterId": "rain-calm",
+          "text": "Reading while weather happens outside"
+        },
+        {
+          "text": "Long solo hikes",
+          "id": "q5a3",
+          "characterId": "mountain-calm"
+        },
+        {
+          "text": "Baking bread on Sundays",
+          "id": "q5a4",
+          "characterId": "candlelight-calm"
+        }
+      ],
+      "text": "Pick a slow hobby:"
+    },
+    {
+      "id": "q6",
+      "answers": [
+        {
+          "text": "A deep exhale",
+          "id": "q6a1",
+          "characterId": "ocean-calm"
+        },
+        {
+          "text": "Shade on a hot day",
+          "id": "q6a2",
+          "characterId": "forest-calm"
+        },
+        {
+          "characterId": "rain-calm",
+          "id": "q6a3",
+          "text": "Permission to slow down"
+        },
+        {
+          "characterId": "mountain-calm",
+          "id": "q6a4",
+          "text": "Solid ground"
+        }
+      ],
+      "text": "Friends say your presence feels like:"
+    },
+    {
+      "text": "Ideal weekend weather:",
+      "id": "q7",
+      "answers": [
+        {
+          "text": "Warm with a salt breeze",
+          "characterId": "ocean-calm",
+          "id": "q7a1"
+        },
+        {
+          "characterId": "forest-calm",
+          "id": "q7a2",
+          "text": "Cool, misty, and green"
+        },
+        {
+          "id": "q7a3",
+          "characterId": "rain-calm",
+          "text": "Grey and dramatic. Cocoa mandatory."
+        },
+        {
+          "text": "Irrelevant — you're inside, glowing",
+          "id": "q7a4",
+          "characterId": "candlelight-calm"
+        }
+      ]
+    },
+    {
+      "text": "When a friend is upset, you:",
+      "id": "q8",
+      "answers": [
+        {
+          "text": "Let them talk in waves, no rush",
+          "characterId": "ocean-calm",
+          "id": "q8a1"
+        },
+        {
+          "id": "q8a2",
+          "characterId": "forest-calm",
+          "text": "Take them for a walk"
+        },
+        {
+          "id": "q8a3",
+          "characterId": "mountain-calm",
+          "text": "Be the steady thing they lean on"
+        },
+        {
+          "characterId": "candlelight-calm",
+          "id": "q8a4",
+          "text": "Make it warm: tea, blanket, soft light"
+        }
+      ]
+    },
+    {
+      "answers": [
+        {
+          "id": "q9a1",
+          "characterId": "ocean-calm",
+          "text": "Floating. Just floating."
+        },
+        {
+          "id": "q9a2",
+          "characterId": "rain-calm",
+          "text": "Opening the window during a storm"
+        },
+        {
+          "characterId": "mountain-calm",
+          "id": "q9a3",
+          "text": "A sunrise stretch facing the view"
+        },
+        {
+          "characterId": "candlelight-calm",
+          "id": "q9a4",
+          "text": "Lighting one candle before dinner"
+        }
+      ],
+      "id": "q9",
+      "text": "Pick a calming ritual:"
+    },
+    {
+      "text": "Your calm motto:",
+      "id": "q10",
+      "answers": [
+        {
+          "text": "'Grow quietly'",
+          "id": "q10a1",
+          "characterId": "forest-calm"
+        },
+        {
+          "id": "q10a2",
+          "characterId": "rain-calm",
+          "text": "'This too will pass'"
+        },
+        {
+          "text": "'Be unmoved'",
+          "id": "q10a3",
+          "characterId": "mountain-calm"
+        },
+        {
+          "text": "'Tend your own small light'",
+          "characterId": "candlelight-calm",
+          "id": "q10a4"
+        }
+      ]
+    }
+  ],
+  "results": [
+    {
+      "characterId": "candlelight-calm",
+      "characterName": "Candlelight Calm",
+      "traits": [
+        "Warm",
+        "Nurturing",
+        "Cozy",
+        "Welcoming",
+        "Gentle"
+      ],
+      "description": "Your calm is warm and handmade. You create coziness wherever you go — soft light, warm drinks, gentle spaces — and people relax the moment they step into your glow."
+    },
+    {
+      "characterName": "Forest Calm",
+      "characterId": "forest-calm",
+      "description": "Your calm is green and growing. Rooted, patient, and quietly alive, you make people feel sheltered — and like them, you're always growing, just never in a hurry.",
+      "traits": [
+        "Grounded",
+        "Patient",
+        "Sheltering",
+        "Growing",
+        "Serene"
+      ]
+    },
+    {
+      "characterId": "mountain-calm",
+      "characterName": "Mountain Calm",
+      "traits": [
+        "Steady",
+        "Strong",
+        "Clear",
+        "Enduring",
+        "Composed"
+      ],
+      "description": "Your calm is unshakeable. Storms come and go around you while you remain exactly where you stand — steady, clear-aired, and quietly majestic about it."
+    },
+    {
+      "description": "Your calm is deep and flowing. You move with life instead of against it, and your presence works like a tide — people breathe slower just standing next to you.",
+      "traits": [
+        "Fluid",
+        "Deep",
+        "Soothing",
+        "Adaptable",
+        "Vast"
+      ],
+      "characterName": "Ocean Calm",
+      "characterId": "ocean-calm"
+    },
+    {
+      "traits": [
+        "Restful",
+        "Reflective",
+        "Renewing",
+        "Soothing",
+        "Unhurried"
+      ],
+      "description": "Your calm gives everyone permission to slow down. Like a good storm, you make staying in feel like the best plan anyone ever had — restful, cozy, and quietly renewing.",
+      "characterId": "rain-calm",
+      "characterName": "Rain Calm"
+    }
+  ]
+}

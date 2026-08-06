@@ -1,0 +1,318 @@
+{
+  "id": "morning-mindset-quiz",
+  "title": "Which Morning Mindset Are You?",
+  "description": "The first hour of your day says a lot about you. Rise (or don't) and discover your morning mindset!",
+  "categoryId": "wellness-mindset",
+  "questions": [
+    {
+      "id": "q1",
+      "answers": [
+        {
+          "characterId": "sunrise-sprinter",
+          "id": "q1a1",
+          "text": "Are up before it finishes the first ring"
+        },
+        {
+          "text": "Do one long stretch, then a slow rise",
+          "id": "q1a2",
+          "characterId": "slow-steeper"
+        },
+        {
+          "text": "Take nine more minutes. It's negotiated.",
+          "id": "q1a3",
+          "characterId": "snooze-strategist"
+        },
+        {
+          "characterId": "quiet-planner",
+          "id": "q1a4",
+          "text": "Were already awake, reviewing today mentally"
+        }
+      ],
+      "text": "Your alarm goes off. You:"
+    },
+    {
+      "answers": [
+        {
+          "id": "q2a1",
+          "characterId": "sunrise-sprinter",
+          "text": "Water, chugged, then out the door"
+        },
+        {
+          "id": "q2a2",
+          "characterId": "slow-steeper",
+          "text": "Tea, steeped exactly right, savored"
+        },
+        {
+          "characterId": "snooze-strategist",
+          "id": "q2a3",
+          "text": "Coffee. Do not speak before it."
+        },
+        {
+          "id": "q2a4",
+          "characterId": "quiet-planner",
+          "text": "Coffee while writing the day's list"
+        }
+      ],
+      "id": "q2",
+      "text": "First drink of the day:"
+    },
+    {
+      "text": "Your morning soundtrack:",
+      "answers": [
+        {
+          "characterId": "sunrise-sprinter",
+          "id": "q3a1",
+          "text": "An upbeat playlist at full volume"
+        },
+        {
+          "text": "Soft acoustic, or nothing at all",
+          "characterId": "slow-steeper",
+          "id": "q3a2"
+        },
+        {
+          "id": "q3a3",
+          "characterId": "snooze-strategist",
+          "text": "The alarm. Again."
+        },
+        {
+          "characterId": "quiet-planner",
+          "id": "q3a4",
+          "text": "A news podcast at 1.5x speed"
+        }
+      ],
+      "id": "q3"
+    },
+    {
+      "text": "Breakfast style:",
+      "answers": [
+        {
+          "text": "Something grabbable, eaten in motion",
+          "id": "q4a1",
+          "characterId": "sunrise-sprinter"
+        },
+        {
+          "id": "q4a2",
+          "characterId": "slow-steeper",
+          "text": "A real breakfast at a real table"
+        },
+        {
+          "id": "q4a3",
+          "characterId": "snooze-strategist",
+          "text": "Brunch. Breakfast's better sibling."
+        },
+        {
+          "characterId": "quiet-planner",
+          "id": "q4a4",
+          "text": "The same thing daily. One decision saved."
+        }
+      ],
+      "id": "q4"
+    },
+    {
+      "text": "Weekend mornings look like:",
+      "id": "q5",
+      "answers": [
+        {
+          "id": "q5a1",
+          "characterId": "sunrise-sprinter",
+          "text": "Same wake-up time — momentum matters"
+        },
+        {
+          "text": "Long, slow, and glorious",
+          "id": "q5a2",
+          "characterId": "slow-steeper"
+        },
+        {
+          "text": "What morning?",
+          "characterId": "snooze-strategist",
+          "id": "q5a3"
+        },
+        {
+          "text": "The week's planning session, happily",
+          "id": "q5a4",
+          "characterId": "quiet-planner"
+        }
+      ]
+    },
+    {
+      "text": "Someone schedules a 7 AM meeting. You:",
+      "id": "q6",
+      "answers": [
+        {
+          "text": "Love it — you've been up since five",
+          "characterId": "sunrise-sprinter",
+          "id": "q6a1"
+        },
+        {
+          "text": "Attend, but your soul arrives at nine",
+          "id": "q6a2",
+          "characterId": "slow-steeper"
+        },
+        {
+          "text": "Briefly consider a career change",
+          "id": "q6a3",
+          "characterId": "snooze-strategist"
+        },
+        {
+          "characterId": "quiet-planner",
+          "id": "q6a4",
+          "text": "Accept, then restructure the whole day around it"
+        }
+      ]
+    },
+    {
+      "text": "Next to your bed you keep:",
+      "answers": [
+        {
+          "characterId": "sunrise-sprinter",
+          "id": "q7a1",
+          "text": "Workout clothes, laid out and ready"
+        },
+        {
+          "characterId": "slow-steeper",
+          "id": "q7a2",
+          "text": "A half-read novel and hand cream"
+        },
+        {
+          "text": "Three alarms and a sleep mask",
+          "id": "q7a3",
+          "characterId": "snooze-strategist"
+        },
+        {
+          "characterId": "quiet-planner",
+          "id": "q7a4",
+          "text": "A notepad for 2 AM thoughts"
+        }
+      ],
+      "id": "q7"
+    },
+    {
+      "text": "Best part of the morning:",
+      "id": "q8",
+      "answers": [
+        {
+          "id": "q8a1",
+          "characterId": "sunrise-sprinter",
+          "text": "Beating the world to the day"
+        },
+        {
+          "id": "q8a2",
+          "characterId": "slow-steeper",
+          "text": "The quiet before anything begins"
+        },
+        {
+          "text": "The last five minutes in bed",
+          "id": "q8a3",
+          "characterId": "snooze-strategist"
+        },
+        {
+          "text": "A fresh list with zero checkmarks",
+          "id": "q8a4",
+          "characterId": "quiet-planner"
+        }
+      ]
+    },
+    {
+      "text": "Your ideal level of sunrise involvement:",
+      "answers": [
+        {
+          "text": "Witnessed mid-run",
+          "characterId": "sunrise-sprinter",
+          "id": "q9a1"
+        },
+        {
+          "text": "Watched from a window, mug in hand",
+          "characterId": "slow-steeper",
+          "id": "q9a2"
+        },
+        {
+          "text": "Photos exist. That's enough.",
+          "characterId": "snooze-strategist",
+          "id": "q9a3"
+        },
+        {
+          "id": "q9a4",
+          "characterId": "quiet-planner",
+          "text": "Scheduled once a month. It's on the calendar."
+        }
+      ],
+      "id": "q9"
+    },
+    {
+      "text": "Your morning motto:",
+      "answers": [
+        {
+          "text": "'Win the morning'",
+          "characterId": "sunrise-sprinter",
+          "id": "q10a1"
+        },
+        {
+          "id": "q10a2",
+          "characterId": "slow-steeper",
+          "text": "'Ease into it'"
+        },
+        {
+          "text": "'Five more minutes'",
+          "characterId": "snooze-strategist",
+          "id": "q10a3"
+        },
+        {
+          "text": "'A good day is a designed day'",
+          "id": "q10a4",
+          "characterId": "quiet-planner"
+        }
+      ],
+      "id": "q10"
+    }
+  ],
+  "results": [
+    {
+      "description": "Your morning is mission control. While the kettle heats, you've already mapped the day — calm, organized, and quietly three steps ahead before most people find their keys.",
+      "traits": [
+        "Organized",
+        "Calm",
+        "Prepared",
+        "Thoughtful",
+        "Steady"
+      ],
+      "characterName": "The Quiet Planner",
+      "characterId": "quiet-planner"
+    },
+    {
+      "description": "You believe mornings are meant to be savored, not survived. Your unhurried start isn't slowness — it's wisdom, and your peaceful energy lasts all day because of it.",
+      "traits": [
+        "Serene",
+        "Mindful",
+        "Unhurried",
+        "Warm",
+        "Balanced"
+      ],
+      "characterName": "The Slow Steeper",
+      "characterId": "slow-steeper"
+    },
+    {
+      "traits": [
+        "Efficient",
+        "Relaxed",
+        "Funny",
+        "Realistic",
+        "Resourceful"
+      ],
+      "description": "You've turned the snooze button into an art form. You know exactly how much time you need (and not a minute more), and once you're up, you're surprisingly unstoppable.",
+      "characterId": "snooze-strategist",
+      "characterName": "The Snooze Strategist"
+    },
+    {
+      "description": "You wake up already in motion. Mornings are your secret weapon — by the time the world logs on, you've exercised, eaten, and won three small victories.",
+      "traits": [
+        "Energetic",
+        "Disciplined",
+        "Optimistic",
+        "Driven",
+        "Bright"
+      ],
+      "characterName": "The Sunrise Sprinter",
+      "characterId": "sunrise-sprinter"
+    }
+  ]
+}

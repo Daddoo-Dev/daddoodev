@@ -1,0 +1,382 @@
+{
+  "id": "superhero-archetype-quiz",
+  "title": "Which Superhero Archetype Are You?",
+  "description": "Every hero has a signature style. Discover whether you save the day with speed, strength, gadgets, heart, or stealth.",
+  "categoryId": "pop-culture-fandom",
+  "questions": [
+    {
+      "text": "Your morning routine:",
+      "answers": [
+        {
+          "characterId": "speedster",
+          "id": "q1a1",
+          "text": "Routine? Out the door in six minutes flat"
+        },
+        {
+          "text": "Same solid breakfast, every day, no exceptions",
+          "characterId": "guardian",
+          "id": "q1a2"
+        },
+        {
+          "characterId": "gadgeteer",
+          "id": "q1a3",
+          "text": "Optimized to the minute — you've timed the toaster"
+        },
+        {
+          "text": "Up before everyone, enjoying the quiet",
+          "id": "q1a4",
+          "characterId": "shadow"
+        }
+      ],
+      "id": "q1"
+    },
+    {
+      "id": "q2",
+      "answers": [
+        {
+          "text": "Call before the second text even lands",
+          "characterId": "speedster",
+          "id": "q2a1"
+        },
+        {
+          "id": "q2a2",
+          "characterId": "guardian",
+          "text": "Reply: 'Coming over. Don't move.'"
+        },
+        {
+          "text": "Send options: call now, dinner later, or both",
+          "id": "q2a3",
+          "characterId": "gadgeteer"
+        },
+        {
+          "text": "Already sensed something was up since Tuesday",
+          "id": "q2a4",
+          "characterId": "empath"
+        }
+      ],
+      "text": "A friend texts 'can you talk?' You:"
+    },
+    {
+      "id": "q3",
+      "answers": [
+        {
+          "text": "A sturdy desk that's survived three moves",
+          "characterId": "guardian",
+          "id": "q3a1"
+        },
+        {
+          "characterId": "gadgeteer",
+          "id": "q3a2",
+          "text": "Covered in prototypes, wires, and sticky notes"
+        },
+        {
+          "text": "Wherever the people you love happen to be",
+          "id": "q3a3",
+          "characterId": "empath"
+        },
+        {
+          "characterId": "shadow",
+          "id": "q3a4",
+          "text": "A corner nook nobody else knows about"
+        }
+      ],
+      "text": "Pick a workspace:"
+    },
+    {
+      "text": "Your favorite part of a party:",
+      "answers": [
+        {
+          "characterId": "speedster",
+          "id": "q4a1",
+          "text": "Being in every conversation at once"
+        },
+        {
+          "characterId": "gadgeteer",
+          "id": "q4a2",
+          "text": "Running the playlist and the lighting"
+        },
+        {
+          "characterId": "empath",
+          "id": "q4a3",
+          "text": "The deep talk that starts in the kitchen"
+        },
+        {
+          "text": "Observing from the balcony with one good friend",
+          "id": "q4a4",
+          "characterId": "shadow"
+        }
+      ],
+      "id": "q4"
+    },
+    {
+      "answers": [
+        {
+          "characterId": "speedster",
+          "id": "q5a1",
+          "text": "Finishing things before anyone else starts"
+        },
+        {
+          "text": "Never letting anyone down",
+          "characterId": "guardian",
+          "id": "q5a2"
+        },
+        {
+          "text": "Making everyone feel understood",
+          "id": "q5a3",
+          "characterId": "empath"
+        },
+        {
+          "text": "Being full of surprises",
+          "characterId": "shadow",
+          "id": "q5a4"
+        }
+      ],
+      "id": "q5",
+      "text": "You'd rather be known for:"
+    },
+    {
+      "text": "Stuck in a traffic jam. You:",
+      "answers": [
+        {
+          "id": "q6a1",
+          "characterId": "speedster",
+          "text": "Know three alternate routes and take the fourth"
+        },
+        {
+          "id": "q6a2",
+          "characterId": "guardian",
+          "text": "Sit tight. It'll clear. It always does."
+        },
+        {
+          "id": "q6a3",
+          "characterId": "gadgeteer",
+          "text": "Have a podcast queue prepared for exactly this"
+        },
+        {
+          "text": "Left early enough that it doesn't matter",
+          "id": "q6a4",
+          "characterId": "shadow"
+        }
+      ],
+      "id": "q6"
+    },
+    {
+      "id": "q7",
+      "answers": [
+        {
+          "id": "q7a1",
+          "characterId": "speedster",
+          "text": "Tag champion, uncatchable"
+        },
+        {
+          "characterId": "guardian",
+          "id": "q7a2",
+          "text": "Human jungle gym for the little kids"
+        },
+        {
+          "characterId": "gadgeteer",
+          "id": "q7a3",
+          "text": "Built the fort with the working drawbridge"
+        },
+        {
+          "characterId": "empath",
+          "id": "q7a4",
+          "text": "Peacemaker of the four-square court"
+        }
+      ],
+      "text": "Choose your childhood playground legacy:"
+    },
+    {
+      "text": "What do you notice first in a room?",
+      "answers": [
+        {
+          "text": "Who might need backup",
+          "id": "q8a1",
+          "characterId": "guardian"
+        },
+        {
+          "characterId": "gadgeteer",
+          "id": "q8a2",
+          "text": "How everything works — outlets, hinges, speakers"
+        },
+        {
+          "id": "q8a3",
+          "characterId": "empath",
+          "text": "The mood, instantly"
+        },
+        {
+          "text": "The exits. Just in case.",
+          "id": "q8a4",
+          "characterId": "shadow"
+        }
+      ],
+      "id": "q8"
+    },
+    {
+      "id": "q9",
+      "answers": [
+        {
+          "text": "First to reply, always",
+          "id": "q9a1",
+          "characterId": "speedster"
+        },
+        {
+          "characterId": "gadgeteer",
+          "id": "q9a2",
+          "text": "Sender of extremely useful links"
+        },
+        {
+          "id": "q9a3",
+          "characterId": "empath",
+          "text": "Checks in when someone goes quiet"
+        },
+        {
+          "text": "Silent for weeks, then one perfect message",
+          "id": "q9a4",
+          "characterId": "shadow"
+        }
+      ],
+      "text": "Your group chat role:"
+    },
+    {
+      "answers": [
+        {
+          "id": "q10a1",
+          "characterId": "speedster",
+          "text": "A 5K you didn't exactly train for"
+        },
+        {
+          "id": "q10a2",
+          "characterId": "guardian",
+          "text": "Helping a friend move. Again. Happily."
+        },
+        {
+          "id": "q10a3",
+          "characterId": "empath",
+          "text": "Hosting a dinner where two friend groups finally merge"
+        },
+        {
+          "text": "A solo day trip you tell no one about",
+          "characterId": "shadow",
+          "id": "q10a4"
+        }
+      ],
+      "id": "q10",
+      "text": "Pick a weekend challenge:"
+    },
+    {
+      "text": "Your homework style, back in school:",
+      "answers": [
+        {
+          "characterId": "speedster",
+          "id": "q11a1",
+          "text": "Done on the bus, somehow correct"
+        },
+        {
+          "characterId": "guardian",
+          "id": "q11a2",
+          "text": "Steady, on schedule, no drama"
+        },
+        {
+          "id": "q11a3",
+          "characterId": "gadgeteer",
+          "text": "Color-coded system with backup pens"
+        },
+        {
+          "id": "q11a4",
+          "characterId": "shadow",
+          "text": "Mysteriously finished — no one ever saw you do it"
+        }
+      ],
+      "id": "q11"
+    },
+    {
+      "text": "Choose a motto:",
+      "answers": [
+        {
+          "text": "Why wait?",
+          "id": "q12a1",
+          "characterId": "speedster"
+        },
+        {
+          "text": "I've got you",
+          "id": "q12a2",
+          "characterId": "guardian"
+        },
+        {
+          "characterId": "gadgeteer",
+          "id": "q12a3",
+          "text": "There's always a smarter way"
+        },
+        {
+          "text": "Everyone has a story",
+          "id": "q12a4",
+          "characterId": "empath"
+        }
+      ],
+      "id": "q12"
+    }
+  ],
+  "results": [
+    {
+      "description": "You read the room like a book — and then help everyone in it. Emotional insight is your superpower, and people feel truly seen the moment you show up.",
+      "traits": [
+        "Perceptive",
+        "Compassionate",
+        "Intuitive",
+        "Supportive",
+        "Wise"
+      ],
+      "characterName": "The Empath",
+      "characterId": "empath"
+    },
+    {
+      "characterName": "The Gadgeteer",
+      "characterId": "gadgeteer",
+      "description": "Always prepared, always a step ahead. You out-think problems instead of out-muscling them, and there's a clever solution in your pocket for absolutely everything.",
+      "traits": [
+        "Inventive",
+        "Prepared",
+        "Clever",
+        "Precise",
+        "Visionary"
+      ]
+    },
+    {
+      "characterName": "The Guardian",
+      "characterId": "guardian",
+      "description": "The immovable object, in the best way. Steady, dependable, and fiercely protective, you're the hero everyone wants standing beside them when it counts.",
+      "traits": [
+        "Protective",
+        "Steadfast",
+        "Loyal",
+        "Strong",
+        "Grounded"
+      ]
+    },
+    {
+      "description": "Quiet, observant, and full of surprises. You see everything, say little, and appear exactly where you're needed at exactly the right moment.",
+      "traits": [
+        "Observant",
+        "Independent",
+        "Mysterious",
+        "Precise",
+        "Loyal"
+      ],
+      "characterName": "The Shadow",
+      "characterId": "shadow"
+    },
+    {
+      "traits": [
+        "Energetic",
+        "Quick-thinking",
+        "Spontaneous",
+        "Efficient",
+        "Lively"
+      ],
+      "description": "Life in the fast lane, permanently. You think fast, move fast, and finish before others start — but your real superpower is the energy you bring everywhere you go.",
+      "characterId": "speedster",
+      "characterName": "The Speedster"
+    }
+  ]
+}

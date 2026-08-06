@@ -1,0 +1,330 @@
+{
+  "id": "self-care-style-quiz",
+  "title": "What's Your Self-Care Style?",
+  "description": "Everyone recharges differently. Discover the self-care style your battery has been asking for!",
+  "categoryId": "wellness-mindset",
+  "questions": [
+    {
+      "answers": [
+        {
+          "text": "Blanket, warm drink, door closed",
+          "characterId": "cozy-recharger",
+          "id": "q1a1"
+        },
+        {
+          "characterId": "nature-reset",
+          "id": "q1a2",
+          "text": "Get outside, even just to the porch"
+        },
+        {
+          "text": "Call the friend who always gets it",
+          "characterId": "social-refueler",
+          "id": "q1a3"
+        },
+        {
+          "text": "Disappear into a project",
+          "characterId": "creative-escapist",
+          "id": "q1a4"
+        }
+      ],
+      "id": "q1",
+      "text": "Your battery hits 10%. First instinct:"
+    },
+    {
+      "id": "q2",
+      "answers": [
+        {
+          "text": "Slow breakfast in pajamas till noon",
+          "characterId": "cozy-recharger",
+          "id": "q2a1"
+        },
+        {
+          "text": "At the trailhead by eight",
+          "id": "q2a2",
+          "characterId": "nature-reset"
+        },
+        {
+          "text": "Flea market hunting for project supplies",
+          "id": "q2a3",
+          "characterId": "creative-escapist"
+        },
+        {
+          "id": "q2a4",
+          "characterId": "mindful-minimalist",
+          "text": "Tidy space, empty calendar, full mug"
+        }
+      ],
+      "text": "Pick a perfect Saturday morning:"
+    },
+    {
+      "text": "Your phone's most-used app category:",
+      "id": "q3",
+      "answers": [
+        {
+          "id": "q3a1",
+          "characterId": "social-refueler",
+          "text": "Group chats, obviously"
+        },
+        {
+          "id": "q3a2",
+          "characterId": "creative-escapist",
+          "text": "Photo editing and inspiration boards"
+        },
+        {
+          "text": "A meditation timer",
+          "characterId": "mindful-minimalist",
+          "id": "q3a3"
+        },
+        {
+          "text": "Weather. You check it like a farmer.",
+          "id": "q3a4",
+          "characterId": "nature-reset"
+        }
+      ]
+    },
+    {
+      "answers": [
+        {
+          "text": "The world's softest blanket",
+          "id": "q4a1",
+          "characterId": "cozy-recharger"
+        },
+        {
+          "id": "q4a2",
+          "characterId": "social-refueler",
+          "text": "A hundred photos with new friends"
+        },
+        {
+          "text": "A sketchbook full of scribbles",
+          "characterId": "creative-escapist",
+          "id": "q4a3"
+        },
+        {
+          "characterId": "mindful-minimalist",
+          "id": "q4a4",
+          "text": "Just the memory. Bags stay light."
+        }
+      ],
+      "id": "q4",
+      "text": "Choose a souvenir from a trip:"
+    },
+    {
+      "text": "A free evening appears out of nowhere. You:",
+      "answers": [
+        {
+          "text": "Take a sunset walk, no headphones",
+          "characterId": "nature-reset",
+          "id": "q5a1"
+        },
+        {
+          "text": "Text 'who's around?' within minutes",
+          "characterId": "social-refueler",
+          "id": "q5a2"
+        },
+        {
+          "characterId": "cozy-recharger",
+          "id": "q5a3",
+          "text": "Rewatch a comfort show, zero guilt"
+        },
+        {
+          "text": "Sit quietly. That's it. It's great.",
+          "characterId": "mindful-minimalist",
+          "id": "q5a4"
+        }
+      ],
+      "id": "q5"
+    },
+    {
+      "text": "Pick a candle scent:",
+      "id": "q6",
+      "answers": [
+        {
+          "text": "Vanilla and warm bread",
+          "characterId": "cozy-recharger",
+          "id": "q6a1"
+        },
+        {
+          "text": "Pine forest after rain",
+          "id": "q6a2",
+          "characterId": "nature-reset"
+        },
+        {
+          "id": "q6a3",
+          "characterId": "social-refueler",
+          "text": "Birthday cake — it smells like parties"
+        },
+        {
+          "text": "Something weird like 'library ink'",
+          "id": "q6a4",
+          "characterId": "creative-escapist"
+        }
+      ]
+    },
+    {
+      "text": "Your ideal vacation pace:",
+      "answers": [
+        {
+          "text": "Cabin, books, no agenda",
+          "characterId": "cozy-recharger",
+          "id": "q7a1"
+        },
+        {
+          "characterId": "nature-reset",
+          "id": "q7a2",
+          "text": "Hike, camp, repeat"
+        },
+        {
+          "text": "Museums and tiny craft workshops",
+          "characterId": "creative-escapist",
+          "id": "q7a3"
+        },
+        {
+          "text": "One bag, one city, no itinerary",
+          "id": "q7a4",
+          "characterId": "mindful-minimalist"
+        }
+      ],
+      "id": "q7"
+    },
+    {
+      "answers": [
+        {
+          "text": "Extra-long weekend walks",
+          "id": "q8a1",
+          "characterId": "nature-reset"
+        },
+        {
+          "id": "q8a2",
+          "characterId": "social-refueler",
+          "text": "A vent session with dessert"
+        },
+        {
+          "text": "Stress-bake, stress-paint, stress-make",
+          "characterId": "creative-escapist",
+          "id": "q8a3"
+        },
+        {
+          "id": "q8a4",
+          "characterId": "mindful-minimalist",
+          "text": "Cancel everything cancelable"
+        }
+      ],
+      "id": "q8",
+      "text": "How do you handle a stressful week?"
+    },
+    {
+      "id": "q9",
+      "answers": [
+        {
+          "id": "q9a1",
+          "characterId": "cozy-recharger",
+          "text": "A heated blanket. Life-changing."
+        },
+        {
+          "text": "Board games for hosting",
+          "characterId": "social-refueler",
+          "id": "q9a2"
+        },
+        {
+          "id": "q9a3",
+          "characterId": "creative-escapist",
+          "text": "Fancy pens you absolutely needed"
+        },
+        {
+          "text": "Nothing. Returning things IS self-care.",
+          "id": "q9a4",
+          "characterId": "mindful-minimalist"
+        }
+      ],
+      "text": "Pick a self-care purchase:"
+    },
+    {
+      "id": "q10",
+      "answers": [
+        {
+          "id": "q10a1",
+          "characterId": "cozy-recharger",
+          "text": "'Soft clothes, soft lighting, soft plans'"
+        },
+        {
+          "id": "q10a2",
+          "characterId": "nature-reset",
+          "text": "'Touch grass, literally'"
+        },
+        {
+          "text": "'Joy is better shared'",
+          "id": "q10a3",
+          "characterId": "social-refueler"
+        },
+        {
+          "id": "q10a4",
+          "characterId": "mindful-minimalist",
+          "text": "'Less, but better'"
+        }
+      ],
+      "text": "Your recharge motto:"
+    }
+  ],
+  "results": [
+    {
+      "characterId": "cozy-recharger",
+      "characterName": "The Cozy Recharger",
+      "traits": [
+        "Comfort-savvy",
+        "Restful",
+        "Warm",
+        "Content",
+        "Self-aware"
+      ],
+      "description": "Your recharge station is soft, warm, and indoors. Blankets, comfort shows, and slow mornings aren't laziness — they're your superpower, and you emerge from them fully restored."
+    },
+    {
+      "traits": [
+        "Imaginative",
+        "Focused",
+        "Expressive",
+        "Curious",
+        "Absorbed"
+      ],
+      "description": "You recharge by making things. A few hours lost in a project resets your whole nervous system, and you return to real life with paint on your hands and peace in your head.",
+      "characterId": "creative-escapist",
+      "characterName": "The Creative Escapist"
+    },
+    {
+      "characterName": "The Mindful Minimalist",
+      "characterId": "mindful-minimalist",
+      "description": "Your self-care is subtraction. Fewer plans, fewer tabs, fewer things — and suddenly there's room to breathe. You've mastered the rare art of doing less on purpose.",
+      "traits": [
+        "Intentional",
+        "Calm",
+        "Clear-headed",
+        "Simple",
+        "Grounded"
+      ]
+    },
+    {
+      "description": "Fresh air fixes you. Ten minutes outside does what nothing indoors can, and your best thinking happens under open sky. The forecast is basically your horoscope.",
+      "traits": [
+        "Outdoorsy",
+        "Refreshed",
+        "Adventurous",
+        "Peaceful",
+        "Energized"
+      ],
+      "characterName": "The Nature Reset",
+      "characterId": "nature-reset"
+    },
+    {
+      "traits": [
+        "Connected",
+        "Warm-hearted",
+        "Fun",
+        "Generous",
+        "Uplifting"
+      ],
+      "description": "People are your power source. One great conversation can undo a whole hard week, and your idea of rest has at least two other humans and probably snacks in it.",
+      "characterId": "social-refueler",
+      "characterName": "The Social Refueler"
+    }
+  ]
+}

@@ -1,0 +1,394 @@
+{
+  "id": "royal-court-quiz",
+  "title": "Which Royal Court Role Would You Have?",
+  "description": "The castle gates open and every court needs its people. Where does your talent place you?",
+  "categoryId": "pop-culture-fandom",
+  "questions": [
+    {
+      "id": "q1",
+      "answers": [
+        {
+          "text": "Improve it with better jokes as it passes through you",
+          "characterId": "jester",
+          "id": "q1a1"
+        },
+        {
+          "characterId": "advisor",
+          "id": "q1a2",
+          "text": "Trace it to the source before reacting"
+        },
+        {
+          "id": "q1a3",
+          "characterId": "spymaster",
+          "text": "Knew three days ago. Know who started it. Saying nothing."
+        },
+        {
+          "text": "Sketch the entire saga for the group chat",
+          "id": "q1a4",
+          "characterId": "court-artist"
+        }
+      ],
+      "text": "A rumor sweeps the kingdom (your friend group). You:"
+    },
+    {
+      "text": "Pick your seat at the grand feast:",
+      "answers": [
+        {
+          "text": "Head of the table. Where else?",
+          "id": "q2a1",
+          "characterId": "monarch"
+        },
+        {
+          "text": "Beside the guest who seems nervous",
+          "id": "q2a2",
+          "characterId": "knight"
+        },
+        {
+          "text": "Back to the wall, view of both doors",
+          "characterId": "spymaster",
+          "id": "q2a3"
+        },
+        {
+          "text": "Wherever the candlelight is best",
+          "characterId": "court-artist",
+          "id": "q2a4"
+        }
+      ],
+      "id": "q2"
+    },
+    {
+      "answers": [
+        {
+          "characterId": "monarch",
+          "id": "q3a1",
+          "text": "Making the call no one else wants to make"
+        },
+        {
+          "text": "Showing up first, every single day",
+          "characterId": "knight",
+          "id": "q3a2"
+        },
+        {
+          "characterId": "jester",
+          "id": "q3a3",
+          "text": "Keeping hope alive — morale is survival"
+        },
+        {
+          "text": "The plan that gets everyone through winter",
+          "characterId": "advisor",
+          "id": "q3a4"
+        }
+      ],
+      "id": "q3",
+      "text": "The kingdom faces a hard year. Your contribution:"
+    },
+    {
+      "text": "Your ideal castle chamber feature:",
+      "id": "q4",
+      "answers": [
+        {
+          "id": "q4a1",
+          "characterId": "knight",
+          "text": "A training yard outside the window"
+        },
+        {
+          "id": "q4a2",
+          "characterId": "advisor",
+          "text": "Walls of books and one enormous desk"
+        },
+        {
+          "text": "A door nobody else knows about",
+          "characterId": "spymaster",
+          "id": "q4a3"
+        },
+        {
+          "text": "North-facing light and endless supplies",
+          "characterId": "court-artist",
+          "id": "q4a4"
+        }
+      ]
+    },
+    {
+      "id": "q5",
+      "answers": [
+        {
+          "text": "Directly, with the weight they deserve",
+          "characterId": "monarch",
+          "id": "q5a1"
+        },
+        {
+          "id": "q5a2",
+          "characterId": "jester",
+          "text": "Wrapped in a joke so it lands soft"
+        },
+        {
+          "id": "q5a3",
+          "characterId": "advisor",
+          "text": "With context, options, and a recommended path"
+        },
+        {
+          "text": "Through a story that says what you can't",
+          "id": "q5a4",
+          "characterId": "court-artist"
+        }
+      ],
+      "text": "How do you deliver hard truths?"
+    },
+    {
+      "text": "Pick a royal duty you'd secretly enjoy:",
+      "id": "q6",
+      "answers": [
+        {
+          "text": "Settling disputes — you're good at verdicts",
+          "id": "q6a1",
+          "characterId": "monarch"
+        },
+        {
+          "text": "Escorting travelers safely through the mountain pass",
+          "characterId": "knight",
+          "id": "q6a2"
+        },
+        {
+          "text": "Roasting visiting dignitaries (affectionately)",
+          "id": "q6a3",
+          "characterId": "jester"
+        },
+        {
+          "characterId": "spymaster",
+          "id": "q6a4",
+          "text": "Reading everyone at the ball from the balcony"
+        }
+      ]
+    },
+    {
+      "text": "Your friends trust you with:",
+      "id": "q7",
+      "answers": [
+        {
+          "text": "Their safety, always",
+          "characterId": "knight",
+          "id": "q7a1"
+        },
+        {
+          "characterId": "jester",
+          "id": "q7a2",
+          "text": "Their bad days"
+        },
+        {
+          "id": "q7a3",
+          "characterId": "spymaster",
+          "text": "Their secrets — all of them, forever"
+        },
+        {
+          "id": "q7a4",
+          "characterId": "court-artist",
+          "text": "Their biggest feelings"
+        }
+      ]
+    },
+    {
+      "text": "A mysterious letter arrives at court. You:",
+      "answers": [
+        {
+          "text": "Have it read aloud. Transparency rules here.",
+          "characterId": "monarch",
+          "id": "q8a1"
+        },
+        {
+          "text": "Read it in a dramatic voice first, contents second",
+          "characterId": "jester",
+          "id": "q8a2"
+        },
+        {
+          "characterId": "advisor",
+          "id": "q8a3",
+          "text": "Verify the seal, the ink, and the sender's motives"
+        },
+        {
+          "text": "Already read it. Resealed it perfectly. Waiting.",
+          "characterId": "spymaster",
+          "id": "q8a4"
+        }
+      ],
+      "id": "q8"
+    },
+    {
+      "id": "q9",
+      "answers": [
+        {
+          "text": "A golden age with your name on it",
+          "id": "q9a1",
+          "characterId": "monarch"
+        },
+        {
+          "text": "The oath that never broke",
+          "characterId": "knight",
+          "id": "q9a2"
+        },
+        {
+          "text": "The wisdom behind three great reigns",
+          "id": "q9a3",
+          "characterId": "advisor"
+        },
+        {
+          "text": "The works that outlived the castle itself",
+          "id": "q9a4",
+          "characterId": "court-artist"
+        }
+      ],
+      "text": "Your legacy in the kingdom's history books:"
+    },
+    {
+      "answers": [
+        {
+          "id": "q10a1",
+          "characterId": "knight",
+          "text": "Morning training, then helping a farmer mend a fence"
+        },
+        {
+          "text": "Testing new material on the market crowd",
+          "id": "q10a2",
+          "characterId": "jester"
+        },
+        {
+          "id": "q10a3",
+          "characterId": "advisor",
+          "text": "Catching up on correspondence, contentedly"
+        },
+        {
+          "characterId": "court-artist",
+          "id": "q10a4",
+          "text": "Painting the harvest festival from the hill"
+        }
+      ],
+      "id": "q10",
+      "text": "A free weekend in the kingdom. You:"
+    },
+    {
+      "answers": [
+        {
+          "text": "The crown. Heavy, but it fits.",
+          "characterId": "monarch",
+          "id": "q11a1"
+        },
+        {
+          "text": "The hat with the bells. Iconic.",
+          "id": "q11a2",
+          "characterId": "jester"
+        },
+        {
+          "id": "q11a3",
+          "characterId": "spymaster",
+          "text": "A cloak with seventeen hidden pockets"
+        },
+        {
+          "text": "Paint-stained sleeves, worn proudly",
+          "characterId": "court-artist",
+          "id": "q11a4"
+        }
+      ],
+      "id": "q11",
+      "text": "Pick a piece of royal attire:"
+    },
+    {
+      "text": "Your court motto:",
+      "answers": [
+        {
+          "text": "'The decision ends here'",
+          "id": "q12a1",
+          "characterId": "monarch"
+        },
+        {
+          "text": "'I hold the line'",
+          "characterId": "knight",
+          "id": "q12a2"
+        },
+        {
+          "text": "'Measure twice'",
+          "characterId": "advisor",
+          "id": "q12a3"
+        },
+        {
+          "id": "q12a4",
+          "characterId": "spymaster",
+          "text": "'I already know'"
+        }
+      ],
+      "id": "q12"
+    }
+  ],
+  "results": [
+    {
+      "characterId": "advisor",
+      "characterName": "The Royal Advisor",
+      "traits": [
+        "Wise",
+        "Strategic",
+        "Trusted",
+        "Analytical",
+        "Diplomatic"
+      ],
+      "description": "The wisdom behind the throne. You read situations three moves deep, give counsel worth its weight in gold, and quietly steer history from a book-lined study."
+    },
+    {
+      "characterId": "court-artist",
+      "characterName": "The Court Artist",
+      "traits": [
+        "Creative",
+        "Expressive",
+        "Observant",
+        "Passionate",
+        "Timeless"
+      ],
+      "description": "The kingdom's memory and its heart. You capture what matters, say the unsayable through your work, and long after the walls fall, your art remains."
+    },
+    {
+      "traits": [
+        "Witty",
+        "Bold",
+        "Insightful",
+        "Uplifting",
+        "Beloved"
+      ],
+      "description": "The only one allowed to tell the monarch the truth — and clever enough to make it funny. Your humor holds the court together and your wit misses nothing.",
+      "characterId": "jester",
+      "characterName": "The Jester"
+    },
+    {
+      "characterId": "knight",
+      "characterName": "The Knight",
+      "traits": [
+        "Loyal",
+        "Brave",
+        "Honorable",
+        "Dependable",
+        "Strong"
+      ],
+      "description": "An oath in human form. Steadfast, brave, and first through every gate, you protect what matters and never need to be asked twice."
+    },
+    {
+      "description": "Born to carry the crown. Decisive, fair, and steady under pressure, you take responsibility others avoid — and your reign would honestly be pretty great.",
+      "traits": [
+        "Decisive",
+        "Responsible",
+        "Confident",
+        "Fair",
+        "Commanding"
+      ],
+      "characterName": "The Monarch",
+      "characterId": "monarch"
+    },
+    {
+      "characterId": "spymaster",
+      "characterName": "The Spymaster",
+      "traits": [
+        "Observant",
+        "Discreet",
+        "Sharp",
+        "Strategic",
+        "Mysterious"
+      ],
+      "description": "The court's quiet all-seeing eye. You notice everything, reveal nothing, and know the kingdom's secrets three days before they happen. Delightfully unnerving."
+    }
+  ]
+}

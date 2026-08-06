@@ -1,0 +1,330 @@
+{
+  "id": "sidekick-energy-quiz",
+  "title": "Which Sidekick Energy Do You Have?",
+  "description": "Heroes get the statues, but sidekicks make the story. Which legendary second-in-command are you?",
+  "categoryId": "pop-culture-fandom",
+  "questions": [
+    {
+      "answers": [
+        {
+          "text": "'Say less. Picking you up in ten.'",
+          "id": "q1a1",
+          "characterId": "ride-or-die"
+        },
+        {
+          "characterId": "comic-relief",
+          "id": "q1a2",
+          "text": "'The last plan got us banned from mini-golf. I'm in.'"
+        },
+        {
+          "id": "q1a3",
+          "characterId": "tech-genius",
+          "text": "'Send details. I'll make a doc.'"
+        },
+        {
+          "id": "q1a4",
+          "characterId": "voice-of-reason",
+          "text": "'Walk me through it first. Slowly.'"
+        }
+      ],
+      "id": "q1",
+      "text": "Your best friend texts 'I have a plan.' You reply:"
+    },
+    {
+      "text": "Road trip roles. Yours is:",
+      "id": "q2",
+      "answers": [
+        {
+          "text": "Shotgun: snack distribution and emotional support",
+          "characterId": "ride-or-die",
+          "id": "q2a1"
+        },
+        {
+          "text": "Backseat commentary, five stars",
+          "id": "q2a2",
+          "characterId": "comic-relief"
+        },
+        {
+          "text": "Navigation, playlists, and tire pressure",
+          "characterId": "tech-genius",
+          "id": "q2a3"
+        },
+        {
+          "characterId": "secret-powerhouse",
+          "id": "q2a4",
+          "text": "Quiet in the back — until the parallel parking emergency"
+        }
+      ]
+    },
+    {
+      "text": "A friend gets rough news. Your move:",
+      "id": "q3",
+      "answers": [
+        {
+          "text": "At their door within the hour",
+          "characterId": "ride-or-die",
+          "id": "q3a1"
+        },
+        {
+          "text": "The perfectly timed meme, then the real talk",
+          "id": "q3a2",
+          "characterId": "comic-relief"
+        },
+        {
+          "characterId": "voice-of-reason",
+          "id": "q3a3",
+          "text": "Help them sort what's actually true from the panic"
+        },
+        {
+          "text": "Quietly handle the errand they're dreading most",
+          "id": "q3a4",
+          "characterId": "secret-powerhouse"
+        }
+      ]
+    },
+    {
+      "id": "q4",
+      "answers": [
+        {
+          "text": "Whatever the leader needs, done, zero complaints",
+          "characterId": "ride-or-die",
+          "id": "q4a1"
+        },
+        {
+          "text": "The research, the formatting, the slides that shine",
+          "characterId": "tech-genius",
+          "id": "q4a2"
+        },
+        {
+          "text": "Scope control. Someone has to say 'that's too much.'",
+          "id": "q4a3",
+          "characterId": "voice-of-reason"
+        },
+        {
+          "id": "q4a4",
+          "characterId": "secret-powerhouse",
+          "text": "Silent all month, then delivers the best section"
+        }
+      ],
+      "text": "Your role in group projects:"
+    },
+    {
+      "answers": [
+        {
+          "characterId": "comic-relief",
+          "id": "q5a1",
+          "text": "'Well, THAT happened'"
+        },
+        {
+          "text": "'Actually, there's an easier way'",
+          "id": "q5a2",
+          "characterId": "tech-genius"
+        },
+        {
+          "text": "'Let's think about this'",
+          "characterId": "voice-of-reason",
+          "id": "q5a3"
+        },
+        {
+          "text": "'...I got it.'",
+          "id": "q5a4",
+          "characterId": "secret-powerhouse"
+        }
+      ],
+      "id": "q5",
+      "text": "Pick a catchphrase:"
+    },
+    {
+      "text": "Your friend is about to attempt something bold. You:",
+      "answers": [
+        {
+          "characterId": "ride-or-die",
+          "id": "q6a1",
+          "text": "Already have your coat on"
+        },
+        {
+          "id": "q6a2",
+          "characterId": "comic-relief",
+          "text": "Lighten the mood until their hands stop shaking"
+        },
+        {
+          "id": "q6a3",
+          "characterId": "tech-genius",
+          "text": "Run the numbers and pack contingencies"
+        },
+        {
+          "text": "List the three ways it goes wrong — then help anyway",
+          "characterId": "voice-of-reason",
+          "id": "q6a4"
+        }
+      ],
+      "id": "q6"
+    },
+    {
+      "id": "q7",
+      "answers": [
+        {
+          "text": "Loyalty that doesn't blink",
+          "characterId": "ride-or-die",
+          "id": "q7a1"
+        },
+        {
+          "text": "Making the worst day funny by Friday",
+          "id": "q7a2",
+          "characterId": "comic-relief"
+        },
+        {
+          "text": "Solving the problem behind the problem",
+          "id": "q7a3",
+          "characterId": "tech-genius"
+        },
+        {
+          "text": "Coming through when it matters most",
+          "id": "q7a4",
+          "characterId": "secret-powerhouse"
+        }
+      ],
+      "text": "Your superpower in friendships:"
+    },
+    {
+      "id": "q8",
+      "answers": [
+        {
+          "text": "First to arrive, last to leave",
+          "characterId": "ride-or-die",
+          "id": "q8a1"
+        },
+        {
+          "characterId": "comic-relief",
+          "id": "q8a2",
+          "text": "The card that makes them cry laughing"
+        },
+        {
+          "text": "Remembering what they actually wanted",
+          "id": "q8a3",
+          "characterId": "voice-of-reason"
+        },
+        {
+          "text": "The gift nobody expected and everybody envies",
+          "id": "q8a4",
+          "characterId": "secret-powerhouse"
+        }
+      ],
+      "text": "Friends' birthdays: your specialty is:"
+    },
+    {
+      "id": "q9",
+      "answers": [
+        {
+          "characterId": "ride-or-die",
+          "id": "q9a1",
+          "text": "Don't care — your people know your worth"
+        },
+        {
+          "characterId": "tech-genius",
+          "id": "q9a2",
+          "text": "Politely correct them. With receipts."
+        },
+        {
+          "text": "Consider whether they have a point first, annoyingly",
+          "id": "q9a3",
+          "characterId": "voice-of-reason"
+        },
+        {
+          "id": "q9a4",
+          "characterId": "secret-powerhouse",
+          "text": "Smile. They'll see."
+        }
+      ],
+      "text": "Someone underestimates you. You:"
+    },
+    {
+      "text": "The credits roll on your story. Your title card reads:",
+      "answers": [
+        {
+          "id": "q10a1",
+          "characterId": "comic-relief",
+          "text": "'The Funny One (Emotionally Essential)'"
+        },
+        {
+          "characterId": "tech-genius",
+          "id": "q10a2",
+          "text": "'The Brains of the Operation'"
+        },
+        {
+          "text": "'The Reason Everyone Survived'",
+          "characterId": "voice-of-reason",
+          "id": "q10a3"
+        },
+        {
+          "text": "'The Plot Twist'",
+          "characterId": "secret-powerhouse",
+          "id": "q10a4"
+        }
+      ],
+      "id": "q10"
+    }
+  ],
+  "results": [
+    {
+      "traits": [
+        "Funny",
+        "Uplifting",
+        "Perceptive",
+        "Warm",
+        "Essential"
+      ],
+      "description": "Officially the funny one; unofficially the emotional backbone. Your jokes arrive exactly when the story needs them, and everyone breathes easier because you exist.",
+      "characterId": "comic-relief",
+      "characterName": "The Comic Relief"
+    },
+    {
+      "characterId": "ride-or-die",
+      "characterName": "The Ride-or-Die",
+      "traits": [
+        "Loyal",
+        "Devoted",
+        "Dependable",
+        "Fearless",
+        "True"
+      ],
+      "description": "Loyalty with a seatbelt on. You show up first, stay longest, and never ask why — your friendship is the one thing in the story that's never in doubt."
+    },
+    {
+      "traits": [
+        "Humble",
+        "Capable",
+        "Surprising",
+        "Composed",
+        "Clutch"
+      ],
+      "description": "Quiet, unassuming, catastrophically underestimated. You spend most of the story in the background — right up until the moment you casually save everything.",
+      "characterId": "secret-powerhouse",
+      "characterName": "The Secret Powerhouse"
+    },
+    {
+      "characterId": "tech-genius",
+      "characterName": "The Tech Genius",
+      "traits": [
+        "Smart",
+        "Prepared",
+        "Inventive",
+        "Detail-oriented",
+        "Indispensable"
+      ],
+      "description": "The one in the chair, and proud of it. Every plan works because you did the homework, built the tools, and thought of the thing nobody else thought of."
+    },
+    {
+      "traits": [
+        "Sensible",
+        "Honest",
+        "Wise",
+        "Protective",
+        "Steady"
+      ],
+      "description": "The sigh before the adventure and the reason everyone comes home. You see the flaws in every plan, say so, and then loyally help anyway. Heroic, honestly.",
+      "characterId": "voice-of-reason",
+      "characterName": "The Voice of Reason"
+    }
+  ]
+}

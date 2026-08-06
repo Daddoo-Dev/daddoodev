@@ -1,0 +1,330 @@
+{
+  "id": "detective-style-quiz",
+  "title": "Which Detective Are You?",
+  "description": "Every great mystery needs a great mind. When the case lands on your desk, how do you crack it?",
+  "categoryId": "pop-culture-fandom",
+  "questions": [
+    {
+      "answers": [
+        {
+          "text": "Reconstruct their morning in ninety seconds. It's in the car.",
+          "characterId": "deducer",
+          "id": "q1a1"
+        },
+        {
+          "characterId": "charmer",
+          "id": "q1a2",
+          "text": "Ask the staff so nicely they check the kitchen twice"
+        },
+        {
+          "id": "q1a3",
+          "characterId": "scholar",
+          "text": "Pull up the tracking app you made everyone install"
+        },
+        {
+          "text": "Text it. Someone always picks up.",
+          "characterId": "streetwise",
+          "id": "q1a4"
+        }
+      ],
+      "id": "q1",
+      "text": "A friend's phone goes missing at brunch. You:"
+    },
+    {
+      "text": "Your favorite kind of puzzle:",
+      "answers": [
+        {
+          "text": "Logic grids, timed",
+          "characterId": "deducer",
+          "id": "q2a1"
+        },
+        {
+          "id": "q2a2",
+          "characterId": "charmer",
+          "text": "People. People are the puzzle."
+        },
+        {
+          "characterId": "scholar",
+          "id": "q2a3",
+          "text": "Anything requiring three open books"
+        },
+        {
+          "text": "Spot-the-difference. You're unbeatable.",
+          "characterId": "observer",
+          "id": "q2a4"
+        }
+      ],
+      "id": "q2"
+    },
+    {
+      "text": "How does news reach you?",
+      "answers": [
+        {
+          "text": "You'd already worked out it was coming",
+          "id": "q3a1",
+          "characterId": "deducer"
+        },
+        {
+          "id": "q3a2",
+          "characterId": "charmer",
+          "text": "People simply tell you things. Everything."
+        },
+        {
+          "text": "You know the person who knows the person",
+          "id": "q3a3",
+          "characterId": "streetwise"
+        },
+        {
+          "text": "You were quietly there when it happened",
+          "id": "q3a4",
+          "characterId": "observer"
+        }
+      ],
+      "id": "q3"
+    },
+    {
+      "answers": [
+        {
+          "text": "Anywhere with good light and zero interruptions",
+          "id": "q4a1",
+          "characterId": "deducer"
+        },
+        {
+          "characterId": "scholar",
+          "id": "q4a2",
+          "text": "A library corner you've claimed for years"
+        },
+        {
+          "text": "A diner booth where the regulars know you",
+          "characterId": "streetwise",
+          "id": "q4a3"
+        },
+        {
+          "text": "A park bench with a view of everything",
+          "characterId": "observer",
+          "id": "q4a4"
+        }
+      ],
+      "id": "q4",
+      "text": "Pick a reading spot:"
+    },
+    {
+      "id": "q5",
+      "answers": [
+        {
+          "text": "'The Diplomat'",
+          "id": "q5a1",
+          "characterId": "charmer"
+        },
+        {
+          "characterId": "scholar",
+          "id": "q5a2",
+          "text": "'The Professor'"
+        },
+        {
+          "text": "'The Fixer'",
+          "characterId": "streetwise",
+          "id": "q5a3"
+        },
+        {
+          "id": "q5a4",
+          "characterId": "observer",
+          "text": "'The Quiet One Who Misses Nothing'"
+        }
+      ],
+      "text": "Your friends' nickname energy for you:"
+    },
+    {
+      "id": "q6",
+      "answers": [
+        {
+          "text": "Predict the entire menu from the signage alone",
+          "id": "q6a1",
+          "characterId": "deducer"
+        },
+        {
+          "text": "Befriend the owner by week two",
+          "id": "q6a2",
+          "characterId": "charmer"
+        },
+        {
+          "id": "q6a3",
+          "characterId": "scholar",
+          "text": "Read forty reviews before setting foot inside"
+        },
+        {
+          "text": "Already know the chef from their last place",
+          "characterId": "streetwise",
+          "id": "q6a4"
+        }
+      ],
+      "text": "A new restaurant opens nearby. You:"
+    },
+    {
+      "text": "Your note-taking style:",
+      "answers": [
+        {
+          "text": "Three words that unlock the whole thing later",
+          "characterId": "deducer",
+          "id": "q7a1"
+        },
+        {
+          "characterId": "charmer",
+          "id": "q7a2",
+          "text": "Notes about people: birthdays, kids' names, favorite teams"
+        },
+        {
+          "text": "Color-coded, indexed, cross-referenced",
+          "characterId": "scholar",
+          "id": "q7a3"
+        },
+        {
+          "text": "Mostly mental. All accurate.",
+          "characterId": "observer",
+          "id": "q7a4"
+        }
+      ],
+      "id": "q7"
+    },
+    {
+      "text": "Someone's story doesn't add up. You:",
+      "id": "q8",
+      "answers": [
+        {
+          "text": "Point out the contradiction immediately, with timeline",
+          "characterId": "deducer",
+          "id": "q8a1"
+        },
+        {
+          "text": "Draw out the truth so gently they thank you for it",
+          "id": "q8a2",
+          "characterId": "charmer"
+        },
+        {
+          "characterId": "streetwise",
+          "id": "q8a3",
+          "text": "Quietly check with your sources first"
+        },
+        {
+          "id": "q8a4",
+          "characterId": "observer",
+          "text": "Say nothing. Watch. The truth surfaces."
+        }
+      ]
+    },
+    {
+      "answers": [
+        {
+          "id": "q9a1",
+          "characterId": "deducer",
+          "text": "Speed chess"
+        },
+        {
+          "text": "Genealogy — you've traced back nine generations",
+          "id": "q9a2",
+          "characterId": "scholar"
+        },
+        {
+          "text": "Flea market treasure hunting",
+          "characterId": "streetwise",
+          "id": "q9a3"
+        },
+        {
+          "characterId": "observer",
+          "id": "q9a4",
+          "text": "Birdwatching, competitively (with yourself)"
+        }
+      ],
+      "id": "q9",
+      "text": "Pick a hobby:"
+    },
+    {
+      "id": "q10",
+      "answers": [
+        {
+          "text": "Reuniting old friends who lost touch",
+          "characterId": "charmer",
+          "id": "q10a1"
+        },
+        {
+          "id": "q10a2",
+          "characterId": "scholar",
+          "text": "Solving a family history mystery in the archives"
+        },
+        {
+          "characterId": "streetwise",
+          "id": "q10a3",
+          "text": "Finding the best-kept secret spot in town"
+        },
+        {
+          "characterId": "observer",
+          "id": "q10a4",
+          "text": "Mapping the neighborhood cat's secret second family"
+        }
+      ],
+      "text": "Your ideal case, everyday edition:"
+    }
+  ],
+  "results": [
+    {
+      "characterName": "The Charmer",
+      "characterId": "charmer",
+      "description": "Your interrogation method is being genuinely delightful. People open up to you within minutes, and you solve cases over coffee that others couldn't crack in weeks.",
+      "traits": [
+        "Charming",
+        "Warm",
+        "Persuasive",
+        "Socially brilliant",
+        "Trustworthy"
+      ]
+    },
+    {
+      "traits": [
+        "Brilliant",
+        "Logical",
+        "Quick",
+        "Confident",
+        "Precise"
+      ],
+      "description": "Lightning logic and a flair for the reveal. You see the whole picture from three details and you're rarely wrong — the dramatic explanation is your favorite part.",
+      "characterId": "deducer",
+      "characterName": "The Deducer"
+    },
+    {
+      "characterId": "observer",
+      "characterName": "The Observer",
+      "traits": [
+        "Patient",
+        "Perceptive",
+        "Discreet",
+        "Thorough",
+        "Uncanny"
+      ],
+      "description": "Patient, quiet, and utterly unmissable-proof. You blend into the background, catch everything, and by the time others start looking, you already know."
+    },
+    {
+      "characterId": "scholar",
+      "characterName": "The Scholar",
+      "traits": [
+        "Studious",
+        "Meticulous",
+        "Knowledgeable",
+        "Persistent",
+        "Methodical"
+      ],
+      "description": "The archives are your crime scene. Meticulous research, deep knowledge, and cross-referenced facts crack your cases — the truth is always in the records."
+    },
+    {
+      "traits": [
+        "Connected",
+        "Practical",
+        "Sharp",
+        "Resourceful",
+        "Grounded"
+      ],
+      "description": "Your network is your superpower. You know everyone, owe nobody, and can find anything in town with three phone calls and a handshake.",
+      "characterId": "streetwise",
+      "characterName": "The Streetwise"
+    }
+  ]
+}

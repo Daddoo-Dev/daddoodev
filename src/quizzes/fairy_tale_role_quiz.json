@@ -1,0 +1,330 @@
+{
+  "id": "fairy-tale-role-quiz",
+  "title": "Which Fairy Tale Role Are You?",
+  "description": "Once upon a time, there was someone exactly like you. Find your place in the story!",
+  "categoryId": "pop-culture-fandom",
+  "questions": [
+    {
+      "text": "A friend calls with a big problem. You:",
+      "answers": [
+        {
+          "text": "Say 'I'm on my way' before they finish",
+          "characterId": "hero",
+          "id": "q1a1"
+        },
+        {
+          "text": "Quietly fix it before they even ask twice",
+          "id": "q1a2",
+          "characterId": "godparent"
+        },
+        {
+          "text": "Ask the question that helps them solve it themselves",
+          "characterId": "mentor",
+          "id": "q1a3"
+        },
+        {
+          "id": "q1a4",
+          "characterId": "sidekick",
+          "text": "Show up with snacks and unwavering moral support"
+        }
+      ],
+      "id": "q1"
+    },
+    {
+      "text": "Your ideal role at a wedding:",
+      "id": "q2",
+      "answers": [
+        {
+          "id": "q2a1",
+          "characterId": "hero",
+          "text": "Whatever job involves lifting, driving, or rescuing"
+        },
+        {
+          "id": "q2a2",
+          "characterId": "godparent",
+          "text": "The one who secretly paid for the band"
+        },
+        {
+          "text": "Best friend duty: speeches, tears, dance floor",
+          "id": "q2a3",
+          "characterId": "sidekick"
+        },
+        {
+          "text": "Effortlessly elegant guest everyone photographs",
+          "characterId": "royal",
+          "id": "q2a4"
+        }
+      ]
+    },
+    {
+      "text": "Pick a gift to give at a christening (fairy tale style):",
+      "answers": [
+        {
+          "characterId": "godparent",
+          "id": "q3a1",
+          "text": "Exactly what they'll need, right when they need it"
+        },
+        {
+          "text": "A book with the important pages marked",
+          "characterId": "mentor",
+          "id": "q3a2"
+        },
+        {
+          "id": "q3a3",
+          "characterId": "sidekick",
+          "text": "A lifelong promise to always show up"
+        },
+        {
+          "text": "Something beautiful that becomes an heirloom",
+          "characterId": "royal",
+          "id": "q3a4"
+        }
+      ],
+      "id": "q3"
+    },
+    {
+      "answers": [
+        {
+          "id": "q4a1",
+          "characterId": "hero",
+          "text": "Challenge it, openly, today"
+        },
+        {
+          "id": "q4a2",
+          "characterId": "godparent",
+          "text": "Quietly help the people it hurts"
+        },
+        {
+          "id": "q4a3",
+          "characterId": "mentor",
+          "text": "Explain patiently why it must change"
+        },
+        {
+          "text": "Change it from the inside, with grace",
+          "characterId": "royal",
+          "id": "q4a4"
+        }
+      ],
+      "id": "q4",
+      "text": "Your reaction to an unfair rule:"
+    },
+    {
+      "text": "Your friends' group adventure role:",
+      "answers": [
+        {
+          "characterId": "hero",
+          "id": "q5a1",
+          "text": "First into the unknown"
+        },
+        {
+          "text": "The one with the wisdom and the map",
+          "id": "q5a2",
+          "characterId": "mentor"
+        },
+        {
+          "text": "Morale, loyalty, and excellent commentary",
+          "id": "q5a3",
+          "characterId": "sidekick"
+        },
+        {
+          "text": "Somehow never gets mud on their shoes",
+          "id": "q5a4",
+          "characterId": "royal"
+        }
+      ],
+      "id": "q5"
+    },
+    {
+      "text": "What's your relationship with advice?",
+      "id": "q6",
+      "answers": [
+        {
+          "characterId": "hero",
+          "id": "q6a1",
+          "text": "Prefer to learn by doing, occasionally the hard way"
+        },
+        {
+          "text": "You give it wrapped in kindness and cake",
+          "characterId": "godparent",
+          "id": "q6a2"
+        },
+        {
+          "text": "You give it in riddles that make sense later",
+          "id": "q6a3",
+          "characterId": "mentor"
+        },
+        {
+          "characterId": "sidekick",
+          "id": "q6a4",
+          "text": "You mostly just listen, which is better anyway"
+        }
+      ]
+    },
+    {
+      "answers": [
+        {
+          "characterId": "hero",
+          "id": "q7a1",
+          "text": "Face it head-on"
+        },
+        {
+          "characterId": "godparent",
+          "id": "q7a2",
+          "text": "Know a guy. The dragon owes you a favor."
+        },
+        {
+          "text": "Recall that dragons respond well to riddles",
+          "characterId": "mentor",
+          "id": "q7a3"
+        },
+        {
+          "text": "Negotiate. Dragons respect composure.",
+          "id": "q7a4",
+          "characterId": "royal"
+        }
+      ],
+      "id": "q7",
+      "text": "A dragon is (metaphorically) blocking the road. You:"
+    },
+    {
+      "text": "Your happily-ever-after looks like:",
+      "id": "q8",
+      "answers": [
+        {
+          "text": "The next adventure on the horizon",
+          "characterId": "hero",
+          "id": "q8a1"
+        },
+        {
+          "characterId": "mentor",
+          "id": "q8a2",
+          "text": "Someone you taught surpassing you"
+        },
+        {
+          "text": "Everyone you love in one room, laughing",
+          "id": "q8a3",
+          "characterId": "sidekick"
+        },
+        {
+          "text": "A legacy that outlasts you, beautifully kept",
+          "id": "q8a4",
+          "characterId": "royal"
+        }
+      ]
+    },
+    {
+      "id": "q9",
+      "answers": [
+        {
+          "characterId": "hero",
+          "id": "q9a1",
+          "text": "Showing up when it was hard"
+        },
+        {
+          "text": "Generosity they never saw coming",
+          "characterId": "godparent",
+          "id": "q9a2"
+        },
+        {
+          "characterId": "sidekick",
+          "id": "q9a3",
+          "text": "Being there through absolutely everything"
+        },
+        {
+          "id": "q9a4",
+          "characterId": "royal",
+          "text": "Making everything feel special"
+        }
+      ],
+      "text": "What do people thank you for most?"
+    },
+    {
+      "answers": [
+        {
+          "characterId": "godparent",
+          "id": "q10a1",
+          "text": "A wand that only works for others' wishes"
+        },
+        {
+          "characterId": "mentor",
+          "id": "q10a2",
+          "text": "A lantern that lights the right path"
+        },
+        {
+          "text": "A compass that points to your best friend",
+          "id": "q10a3",
+          "characterId": "sidekick"
+        },
+        {
+          "characterId": "royal",
+          "id": "q10a4",
+          "text": "A crown that fits perfectly. Naturally."
+        }
+      ],
+      "id": "q10",
+      "text": "Pick a magical object:"
+    }
+  ],
+  "results": [
+    {
+      "traits": [
+        "Generous",
+        "Magical",
+        "Thoughtful",
+        "Selfless",
+        "Warm"
+      ],
+      "description": "Quietly magical and endlessly generous. You make wonderful things happen for people, often before they know they need it — and you never wait around for credit.",
+      "characterId": "godparent",
+      "characterName": "The Fairy Godparent"
+    },
+    {
+      "description": "Brave heart, forward motion. When the story needs someone to step up, it's always you — not because it's easy, but because someone has to, and you love them.",
+      "traits": [
+        "Brave",
+        "Determined",
+        "Loyal",
+        "Selfless",
+        "Adventurous"
+      ],
+      "characterName": "The Hero",
+      "characterId": "hero"
+    },
+    {
+      "description": "The keeper of lanterns and good questions. You've seen enough of the story to guide others through it, and your advice always makes sense — eventually.",
+      "traits": [
+        "Wise",
+        "Patient",
+        "Insightful",
+        "Calm",
+        "Guiding"
+      ],
+      "characterName": "The Wise Mentor",
+      "characterId": "mentor"
+    },
+    {
+      "traits": [
+        "Graceful",
+        "Composed",
+        "Elegant",
+        "Responsible",
+        "Inspiring"
+      ],
+      "description": "Grace under pressure and a touch of destiny. You carry yourself like the story was written about you — because honestly, it might have been.",
+      "characterId": "royal",
+      "characterName": "The Royal"
+    },
+    {
+      "characterId": "sidekick",
+      "characterName": "The Loyal Sidekick",
+      "traits": [
+        "Loyal",
+        "Funny",
+        "Supportive",
+        "Genuine",
+        "Beloved"
+      ],
+      "description": "The heart of the whole tale. Heroes get statues, but you get something better: everyone's trust, everyone's laughter, and a seat at every table forever."
+    }
+  ]
+}

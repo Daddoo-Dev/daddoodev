@@ -1,0 +1,330 @@
+{
+  "id": "band-member-quiz",
+  "title": "Which Band Member Are You?",
+  "description": "Every legendary band needs five kinds of star. When your crew goes on tour, which one are you?",
+  "categoryId": "pop-culture-fandom",
+  "questions": [
+    {
+      "text": "Group photo time. You are:",
+      "id": "q1",
+      "answers": [
+        {
+          "text": "Front and center, naturally",
+          "id": "q1a1",
+          "characterId": "lead-singer"
+        },
+        {
+          "text": "Doing something interesting off to the side",
+          "id": "q1a2",
+          "characterId": "guitarist"
+        },
+        {
+          "text": "Behind the camera — you'd rather take the photo",
+          "characterId": "songwriter",
+          "id": "q1a3"
+        },
+        {
+          "text": "Back row, perfectly content",
+          "id": "q1a4",
+          "characterId": "bassist"
+        }
+      ]
+    },
+    {
+      "id": "q2",
+      "answers": [
+        {
+          "text": "Love it. The mic finds you.",
+          "characterId": "lead-singer",
+          "id": "q2a1"
+        },
+        {
+          "id": "q2a2",
+          "characterId": "guitarist",
+          "text": "Great, as long as you can show rather than tell"
+        },
+        {
+          "text": "Fine, but you'd rather someone else did it",
+          "characterId": "bassist",
+          "id": "q2a3"
+        },
+        {
+          "characterId": "songwriter",
+          "id": "q2a4",
+          "text": "You wrote the speech. Someone else can give it."
+        }
+      ],
+      "text": "How do you handle public speaking?"
+    },
+    {
+      "answers": [
+        {
+          "characterId": "lead-singer",
+          "id": "q3a1",
+          "text": "Pitching the destination with full enthusiasm"
+        },
+        {
+          "id": "q3a2",
+          "characterId": "drummer",
+          "text": "Keeping everyone on schedule, loudly"
+        },
+        {
+          "characterId": "bassist",
+          "id": "q3a3",
+          "text": "Going along happily with whatever's decided"
+        },
+        {
+          "text": "The group chat poet documenting everything",
+          "id": "q3a4",
+          "characterId": "songwriter"
+        }
+      ],
+      "id": "q3",
+      "text": "Your role when friends plan a trip:"
+    },
+    {
+      "answers": [
+        {
+          "text": "'You light up every room'",
+          "characterId": "lead-singer",
+          "id": "q4a1"
+        },
+        {
+          "id": "q4a2",
+          "characterId": "guitarist",
+          "text": "'How did you DO that?'"
+        },
+        {
+          "id": "q4a3",
+          "characterId": "drummer",
+          "text": "'Nothing works without you'"
+        },
+        {
+          "id": "q4a4",
+          "characterId": "songwriter",
+          "text": "'That thing you made? It meant something to me.'"
+        }
+      ],
+      "id": "q4",
+      "text": "Pick a compliment that would make your week:"
+    },
+    {
+      "id": "q5",
+      "answers": [
+        {
+          "text": "Telling the story everyone's gathered around",
+          "id": "q5a1",
+          "characterId": "lead-singer"
+        },
+        {
+          "text": "Showing someone a trick in the corner, crowd forming",
+          "id": "q5a2",
+          "characterId": "guitarist"
+        },
+        {
+          "characterId": "drummer",
+          "id": "q5a3",
+          "text": "Starting the dancing, refusing to let it die"
+        },
+        {
+          "id": "q5a4",
+          "characterId": "bassist",
+          "text": "Having one great conversation all night"
+        }
+      ],
+      "text": "At a party, you're the one:"
+    },
+    {
+      "answers": [
+        {
+          "text": "Practice obsessively, perform effortlessly",
+          "id": "q6a1",
+          "characterId": "guitarist"
+        },
+        {
+          "id": "q6a2",
+          "characterId": "drummer",
+          "text": "Steady output, powerful bursts"
+        },
+        {
+          "text": "Quietly essential — things fall apart without you",
+          "id": "q6a3",
+          "characterId": "bassist"
+        },
+        {
+          "text": "Best ideas arrive at 2 AM",
+          "id": "q6a4",
+          "characterId": "songwriter"
+        }
+      ],
+      "id": "q6",
+      "text": "Your work style:"
+    },
+    {
+      "id": "q7",
+      "answers": [
+        {
+          "characterId": "lead-singer",
+          "id": "q7a1",
+          "text": "Openly and at full volume"
+        },
+        {
+          "characterId": "drummer",
+          "id": "q7a2",
+          "text": "Through energy — you can't hide a mood"
+        },
+        {
+          "text": "Rarely, but when you do, it counts",
+          "id": "q7a3",
+          "characterId": "bassist"
+        },
+        {
+          "text": "In writing, always in writing",
+          "characterId": "songwriter",
+          "id": "q7a4"
+        }
+      ],
+      "text": "How do you express feelings?"
+    },
+    {
+      "text": "Pick a superpower for daily life:",
+      "answers": [
+        {
+          "characterId": "lead-singer",
+          "id": "q8a1",
+          "text": "Instant crowd charisma"
+        },
+        {
+          "id": "q8a2",
+          "characterId": "guitarist",
+          "text": "Mastering any skill in a week"
+        },
+        {
+          "characterId": "drummer",
+          "id": "q8a3",
+          "text": "Boundless energy on demand"
+        },
+        {
+          "characterId": "songwriter",
+          "id": "q8a4",
+          "text": "Hearing what people mean, not just what they say"
+        }
+      ],
+      "id": "q8"
+    },
+    {
+      "answers": [
+        {
+          "id": "q9a1",
+          "characterId": "lead-singer",
+          "text": "Give the speech that gets everyone believing again"
+        },
+        {
+          "id": "q9a2",
+          "characterId": "guitarist",
+          "text": "Head down, sharpen the craft, let the work talk"
+        },
+        {
+          "id": "q9a3",
+          "characterId": "drummer",
+          "text": "Keep the rhythm going until everyone finds it again"
+        },
+        {
+          "characterId": "bassist",
+          "id": "q9a4",
+          "text": "Hold steady — someone has to be the calm one"
+        }
+      ],
+      "id": "q9",
+      "text": "The band hits a rough patch. You:"
+    },
+    {
+      "id": "q10",
+      "answers": [
+        {
+          "text": "The solo everyone air-guitars forever",
+          "id": "q10a1",
+          "characterId": "guitarist"
+        },
+        {
+          "characterId": "drummer",
+          "id": "q10a2",
+          "text": "The intro beat everyone recognizes in one second"
+        },
+        {
+          "characterId": "bassist",
+          "id": "q10a3",
+          "text": "The groove people can't help moving to"
+        },
+        {
+          "text": "The line people tattoo on their arms",
+          "id": "q10a4",
+          "characterId": "songwriter"
+        }
+      ],
+      "text": "Your dream contribution to a hit song:"
+    }
+  ],
+  "results": [
+    {
+      "characterName": "The Bassist",
+      "characterId": "bassist",
+      "description": "The quiet foundation everything is built on. You don't chase the spotlight — you hold the whole thing together, and the people who matter know exactly how essential you are.",
+      "traits": [
+        "Steady",
+        "Understated",
+        "Essential",
+        "Loyal",
+        "Cool-headed"
+      ]
+    },
+    {
+      "characterId": "drummer",
+      "characterName": "The Drummer",
+      "traits": [
+        "Energetic",
+        "Reliable",
+        "Powerful",
+        "Rhythmic",
+        "Spirited"
+      ],
+      "description": "Pure engine. Your energy sets the pace for everyone around you, and when you're locked in, the whole room moves with you. Nothing works without the beat."
+    },
+    {
+      "characterName": "The Lead Guitarist",
+      "characterId": "guitarist",
+      "description": "Craft plus showmanship. You practice in private so you can amaze in public, and your best moments make people ask 'how?!' — which is exactly the point.",
+      "traits": [
+        "Skilled",
+        "Dedicated",
+        "Expressive",
+        "Cool",
+        "Show-stopping"
+      ]
+    },
+    {
+      "characterName": "The Lead Singer",
+      "characterId": "lead-singer",
+      "description": "Born for the front of the stage. Expressive, magnetic, and fearless with a spotlight, you give the group its voice and the crowd its reason to cheer.",
+      "traits": [
+        "Charismatic",
+        "Expressive",
+        "Confident",
+        "Magnetic",
+        "Fearless"
+      ]
+    },
+    {
+      "characterId": "songwriter",
+      "characterName": "The Songwriter",
+      "traits": [
+        "Creative",
+        "Observant",
+        "Deep",
+        "Poetic",
+        "Insightful"
+      ],
+      "description": "The soul behind the sound. You notice everything, feel it deeply, and turn it into words that stick with people forever. The hits exist because you do."
+    }
+  ]
+}
