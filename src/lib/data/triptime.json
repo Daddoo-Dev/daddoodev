@@ -1,0 +1,809 @@
+{
+	"settings": {
+		"adults": 2,
+		"origin": "DEN",
+		"year": 2027,
+		"windowStartMonth": 6,
+		"windowStartDay": 6,
+		"windowEndMonth": 6,
+		"windowEndDay": 26,
+		"nights": 7,
+		"hotelMinUsd": 150,
+		"hotelMaxUsd": 250,
+		"gapThresholdUsd": 500,
+		"cabin": "ECONOMY",
+		"cabinUpgradeWithinUsd": 200
+	},
+	"lastScanAt": "2026-08-07T00:24:25.076Z",
+	"quotes": [
+		{
+			"city": "paris",
+			"window": {
+				"id": "2027-06-06_2027-06-13",
+				"departDate": "2027-06-06",
+				"returnDate": "2027-06-13",
+				"nights": 7
+			},
+			"flight": {
+				"priceUsd": 2388,
+				"cabin": "ECONOMY",
+				"airline": "WestJet",
+				"stops": 1,
+				"durationOutbound": "15h 45m",
+				"durationReturn": "—",
+				"bookingLink": "https://www.google.com/travel/flights?hl=en&gl=us&curr=USD&tfs=CBwQAhonEgoyMDI3LTA2LTA2agcIARIDREVOcgcIARIDQ0RHcgcIARIDT1JZGicSCjIwMjctMDYtMTNqBwgBEgNDREdqBwgBEgNPUllyBwgBEgNERU5AAUABSAFwAZgBAQ&tfu=EgIIAQ",
+				"rawLabel": "WestJet · Google Flights"
+			},
+			"flightUpgrade": null,
+			"hotel": {
+				"priceTotalUsd": 1400,
+				"pricePerNightUsd": 200,
+				"name": "Paris mid-band estimate ($150–$250/night)",
+				"bookingLink": "https://www.google.com/travel/hotels/Paris%20hotels?q=Paris%20hotels&dates=2027-06-06,2027-06-13&adults=2&curr=USD&price=150,250",
+				"estimated": true
+			},
+			"totalUsd": 3788
+		},
+		{
+			"city": "rome",
+			"window": {
+				"id": "2027-06-06_2027-06-13",
+				"departDate": "2027-06-06",
+				"returnDate": "2027-06-13",
+				"nights": 7
+			},
+			"flight": {
+				"priceUsd": 2741,
+				"cabin": "ECONOMY",
+				"airline": "Turkish Airlines",
+				"stops": 1,
+				"durationOutbound": "19h 10m",
+				"durationReturn": "—",
+				"bookingLink": "https://www.google.com/travel/flights?hl=en&gl=us&curr=USD&tfs=CBwQAhonEgoyMDI3LTA2LTA2agcIARIDREVOcgcIARIDRkNPcgcIARIDQ0lBGicSCjIwMjctMDYtMTNqBwgBEgNGQ09qBwgBEgNDSUFyBwgBEgNERU5AAUABSAFwAZgBAQ&tfu=EgIIAQ",
+				"rawLabel": "Turkish Airlines · Google Flights"
+			},
+			"flightUpgrade": null,
+			"hotel": {
+				"priceTotalUsd": 1400,
+				"pricePerNightUsd": 200,
+				"name": "Rome mid-band estimate ($150–$250/night)",
+				"bookingLink": "https://www.google.com/travel/hotels/Rome%20hotels?q=Rome%20hotels&dates=2027-06-06,2027-06-13&adults=2&curr=USD&price=150,250",
+				"estimated": true
+			},
+			"totalUsd": 4141
+		},
+		{
+			"city": "paris",
+			"window": {
+				"id": "2027-06-07_2027-06-14",
+				"departDate": "2027-06-07",
+				"returnDate": "2027-06-14",
+				"nights": 7
+			},
+			"flight": {
+				"priceUsd": 2247,
+				"cabin": "ECONOMY",
+				"airline": "WestJet",
+				"stops": 1,
+				"durationOutbound": "15h 45m",
+				"durationReturn": "—",
+				"bookingLink": "https://www.google.com/travel/flights?hl=en&gl=us&curr=USD&tfs=CBwQAhonEgoyMDI3LTA2LTA3agcIARIDREVOcgcIARIDQ0RHcgcIARIDT1JZGicSCjIwMjctMDYtMTRqBwgBEgNDREdqBwgBEgNPUllyBwgBEgNERU5AAUABSAFwAZgBAQ&tfu=EgIIAQ",
+				"rawLabel": "WestJet · Google Flights"
+			},
+			"flightUpgrade": null,
+			"hotel": {
+				"priceTotalUsd": 1400,
+				"pricePerNightUsd": 200,
+				"name": "Paris mid-band estimate ($150–$250/night)",
+				"bookingLink": "https://www.google.com/travel/hotels/Paris%20hotels?q=Paris%20hotels&dates=2027-06-07,2027-06-14&adults=2&curr=USD&price=150,250",
+				"estimated": true
+			},
+			"totalUsd": 3647
+		},
+		{
+			"city": "rome",
+			"window": {
+				"id": "2027-06-07_2027-06-14",
+				"departDate": "2027-06-07",
+				"returnDate": "2027-06-14",
+				"nights": 7
+			},
+			"flight": {
+				"priceUsd": 2613,
+				"cabin": "ECONOMY",
+				"airline": "JetBlue",
+				"stops": 2,
+				"durationOutbound": "18h 25m",
+				"durationReturn": "—",
+				"bookingLink": "https://www.google.com/travel/flights?hl=en&gl=us&curr=USD&tfs=CBwQAhonEgoyMDI3LTA2LTA3agcIARIDREVOcgcIARIDRkNPcgcIARIDQ0lBGicSCjIwMjctMDYtMTRqBwgBEgNGQ09qBwgBEgNDSUFyBwgBEgNERU5AAUABSAFwAZgBAQ&tfu=EgIIAQ",
+				"rawLabel": "JetBlue · Google Flights"
+			},
+			"flightUpgrade": null,
+			"hotel": {
+				"priceTotalUsd": 1400,
+				"pricePerNightUsd": 200,
+				"name": "Rome mid-band estimate ($150–$250/night)",
+				"bookingLink": "https://www.google.com/travel/hotels/Rome%20hotels?q=Rome%20hotels&dates=2027-06-07,2027-06-14&adults=2&curr=USD&price=150,250",
+				"estimated": true
+			},
+			"totalUsd": 4013
+		},
+		{
+			"city": "paris",
+			"window": {
+				"id": "2027-06-08_2027-06-15",
+				"departDate": "2027-06-08",
+				"returnDate": "2027-06-15",
+				"nights": 7
+			},
+			"flight": {
+				"priceUsd": 1999,
+				"cabin": "ECONOMY",
+				"airline": "WestJet",
+				"stops": 1,
+				"durationOutbound": "15h 45m",
+				"durationReturn": "—",
+				"bookingLink": "https://www.google.com/travel/flights?hl=en&gl=us&curr=USD&tfs=CBwQAhonEgoyMDI3LTA2LTA4agcIARIDREVOcgcIARIDQ0RHcgcIARIDT1JZGicSCjIwMjctMDYtMTVqBwgBEgNDREdqBwgBEgNPUllyBwgBEgNERU5AAUABSAFwAZgBAQ&tfu=EgIIAQ",
+				"rawLabel": "WestJet · Google Flights"
+			},
+			"flightUpgrade": null,
+			"hotel": {
+				"priceTotalUsd": 1400,
+				"pricePerNightUsd": 200,
+				"name": "Paris mid-band estimate ($150–$250/night)",
+				"bookingLink": "https://www.google.com/travel/hotels/Paris%20hotels?q=Paris%20hotels&dates=2027-06-08,2027-06-15&adults=2&curr=USD&price=150,250",
+				"estimated": true
+			},
+			"totalUsd": 3399
+		},
+		{
+			"city": "rome",
+			"window": {
+				"id": "2027-06-08_2027-06-15",
+				"departDate": "2027-06-08",
+				"returnDate": "2027-06-15",
+				"nights": 7
+			},
+			"flight": {
+				"priceUsd": 2386,
+				"cabin": "ECONOMY",
+				"airline": "WestJet",
+				"stops": 1,
+				"durationOutbound": "16h 40m",
+				"durationReturn": "—",
+				"bookingLink": "https://www.google.com/travel/flights?hl=en&gl=us&curr=USD&tfs=CBwQAhonEgoyMDI3LTA2LTA4agcIARIDREVOcgcIARIDRkNPcgcIARIDQ0lBGicSCjIwMjctMDYtMTVqBwgBEgNGQ09qBwgBEgNDSUFyBwgBEgNERU5AAUABSAFwAZgBAQ&tfu=EgIIAQ",
+				"rawLabel": "WestJet · Google Flights"
+			},
+			"flightUpgrade": null,
+			"hotel": {
+				"priceTotalUsd": 1400,
+				"pricePerNightUsd": 200,
+				"name": "Rome mid-band estimate ($150–$250/night)",
+				"bookingLink": "https://www.google.com/travel/hotels/Rome%20hotels?q=Rome%20hotels&dates=2027-06-08,2027-06-15&adults=2&curr=USD&price=150,250",
+				"estimated": true
+			},
+			"totalUsd": 3786
+		},
+		{
+			"city": "paris",
+			"window": {
+				"id": "2027-06-09_2027-06-16",
+				"departDate": "2027-06-09",
+				"returnDate": "2027-06-16",
+				"nights": 7
+			},
+			"flight": {
+				"priceUsd": 2142,
+				"cabin": "ECONOMY",
+				"airline": "WestJet",
+				"stops": 1,
+				"durationOutbound": "15h 45m",
+				"durationReturn": "—",
+				"bookingLink": "https://www.google.com/travel/flights?hl=en&gl=us&curr=USD&tfs=CBwQAhonEgoyMDI3LTA2LTA5agcIARIDREVOcgcIARIDQ0RHcgcIARIDT1JZGicSCjIwMjctMDYtMTZqBwgBEgNDREdqBwgBEgNPUllyBwgBEgNERU5AAUABSAFwAZgBAQ&tfu=EgIIAQ",
+				"rawLabel": "WestJet · Google Flights"
+			},
+			"flightUpgrade": null,
+			"hotel": {
+				"priceTotalUsd": 1400,
+				"pricePerNightUsd": 200,
+				"name": "Paris mid-band estimate ($150–$250/night)",
+				"bookingLink": "https://www.google.com/travel/hotels/Paris%20hotels?q=Paris%20hotels&dates=2027-06-09,2027-06-16&adults=2&curr=USD&price=150,250",
+				"estimated": true
+			},
+			"totalUsd": 3542
+		},
+		{
+			"city": "rome",
+			"window": {
+				"id": "2027-06-09_2027-06-16",
+				"departDate": "2027-06-09",
+				"returnDate": "2027-06-16",
+				"nights": 7
+			},
+			"flight": {
+				"priceUsd": 2386,
+				"cabin": "ECONOMY",
+				"airline": "WestJet",
+				"stops": 1,
+				"durationOutbound": "16h 40m",
+				"durationReturn": "—",
+				"bookingLink": "https://www.google.com/travel/flights?hl=en&gl=us&curr=USD&tfs=CBwQAhonEgoyMDI3LTA2LTA5agcIARIDREVOcgcIARIDRkNPcgcIARIDQ0lBGicSCjIwMjctMDYtMTZqBwgBEgNGQ09qBwgBEgNDSUFyBwgBEgNERU5AAUABSAFwAZgBAQ&tfu=EgIIAQ",
+				"rawLabel": "WestJet · Google Flights"
+			},
+			"flightUpgrade": null,
+			"hotel": {
+				"priceTotalUsd": 1400,
+				"pricePerNightUsd": 200,
+				"name": "Rome mid-band estimate ($150–$250/night)",
+				"bookingLink": "https://www.google.com/travel/hotels/Rome%20hotels?q=Rome%20hotels&dates=2027-06-09,2027-06-16&adults=2&curr=USD&price=150,250",
+				"estimated": true
+			},
+			"totalUsd": 3786
+		},
+		{
+			"city": "paris",
+			"window": {
+				"id": "2027-06-10_2027-06-17",
+				"departDate": "2027-06-10",
+				"returnDate": "2027-06-17",
+				"nights": 7
+			},
+			"flight": {
+				"priceUsd": 2283,
+				"cabin": "ECONOMY",
+				"airline": "WestJet",
+				"stops": 1,
+				"durationOutbound": "15h 45m",
+				"durationReturn": "—",
+				"bookingLink": "https://www.google.com/travel/flights?hl=en&gl=us&curr=USD&tfs=CBwQAhonEgoyMDI3LTA2LTEwagcIARIDREVOcgcIARIDQ0RHcgcIARIDT1JZGicSCjIwMjctMDYtMTdqBwgBEgNDREdqBwgBEgNPUllyBwgBEgNERU5AAUABSAFwAZgBAQ&tfu=EgIIAQ",
+				"rawLabel": "WestJet · Google Flights"
+			},
+			"flightUpgrade": null,
+			"hotel": {
+				"priceTotalUsd": 1400,
+				"pricePerNightUsd": 200,
+				"name": "Paris mid-band estimate ($150–$250/night)",
+				"bookingLink": "https://www.google.com/travel/hotels/Paris%20hotels?q=Paris%20hotels&dates=2027-06-10,2027-06-17&adults=2&curr=USD&price=150,250",
+				"estimated": true
+			},
+			"totalUsd": 3683
+		},
+		{
+			"city": "rome",
+			"window": {
+				"id": "2027-06-10_2027-06-17",
+				"departDate": "2027-06-10",
+				"returnDate": "2027-06-17",
+				"nights": 7
+			},
+			"flight": {
+				"priceUsd": 2741,
+				"cabin": "ECONOMY",
+				"airline": "Turkish Airlines",
+				"stops": 1,
+				"durationOutbound": "19h 10m",
+				"durationReturn": "—",
+				"bookingLink": "https://www.google.com/travel/flights?hl=en&gl=us&curr=USD&tfs=CBwQAhonEgoyMDI3LTA2LTEwagcIARIDREVOcgcIARIDRkNPcgcIARIDQ0lBGicSCjIwMjctMDYtMTdqBwgBEgNGQ09qBwgBEgNDSUFyBwgBEgNERU5AAUABSAFwAZgBAQ&tfu=EgIIAQ",
+				"rawLabel": "Turkish Airlines · Google Flights"
+			},
+			"flightUpgrade": null,
+			"hotel": {
+				"priceTotalUsd": 1400,
+				"pricePerNightUsd": 200,
+				"name": "Rome mid-band estimate ($150–$250/night)",
+				"bookingLink": "https://www.google.com/travel/hotels/Rome%20hotels?q=Rome%20hotels&dates=2027-06-10,2027-06-17&adults=2&curr=USD&price=150,250",
+				"estimated": true
+			},
+			"totalUsd": 4141
+		},
+		{
+			"city": "paris",
+			"window": {
+				"id": "2027-06-11_2027-06-18",
+				"departDate": "2027-06-11",
+				"returnDate": "2027-06-18",
+				"nights": 7
+			},
+			"flight": {
+				"priceUsd": 2178,
+				"cabin": "ECONOMY",
+				"airline": "WestJet",
+				"stops": 1,
+				"durationOutbound": "15h 45m",
+				"durationReturn": "—",
+				"bookingLink": "https://www.google.com/travel/flights?hl=en&gl=us&curr=USD&tfs=CBwQAhonEgoyMDI3LTA2LTExagcIARIDREVOcgcIARIDQ0RHcgcIARIDT1JZGicSCjIwMjctMDYtMThqBwgBEgNDREdqBwgBEgNPUllyBwgBEgNERU5AAUABSAFwAZgBAQ&tfu=EgIIAQ",
+				"rawLabel": "WestJet · Google Flights"
+			},
+			"flightUpgrade": null,
+			"hotel": {
+				"priceTotalUsd": 1400,
+				"pricePerNightUsd": 200,
+				"name": "Paris mid-band estimate ($150–$250/night)",
+				"bookingLink": "https://www.google.com/travel/hotels/Paris%20hotels?q=Paris%20hotels&dates=2027-06-11,2027-06-18&adults=2&curr=USD&price=150,250",
+				"estimated": true
+			},
+			"totalUsd": 3578
+		},
+		{
+			"city": "rome",
+			"window": {
+				"id": "2027-06-11_2027-06-18",
+				"departDate": "2027-06-11",
+				"returnDate": "2027-06-18",
+				"nights": 7
+			},
+			"flight": {
+				"priceUsd": 2988,
+				"cabin": "ECONOMY",
+				"airline": "WestJet",
+				"stops": 1,
+				"durationOutbound": "16h 40m",
+				"durationReturn": "—",
+				"bookingLink": "https://www.google.com/travel/flights?hl=en&gl=us&curr=USD&tfs=CBwQAhonEgoyMDI3LTA2LTExagcIARIDREVOcgcIARIDRkNPcgcIARIDQ0lBGicSCjIwMjctMDYtMThqBwgBEgNGQ09qBwgBEgNDSUFyBwgBEgNERU5AAUABSAFwAZgBAQ&tfu=EgIIAQ",
+				"rawLabel": "WestJet · Google Flights"
+			},
+			"flightUpgrade": null,
+			"hotel": {
+				"priceTotalUsd": 1400,
+				"pricePerNightUsd": 200,
+				"name": "Rome mid-band estimate ($150–$250/night)",
+				"bookingLink": "https://www.google.com/travel/hotels/Rome%20hotels?q=Rome%20hotels&dates=2027-06-11,2027-06-18&adults=2&curr=USD&price=150,250",
+				"estimated": true
+			},
+			"totalUsd": 4388
+		},
+		{
+			"city": "paris",
+			"window": {
+				"id": "2027-06-12_2027-06-19",
+				"departDate": "2027-06-12",
+				"returnDate": "2027-06-19",
+				"nights": 7
+			},
+			"flight": {
+				"priceUsd": 2036,
+				"cabin": "ECONOMY",
+				"airline": "WestJet",
+				"stops": 1,
+				"durationOutbound": "15h 45m",
+				"durationReturn": "—",
+				"bookingLink": "https://www.google.com/travel/flights?hl=en&gl=us&curr=USD&tfs=CBwQAhonEgoyMDI3LTA2LTEyagcIARIDREVOcgcIARIDQ0RHcgcIARIDT1JZGicSCjIwMjctMDYtMTlqBwgBEgNDREdqBwgBEgNPUllyBwgBEgNERU5AAUABSAFwAZgBAQ&tfu=EgIIAQ",
+				"rawLabel": "WestJet · Google Flights"
+			},
+			"flightUpgrade": null,
+			"hotel": {
+				"priceTotalUsd": 1400,
+				"pricePerNightUsd": 200,
+				"name": "Paris mid-band estimate ($150–$250/night)",
+				"bookingLink": "https://www.google.com/travel/hotels/Paris%20hotels?q=Paris%20hotels&dates=2027-06-12,2027-06-19&adults=2&curr=USD&price=150,250",
+				"estimated": true
+			},
+			"totalUsd": 3436
+		},
+		{
+			"city": "rome",
+			"window": {
+				"id": "2027-06-12_2027-06-19",
+				"departDate": "2027-06-12",
+				"returnDate": "2027-06-19",
+				"nights": 7
+			},
+			"flight": {
+				"priceUsd": 2560,
+				"cabin": "ECONOMY",
+				"airline": "WestJet",
+				"stops": 1,
+				"durationOutbound": "40h 40m",
+				"durationReturn": "—",
+				"bookingLink": "https://www.google.com/travel/flights?hl=en&gl=us&curr=USD&tfs=CBwQAhonEgoyMDI3LTA2LTEyagcIARIDREVOcgcIARIDRkNPcgcIARIDQ0lBGicSCjIwMjctMDYtMTlqBwgBEgNGQ09qBwgBEgNDSUFyBwgBEgNERU5AAUABSAFwAZgBAQ&tfu=EgIIAQ",
+				"rawLabel": "WestJet · Google Flights"
+			},
+			"flightUpgrade": null,
+			"hotel": {
+				"priceTotalUsd": 1400,
+				"pricePerNightUsd": 200,
+				"name": "Rome mid-band estimate ($150–$250/night)",
+				"bookingLink": "https://www.google.com/travel/hotels/Rome%20hotels?q=Rome%20hotels&dates=2027-06-12,2027-06-19&adults=2&curr=USD&price=150,250",
+				"estimated": true
+			},
+			"totalUsd": 3960
+		},
+		{
+			"city": "paris",
+			"window": {
+				"id": "2027-06-13_2027-06-20",
+				"departDate": "2027-06-13",
+				"returnDate": "2027-06-20",
+				"nights": 7
+			},
+			"flight": {
+				"priceUsd": 2140,
+				"cabin": "ECONOMY",
+				"airline": "WestJet",
+				"stops": 1,
+				"durationOutbound": "15h 45m",
+				"durationReturn": "—",
+				"bookingLink": "https://www.google.com/travel/flights?hl=en&gl=us&curr=USD&tfs=CBwQAhonEgoyMDI3LTA2LTEzagcIARIDREVOcgcIARIDQ0RHcgcIARIDT1JZGicSCjIwMjctMDYtMjBqBwgBEgNDREdqBwgBEgNPUllyBwgBEgNERU5AAUABSAFwAZgBAQ&tfu=EgIIAQ",
+				"rawLabel": "WestJet · Google Flights"
+			},
+			"flightUpgrade": null,
+			"hotel": {
+				"priceTotalUsd": 1400,
+				"pricePerNightUsd": 200,
+				"name": "Paris mid-band estimate ($150–$250/night)",
+				"bookingLink": "https://www.google.com/travel/hotels/Paris%20hotels?q=Paris%20hotels&dates=2027-06-13,2027-06-20&adults=2&curr=USD&price=150,250",
+				"estimated": true
+			},
+			"totalUsd": 3540
+		},
+		{
+			"city": "rome",
+			"window": {
+				"id": "2027-06-13_2027-06-20",
+				"departDate": "2027-06-13",
+				"returnDate": "2027-06-20",
+				"nights": 7
+			},
+			"flight": {
+				"priceUsd": 2451,
+				"cabin": "ECONOMY",
+				"airline": "WestJet",
+				"stops": 1,
+				"durationOutbound": "16h 40m",
+				"durationReturn": "—",
+				"bookingLink": "https://www.google.com/travel/flights?hl=en&gl=us&curr=USD&tfs=CBwQAhonEgoyMDI3LTA2LTEzagcIARIDREVOcgcIARIDRkNPcgcIARIDQ0lBGicSCjIwMjctMDYtMjBqBwgBEgNGQ09qBwgBEgNDSUFyBwgBEgNERU5AAUABSAFwAZgBAQ&tfu=EgIIAQ",
+				"rawLabel": "WestJet · Google Flights"
+			},
+			"flightUpgrade": null,
+			"hotel": {
+				"priceTotalUsd": 1400,
+				"pricePerNightUsd": 200,
+				"name": "Rome mid-band estimate ($150–$250/night)",
+				"bookingLink": "https://www.google.com/travel/hotels/Rome%20hotels?q=Rome%20hotels&dates=2027-06-13,2027-06-20&adults=2&curr=USD&price=150,250",
+				"estimated": true
+			},
+			"totalUsd": 3851
+		},
+		{
+			"city": "paris",
+			"window": {
+				"id": "2027-06-14_2027-06-21",
+				"departDate": "2027-06-14",
+				"returnDate": "2027-06-21",
+				"nights": 7
+			},
+			"flight": {
+				"priceUsd": 2140,
+				"cabin": "ECONOMY",
+				"airline": "WestJet",
+				"stops": 1,
+				"durationOutbound": "15h 45m",
+				"durationReturn": "—",
+				"bookingLink": "https://www.google.com/travel/flights?hl=en&gl=us&curr=USD&tfs=CBwQAhonEgoyMDI3LTA2LTE0agcIARIDREVOcgcIARIDQ0RHcgcIARIDT1JZGicSCjIwMjctMDYtMjFqBwgBEgNDREdqBwgBEgNPUllyBwgBEgNERU5AAUABSAFwAZgBAQ&tfu=EgIIAQ",
+				"rawLabel": "WestJet · Google Flights"
+			},
+			"flightUpgrade": null,
+			"hotel": {
+				"priceTotalUsd": 1400,
+				"pricePerNightUsd": 200,
+				"name": "Paris mid-band estimate ($150–$250/night)",
+				"bookingLink": "https://www.google.com/travel/hotels/Paris%20hotels?q=Paris%20hotels&dates=2027-06-14,2027-06-21&adults=2&curr=USD&price=150,250",
+				"estimated": true
+			},
+			"totalUsd": 3540
+		},
+		{
+			"city": "rome",
+			"window": {
+				"id": "2027-06-14_2027-06-21",
+				"departDate": "2027-06-14",
+				"returnDate": "2027-06-21",
+				"nights": 7
+			},
+			"flight": {
+				"priceUsd": 2422,
+				"cabin": "ECONOMY",
+				"airline": "WestJet",
+				"stops": 1,
+				"durationOutbound": "16h 40m",
+				"durationReturn": "—",
+				"bookingLink": "https://www.google.com/travel/flights?hl=en&gl=us&curr=USD&tfs=CBwQAhonEgoyMDI3LTA2LTE0agcIARIDREVOcgcIARIDRkNPcgcIARIDQ0lBGicSCjIwMjctMDYtMjFqBwgBEgNGQ09qBwgBEgNDSUFyBwgBEgNERU5AAUABSAFwAZgBAQ&tfu=EgIIAQ",
+				"rawLabel": "WestJet · Google Flights"
+			},
+			"flightUpgrade": null,
+			"hotel": {
+				"priceTotalUsd": 1400,
+				"pricePerNightUsd": 200,
+				"name": "Rome mid-band estimate ($150–$250/night)",
+				"bookingLink": "https://www.google.com/travel/hotels/Rome%20hotels?q=Rome%20hotels&dates=2027-06-14,2027-06-21&adults=2&curr=USD&price=150,250",
+				"estimated": true
+			},
+			"totalUsd": 3822
+		},
+		{
+			"city": "paris",
+			"window": {
+				"id": "2027-06-15_2027-06-22",
+				"departDate": "2027-06-15",
+				"returnDate": "2027-06-22",
+				"nights": 7
+			},
+			"flight": {
+				"priceUsd": 1999,
+				"cabin": "ECONOMY",
+				"airline": "WestJet",
+				"stops": 1,
+				"durationOutbound": "15h 45m",
+				"durationReturn": "—",
+				"bookingLink": "https://www.google.com/travel/flights?hl=en&gl=us&curr=USD&tfs=CBwQAhonEgoyMDI3LTA2LTE1agcIARIDREVOcgcIARIDQ0RHcgcIARIDT1JZGicSCjIwMjctMDYtMjJqBwgBEgNDREdqBwgBEgNPUllyBwgBEgNERU5AAUABSAFwAZgBAQ&tfu=EgIIAQ",
+				"rawLabel": "WestJet · Google Flights"
+			},
+			"flightUpgrade": null,
+			"hotel": {
+				"priceTotalUsd": 1400,
+				"pricePerNightUsd": 200,
+				"name": "Paris mid-band estimate ($150–$250/night)",
+				"bookingLink": "https://www.google.com/travel/hotels/Paris%20hotels?q=Paris%20hotels&dates=2027-06-15,2027-06-22&adults=2&curr=USD&price=150,250",
+				"estimated": true
+			},
+			"totalUsd": 3399
+		},
+		{
+			"city": "rome",
+			"window": {
+				"id": "2027-06-15_2027-06-22",
+				"departDate": "2027-06-15",
+				"returnDate": "2027-06-22",
+				"nights": 7
+			},
+			"flight": {
+				"priceUsd": 2386,
+				"cabin": "ECONOMY",
+				"airline": "WestJet",
+				"stops": 1,
+				"durationOutbound": "16h 40m",
+				"durationReturn": "—",
+				"bookingLink": "https://www.google.com/travel/flights?hl=en&gl=us&curr=USD&tfs=CBwQAhonEgoyMDI3LTA2LTE1agcIARIDREVOcgcIARIDRkNPcgcIARIDQ0lBGicSCjIwMjctMDYtMjJqBwgBEgNGQ09qBwgBEgNDSUFyBwgBEgNERU5AAUABSAFwAZgBAQ&tfu=EgIIAQ",
+				"rawLabel": "WestJet · Google Flights"
+			},
+			"flightUpgrade": null,
+			"hotel": {
+				"priceTotalUsd": 1400,
+				"pricePerNightUsd": 200,
+				"name": "Rome mid-band estimate ($150–$250/night)",
+				"bookingLink": "https://www.google.com/travel/hotels/Rome%20hotels?q=Rome%20hotels&dates=2027-06-15,2027-06-22&adults=2&curr=USD&price=150,250",
+				"estimated": true
+			},
+			"totalUsd": 3786
+		},
+		{
+			"city": "paris",
+			"window": {
+				"id": "2027-06-16_2027-06-23",
+				"departDate": "2027-06-16",
+				"returnDate": "2027-06-23",
+				"nights": 7
+			},
+			"flight": {
+				"priceUsd": 2140,
+				"cabin": "ECONOMY",
+				"airline": "WestJet",
+				"stops": 1,
+				"durationOutbound": "15h 45m",
+				"durationReturn": "—",
+				"bookingLink": "https://www.google.com/travel/flights?hl=en&gl=us&curr=USD&tfs=CBwQAhonEgoyMDI3LTA2LTE2agcIARIDREVOcgcIARIDQ0RHcgcIARIDT1JZGicSCjIwMjctMDYtMjNqBwgBEgNDREdqBwgBEgNPUllyBwgBEgNERU5AAUABSAFwAZgBAQ&tfu=EgIIAQ",
+				"rawLabel": "WestJet · Google Flights"
+			},
+			"flightUpgrade": null,
+			"hotel": {
+				"priceTotalUsd": 1400,
+				"pricePerNightUsd": 200,
+				"name": "Paris mid-band estimate ($150–$250/night)",
+				"bookingLink": "https://www.google.com/travel/hotels/Paris%20hotels?q=Paris%20hotels&dates=2027-06-16,2027-06-23&adults=2&curr=USD&price=150,250",
+				"estimated": true
+			},
+			"totalUsd": 3540
+		},
+		{
+			"city": "rome",
+			"window": {
+				"id": "2027-06-16_2027-06-23",
+				"departDate": "2027-06-16",
+				"returnDate": "2027-06-23",
+				"nights": 7
+			},
+			"flight": {
+				"priceUsd": 2386,
+				"cabin": "ECONOMY",
+				"airline": "WestJet",
+				"stops": 1,
+				"durationOutbound": "16h 40m",
+				"durationReturn": "—",
+				"bookingLink": "https://www.google.com/travel/flights?hl=en&gl=us&curr=USD&tfs=CBwQAhonEgoyMDI3LTA2LTE2agcIARIDREVOcgcIARIDRkNPcgcIARIDQ0lBGicSCjIwMjctMDYtMjNqBwgBEgNGQ09qBwgBEgNDSUFyBwgBEgNERU5AAUABSAFwAZgBAQ&tfu=EgIIAQ",
+				"rawLabel": "WestJet · Google Flights"
+			},
+			"flightUpgrade": null,
+			"hotel": {
+				"priceTotalUsd": 1400,
+				"pricePerNightUsd": 200,
+				"name": "Rome mid-band estimate ($150–$250/night)",
+				"bookingLink": "https://www.google.com/travel/hotels/Rome%20hotels?q=Rome%20hotels&dates=2027-06-16,2027-06-23&adults=2&curr=USD&price=150,250",
+				"estimated": true
+			},
+			"totalUsd": 3786
+		},
+		{
+			"city": "paris",
+			"window": {
+				"id": "2027-06-17_2027-06-24",
+				"departDate": "2027-06-17",
+				"returnDate": "2027-06-24",
+				"nights": 7
+			},
+			"flight": {
+				"priceUsd": 2774,
+				"cabin": "ECONOMY",
+				"airline": "WestJet",
+				"stops": 1,
+				"durationOutbound": "15h 45m",
+				"durationReturn": "—",
+				"bookingLink": "https://www.google.com/travel/flights?hl=en&gl=us&curr=USD&tfs=CBwQAhonEgoyMDI3LTA2LTE3agcIARIDREVOcgcIARIDQ0RHcgcIARIDT1JZGicSCjIwMjctMDYtMjRqBwgBEgNDREdqBwgBEgNPUllyBwgBEgNERU5AAUABSAFwAZgBAQ&tfu=EgIIAQ",
+				"rawLabel": "WestJet · Google Flights"
+			},
+			"flightUpgrade": null,
+			"hotel": {
+				"priceTotalUsd": 1400,
+				"pricePerNightUsd": 200,
+				"name": "Paris mid-band estimate ($150–$250/night)",
+				"bookingLink": "https://www.google.com/travel/hotels/Paris%20hotels?q=Paris%20hotels&dates=2027-06-17,2027-06-24&adults=2&curr=USD&price=150,250",
+				"estimated": true
+			},
+			"totalUsd": 4174
+		},
+		{
+			"city": "rome",
+			"window": {
+				"id": "2027-06-17_2027-06-24",
+				"departDate": "2027-06-17",
+				"returnDate": "2027-06-24",
+				"nights": 7
+			},
+			"flight": {
+				"priceUsd": 2741,
+				"cabin": "ECONOMY",
+				"airline": "Turkish Airlines",
+				"stops": 1,
+				"durationOutbound": "19h 10m",
+				"durationReturn": "—",
+				"bookingLink": "https://www.google.com/travel/flights?hl=en&gl=us&curr=USD&tfs=CBwQAhonEgoyMDI3LTA2LTE3agcIARIDREVOcgcIARIDRkNPcgcIARIDQ0lBGicSCjIwMjctMDYtMjRqBwgBEgNGQ09qBwgBEgNDSUFyBwgBEgNERU5AAUABSAFwAZgBAQ&tfu=EgIIAQ",
+				"rawLabel": "Turkish Airlines · Google Flights"
+			},
+			"flightUpgrade": null,
+			"hotel": {
+				"priceTotalUsd": 1400,
+				"pricePerNightUsd": 200,
+				"name": "Rome mid-band estimate ($150–$250/night)",
+				"bookingLink": "https://www.google.com/travel/hotels/Rome%20hotels?q=Rome%20hotels&dates=2027-06-17,2027-06-24&adults=2&curr=USD&price=150,250",
+				"estimated": true
+			},
+			"totalUsd": 4141
+		},
+		{
+			"city": "paris",
+			"window": {
+				"id": "2027-06-18_2027-06-25",
+				"departDate": "2027-06-18",
+				"returnDate": "2027-06-25",
+				"nights": 7
+			},
+			"flight": {
+				"priceUsd": 2176,
+				"cabin": "ECONOMY",
+				"airline": "WestJet",
+				"stops": 1,
+				"durationOutbound": "15h 45m",
+				"durationReturn": "—",
+				"bookingLink": "https://www.google.com/travel/flights?hl=en&gl=us&curr=USD&tfs=CBwQAhonEgoyMDI3LTA2LTE4agcIARIDREVOcgcIARIDQ0RHcgcIARIDT1JZGicSCjIwMjctMDYtMjVqBwgBEgNDREdqBwgBEgNPUllyBwgBEgNERU5AAUABSAFwAZgBAQ&tfu=EgIIAQ",
+				"rawLabel": "WestJet · Google Flights"
+			},
+			"flightUpgrade": null,
+			"hotel": {
+				"priceTotalUsd": 1400,
+				"pricePerNightUsd": 200,
+				"name": "Paris mid-band estimate ($150–$250/night)",
+				"bookingLink": "https://www.google.com/travel/hotels/Paris%20hotels?q=Paris%20hotels&dates=2027-06-18,2027-06-25&adults=2&curr=USD&price=150,250",
+				"estimated": true
+			},
+			"totalUsd": 3576
+		},
+		{
+			"city": "rome",
+			"window": {
+				"id": "2027-06-18_2027-06-25",
+				"departDate": "2027-06-18",
+				"returnDate": "2027-06-25",
+				"nights": 7
+			},
+			"flight": {
+				"priceUsd": 2422,
+				"cabin": "ECONOMY",
+				"airline": "WestJet",
+				"stops": 1,
+				"durationOutbound": "16h 40m",
+				"durationReturn": "—",
+				"bookingLink": "https://www.google.com/travel/flights?hl=en&gl=us&curr=USD&tfs=CBwQAhonEgoyMDI3LTA2LTE4agcIARIDREVOcgcIARIDRkNPcgcIARIDQ0lBGicSCjIwMjctMDYtMjVqBwgBEgNGQ09qBwgBEgNDSUFyBwgBEgNERU5AAUABSAFwAZgBAQ&tfu=EgIIAQ",
+				"rawLabel": "WestJet · Google Flights"
+			},
+			"flightUpgrade": null,
+			"hotel": {
+				"priceTotalUsd": 1400,
+				"pricePerNightUsd": 200,
+				"name": "Rome mid-band estimate ($150–$250/night)",
+				"bookingLink": "https://www.google.com/travel/hotels/Rome%20hotels?q=Rome%20hotels&dates=2027-06-18,2027-06-25&adults=2&curr=USD&price=150,250",
+				"estimated": true
+			},
+			"totalUsd": 3822
+		},
+		{
+			"city": "paris",
+			"window": {
+				"id": "2027-06-19_2027-06-26",
+				"departDate": "2027-06-19",
+				"returnDate": "2027-06-26",
+				"nights": 7
+			},
+			"flight": {
+				"priceUsd": 2444,
+				"cabin": "ECONOMY",
+				"airline": "WestJet",
+				"stops": 1,
+				"durationOutbound": "15h 45m",
+				"durationReturn": "—",
+				"bookingLink": "https://www.google.com/travel/flights?hl=en&gl=us&curr=USD&tfs=CBwQAhonEgoyMDI3LTA2LTE5agcIARIDREVOcgcIARIDQ0RHcgcIARIDT1JZGicSCjIwMjctMDYtMjZqBwgBEgNDREdqBwgBEgNPUllyBwgBEgNERU5AAUABSAFwAZgBAQ&tfu=EgIIAQ",
+				"rawLabel": "WestJet · Google Flights"
+			},
+			"flightUpgrade": null,
+			"hotel": {
+				"priceTotalUsd": 1400,
+				"pricePerNightUsd": 200,
+				"name": "Paris mid-band estimate ($150–$250/night)",
+				"bookingLink": "https://www.google.com/travel/hotels/Paris%20hotels?q=Paris%20hotels&dates=2027-06-19,2027-06-26&adults=2&curr=USD&price=150,250",
+				"estimated": true
+			},
+			"totalUsd": 3844
+		},
+		{
+			"city": "rome",
+			"window": {
+				"id": "2027-06-19_2027-06-26",
+				"departDate": "2027-06-19",
+				"returnDate": "2027-06-26",
+				"nights": 7
+			},
+			"flight": {
+				"priceUsd": 2741,
+				"cabin": "ECONOMY",
+				"airline": "Turkish Airlines",
+				"stops": 1,
+				"durationOutbound": "19h 10m",
+				"durationReturn": "—",
+				"bookingLink": "https://www.google.com/travel/flights?hl=en&gl=us&curr=USD&tfs=CBwQAhonEgoyMDI3LTA2LTE5agcIARIDREVOcgcIARIDRkNPcgcIARIDQ0lBGicSCjIwMjctMDYtMjZqBwgBEgNGQ09qBwgBEgNDSUFyBwgBEgNERU5AAUABSAFwAZgBAQ&tfu=EgIIAQ",
+				"rawLabel": "Turkish Airlines · Google Flights"
+			},
+			"flightUpgrade": null,
+			"hotel": {
+				"priceTotalUsd": 1400,
+				"pricePerNightUsd": 200,
+				"name": "Rome mid-band estimate ($150–$250/night)",
+				"bookingLink": "https://www.google.com/travel/hotels/Rome%20hotels?q=Rome%20hotels&dates=2027-06-19,2027-06-26&adults=2&curr=USD&price=150,250",
+				"estimated": true
+			},
+			"totalUsd": 4141
+		}
+	],
+	"selectedWindowId": "2027-06-08_2027-06-15",
+	"notes": {
+		"paris": "",
+		"rome": ""
+	}
+}

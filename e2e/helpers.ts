@@ -2,7 +2,7 @@ import { expect, type Page } from '@playwright/test';
 
 export const TERMINAL_SELECTOR = '[aria-label="Daddoo Dev BBS terminal"]';
 
-export const HIDDEN_ROUTE_PATTERNS = ['/marketminder', '/honorguard', '/analytics/'];
+export const HIDDEN_ROUTE_PATTERNS = ['/marketminder', '/honorguard', '/analytics/', '/triptime'];
 
 export type RouteSpec = {
 	path: string;
@@ -76,6 +76,11 @@ export const HIDDEN_ROUTES: RouteSpec[] = [
 		path: '/bbs',
 		title: /Text mode/i,
 		heading: /.+/ // terminal overlay, no page heading
+	},
+	{
+		path: '/triptime',
+		title: /TripTime/i,
+		heading: /TripTime/i
 	}
 ];
 

@@ -19,6 +19,10 @@
         "function": "kmAnalytics"
       },
       {
+        "source": "/api/triptime",
+        "function": "triptime"
+      },
+      {
         "source": "/mm/chart",
         "function": "mmChart"
       },
