@@ -13,16 +13,20 @@
 				Cross-platform apps, games and developer tools — designed and shipped by Shawn McPeek.
 			</p>
 			<div class="footer-meta-links">
-				<button type="button" class="footer-text-mode" on:click={openTerminal}>TEXT MODE</button>
+				<button type="button" class="footer-text-mode" onclick={openTerminal}>TEXT MODE</button>
 			</div>
 		</div>
 
 		<div class="footer-col">
-			<div class="footer-col-title">APPS &amp; TOOLS</div>
+			<div class="footer-col-title">APPS</div>
 			<a href="https://conclavium.app" target="_blank" rel="noopener noreferrer">Conclavium</a>
 			<a href="https://ridewealthassistant.com/marketing/" target="_blank" rel="noopener noreferrer"
 				>Ridewealth Assistant</a>
 			<a href="/twistedfortunes">Twisted Fortunes</a>
+		</div>
+
+		<div class="footer-col">
+			<div class="footer-col-title">TOOLS</div>
 			<a href="/clocks">ChronoCluster</a>
 			<a href="/qr-generator">QR Generator</a>
 		</div>
@@ -40,8 +44,6 @@
 			<a href="/#about">About</a>
 			<a href="/#projects">Work</a>
 			<a href="/#contact">Contact</a>
-			<a href="/privacy">Privacy</a>
-			<a href="/terms">Terms</a>
 		</div>
 	</div>
 
@@ -49,6 +51,8 @@
 		<div class="footer-subbar-inner">
 			<span>© {currentYear} Daddoo Dev · Firestone, CO</span>
 			<div class="footer-subbar-links">
+				<a href="/privacy">Privacy</a>
+				<a href="/terms">Terms</a>
 				<a href="https://github.com/Daddoo-Dev" target="_blank" rel="noopener noreferrer">GitHub</a>
 				<a
 					href="https://play.google.com/store/apps/developer?id=Daddoo+Dev"
