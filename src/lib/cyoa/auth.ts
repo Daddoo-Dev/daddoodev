@@ -1,9 +1,9 @@
-import { env } from '$env/dynamic/public';
+import { PUBLIC_CYOA_PASSWORD, PUBLIC_CYOA_USER } from '$env/static/public';
 
 const SESSION_KEY = 'cyoa-secret-auth';
 
-const USER = (env.PUBLIC_CYOA_USER ?? 'shawnmcpeek').trim();
-const PASS = (env.PUBLIC_CYOA_PASSWORD ?? 'Mgti18il').trim();
+const USER = (PUBLIC_CYOA_USER ?? 'shawnmcpeek').trim();
+const PASS = (PUBLIC_CYOA_PASSWORD ?? 'Mgti18il').trim();
 
 export function isCyoaAuthed(): boolean {
 	if (typeof sessionStorage === 'undefined') return false;
