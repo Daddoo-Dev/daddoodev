@@ -39,7 +39,7 @@ async function quoteWindow(
 			flightUpgrade: null,
 			hotel,
 			totalUsd: flight ? flight.priceUsd + hotel.priceTotalUsd : hotel.priceTotalUsd,
-			error: flight ? undefined : 'No Google Flights price returned'
+			...(flight ? {} : { error: 'No Google Flights price returned' })
 		};
 	} catch (e) {
 		return {

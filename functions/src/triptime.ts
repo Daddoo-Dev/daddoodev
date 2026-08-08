@@ -366,7 +366,7 @@ async function runScan(store: TripStore, apiKey: string): Promise<TripStore> {
 					flightUpgrade: null,
 					hotel,
 					totalUsd: flight ? flight.priceUsd + hotel.priceTotalUsd : hotel.priceTotalUsd,
-					error: flight ? undefined : 'No price'
+					...(flight ? {} : { error: 'No price' })
 				});
 			} catch (e) {
 				quotes.push({
@@ -453,7 +453,9 @@ export const triptime = onRequest(
 
 		const save = async (store: TripStore) => {
 			const { compare: _c, flightsConfigured: _f, ...persist } = store;
-			await ref.set({ ...persist, updatedAt: admin.firestore.FieldValue.serverTimestamp() });
+			// Firestore rejects undefined; JSON round-trip strips those keys (null stays).
+			const clean = JSON.parse(JSON.stringify(persist)) as typeof persist;
+			await ref.set({ ...clean, updatedAt: admin.firestore.FieldValue.serverTimestamp() });
 		};
 
 		try {
