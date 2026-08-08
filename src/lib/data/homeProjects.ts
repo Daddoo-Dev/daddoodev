@@ -92,7 +92,6 @@ export const labProjects: LabProject[] = [
 	{ title: 'ChronoCluster', href: '/clocks' },
 	{ title: 'QR Generator', href: '/qr-generator' },
 	{ title: 'Stock Market Game', href: 'https://marketgame-3e924.firebaseapp.com/' },
-	{ title: 'Pandalerium', href: 'https://pandalerium.daddoodev.pro' },
 	{ title: 'Inspiration by Simpsons', href: 'https://shawnmcpeek.github.io/simpsonsquotes/' },
 	{ title: 'TopMath', href: 'https://topmath.netlify.app/' },
 	{ title: 'New Horizons Landscaping', href: 'https://newhorizonsnativelandscaping.netlify.app/' },
