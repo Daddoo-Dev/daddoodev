@@ -11,7 +11,8 @@ const HIDDEN_NOINDEX = [
 	'/honorguard/preview',
 	'/analytics/conclavium',
 	'/analytics/knights-management',
-	'/bbs'
+	'/bbs',
+	'/lab/godspeed-ginny/index.html'
 ];
 
 test.describe('SEO — public routes', () => {

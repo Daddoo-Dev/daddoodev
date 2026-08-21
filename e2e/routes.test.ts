@@ -51,6 +51,13 @@ test.describe('Hidden routes', () => {
 				return;
 			}
 
+			if (route.path.includes('godspeed-ginny')) {
+				await expect(page).toHaveTitle(route.title);
+				await expect(page.locator('h1')).toContainText(route.heading);
+				await expect(page.locator('header.header')).toHaveCount(0);
+				return;
+			}
+
 			if (route.path === '/honorguard/preview') {
 				await expect(page.locator('.sheet-root')).toBeVisible();
 				await expectSiteShell(page);

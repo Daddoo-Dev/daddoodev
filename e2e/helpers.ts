@@ -2,7 +2,14 @@ import { expect, type Page } from '@playwright/test';
 
 export const TERMINAL_SELECTOR = '[aria-label="Daddoo Dev BBS terminal"]';
 
-export const HIDDEN_ROUTE_PATTERNS = ['/marketminder', '/honorguard', '/analytics/', '/triptime'];
+export const HIDDEN_ROUTE_PATTERNS = [
+	'/marketminder',
+	'/honorguard',
+	'/analytics/',
+	'/triptime',
+	'/lab/godspeed-ginny',
+	'/godspeed_ginny'
+];
 
 export type RouteSpec = {
 	path: string;
@@ -81,6 +88,12 @@ export const HIDDEN_ROUTES: RouteSpec[] = [
 		path: '/triptime',
 		title: /TripTime/i,
 		heading: /TripTime/i
+	},
+	{
+		path: '/lab/godspeed-ginny/index.html',
+		title: /Godspeed Ginny/i,
+		heading: /Godspeed/i,
+		shell: false
 	}
 ];
 

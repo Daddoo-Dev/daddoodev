@@ -9,6 +9,18 @@
       "**/.*",
       "**/node_modules/**"
     ],
+    "redirects": [
+      {
+        "source": "/godspeed_ginny",
+        "destination": "/lab/godspeed-ginny/index.html",
+        "type": 302
+      },
+      {
+        "source": "/godspeed_ginny/",
+        "destination": "/lab/godspeed-ginny/index.html",
+        "type": 302
+      }
+    ],
     "rewrites": [
       {
         "source": "/ym/v2/**",
