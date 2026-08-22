@@ -114,6 +114,21 @@ function jokeMeta(joke, times, est) {
 	return `${(joke.flavors || []).join(' / ')} · ${bits.join(' · ')}`;
 }
 
+function formatTelegram(text) {
+	const raw = String(text);
+	const chunks = raw.split(/\s*STOP\s*/).filter((p) => p.length);
+	if (!chunks.length) return raw;
+	let out = chunks.join(' - STOP - ');
+	if (/STOP\s*$/.test(raw)) out += ' - STOP';
+	return out;
+}
+
+function telegramHtml(text) {
+	return esc(formatTelegram(text))
+		.replace(/\n/g, '<br>')
+		.replace(/STOP/g, '<span class="tg-stop">STOP</span>');
+}
+
 function renderOffice() {
 	const t = game.officeTelegram();
 	const notes = Object.entries(game.career.notes);
@@ -123,7 +138,7 @@ function renderOffice() {
 	return `
 	<div class="telegram">
 		<div class="hd">${esc(t.header)}</div>
-		${esc(t.body).replace(/\n/g, '<br>')}
+		${telegramHtml(t.body)}
 		<br><br>${esc(t.signoff)}
 	</div>
 	<p class="note">${esc(strings.office.note)}</p>
@@ -167,21 +182,45 @@ function renderNode() {
 		game.run.beat === 1
 			? fmt(strings.node.beatsLeft, { n: game.run.beat })
 			: fmt(strings.node.beatsLeftPlural, { n: game.run.beat });
-	const threat = n.threat_label
-		? `<div class="threat">${esc(fmt(strings.node.threatClear, { label: n.threat_label.toUpperCase(), threat: game.run.threat }))}</div>`
-		: `<div class="threat">${esc(strings.node.sellingThreat)}</div>`;
-	const jokes = game.run.hand
-		.map((id) => {
-			const j = game.jokes[id];
-			const times = game.run.used[id] || 0;
-			const est = game.scoreJoke(j);
-			const disabled = waiting || game.run.beat < (j.attention_cost || 1);
-			return `<button class="joke${times ? ' tired' : ''}${j.risk ? ' risky' : ''}" type="button" data-joke="${esc(id)}" ${disabled ? 'disabled' : ''}>
+	const threat = n.selling
+		? `<div class="threat">${esc(strings.node.sellingThreat)}</div>`
+		: n.threat_label
+			? `<div class="threat">${esc(
+					fmt(n.salvage ? strings.node.threatSalvage : strings.node.threatClear, {
+						label: n.threat_label.toUpperCase(),
+						threat: game.run.threat,
+						max: game.cfg.salvageThreatMax
+					})
+				)}</div>`
+			: '';
+	const jokeBtn = (id, extra = '') => {
+		const j = game.jokes[id];
+		const times = game.run.used[id] || 0;
+		const est = game.scoreJoke(j);
+		const disabled = waiting || game.run.beat < (j.attention_cost || 1);
+		return `<button class="joke${times ? ' tired' : ''}${j.risk ? ' risky' : ''}${extra}" type="button" data-joke="${esc(id)}" ${disabled ? 'disabled' : ''}>
 				<div class="t">${esc(j.title)}</div>
 				<div class="m">${esc(jokeMeta(j, times, est))}</div>
 			</button>`;
-		})
-		.join('');
+	};
+	const byScore = (a, b) => game.scoreJoke(game.jokes[b]) - game.scoreJoke(game.jokes[a]);
+	const here = [];
+	const anywhere = [];
+	const elsewhere = [];
+	for (const id of game.run.hand) {
+		const j = game.jokes[id];
+		if (game.jokeOnTopic(j)) here.push(id);
+		else if (!j.at?.length) anywhere.push(id);
+		else elsewhere.push(id);
+	}
+	here.sort(byScore);
+	anywhere.sort(byScore);
+	elsewhere.sort(byScore);
+	const jokes = `<div class="joke-script">
+		${here.length ? `<div class="sect">${esc(strings.node.scriptHere)}</div>${here.map((id) => jokeBtn(id)).join('')}` : ''}
+		${anywhere.length ? `<div class="sect">${esc(strings.node.scriptAnywhere)}</div>${anywhere.map((id) => jokeBtn(id)).join('')}` : ''}
+		${elsewhere.length ? `<div class="sect">${esc(strings.node.scriptElsewhere)}</div>${elsewhere.map((id) => jokeBtn(id, ' cold')).join('')}` : ''}
+	</div>`;
 	const cargo = game.cargo[game.run.cargo];
 	const ice = cargo.effects?.some((e) => e.effect === 'melt')
 		? fmt(strings.node.iceLeft, { pct: game.run.cargoHealth })
@@ -190,8 +229,12 @@ function renderNode() {
 		? `<button class="btn wide" type="button" id="next-passage">${esc(strings.card.continue)}</button>`
 		: `<div class="sect">${esc(strings.node.doSomething)}</div>
 	<div class="act-row">
-		<button class="btn" type="button" data-act="steer" ${game.run.beat < 1 ? 'disabled' : ''}>${esc(strings.node.steer)}<small>${esc(fmt(strings.node.steerHint, { n: game.cfg.steerThreatReduce }))}</small></button>
-		<button class="btn" type="button" data-act="wrench" ${game.run.beat < 1 ? 'disabled' : ''}>${esc(strings.node.wrench)}<small>${esc(fmt(strings.node.wrenchHint, { n: game.cfg.wrenchBoilerReduce }))}</small></button>
+		<button class="btn" type="button" data-act="steer" ${game.run.beat < 1 ? 'disabled' : ''}>${esc(strings.node.steer)}<small>${esc(
+			n.selling
+				? fmt(strings.node.steerHintSelling, { b: game.cfg.steerBoilerReduce })
+				: fmt(strings.node.steerHint, { n: game.cfg.steerThreatReduce, b: game.cfg.steerBoilerReduce })
+		)}</small></button>
+		<button class="btn" type="button" data-act="wrench" ${game.run.beat < 1 ? 'disabled' : ''}>${esc(strings.node.wrench)}<small>${esc(fmt(strings.node.wrenchHint, { n: game.cfg.wrenchHullReduce }))}</small></button>
 		<button class="btn" type="button" data-act="bail" ${game.run.beat < 1 ? 'disabled' : ''}>${esc(strings.node.bail)}<small>${esc(fmt(strings.node.bailHint, { n: game.cfg.bailWaterReduce }))}</small></button>
 	</div>
 	<div class="sect">${esc(strings.node.orSay)}</div>
@@ -224,7 +267,7 @@ function renderBranch() {
 	${cardHtml(game.run.card)}
 	<div class="play-actions">
 		<p class="note">${esc(b.prompt)}</p>
-		${b.edges
+		${game.offeredEdges(b)
 			.map((o) => {
 				const note = game.career.notes[o.id];
 				return `<button class="chart-card" type="button" data-opt="${esc(o.id)}">
@@ -307,7 +350,8 @@ function renderSettle() {
 		${t.repairs ? row(s.repairs, t.repairs, true) : ''}
 		<tr class="net"><td>${esc(s.net)}</td><td class="${t.net < 0 ? 'neg' : ''}">${t.net < 0 ? '−' : ''}£${Math.abs(t.net)}</td></tr>
 	</table>
-	<div class="telegram"><div class="hd">${esc(s.incomingHeader)}</div>${esc(t.wire).replace(/\n/g, '<br>')}<br><br>${esc(game.content.telegrams.office.signoff)}</div>
+	${t.why ? `<p class="note">${esc(t.why)}</p>` : ''}
+	<div class="telegram"><div class="hd">${esc(s.incomingHeader)}</div>${telegramHtml(t.wire)}<br><br>${esc(game.content.telegrams.office.signoff)}</div>
 	<p class="pax">${esc(fmt(s.summary, { sat: game.run.sat, told: game.run.told, leopard: game.career.leopardOut ? s.leopard : '' }))}</p>
 	<button class="btn wide" type="button" id="again">${esc(s.again)}</button>`;
 }

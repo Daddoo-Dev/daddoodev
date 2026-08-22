@@ -76,6 +76,9 @@ export function validateContent(content) {
 				warnings.push(`branch '${b.id}' references node '${e.to}' that is not in nodes.json`);
 			}
 		}
+		if (b.pick != null && b.pick > (b.edges || []).length) {
+			warnings.push(`branch '${b.id}' pick ${b.pick} exceeds ${b.edges.length} edges`);
+		}
 	}
 
 	return warnings;
@@ -104,9 +107,9 @@ function pickWeighted(variants) {
 	let r = Math.random() * total;
 	for (const v of variants) {
 		r -= v.weight || 1;
-		if (r <= 0) return v.text;
+		if (r <= 0) return v;
 	}
-	return variants[0].text;
+	return variants[0];
 }
 
 function indexById(arr) {
@@ -156,6 +159,19 @@ function condMatch(cond, ctx) {
 	if (cond.sat_gte != null && ctx.sat >= cond.sat_gte) return true;
 	if (cond.cargo_lost && ctx.cargoId === cond.cargo_lost && ctx.cargoHealth === 0) return true;
 	return false;
+}
+
+function fill(template, vars) {
+	return String(template).replace(/\{(\w+)\}/g, (_, k) => (vars && vars[k] != null ? String(vars[k]) : ''));
+}
+
+function explainMatch(cond, ctx) {
+	if (!cond) return true;
+	if (cond.refunds_gte != null && !(ctx.refunds >= cond.refunds_gte)) return false;
+	if (cond.falls_unsold != null && Boolean(ctx.fallsUnsold) !== Boolean(cond.falls_unsold)) return false;
+	if (cond.nowhere != null && ctx.nowhere !== cond.nowhere) return false;
+	if (cond.repairs_gte != null && !(ctx.repairs >= cond.repairs_gte)) return false;
+	return true;
 }
 
 export class Game {
@@ -258,6 +274,29 @@ export class Game {
 		return node.open;
 	}
 
+	dealForks() {
+		const offer = {};
+		for (const b of this.content.branches) {
+			const n = b.pick != null ? b.pick : (b.edges || []).length;
+			offer[b.id] = pickUnique(b.edges || [], n).map((e) => e.id);
+		}
+		return offer;
+	}
+
+	offeredEdges(branch) {
+		const ids = this.run?.forkOffer?.[branch.id];
+		if (!ids) return branch.edges || [];
+		return ids.map((id) => (branch.edges || []).find((e) => e.id === id)).filter(Boolean);
+	}
+
+	edgeById(id) {
+		for (const b of this.content.branches) {
+			const e = (b.edges || []).find((x) => x.id === id);
+			if (e) return e;
+		}
+		return null;
+	}
+
 	scoreJoke(joke) {
 		const cfg = this.cfg;
 		const run = this.run;
@@ -271,31 +310,55 @@ export class Game {
 		}
 		s /= run.pax.length;
 		s *= Math.pow(cfg.fatigueMultiplier, run.used[joke.id] || 0);
-		const at = joke.at && joke.at.length;
-		if (at) {
-			const tags = node.tags || [];
-			const onTopic = joke.at.some((t) => tags.includes(t));
-			s *= onTopic ? cfg.onTopicBonus : cfg.offTopicPenalty;
-		}
+		if (this.jokeOnTopic(joke)) s *= cfg.onTopicBonus;
+		else if (joke.at && joke.at.length) s *= cfg.offTopicPenalty;
 		if (node.selling) s *= cfg.sellingMultiplier;
 		return Math.round(s * cfg.scoreScale);
 	}
 
+	runMeets(cond) {
+		if (!cond || !this.run) return false;
+		const r = this.run;
+		if (cond.boiler_gte != null && r.boiler < cond.boiler_gte) return false;
+		if (cond.water_gte != null && r.water < cond.water_gte) return false;
+		if (cond.hull_gte != null && r.hull < cond.hull_gte) return false;
+		return true;
+	}
+
+	situationTags() {
+		const n = this.nodes[this.run.node];
+		const tags = new Set([...(n?.tags || []), ...(n?.joke_tags_favored || [])]);
+		for (const rule of this.cfg.situationTags || []) {
+			if (rule.tag && this.runMeets(rule)) tags.add(rule.tag);
+		}
+		return tags;
+	}
+
+	jokeOnTopic(joke) {
+		if (!this.run) return false;
+		const tags = this.situationTags();
+		if (joke.at?.some((t) => tags.has(t))) return true;
+		if (joke.unlock?.method === 'bail' && this.run.nodeBailed) return true;
+		const cargo = this.cargo[this.run.cargo];
+		return Boolean(cargo?.unlocks_jokes?.includes(joke.id));
+	}
+
 	jokeOffTopic(joke) {
 		if (!joke.at || !joke.at.length) return false;
-		const tags = this.nodes[this.run.node]?.tags || [];
-		return !joke.at.some((t) => tags.includes(t));
+		return !this.jokeOnTopic(joke);
 	}
 
 	startRun(cargoId) {
 		const cfg = this.cfg;
 		const goose = this.career.runs >= cfg.gooseAfterRuns;
-		const pool = this.content.jokes.filter((j) => {
-			if (j.unlock?.method === 'salvage' && !this.career.salvage.includes(j.id)) return false;
-			if (j.at?.includes('goose') && !goose) return false;
-			return true;
-		});
-		const hand = pickUnique(pool, cfg.handSize).map((j) => j.id);
+		const hand = this.content.jokes
+			.filter((j) => {
+				if (j.unlock?.method === 'salvage' && !this.career.salvage.includes(j.id)) return false;
+				if (j.unlock?.method === 'bail') return false;
+				if (j.at?.includes('goose') && !goose) return false;
+				return true;
+			})
+			.map((j) => j.id);
 		const pax = pickUnique(this.content.profiles, cfg.paxCount).map((p) => p.id);
 
 		this.run = {
@@ -318,6 +381,8 @@ export class Game {
 			salvageGot: 0,
 			fallsScore: 0,
 			told: 0,
+			nowhere: null,
+			forkOffer: this.dealForks(),
 			plan: cfg.runPlan.map((s) => ({ ...s })),
 			nodeBeats: { patter: 0, steer: 0, wrench: 0, bail: 0 },
 			nodeSatStart: 0,
@@ -381,13 +446,53 @@ export class Game {
 		this.run.nodeBeats = { patter: 0, steer: 0, wrench: 0, bail: 0 };
 		this.run.nodeSatStart = this.run.sat;
 		this.run.nodeCrises = [];
+		this.run.nodeBailed = false;
 		this.run.awaitingContinue = false;
 		this.screen = 'node';
+		let open = this.nodeOpenText(n);
+		if (n.type === 'destination') {
+			this.run.nowhere = this.nowhereOutcome();
+			open = this.S.nowhere[this.run.nowhere];
+			if (this.run.nowhere !== 'passed') {
+				this.run.beat = 0;
+				this.run.awaitingContinue = true;
+				this.run.card = {
+					station: 'open',
+					lines: open ? [{ cls: 'beat', text: open }] : [],
+					deltas: {},
+					ended: true,
+					beatsSpent: 0
+				};
+				this.run.record.nodes.push({
+					id,
+					satDelta: 0,
+					threatLeft: 0,
+					crises: [],
+					beats: { ...this.run.nodeBeats }
+				});
+				return;
+			}
+		}
 		const lines = [];
-		const open = this.nodeOpenText(n);
 		if (open) lines.push({ cls: 'beat', text: open });
-		if (this.S.card?.rule) lines.push({ cls: 'act', text: this.S.card.rule });
+		if (n.beats > 0) {
+			const brief = n.brief || this.S.card?.rule;
+			if (brief) lines.push({ cls: 'act', text: brief });
+		}
 		this.run.card = { station: 'open', lines, deltas: {}, ended: false, beatsSpent: 0 };
+	}
+
+	nowhereOutcome() {
+		const cfg = this.cfg.nowhere;
+		let crises = 0;
+		for (const row of this.run.record.nodes) crises += (row.crises || []).length;
+		crises += (this.run.nodeCrises || []).length;
+		if (this.run.hull >= cfg.abortHull || this.run.sat < cfg.abortSat || crises >= cfg.abortCrises) {
+			return 'abort';
+		}
+		if (this.run.record.branches.some((id) => this.edgeById(id)?.detour)) return 'missed';
+		if (cfg.wrongTurn && this.run.record.branches.includes(cfg.wrongTurn)) return 'missed';
+		return 'passed';
 	}
 
 	applyBeatCargo() {
@@ -425,7 +530,11 @@ export class Game {
 		const wasTalk = station === 'patter';
 		for (let i = 0; i < cost; i++) {
 			this.run.beat--;
-			this.run.boiler = clamp(this.run.boiler + node.boiler_rate, 0, cfg.gaugeClamp);
+			if (station === 'steer') {
+				this.run.boiler = clamp(this.run.boiler - cfg.steerBoilerReduce, 0, cfg.gaugeClamp);
+			} else {
+				this.run.boiler = clamp(this.run.boiler + node.boiler_rate, 0, cfg.gaugeClamp);
+			}
 			this.run.water = clamp(
 				this.run.water + node.water_rate + Math.floor(this.run.hull / cfg.hullWaterFactor),
 				0,
@@ -448,7 +557,10 @@ export class Game {
 		this.beginTurn();
 		this.run.used[id] = timesPrev + 1;
 		this.run.told++;
-		this.say('skip', pickWeighted(joke.variants));
+		const told = pickWeighted(joke.variants);
+		this.say('skip', told.text);
+		if (told.follow) this.say('act', told.follow);
+		if (told.water) this.run.water = clamp(this.run.water + told.water, 0, cfg.gaugeClamp);
 		if (joke.deadpan) this.say('beat', this.S.log.deadpan);
 
 		this.run.sat = clamp(this.run.sat + gain, 0, 100);
@@ -484,19 +596,29 @@ export class Game {
 		const node = this.nodes[this.run.node];
 		this.beginTurn();
 		if (kind === 'steer') {
-			if (node.selling) this.say('act', this.S.log.steerSelling);
+			if (node.selling) this.say('act', node.station_copy?.steer || this.S.log.steerSelling);
 			else {
 				this.run.threat = Math.max(0, this.run.threat - cfg.steerThreatReduce);
-				this.say('act', this.S.log.steer);
+				this.say('act', node.station_copy?.steer || this.S.log.steer);
 			}
 		}
 		if (kind === 'wrench') {
-			this.run.boiler = clamp(this.run.boiler - cfg.wrenchBoilerReduce, 0, cfg.gaugeClamp);
-			this.say('act', this.S.log.wrench);
+			this.run.hull = Math.max(0, this.run.hull - cfg.wrenchHullReduce);
+			this.say('act', node.station_copy?.wrench || this.S.log.wrench);
 		}
 		if (kind === 'bail') {
 			this.run.water = clamp(this.run.water - cfg.bailWaterReduce, 0, cfg.gaugeClamp);
-			this.say('act', this.S.log.bail);
+			this.run.nodeBailed = true;
+			this.say('act', node.station_copy?.bail || this.S.log.bail);
+			const jumped = !node.selling && Math.random() < cfg.bailJumpChance;
+			if (jumped) this.say('bad', this.S.log.bailJump);
+			for (const j of this.content.jokes) {
+				if (j.unlock?.method === 'bail' && !this.run.hand.includes(j.id)) this.run.hand.push(j.id);
+			}
+			this.spend(1, kind);
+			if (!jumped && !node.selling) this.say('beat', this.S.log.silence);
+			this.commitCard(kind);
+			return;
 		}
 		this.spend(1, kind);
 		if (kind !== 'patter') this.say('beat', this.S.log.silence);
@@ -507,11 +629,23 @@ export class Game {
 		const cfg = this.cfg;
 		const n = this.nodes[this.run.node];
 		const cargo = this.cargo[this.run.cargo];
-		if (this.run.threat > 0) {
+		if (n.type === 'destination') {
+			if (this.run.nowhere === 'passed') this.say('act', this.S.log.nowhereHome);
+		} else if (n.selling) {
+			if (this.run.nodeBeats.patter > 0) this.say('good', this.S.log.cleanSelling);
+			else this.say('act', this.S.log.fallsUnsold);
+			const r = this.run.fallsScore;
+			if (r >= cfg.fallsRatingHigh) this.say('good', this.S.log.fallsHigh);
+			else if (r >= cfg.fallsRatingMid) this.say('act', this.S.log.fallsMid);
+			else this.say('bad', this.S.log.fallsLow);
+		} else if (this.run.threat > 0) {
 			const t = this.run.threat;
 			this.say(
 				'bad',
-				this.fmt('log.unresolved', { label: n.threat_label || this.S.log.unresolvedFallback })
+				this.fmt('log.unresolved', {
+					label: n.threat_label || this.S.log.unresolvedFallback,
+					side: pick(this.S.log.sides)
+				})
 			);
 			this.run.hull += Math.round(t * cfg.unresolvedHullScale);
 			this.run.water = clamp(this.run.water + t * cfg.unresolvedWaterScale, 0, cfg.gaugeClamp);
@@ -528,13 +662,7 @@ export class Game {
 				}
 			}
 		} else {
-			this.say('good', n.selling ? this.S.log.cleanSelling : this.S.log.clean);
-		}
-		if (n.selling) {
-			const r = this.run.fallsScore;
-			if (r >= cfg.fallsRatingHigh) this.say('good', this.S.log.fallsHigh);
-			else if (r >= cfg.fallsRatingMid) this.say('act', this.S.log.fallsMid);
-			else this.say('bad', this.S.log.fallsLow);
+			this.say('good', this.S.log.clean);
 		}
 		if (n.salvage && this.run.threat <= cfg.salvageThreatMax) {
 			this.run.salvageGot = 1;
@@ -588,17 +716,17 @@ export class Game {
 			if (this.run.goose && !this.career.salvage.includes(cfg.gooseJokeId)) {
 				this.say('skip', S.funnySetup);
 				this.say('bad', S.funnyFail);
-				this.say('skip', pickWeighted(gooseJoke.variants));
+				this.say('skip', pickWeighted(gooseJoke.variants).text);
 				this.say('good', S.funnyLand);
 				this.career.salvage.push(cfg.gooseJokeId);
 				this.persist();
 				this.run.sat = clamp(this.run.sat + cfg.gooseSat, 0, 100);
 			} else if (this.run.goose) {
-				this.say('skip', pickWeighted(gooseJoke.variants));
+				this.say('skip', pickWeighted(gooseJoke.variants).text);
 				this.run.sat = clamp(this.run.sat + cfg.gooseRepeatSat, 0, 100);
 				this.say('good', S.funnyRepeat);
 			} else {
-				this.say('skip', pickWeighted(paraJoke.variants));
+				this.say('skip', pickWeighted(paraJoke.variants).text);
 				this.run.sat = clamp(this.run.sat + cfg.funnySat, 0, 100);
 				this.say('good', S.funnyGroan);
 			}
@@ -634,7 +762,7 @@ export class Game {
 		} else {
 			this.say('good', S.clear);
 		}
-		this.say('skip', pickWeighted(S.punchlines));
+		this.say('skip', pickWeighted(S.punchlines).text);
 		this.checkCrisis();
 		this.choiceDone = true;
 		this.run.card = {
@@ -696,6 +824,21 @@ export class Game {
 		let wire = (wireRule?.text || '').replace('{refunds}', String(refunds));
 		wire = applyTypos(wire, this.content.telegrams.typos, cfg.typosPerTelegram);
 
+		const fallsUnsold = this.run.record.nodes.some(
+			(row) => this.nodes[row.id]?.selling && !(row.beats?.patter)
+		);
+		const why = (this.S.settle.why || [])
+			.filter((line) =>
+				explainMatch(line.if, {
+					refunds,
+					fallsUnsold,
+					nowhere: this.run.nowhere,
+					repairs
+				})
+			)
+			.map((line) => fill(line.text, { refunds, sat: Math.round(this.run.sat) }))
+			.join(' ');
+
 		const result = {
 			base: cfg.baseFare,
 			tips,
@@ -706,7 +849,8 @@ export class Game {
 			cargoName: cargo.name,
 			salvage,
 			net,
-			wire
+			wire,
+			why
 		};
 
 		this.telemetry?.commitRun({
@@ -722,6 +866,7 @@ export class Game {
 				sat: this.run.sat
 			},
 			refunds,
+			nowhere: this.run.nowhere,
 			net
 		});
 
