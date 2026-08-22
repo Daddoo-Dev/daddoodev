@@ -27,6 +27,7 @@
     "sellingThreat": "NOTHING TO STEER. THIS ONE IS SOLD, NOT SAILED.",
     "beatsLeft": "{n} beat left",
     "beatsLeftPlural": "{n} beats left",
+    "beatHint": "one action each",
     "doSomething": "Do something",
     "orSay": "Or say something",
     "steer": "Steer",
@@ -52,6 +53,7 @@
   "log": {
     "skipperEyebrow": "SKIPPER",
     "deadpan": "— delivered completely straight. He is not making a joke.",
+    "jokeOffTopic": "Wrong stretch for that — it plays off-topic.",
     "jokeStrong": "It lands. You can feel the boat lighten.",
     "jokeFair": "Polite. A few of them got it.",
     "jokeFlat": "Nothing. Somewhere behind you, water.",
@@ -62,6 +64,7 @@
     "steerSelling": "There is nothing to steer. The falls are not a channel.",
     "wrench": "You go below. Mid-sentence. Forty people watch you disappear.",
     "bail": "You bail. It looks exactly as bad as it is.",
+    "silence": "The room notices you stopped talking.",
     "boilerCrisis": "The gauge is past the red and the valve is painted shut. The only fix is more throttle.",
     "boilerCrisisFix": "You open her up. Into whatever's ahead.",
     "waterCrisis": "She's taking it faster than you can pretend she isn't. Everyone's feet are wet.",
@@ -76,6 +79,29 @@
     "fallsLow": "One of them writes 'nine feet' in a notebook. You saw it happen.",
     "salvage": "You come out with a crate of ore and a story about turning around.",
     "chartSaid": "Chart said: {claim}"
+  },
+  "card": {
+    "rule": "One action per beat. Patter spends the beat you would have used to steer. Silence drains the room.",
+    "stations": {
+      "open": "On the water",
+      "steer": "Steer",
+      "wrench": "Went below",
+      "bail": "Bailed",
+      "patter": "Patter",
+      "boulder": "The boulder"
+    },
+    "beat": "{n} beat",
+    "beats": "{n} beats",
+    "ended": "passage over",
+    "continue": "Next",
+    "labels": {
+      "boiler": "Boiler",
+      "water": "Water",
+      "hull": "Damage",
+      "sat": "The room",
+      "threat": "Threat",
+      "cargoHealth": "Ice"
+    }
   },
   "branch": {
     "title": "The chart",
@@ -102,6 +128,22 @@
     "funnyCost": "The slow route costs you. Pressure climbing.",
     "fastAct": "You take the fast water and say nothing. The ducks go by to port, unremarked.",
     "fastAsk": "Someone asks about the ducks. You've already passed them."
+  },
+  "boulder": {
+    "title": "The boulder",
+    "sub": "The river splits.",
+    "note": "I am conflicted on which direction to go. Left or right.",
+    "left": "Left",
+    "leftHint": "Port around the rock",
+    "right": "Right",
+    "rightHint": "Starboard around the rock",
+    "scrape": "The rail finds the granite. There was a clean side. This was not it.",
+    "clear": "Clear water. The other channel would not have been.",
+    "punchlines": [
+      { "text": "The boulder is no longer conflicted.", "weight": 3 },
+      { "text": "I guess the boulder wasn't conflicted.", "weight": 2 }
+    ],
+    "carryOn": "Carry on downriver"
   },
   "settle": {
     "title": "Welcome back to Cra-Zi",

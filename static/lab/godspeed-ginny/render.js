@@ -34,29 +34,66 @@ function gauges() {
 	if (!game.run) return '';
 	const max = game.cfg.gaugeDisplayMax;
 	const R = game.run;
-	const g = (cls, lbl, val, hot) => {
+	const d = game.run.card?.deltas || {};
+	const g = (cls, lbl, val, hot, dkey) => {
 		const w = Math.max(0, Math.min(100, (val / max) * 100));
-		return `<div class="g ${cls}${hot ? ' hot' : ''}"><div class="lbl">${esc(lbl)}</div><div class="val">${Math.round(val)}</div><div class="bar"><i style="width:${w}%"></i></div></div>`;
+		const delta = d[dkey];
+		const chip = delta
+			? `<span class="g-d ${deltaClass(dkey, delta)}">${esc(fmtDelta(delta))}</span>`
+			: '';
+		return `<div class="g ${cls}${hot ? ' hot' : ''}"><div class="lbl">${esc(lbl)}</div><div class="val">${Math.round(val)}${chip}</div><div class="bar"><i style="width:${w}%"></i></div></div>`;
 	};
 	const L = strings.gauges;
 	return `<div class="gauges">
-		${g('boiler', L.boiler, R.boiler, R.boiler >= 80)}
-		${g('water', L.water, R.water, R.water >= 80)}
-		${g('hull', L.hull, R.hull, R.hull >= 50)}
-		${g('mood', L.sat, R.sat, R.sat <= 30)}
+		${g('boiler', L.boiler, R.boiler, R.boiler >= 80, 'boiler')}
+		${g('water', L.water, R.water, R.water >= 80, 'water')}
+		${g('hull', L.hull, R.hull, R.hull >= 50, 'hull')}
+		${g('mood', L.sat, R.sat, R.sat <= 30, 'sat')}
 	</div>`;
 }
 
-function logHtml() {
-	if (!game.run) return '';
+function fmtDelta(n) {
+	return n > 0 ? `+${n}` : `−${Math.abs(n)}`;
+}
+
+function deltaClass(key, n) {
+	const badUp = key === 'boiler' || key === 'water' || key === 'hull' || key === 'threat';
+	if (n > 0) return badUp ? 'delta-bad' : 'delta-good';
+	return badUp ? 'delta-good' : 'delta-bad';
+}
+
+function cardHtml(card) {
+	if (!card) return '';
+	const C = strings.card;
+	const station = C.stations[card.station] || card.station;
+	const bits = [station];
+	if (card.beatsSpent) {
+		bits.push(
+			card.beatsSpent === 1 ? fmt(C.beat, { n: card.beatsSpent }) : fmt(C.beats, { n: card.beatsSpent })
+		);
+	}
+	if (card.ended) bits.push(C.ended);
 	const eyebrow = esc(strings.log.skipperEyebrow);
-	return `<ul class="log">${game.run.log
+	const lines = (card.lines || [])
 		.map((l) =>
 			l.cls === 'skip'
 				? `<li class="skip" data-eyebrow="${eyebrow}">${esc(l.text)}</li>`
 				: `<li class="${esc(l.cls)}">${esc(l.text)}</li>`
 		)
-		.join('')}</ul>`;
+		.join('');
+	const order = ['threat', 'boiler', 'water', 'hull', 'sat', 'cargoHealth'];
+	const chips = order
+		.filter((k) => card.deltas?.[k])
+		.map((k) => {
+			const n = card.deltas[k];
+			return `<span class="dchip ${deltaClass(k, n)}"><i>${esc(C.labels[k])}</i> ${esc(fmtDelta(n))}</span>`;
+		})
+		.join('');
+	return `<article class="play-card">
+		<div class="card-kicker">${esc(bits.join(' · '))}</div>
+		<ul class="log">${lines}</ul>
+		${chips ? `<div class="delta-row">${chips}</div>` : ''}
+	</article>`;
 }
 
 function jokeMeta(joke, times, est) {
@@ -121,6 +158,7 @@ function renderOffice() {
 
 function renderNode() {
 	const n = game.nodes[game.run.node];
+	const waiting = game.run.awaitingContinue;
 	const pips = Array.from(
 		{ length: n.beats },
 		(_, i) => `<div class="pip${i >= game.run.beat ? ' spent' : ''}"></div>`
@@ -137,7 +175,7 @@ function renderNode() {
 			const j = game.jokes[id];
 			const times = game.run.used[id] || 0;
 			const est = game.scoreJoke(j);
-			const disabled = game.run.beat < (j.attention_cost || 1);
+			const disabled = waiting || game.run.beat < (j.attention_cost || 1);
 			return `<button class="joke${times ? ' tired' : ''}${j.risk ? ' risky' : ''}" type="button" data-joke="${esc(id)}" ${disabled ? 'disabled' : ''}>
 				<div class="t">${esc(j.title)}</div>
 				<div class="m">${esc(jokeMeta(j, times, est))}</div>
@@ -148,53 +186,69 @@ function renderNode() {
 	const ice = cargo.effects?.some((e) => e.effect === 'melt')
 		? fmt(strings.node.iceLeft, { pct: game.run.cargoHealth })
 		: '';
-	return `
-	${gauges()}
-	<h2 class="node-head">${esc(n.name)}</h2>
-	<div class="node-sub">${esc(n.sub)}</div>
-	${threat}
-	<div class="beats">${pips}<span class="cap">${esc(beatLabel)}</span></div>
-	${logHtml()}
-	<div class="sect">${esc(strings.node.doSomething)}</div>
+	const actions = waiting
+		? `<button class="btn wide" type="button" id="next-passage">${esc(strings.card.continue)}</button>`
+		: `<div class="sect">${esc(strings.node.doSomething)}</div>
 	<div class="act-row">
 		<button class="btn" type="button" data-act="steer" ${game.run.beat < 1 ? 'disabled' : ''}>${esc(strings.node.steer)}<small>${esc(fmt(strings.node.steerHint, { n: game.cfg.steerThreatReduce }))}</small></button>
 		<button class="btn" type="button" data-act="wrench" ${game.run.beat < 1 ? 'disabled' : ''}>${esc(strings.node.wrench)}<small>${esc(fmt(strings.node.wrenchHint, { n: game.cfg.wrenchBoilerReduce }))}</small></button>
 		<button class="btn" type="button" data-act="bail" ${game.run.beat < 1 ? 'disabled' : ''}>${esc(strings.node.bail)}<small>${esc(fmt(strings.node.bailHint, { n: game.cfg.bailWaterReduce }))}</small></button>
 	</div>
 	<div class="sect">${esc(strings.node.orSay)}</div>
-	${jokes}
-	<p class="pax">${esc(strings.node.aboard)} ${game.run.pax.map((p) => `<b>${esc(game.profiles[p].name)}</b>`).join(' · ')}<br>${esc(strings.node.hold)} <b>${esc(cargo.name)}</b>${esc(ice)}</p>`;
+	${jokes}`;
+	return `<div class="play-board">
+	${gauges()}
+	<div class="play-head">
+		<h2 class="node-head">${esc(n.name)}</h2>
+		<div class="node-sub">${esc(n.sub)}</div>
+		${threat}
+		<div class="beats">${pips}<span class="cap">${esc(beatLabel)} · ${esc(strings.node.beatHint)}</span></div>
+	</div>
+	${cardHtml(game.run.card)}
+	<div class="play-actions">
+		${actions}
+		<p class="pax">${esc(strings.node.aboard)} ${game.run.pax.map((p) => `<b>${esc(game.profiles[p].name)}</b>`).join(' · ')}<br>${esc(strings.node.hold)} <b>${esc(cargo.name)}</b>${esc(ice)}</p>
+	</div>
+	</div>`;
 }
 
 function renderBranch() {
 	const step = game.currentStep();
 	const b = game.branches[step.id];
-	return `
+	return `<div class="play-board">
 	${gauges()}
-	<h2 class="node-head">${esc(strings.branch.title)}</h2>
-	<div class="node-sub">${esc(strings.branch.sub)}</div>
-	${logHtml()}
-	<p class="note">${esc(b.prompt)}</p>
-	${b.edges
-		.map((o) => {
-			const note = game.career.notes[o.id];
-			return `<button class="chart-card" type="button" data-opt="${esc(o.id)}">
+	<div class="play-head">
+		<h2 class="node-head">${esc(strings.branch.title)}</h2>
+		<div class="node-sub">${esc(strings.branch.sub)}</div>
+	</div>
+	${cardHtml(game.run.card)}
+	<div class="play-actions">
+		<p class="note">${esc(b.prompt)}</p>
+		${b.edges
+			.map((o) => {
+				const note = game.career.notes[o.id];
+				return `<button class="chart-card" type="button" data-opt="${esc(o.id)}">
 				<div class="nm">${esc(o.charted.label)}</div>
 				<div class="cl" data-k="${esc(strings.branch.chartPrefix)}">${esc(o.charted.claim)}</div>
 				${note ? `<div class="an">${esc(note)}</div>` : ''}
 			</button>`;
-		})
-		.join('')}`;
+			})
+			.join('')}
+	</div>
+	</div>`;
 }
 
 function renderDucks() {
 	const d = strings.ducks;
 	const done = game.choiceDone;
-	return `
+	return `<div class="play-board">
 	${gauges()}
-	<h2 class="node-head">${esc(game.run.goose ? d.titleGoose : d.title)}</h2>
-	<div class="node-sub">${esc(d.sub)}</div>
-	${done ? logHtml() : `<p class="note">${esc(d.note)}</p>`}
+	<div class="play-head">
+		<h2 class="node-head">${esc(game.run.goose ? d.titleGoose : d.title)}</h2>
+		<div class="node-sub">${esc(d.sub)}</div>
+	</div>
+	${done ? cardHtml(game.run.card) : `<article class="play-card"><p class="note">${esc(d.note)}</p></article>`}
+	<div class="play-actions">
 	${
 		done
 			? `<button class="btn wide" type="button" id="on">${esc(d.carryOn)}</button>`
@@ -202,7 +256,36 @@ function renderDucks() {
 			<button class="btn" type="button" data-d="fast">${esc(d.fast)}<small>${esc(d.fastHint)}</small></button>
 			<button class="btn hot" type="button" data-d="funny">${esc(d.funny)}<small>${esc(d.funnyHint)}</small></button>
 		</div>`
-	}`;
+	}
+	</div>
+	</div>`;
+}
+
+function renderBoulder() {
+	const b = strings.boulder;
+	const done = game.choiceDone;
+	return `<div class="play-board">
+	${gauges()}
+	<div class="play-head">
+		<h2 class="node-head">${esc(b.title)}</h2>
+		<div class="node-sub">${esc(b.sub)}</div>
+	</div>
+	${done ? cardHtml(game.run.card) : `<article class="play-card"><p class="note">${esc(b.note)}</p></article>`}
+	<div class="play-actions">
+	${
+		done
+			? `<button class="btn wide" type="button" id="on">${esc(b.carryOn)}</button>`
+			: `<div class="act-row">
+			<button class="btn" type="button" data-b="left">${esc(b.left)}<small>${esc(b.leftHint)}</small></button>
+			<button class="btn" type="button" data-b="right">${esc(b.right)}<small>${esc(b.rightHint)}</small></button>
+		</div>`
+	}
+	</div>
+	</div>`;
+}
+
+function renderChoice() {
+	return game.choiceId === 'boulder' ? renderBoulder() : renderDucks();
 }
 
 function renderSettle() {
@@ -269,9 +352,15 @@ function render() {
 	const app = $('#app');
 	if (game.screen === 'office' || !game.run) app.innerHTML = renderOffice();
 	else if (game.screen === 'branch') app.innerHTML = renderBranch();
-	else if (game.screen === 'choice') app.innerHTML = renderDucks();
+	else if (game.screen === 'choice') app.innerHTML = renderChoice();
 	else if (game.screen === 'settle') app.innerHTML = renderSettle();
 	else app.innerHTML = renderNode();
+
+	const playing =
+		game.run &&
+		(game.screen === 'node' || game.screen === 'branch' || game.screen === 'choice') &&
+		!showTelemetry;
+	document.body.classList.toggle('play', playing);
 
 	let telem = $('#telem-slot');
 	if (!telem) {
@@ -315,6 +404,18 @@ function bind() {
 			render();
 		};
 	});
+	app.querySelectorAll('[data-b]').forEach((b) => {
+		b.onclick = () => {
+			game.chooseBoulder(b.dataset.b);
+			render();
+		};
+	});
+	const next = $('#next-passage');
+	if (next)
+		next.onclick = () => {
+			game.continueNode();
+			render();
+		};
 	const on = $('#on');
 	if (on)
 		on.onclick = () => {

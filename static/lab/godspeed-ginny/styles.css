@@ -25,15 +25,56 @@ body {
 	font-family: 'Newsreader', Georgia, serif;
 	font-size: 17px;
 	line-height: 1.55;
-	padding: 0 16px 64px;
+	min-height: 100dvh;
 	background-image:
 		repeating-linear-gradient(0deg, transparent 0 39px, rgba(44, 95, 92, 0.05) 39px 40px),
 		repeating-linear-gradient(90deg, transparent 0 39px, rgba(44, 95, 92, 0.05) 39px 40px);
 }
 
 .wrap {
-	max-width: 660px;
+	max-width: 720px;
 	margin: 0 auto;
+	min-height: 100dvh;
+	padding: 0 12px;
+	display: flex;
+	flex-direction: column;
+}
+
+#app {
+	flex: 1;
+	min-height: 0;
+	display: flex;
+	flex-direction: column;
+}
+
+body.play {
+	overflow: hidden;
+	height: 100dvh;
+}
+
+body.play .wrap {
+	height: 100dvh;
+	max-height: 100dvh;
+	overflow: hidden;
+}
+
+body.play .mast {
+	padding: 10px 0 8px;
+	margin-bottom: 8px;
+}
+
+body.play .mast h1 {
+	font-size: clamp(18px, 4.2vw, 28px);
+}
+
+body.play .gauges {
+	margin-bottom: 0;
+	padding: 8px;
+}
+
+body.play footer {
+	margin-top: 0;
+	padding: 8px 0 10px;
 }
 
 header.mast {
@@ -92,6 +133,94 @@ header.mast {
 	font-weight: 700;
 	font-size: 21px;
 	line-height: 1.1;
+	display: flex;
+	align-items: baseline;
+	justify-content: center;
+	gap: 4px;
+}
+
+.g-d {
+	font-family: 'Courier Prime', monospace;
+	font-size: 10px;
+	font-weight: 400;
+	letter-spacing: 0.04em;
+}
+
+.play-board {
+	flex: 1;
+	min-height: 0;
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+}
+
+.play-head {
+	flex: 0 0 auto;
+}
+
+.play-card {
+	flex: 1 1 auto;
+	min-height: 0;
+	overflow: auto;
+	border: 1.5px solid var(--water);
+	background: rgba(255, 255, 255, 0.28);
+	padding: 12px 14px;
+}
+
+.card-kicker {
+	font-family: 'Courier Prime', monospace;
+	font-size: 10px;
+	letter-spacing: 0.18em;
+	text-transform: uppercase;
+	color: var(--stamp);
+	margin-bottom: 8px;
+}
+
+.delta-row {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px 14px;
+	margin-top: 12px;
+	padding-top: 10px;
+	border-top: 1px solid var(--chart-deep);
+}
+
+.dchip {
+	font-family: 'Courier Prime', monospace;
+	font-size: 11px;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+}
+
+.dchip i {
+	font-style: normal;
+	color: var(--ink-soft);
+	letter-spacing: 0.14em;
+	font-size: 9px;
+}
+
+.delta-bad,
+.g-d.delta-bad {
+	color: var(--stamp);
+}
+
+.delta-good,
+.g-d.delta-good {
+	color: var(--brass);
+}
+
+.play-actions {
+	flex: 0 1 auto;
+	max-height: 42%;
+	overflow: auto;
+}
+
+.play-actions .sect {
+	margin: 8px 0 6px;
+}
+
+.play-actions .pax {
+	margin-bottom: 0;
 }
 
 .g .bar {
@@ -125,9 +254,13 @@ header.mast {
 }
 
 .log {
-	margin: 0 0 22px;
+	margin: 0;
 	padding: 0;
 	list-style: none;
+}
+
+.play-card .log {
+	margin: 0;
 }
 
 .log li {
@@ -197,10 +330,10 @@ header.mast {
 }
 
 .node-head {
-	margin: 0 0 4px;
+	margin: 0 0 2px;
 	font-family: 'Zilla Slab', serif;
 	font-weight: 700;
-	font-size: 27px;
+	font-size: clamp(18px, 5vw, 24px);
 	letter-spacing: 0.02em;
 }
 
@@ -210,14 +343,14 @@ header.mast {
 	letter-spacing: 0.14em;
 	text-transform: uppercase;
 	color: var(--stamp);
-	margin-bottom: 14px;
+	margin-bottom: 6px;
 }
 
 .threat {
 	font-family: 'Courier Prime', monospace;
 	font-size: 12px;
 	letter-spacing: 0.1em;
-	margin-bottom: 14px;
+	margin-bottom: 6px;
 	color: var(--ink-soft);
 }
 
@@ -229,7 +362,7 @@ header.mast {
 	display: flex;
 	gap: 6px;
 	align-items: center;
-	margin-bottom: 16px;
+	margin-bottom: 0;
 }
 
 .beats .pip {
@@ -325,10 +458,10 @@ button {
 	background: transparent;
 	border: 1.5px solid var(--water);
 	border-left-width: 5px;
-	padding: 10px 12px;
+	padding: 8px 10px;
 	text-align: left;
 	width: 100%;
-	margin-bottom: 7px;
+	margin-bottom: 5px;
 }
 
 .joke:hover:not(:disabled),
@@ -504,8 +637,9 @@ button {
 }
 
 footer {
-	margin-top: 44px;
+	margin-top: auto;
 	padding-top: 14px;
+	padding-bottom: 16px;
 	border-top: 1px solid var(--chart-deep);
 	font-family: 'Courier Prime', monospace;
 	font-size: 10px;
@@ -537,7 +671,10 @@ footer span:last-child {
 	.gauges {
 		grid-template-columns: repeat(2, 1fr);
 	}
-	.node-head {
-		font-size: 22px;
+	.play-actions {
+		max-height: 46%;
+	}
+	.g .val {
+		font-size: 18px;
 	}
 }

@@ -505,5 +505,22 @@
     "callback_to": [],
     "risk": { "chance": 0.3, "generates": "overboard" },
     "tags": ["risk"]
+  },
+  {
+    "id": "conflicted_boulder",
+    "category": "rehearsed",
+    "title": "Conflicted",
+    "variants": [
+      { "text": "The river splits around a boulder here. I am conflicted on which way to go. Left or right.", "weight": 3 },
+      { "text": "Big rock, two channels. I am conflicted. You are looking at me like that is not a nautical term.", "weight": 2 }
+    ],
+    "flavors": ["pun", "wordplay", "groaner"],
+    "attention_cost": 1,
+    "deadpan": true,
+    "at": ["boulder"],
+    "fatigue_runs": 2,
+    "callback_to": [],
+    "risk": null,
+    "tags": ["landmark", "signature"]
   }
 ]

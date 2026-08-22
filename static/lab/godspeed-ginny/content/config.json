@@ -67,11 +67,17 @@
     "fastSat": -7,
     "fastBoiler": -6
   },
+  "boulder": {
+    "scrapeHull": 5,
+    "scrapeWater": 10,
+    "scrapeSat": 3
+  },
   "runPlan": [
     { "kind": "node", "id": "castoff" },
     { "kind": "branch", "id": "fork1" },
     { "kind": "node", "id": null },
     { "kind": "node", "id": "wreck" },
+    { "kind": "choice", "id": "boulder" },
     { "kind": "branch", "id": "fork2" },
     { "kind": "node", "id": null },
     { "kind": "node", "id": "falls" },

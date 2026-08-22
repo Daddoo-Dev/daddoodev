@@ -133,6 +133,23 @@
     "settle_stages": null
   },
   {
+    "id": "boulder",
+    "name": "The boulder",
+    "sub": "The river splits.",
+    "type": "choice",
+    "beats": 0,
+    "threat": 0,
+    "threat_label": null,
+    "boiler_rate": 0,
+    "water_rate": 0,
+    "joke_tags_favored": ["boulder"],
+    "tags": ["boulder"],
+    "open": null,
+    "selling": false,
+    "salvage": false,
+    "settle_stages": null
+  },
+  {
     "id": "two_ducks_goose",
     "name": "Two Ducks and a Goose",
     "sub": "Sandbar. Fast water to port.",

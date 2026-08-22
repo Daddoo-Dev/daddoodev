@@ -191,8 +191,52 @@ export class Game {
 		this.officeWire = null;
 	}
 
+	gaugeSnap() {
+		const r = this.run;
+		return {
+			boiler: r.boiler,
+			water: r.water,
+			hull: r.hull,
+			sat: r.sat,
+			threat: r.threat,
+			beat: r.beat,
+			cargoHealth: r.cargoHealth
+		};
+	}
+
+	gaugeDelta(before, after) {
+		const d = {};
+		for (const k of Object.keys(after)) {
+			const n = after[k] - before[k];
+			if (n) d[k] = n;
+		}
+		return d;
+	}
+
+	beginTurn() {
+		this._before = this.gaugeSnap();
+		this._turnLines = [];
+	}
+
 	say(cls, text) {
-		this.run.log.push({ cls, text });
+		if (this._turnLines) this._turnLines.push({ cls, text });
+		else if (this.run?.card) this.run.card.lines.push({ cls, text });
+	}
+
+	commitCard(station) {
+		const ended = this.screen === 'node' && this.run.beat <= 0 && !this.run.awaitingContinue;
+		if (ended) {
+			this.applyNodeResolution();
+			this.run.awaitingContinue = true;
+		}
+		this.run.card = {
+			station,
+			lines: this._turnLines || [],
+			deltas: this._before ? this.gaugeDelta(this._before, this.gaugeSnap()) : {},
+			ended,
+			beatsSpent: this._before ? this._before.beat - this.run.beat : 0
+		};
+		this._turnLines = null;
 	}
 
 	fmt(keyPath, vars) {
@@ -264,7 +308,8 @@ export class Game {
 			pax,
 			hand,
 			used: {},
-			log: [],
+			card: null,
+			awaitingContinue: false,
 			step: 0,
 			beat: 0,
 			threat: 0,
@@ -314,7 +359,10 @@ export class Game {
 			this.screen = 'choice';
 			this.choiceId = s.id;
 			this.choiceDone = false;
-			this.run.log = [];
+			this.run.card = null;
+			if (s.id === 'boulder') {
+				this.run.boulderScrape = Math.random() < 0.5 ? 'left' : 'right';
+			}
 			return;
 		}
 		if (s.kind === 'settle') {
@@ -327,17 +375,19 @@ export class Game {
 
 	enterNode(id) {
 		const n = this.nodes[id];
-		const carry = (this.run.log || []).filter((l) => l.cls === 'bad' || l.cls === 'good').slice(-4);
 		this.run.node = id;
 		this.run.beat = n.beats;
 		this.run.threat = n.threat;
-		this.run.log = carry;
 		this.run.nodeBeats = { patter: 0, steer: 0, wrench: 0, bail: 0 };
 		this.run.nodeSatStart = this.run.sat;
 		this.run.nodeCrises = [];
+		this.run.awaitingContinue = false;
 		this.screen = 'node';
+		const lines = [];
 		const open = this.nodeOpenText(n);
-		if (open) this.say('beat', open);
+		if (open) lines.push({ cls: 'beat', text: open });
+		if (this.S.card?.rule) lines.push({ cls: 'act', text: this.S.card.rule });
+		this.run.card = { station: 'open', lines, deltas: {}, ended: false, beatsSpent: 0 };
 	}
 
 	applyBeatCargo() {
@@ -387,7 +437,6 @@ export class Game {
 			this.run.nodeBeats[station] = (this.run.nodeBeats[station] || 0) + 1;
 			this.checkCrisis();
 		}
-		if (this.run.beat <= 0) this.endNode();
 	}
 
 	tellJoke(id) {
@@ -396,12 +445,14 @@ export class Game {
 		const timesPrev = this.run.used[id] || 0;
 		const gain = this.scoreJoke(joke);
 		const offTopic = this.jokeOffTopic(joke);
+		this.beginTurn();
 		this.run.used[id] = timesPrev + 1;
 		this.run.told++;
 		this.say('skip', pickWeighted(joke.variants));
 		if (joke.deadpan) this.say('beat', this.S.log.deadpan);
 
 		this.run.sat = clamp(this.run.sat + gain, 0, 100);
+		if (offTopic) this.say('act', this.S.log.jokeOffTopic);
 		if (gain >= cfg.jokeStrongAt) this.say('good', this.S.log.jokeStrong);
 		else if (gain >= cfg.jokeFairAt) this.say('act', this.S.log.jokeFair);
 		else if (gain > cfg.jokeFlatAt) this.say('act', this.S.log.jokeFlat);
@@ -425,11 +476,13 @@ export class Game {
 			this.say('bad', this.S.log.riskOverboard);
 		}
 		this.spend(joke.attention_cost || 1, 'patter');
+		this.commitCard('patter');
 	}
 
 	doAction(kind) {
 		const cfg = this.cfg;
 		const node = this.nodes[this.run.node];
+		this.beginTurn();
 		if (kind === 'steer') {
 			if (node.selling) this.say('act', this.S.log.steerSelling);
 			else {
@@ -446,9 +499,11 @@ export class Game {
 			this.say('act', this.S.log.bail);
 		}
 		this.spend(1, kind);
+		if (kind !== 'patter') this.say('beat', this.S.log.silence);
+		this.commitCard(kind);
 	}
 
-	endNode() {
+	applyNodeResolution() {
 		const cfg = this.cfg;
 		const n = this.nodes[this.run.node];
 		const cargo = this.cargo[this.run.cargo];
@@ -493,7 +548,10 @@ export class Game {
 			crises: this.run.nodeCrises.slice(),
 			beats: { ...this.run.nodeBeats }
 		});
+	}
 
+	continueNode() {
+		this.run.awaitingContinue = false;
 		this.run.step++;
 		const nx = this.currentStep();
 		if (nx && nx.kind === 'node' && nx.id) this.enterNode(nx.id);
@@ -514,13 +572,14 @@ export class Game {
 		}
 		this.run.step++;
 		this.enterNode(edge.to);
-		this.say('beat', this.fmt('log.chartSaid', { claim: edge.charted.claim }));
+		const claim = this.fmt('log.chartSaid', { claim: edge.charted.claim });
+		if (this.run.card) this.run.card.lines.push({ cls: 'beat', text: claim });
 	}
 
 	chooseDucks(choice) {
 		const cfg = this.cfg.ducks;
 		const S = this.S.ducks;
-		this.run.log = [];
+		this.beginTurn();
 		this.say('beat', this.run.goose ? S.openGoose : S.open);
 
 		if (choice === 'funny') {
@@ -553,6 +612,39 @@ export class Game {
 			this.say('beat', S.fastAsk);
 		}
 		this.choiceDone = true;
+		this.run.card = {
+			station: choice === 'funny' ? 'patter' : 'steer',
+			lines: this._turnLines || [],
+			deltas: this._before ? this.gaugeDelta(this._before, this.gaugeSnap()) : {},
+			ended: true,
+			beatsSpent: 0
+		};
+		this._turnLines = null;
+	}
+
+	chooseBoulder(side) {
+		const cfg = this.cfg.boulder;
+		const S = this.S.boulder;
+		this.beginTurn();
+		if (side === this.run.boulderScrape) {
+			this.run.hull += cfg.scrapeHull;
+			this.run.water = clamp(this.run.water + cfg.scrapeWater, 0, this.cfg.gaugeClamp);
+			this.run.sat = clamp(this.run.sat - cfg.scrapeSat, 0, 100);
+			this.say('bad', S.scrape);
+		} else {
+			this.say('good', S.clear);
+		}
+		this.say('skip', pickWeighted(S.punchlines));
+		this.checkCrisis();
+		this.choiceDone = true;
+		this.run.card = {
+			station: 'boulder',
+			lines: this._turnLines || [],
+			deltas: this._before ? this.gaugeDelta(this._before, this.gaugeSnap()) : {},
+			ended: true,
+			beatsSpent: 0
+		};
+		this._turnLines = null;
 	}
 
 	continueAfterChoice() {
