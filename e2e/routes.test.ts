@@ -39,6 +39,15 @@ test.describe('Public routes', () => {
 		await expect(page.locator('.app-content')).toBeVisible();
 		await expect(page.locator('a[href="/twistedfortunes/privacy"]')).toBeVisible();
 	});
+
+	test('my prayer cards page has review samples and privacy link', async ({ page }) => {
+		await page.goto('/myprayercards');
+		await expect(page.locator('.app-content')).toBeVisible();
+		await expect(page.locator('#review')).toBeVisible();
+		await expect(page.locator('a[href="/privacy"]')).toBeVisible();
+		await expect(page.locator('a[href="/images/myprayercards/review-front.jpg"]')).toBeVisible();
+		await expect(page.locator('a[href="/images/myprayercards/review-back.png"]')).toBeVisible();
+	});
 });
 
 test.describe('Hidden routes', () => {

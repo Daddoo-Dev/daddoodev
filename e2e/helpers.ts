@@ -41,6 +41,11 @@ export const PUBLIC_ROUTES: RouteSpec[] = [
 		heading: /Twisted Fortunes/i
 	},
 	{
+		path: '/myprayercards',
+		title: /My Prayer Cards/i,
+		heading: /My Prayer Cards/i
+	},
+	{
 		path: '/twistedfortunes/privacy',
 		title: /Twisted Fortunes Privacy Policy|Privacy Policy/i,
 		heading: /Privacy Policy/i
