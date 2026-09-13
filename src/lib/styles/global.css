@@ -2736,10 +2736,6 @@ a.action-button {
 	gap: 1rem;
 }
 
-.product-page .screenshot-row--quad {
-	grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-}
-
 .product-page .screenshot-row img {
 	width: 100%;
 	height: auto;
@@ -2827,10 +2823,6 @@ a.action-button {
 	.product-page .screenshot-row,
 	.product-page .review-card-row {
 		grid-template-columns: 1fr;
-	}
-
-	.product-page .screenshot-row--quad {
-		grid-template-columns: 1fr 1fr;
 	}
 }
 

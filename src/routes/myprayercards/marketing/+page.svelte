@@ -48,7 +48,6 @@
 
 			<div class="download-section">
 				<h2>Get the app</h2>
-				<p>Available on Google Play. App Store listing is in review.</p>
 				<div class="download-buttons">
 					<StoreBadges googlePlay={playUrl} appStore={undefined} />
 				</div>
@@ -56,7 +55,7 @@
 
 			<section>
 				<h2>In the app</h2>
-				<div class="screenshot-row screenshot-row--quad">
+				<div class="screenshot-row">
 					<figure>
 						<img src="/images/myprayercards/library.png" alt="Prayer card library" loading="lazy" />
 						<figcaption>Your library</figcaption>
@@ -69,10 +68,6 @@
 						<img src="/images/myprayercards/scan.png" alt="Scanning a prayer card" loading="lazy" />
 						<figcaption>Scan front, then the prayer</figcaption>
 					</figure>
-					<figure>
-						<img src="/images/myprayercards/search.png" alt="Searching the prayer card library" loading="lazy" />
-						<figcaption>Search and find a card fast</figcaption>
-					</figure>
 				</div>
 			</section>
 
@@ -82,23 +77,13 @@
 					<div class="feature-card">
 						<h3>Scan once, pray anytime</h3>
 						<p>
-							Photograph the art, then the text. OCR reads the prayer. You can fix the title or
-							the words before you save.
+							Photograph the art, then the text. You can fix the title or the words before you
+							save.
 						</p>
 					</div>
 					<div class="feature-card">
 						<h3>A library that stays yours</h3>
-						<p>
-							Favorite, search, sort, and pin cards for offline. Sign in with email and a
-							password, or use a guest session on this device.
-						</p>
-					</div>
-					<div class="feature-card">
-						<h3>One prayer, not copies</h3>
-						<p>
-							If that prayer already exists, you link to it instead of creating another copy. The
-							same happens for artwork that already belongs to that prayer.
-						</p>
+						<p>Favorite, search, sort, and pin cards for offline.</p>
 					</div>
 					<div class="feature-card">
 						<h3>Free, then unlimited</h3>
@@ -111,35 +96,12 @@
 			</section>
 
 			<section>
-				<h2>How it works</h2>
-				<ol class="how-to-list">
-					<li><strong>Scan the front</strong> — the artwork side of the card.</li>
-					<li><strong>Scan the back</strong> — the prayer text. Only this side is read.</li>
-					<li><strong>Confirm and save</strong> — fix the title or text if you need to, then keep it in your library.</li>
-					<li><strong>Pray from your phone</strong> — open a card, pinch to zoom, pin it for offline.</li>
-				</ol>
-			</section>
-
-			<section>
 				<h2>Privacy</h2>
-				<ul class="privacy-list">
-					<li>Email and a user ID if you create an account.</li>
-					<li>Prayer text and front artwork you add.</li>
-					<li>Crash logs and app interaction for analytics. No advertising ID. No tracking.</li>
-				</ul>
 				<p>
 					<a href="/privacy">Privacy Policy</a>
 					|
 					<a href="/terms">Terms of Service</a>
 				</p>
-			</section>
-
-			<section>
-				<h2>Support</h2>
-				<ul class="contact-list">
-					<li>Email: <a href="mailto:daddoodev@proton.me">daddoodev@proton.me</a></li>
-					<li>Website: <a href="https://daddoodev.pro">https://daddoodev.pro</a></li>
-				</ul>
 			</section>
 		</div>
 	</div>

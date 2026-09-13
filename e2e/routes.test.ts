@@ -109,9 +109,13 @@ test.describe('Hidden routes', () => {
 		await page.goto('/myprayercards/marketing');
 		await expect(page.locator('.app-content')).toBeVisible();
 		await expect(page.locator('#review')).toHaveCount(0);
+		await expect(page.getByRole('heading', { name: 'How it works' })).toHaveCount(0);
+		await expect(page.getByRole('heading', { name: 'Support' })).toHaveCount(0);
 		await expect(page.getByRole('img', { name: 'Prayer card library', exact: true })).toBeVisible();
 		await expect(page.getByRole('img', { name: 'Prayer reader', exact: true })).toBeVisible();
+		await expect(page.getByRole('img', { name: 'Searching the prayer card library' })).toHaveCount(0);
 		await expect(page.getByRole('link', { name: 'Get it on Google Play' })).toBeVisible();
 		await expect(page.locator('a[href="/privacy"]')).toBeVisible();
+		await expect(page.locator('a[href="/terms"]')).toBeVisible();
 	});
 });
