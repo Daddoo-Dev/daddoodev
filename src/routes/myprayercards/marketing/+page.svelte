@@ -76,10 +76,7 @@
 				<div class="features-grid">
 					<div class="feature-card">
 						<h3>Scan once, pray anytime</h3>
-						<p>
-							Photograph the art, then the text. You can fix the title or the words before you
-							save.
-						</p>
+						<p>Photograph the art, then the text.</p>
 					</div>
 					<div class="feature-card">
 						<h3>A library that stays yours</h3>
