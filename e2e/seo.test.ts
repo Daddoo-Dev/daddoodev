@@ -12,7 +12,8 @@ const HIDDEN_NOINDEX = [
 	'/analytics/conclavium',
 	'/analytics/knights-management',
 	'/bbs',
-	'/lab/godspeed-ginny/index.html'
+	'/lab/godspeed-ginny/index.html',
+	'/myprayercards/marketing'
 ];
 
 test.describe('SEO — public routes', () => {

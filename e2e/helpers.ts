@@ -8,7 +8,8 @@ export const HIDDEN_ROUTE_PATTERNS = [
 	'/analytics/',
 	'/triptime',
 	'/lab/godspeed-ginny',
-	'/godspeed_ginny'
+	'/godspeed_ginny',
+	'/myprayercards/marketing'
 ];
 
 export type RouteSpec = {
@@ -99,6 +100,11 @@ export const HIDDEN_ROUTES: RouteSpec[] = [
 		title: /Godspeed Ginny/i,
 		heading: /Godspeed/i,
 		shell: false
+	},
+	{
+		path: '/myprayercards/marketing',
+		title: /My Prayer Cards/i,
+		heading: /My Prayer Cards/i
 	}
 ];
 
