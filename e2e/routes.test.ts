@@ -3,6 +3,7 @@ import {
 	HIDDEN_ROUTES,
 	PUBLIC_ROUTES,
 	TERMINAL_SELECTOR,
+	expectNotNoIndexed,
 	expectSiteShell,
 	visitRoute
 } from './helpers';
@@ -44,9 +45,21 @@ test.describe('Public routes', () => {
 		await page.goto('/myprayercards');
 		await expect(page.locator('.app-content')).toBeVisible();
 		await expect(page.locator('#review')).toBeVisible();
-		await expect(page.locator('a[href="/privacy"]')).toBeVisible();
+		await expect(page.locator('#support')).toBeVisible();
+		await expect(page.locator('a[href="mailto:daddoodev@proton.me"]')).toBeVisible();
+		await expect(page.locator('a[href="/privacy"]').first()).toBeVisible();
 		await expect(page.locator('a[href="/images/myprayercards/review-front.jpg"]')).toBeVisible();
 		await expect(page.locator('a[href="/images/myprayercards/review-back.png"]')).toBeVisible();
+	});
+
+	test('my prayer cards support page is public and indexable', async ({ page }) => {
+		await page.goto('/myprayercards/support');
+		await expect(page.locator('.app-content')).toBeVisible();
+		await expectNotNoIndexed(page);
+		await expect(page.getByRole('heading', { name: 'Support', exact: true })).toBeVisible();
+		await expect(page.locator('a[href="mailto:daddoodev@proton.me"]')).toBeVisible();
+		await expect(page.locator('a[href="/privacy"]')).toBeVisible();
+		await expect(page.locator('a[href="/terms"]')).toBeVisible();
 	});
 });
 

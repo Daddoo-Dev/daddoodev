@@ -156,12 +156,28 @@
 				</p>
 			</section>
 
-			<section>
+			<section id="support">
 				<h2>Support</h2>
+				<p>
+					Need help with My Prayer Cards? This is the public support destination for the app. Reach
+					Daddoo Dev by email, from the website, or from inside the app.
+				</p>
 				<ul class="contact-list">
 					<li>Email: <a href="mailto:daddoodev@proton.me">daddoodev@proton.me</a></li>
 					<li>Website: <a href="https://daddoodev.pro">https://daddoodev.pro</a></li>
+					<li>In-app: Settings → Contact support / Report a bug</li>
+					<li>
+						Camera: used only to scan physical prayer cards (front artwork + back prayer text). The
+						back photo is discarded after OCR. You can change camera access in iOS Settings.
+					</li>
 				</ul>
+				<p>
+					<a href="/myprayercards/support">Support page</a>
+					|
+					<a href="/privacy">Privacy Policy</a>
+					|
+					<a href="/terms">Terms of Service</a>
+				</p>
 			</section>
 		</div>
 	</div>

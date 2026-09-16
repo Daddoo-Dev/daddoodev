@@ -1,7 +1,13 @@
 import { test } from '@playwright/test';
 import { expectNotNoIndexed, expectRobots } from './helpers';
 
-const PUBLIC_INDEXABLE = ['/', '/twistedfortunes', '/twistedfortunes/privacy', '/myprayercards'];
+const PUBLIC_INDEXABLE = [
+	'/',
+	'/twistedfortunes',
+	'/twistedfortunes/privacy',
+	'/myprayercards',
+	'/myprayercards/support'
+];
 
 const PUBLIC_NO_EXPLICIT_ROBOTS = ['/clocks', '/qr-generator', '/privacy', '/terms'];
 
