@@ -11,6 +11,22 @@
 		defaults: { color?: string; font: { family?: string } };
 	};
 
+	type PlatformRow = { key: string; label: string; count: number };
+
+	const PREFERRED_PLATFORMS = ['web', 'android', 'ios', 'linux'] as const;
+
+	const PLATFORM_LABELS: Record<string, string> = {
+		web: 'Web',
+		android: 'Android',
+		ios: 'iOS',
+		linux: 'Linux'
+	};
+
+	const UI_MODE_LABELS: Record<string, string> = {
+		classic: 'Classic',
+		overview: 'Overview'
+	};
+
 	let chartJsLoading: Promise<void> | null = null;
 
 	let selectedIndex = $state(0);
@@ -38,6 +54,7 @@
 	let featuresCanvas = $state<HTMLCanvasElement | undefined>(undefined);
 	let stackedCanvas = $state<HTMLCanvasElement | undefined>(undefined);
 	let trendCanvas = $state<HTMLCanvasElement | undefined>(undefined);
+	let platformTrendCanvas = $state<HTMLCanvasElement | undefined>(undefined);
 	let analyticsRoot = $state<HTMLElement | undefined>(undefined);
 
 	let chartInstances: ChartInstance[] = [];
@@ -52,12 +69,126 @@
 			classic: cssVar(el, '--km-chart-classic', '#3b82f6'),
 			overview: cssVar(el, '--km-chart-overview', '#22c55e'),
 			neutral: cssVar(el, '--km-chart-neutral', '#94a3b8'),
+			web: cssVar(el, '--km-chart-web', '#38bdf8'),
 			android: cssVar(el, '--km-chart-android', '#818cf8'),
 			ios: cssVar(el, '--km-chart-ios', '#f472b6'),
+			linux: cssVar(el, '--km-chart-linux', '#fbbf24'),
 			tick: cssVar(el, '--km-chart-tick', 'rgba(224, 224, 224, 0.75)'),
 			grid: cssVar(el, '--km-chart-grid', 'rgba(255, 255, 255, 0.08)')
 		};
 	}
+
+	type KmChartTheme = ReturnType<typeof readKmChartTheme>;
+
+	function platformColor(theme: KmChartTheme, key: string): string {
+		const map: Record<string, string> = {
+			web: theme.web,
+			android: theme.android,
+			ios: theme.ios,
+			linux: theme.linux
+		};
+		return map[key] ?? theme.neutral;
+	}
+
+	function uiModeColor(theme: KmChartTheme, key: string): string {
+		const map: Record<string, string> = {
+			classic: theme.classic,
+			overview: theme.overview
+		};
+		return map[key] ?? theme.neutral;
+	}
+
+	function titleCaseKey(key: string): string {
+		return key
+			.split(/[-_\s]+/)
+			.filter(Boolean)
+			.map((part) => part.charAt(0).toUpperCase() + part.slice(1).toLowerCase())
+			.join(' ');
+	}
+
+	function platformLabel(key: string): string {
+		return PLATFORM_LABELS[key] ?? titleCaseKey(key);
+	}
+
+	function uiModeLabel(key: string): string {
+		return UI_MODE_LABELS[key] ?? titleCaseKey(key);
+	}
+
+	function sortPlatformKeys(keys: string[]): string[] {
+		const preferred = PREFERRED_PLATFORMS.filter((k) => keys.includes(k));
+		const rest = keys.filter((k) => !(PREFERRED_PLATFORMS as readonly string[]).includes(k)).sort();
+		return [...preferred, ...rest];
+	}
+
+	/** Platforms for metrics: preferred zeros included when present in current or previous. */
+	function listPlatformsForMetrics(
+		snap: KmWeeklySnapshot,
+		prev: KmWeeklySnapshot | null
+	): PlatformRow[] {
+		const inCurrentOrPrev = (key: string) =>
+			key in snap.byPlatform || (prev != null && key in prev.byPlatform);
+
+		const keys = new Set<string>([
+			...Object.keys(snap.byPlatform),
+			...(prev ? Object.keys(prev.byPlatform) : [])
+		]);
+
+		for (const k of PREFERRED_PLATFORMS) {
+			if (inCurrentOrPrev(k)) keys.add(k);
+		}
+
+		const filtered = [...keys].filter((key) => {
+			const count = snap.byPlatform[key] ?? 0;
+			const prevCount = prev?.byPlatform[key] ?? 0;
+			if (count > 0 || prevCount > 0) return true;
+			return (PREFERRED_PLATFORMS as readonly string[]).includes(key) && inCurrentOrPrev(key);
+		});
+
+		return sortPlatformKeys(filtered).map((key) => ({
+			key,
+			label: platformLabel(key),
+			count: snap.byPlatform[key] ?? 0
+		}));
+	}
+
+	/** Donut: platforms with count > 0, or all keys present in byPlatform. */
+	function listPlatformsForDonut(snap: KmWeeklySnapshot): PlatformRow[] {
+		const keys = Object.keys(snap.byPlatform);
+		const withCount = keys.filter((k) => (snap.byPlatform[k] ?? 0) > 0);
+		const use = withCount.length > 0 ? withCount : keys;
+		return sortPlatformKeys(use).map((key) => ({
+			key,
+			label: platformLabel(key),
+			count: snap.byPlatform[key] ?? 0
+		}));
+	}
+
+	function listUiModesForDonut(snap: KmWeeklySnapshot): { key: string; label: string; count: number }[] {
+		const preferred = ['classic', 'overview'];
+		const keys = Object.keys(snap.byUiMode);
+		const withCount = keys.filter((k) => (snap.byUiMode[k] ?? 0) > 0);
+		const use = withCount.length > 0 ? withCount : keys;
+		const preferredPresent = preferred.filter((k) => use.includes(k));
+		const rest = use.filter((k) => !preferred.includes(k)).sort();
+		return [...preferredPresent, ...rest].map((key) => ({
+			key,
+			label: uiModeLabel(key),
+			count: snap.byUiMode[key] ?? 0
+		}));
+	}
+
+	function collectPlatformKeysAcrossWeeks(weeks: KmWeeklySnapshot[]): string[] {
+		const keys = new Set<string>();
+		for (const w of weeks) {
+			for (const k of Object.keys(w.byPlatform)) keys.add(k);
+		}
+		return sortPlatformKeys([...keys]);
+	}
+
+	const platformMetrics = $derived.by(() => {
+		if (!current) return [] as PlatformRow[];
+		return listPlatformsForMetrics(current, previous);
+	});
 
 	let pasteText = $state('');
 	let submitStatus = $state<'idle' | 'loading' | 'success' | 'error'>('idle');
@@ -172,6 +303,7 @@
 		const f = featuresCanvas;
 		const s = stackedCanvas;
 		const t = trendCanvas;
+		const pt = platformTrendCanvas;
 		const root = analyticsRoot;
 
 		if (!snap || !u || !p || !f || !root) return;
@@ -227,19 +359,17 @@
 				return out;
 			})();
 
-			const uiTot = (snap.byUiMode.classic ?? 0) + (snap.byUiMode.overview ?? 0);
-			const uiC1 = uiTot > 0 ? snap.byUiMode.classic ?? 0 : 0;
-			const uiC2 = uiTot > 0 ? snap.byUiMode.overview ?? 0 : 0;
+			const uiModes = listUiModesForDonut(snap);
 
 			chartInstances.push(
 				new ChartMod(u.getContext('2d')!, {
 					type: 'doughnut',
 					data: {
-						labels: ['Classic', 'Overview'],
+						labels: uiModes.map((m) => m.label),
 						datasets: [
 							{
-								data: [uiC1, uiC2],
-								backgroundColor: [theme.classic, theme.overview],
+								data: uiModes.map((m) => m.count),
+								backgroundColor: uiModes.map((m) => uiModeColor(theme, m.key)),
 								borderWidth: 0
 							}
 						]
@@ -259,19 +389,17 @@
 				})
 			);
 
-			const platTot = (snap.byPlatform.android ?? 0) + (snap.byPlatform.ios ?? 0);
-			const a = platTot > 0 ? snap.byPlatform.android ?? 0 : 0;
-			const i = platTot > 0 ? snap.byPlatform.ios ?? 0 : 0;
+			const platforms = listPlatformsForDonut(snap);
 
 			chartInstances.push(
 				new ChartMod(p.getContext('2d')!, {
 					type: 'doughnut',
 					data: {
-						labels: ['Android', 'iOS'],
+						labels: platforms.map((r) => r.label),
 						datasets: [
 							{
-								data: [a, i],
-								backgroundColor: [theme.android, theme.ios],
+								data: platforms.map((r) => r.count),
+								backgroundColor: platforms.map((r) => platformColor(theme, r.key)),
 								borderWidth: 0
 							}
 						]
@@ -441,6 +569,48 @@
 				);
 			}
 
+			if (asc.length >= 2 && pt) {
+				const platKeys = collectPlatformKeysAcrossWeeks(asc);
+				chartInstances.push(
+					new ChartMod(pt.getContext('2d')!, {
+						type: 'line',
+						data: {
+							labels: asc.map((w) => w.week),
+							datasets: platKeys.map((key) => ({
+								label: platformLabel(key),
+								data: asc.map((w) => w.byPlatform[key] ?? 0),
+								borderColor: platformColor(theme, key),
+								backgroundColor: 'transparent',
+								tension: 0.25,
+								fill: false
+							}))
+						},
+						options: {
+							...commonOpts,
+							scales: {
+								x: {
+									grid: { color: gridColor },
+									ticks: { color: tickColor }
+								},
+								y: {
+									beginAtZero: true,
+									grid: { color: gridColor },
+									ticks: { color: tickColor }
+								}
+							},
+							plugins: {
+								legend: { position: 'bottom', labels: { color: tickColor } },
+								title: {
+									display: true,
+									text: 'Platform by week (all events)',
+									color: tickColor,
+									font: { size: 13 }
+								}
+							}
+						}
+					})
+				);
+			}
 		})();
 
 		return () => {
@@ -467,7 +637,7 @@
 		<div class="km-analytics-toolbar">
 			<label class="km-analytics-label" for="km-week-select">Week</label>
 			<select id="km-week-select" class="km-analytics-select" bind:value={selectedIndex}>
-				{#each weeksDesc as w, i}
+				{#each weeksDesc as w, i (w.week)}
 					<option value={i}>{w.week} → {w.to}</option>
 				{/each}
 			</select>
@@ -531,23 +701,78 @@
 							{/if}
 						</div>
 					{/if}
+					<ul class="km-analytics-breakdown">
+						<li class="km-analytics-breakdown-row">
+							<span class="km-analytics-breakdown-label">to overview</span>
+							<span class="km-analytics-breakdown-count">{current.uiModeChangesDetail.toOverview}</span>
+							{#if previous}
+								<span
+									class="km-analytics-breakdown-delta"
+									class:km-analytics-delta--up={numDelta(
+										current.uiModeChangesDetail.toOverview,
+										previous.uiModeChangesDetail.toOverview
+									)! > 0}
+									class:km-analytics-delta--down={numDelta(
+										current.uiModeChangesDetail.toOverview,
+										previous.uiModeChangesDetail.toOverview
+									)! < 0}
+								>
+									{formatDelta(
+										current.uiModeChangesDetail.toOverview,
+										previous.uiModeChangesDetail.toOverview
+									)}
+								</span>
+							{/if}
+						</li>
+						<li class="km-analytics-breakdown-row">
+							<span class="km-analytics-breakdown-label">to classic</span>
+							<span class="km-analytics-breakdown-count">{current.uiModeChangesDetail.toClassic}</span>
+							{#if previous}
+								<span
+									class="km-analytics-breakdown-delta"
+									class:km-analytics-delta--up={numDelta(
+										current.uiModeChangesDetail.toClassic,
+										previous.uiModeChangesDetail.toClassic
+									)! > 0}
+									class:km-analytics-delta--down={numDelta(
+										current.uiModeChangesDetail.toClassic,
+										previous.uiModeChangesDetail.toClassic
+									)! < 0}
+								>
+									{formatDelta(
+										current.uiModeChangesDetail.toClassic,
+										previous.uiModeChangesDetail.toClassic
+									)}
+								</span>
+							{/if}
+						</li>
+					</ul>
 				</div>
 				<div class="km-analytics-card">
-					<div class="km-analytics-card-label">Android / iOS</div>
-					<div class="km-analytics-card-value">
-						{current.byPlatform.android ?? 0} / {current.byPlatform.ios ?? 0}
-					</div>
-					{#if previous}
-						<div class="km-analytics-delta">
-							{#if formatDelta(current.byPlatform.android ?? 0, previous.byPlatform.android ?? 0)}
-								Android {formatDelta(current.byPlatform.android ?? 0, previous.byPlatform.android ?? 0)}
-							{/if}
-							<span class="km-analytics-delta-sep">·</span>
-							{#if formatDelta(current.byPlatform.ios ?? 0, previous.byPlatform.ios ?? 0)}
-								iOS {formatDelta(current.byPlatform.ios ?? 0, previous.byPlatform.ios ?? 0)}
-							{/if}
-						</div>
-					{/if}
+					<div class="km-analytics-card-label">Platforms</div>
+					<ul class="km-analytics-breakdown">
+						{#each platformMetrics as row (row.key)}
+							<li class="km-analytics-breakdown-row">
+								<span class="km-analytics-breakdown-label">{row.label}</span>
+								<span class="km-analytics-breakdown-count">{row.count}</span>
+								{#if previous}
+									<span
+										class="km-analytics-breakdown-delta"
+										class:km-analytics-delta--up={numDelta(
+											row.count,
+											previous.byPlatform[row.key] ?? 0
+										)! > 0}
+										class:km-analytics-delta--down={numDelta(
+											row.count,
+											previous.byPlatform[row.key] ?? 0
+										)! < 0}
+									>
+										{formatDelta(row.count, previous.byPlatform[row.key] ?? 0)}
+									</span>
+								{/if}
+							</li>
+						{/each}
+					</ul>
 				</div>
 				<div class="km-analytics-card">
 					<div class="km-analytics-card-label">Classic / Overview</div>
@@ -594,6 +819,18 @@
 				{:else}
 					<div class="km-analytics-chart-placeholder">
 						UI mode trend appears when at least two weeks are stored.
+					</div>
+				{/if}
+				{#if weeksAsc.length >= 2}
+					<div class="km-analytics-chart-wrap km-analytics-chart-wrap--trend">
+						<canvas
+							bind:this={platformTrendCanvas}
+							aria-label="Platform week-over-week trend"
+						></canvas>
+					</div>
+				{:else}
+					<div class="km-analytics-chart-placeholder">
+						Platform trend appears when at least two weeks are stored.
 					</div>
 				{/if}
 			</div>
