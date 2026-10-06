@@ -52,6 +52,11 @@ export const PUBLIC_ROUTES: RouteSpec[] = [
 		heading: /My Prayer Cards Support/i
 	},
 	{
+		path: '/adorate',
+		title: /Adorate/i,
+		heading: /Adorate/i
+	},
+	{
 		path: '/twistedfortunes/privacy',
 		title: /Twisted Fortunes Privacy Policy|Privacy Policy/i,
 		heading: /Privacy Policy/i

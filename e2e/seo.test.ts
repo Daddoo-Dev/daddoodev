@@ -6,7 +6,8 @@ const PUBLIC_INDEXABLE = [
 	'/twistedfortunes',
 	'/twistedfortunes/privacy',
 	'/myprayercards',
-	'/myprayercards/support'
+	'/myprayercards/support',
+	'/adorate'
 ];
 
 const PUBLIC_NO_EXPLICIT_ROBOTS = ['/clocks', '/qr-generator', '/privacy', '/terms'];
