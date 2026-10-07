@@ -66,14 +66,6 @@
 						</p>
 					</div>
 					<div class="feature-card">
-						<h3>One prayer, not copies</h3>
-						<p>
-							If that prayer already exists in the shared pool, you link to it. Unique prayers are
-							added automatically. Deleting a card from your library does not remove the shared
-							prayer.
-						</p>
-					</div>
-					<div class="feature-card">
 						<h3>A library that stays yours</h3>
 						<p>
 							Favorite, search, sort, and pin cards offline. Sign in with email and a password, or
@@ -104,11 +96,7 @@
 				<ol class="how-to-list">
 					<li><strong>Photograph the front</strong> — the artwork side.</li>
 					<li><strong>Photograph the back</strong> — the prayer text. OCR runs here only.</li>
-					<li>
-						<strong>Confirm the match</strong> — use an existing prayer if it is the same, or save a
-						new one.
-					</li>
-					<li><strong>Keep or replace the art</strong> — reuse a known image when it is a match.</li>
+					<li><strong>Check the title and the text</strong>, then save.</li>
 				</ol>
 			</section>
 
@@ -146,7 +134,7 @@
 				<h2>Privacy</h2>
 				<ul class="privacy-list">
 					<li>Email and a user ID if you create an account.</li>
-					<li>Prayer text and front artwork you add, including the shared canonical pool.</li>
+					<li>Prayer text and front artwork you add.</li>
 					<li>Crash logs and app interaction for analytics. No advertising ID. No tracking.</li>
 				</ul>
 				<p>
