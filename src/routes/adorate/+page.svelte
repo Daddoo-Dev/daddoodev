@@ -58,6 +58,14 @@
 						</p>
 					</div>
 					<div class="feature-card">
+						<h3>A theme for each day</h3>
+						<p>
+							32 themes from the virtues, the gifts and fruits of the Holy Spirit, and the capital
+							sins, each with a meditation, Scripture, and The Imitation of Christ. The liturgical
+							seasons have their own.
+						</p>
+					</div>
+					<div class="feature-card">
 						<h3>Keep time</h3>
 						<p>
 							A bell marks each change. Stay longer in any part when you want to. Turn the candle
