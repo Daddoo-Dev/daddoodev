@@ -23,6 +23,7 @@
 			<a href="https://ridewealthassistant.com/marketing/" target="_blank" rel="noopener noreferrer"
 				>Ridewealth Assistant</a>
 			<a href="/twistedfortunes">Twisted Fortunes</a>
+			<a href="/myprayercards">My Prayer Cards</a>
 		</div>
 
 		<div class="footer-col">

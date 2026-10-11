@@ -23,11 +23,12 @@ test.describe('Homepage — Mission Control', () => {
 		await expectNoHiddenLinks(page);
 	});
 
-	test('shows three featured work cards', async ({ page }) => {
-		await expect(page.locator('#projects .featured-card')).toHaveCount(3);
+	test('shows four featured work cards', async ({ page }) => {
+		await expect(page.locator('#projects .featured-card')).toHaveCount(4);
 		await expect(page.getByRole('heading', { name: 'Ridewealth Assistant' })).toBeVisible();
 		await expect(page.getByRole('heading', { name: 'Conclavium' })).toBeVisible();
 		await expect(page.getByRole('heading', { name: 'Twisted Fortunes' })).toBeVisible();
+		await expect(page.getByRole('heading', { name: 'My Prayer Cards' })).toBeVisible();
 	});
 
 	test('shows four developer tool cards', async ({ page }) => {

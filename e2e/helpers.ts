@@ -121,7 +121,7 @@ export const HIDDEN_ROUTES: RouteSpec[] = [
 export async function expectSiteShell(page: Page): Promise<void> {
 	await expect(page.locator('header.header')).toBeVisible();
 	await expect(page.locator('.telemetry-bar')).toBeVisible();
-	await expect(page.getByText('3 apps in production')).toBeVisible();
+	await expect(page.getByText('4 apps in production')).toBeVisible();
 }
 
 export async function expectRobots(page: Page, content: RegExp): Promise<void> {

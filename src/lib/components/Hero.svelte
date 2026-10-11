@@ -3,7 +3,7 @@
 		<p class="hero-eyebrow">SHAWN McPEEK · COLORADO</p>
 		<h1 class="hero-title">I ship cross-platform apps that are live on both stores.</h1>
 		<p class="hero-lead">
-			Flutter and SvelteKit developer. Three production apps on iOS and Android, four published VS
+			Flutter and SvelteKit developer. Four production apps on iOS and Android, four published VS
 			Code extensions, and a habit of finishing what I start.
 		</p>
 		<div class="hero-proof">

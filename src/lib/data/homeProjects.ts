@@ -54,6 +54,18 @@ export const featuredProjects: FeaturedProject[] = [
 			googlePlay: 'https://play.google.com/store/apps/details?id=com.daddoodev.twistedfortunes',
 			appStore: 'https://apps.apple.com/us/app/twisted-fortunes/id6756530267'
 		}
+	},
+	{
+		title: 'My Prayer Cards',
+		description:
+			'Digitize the prayer cards you already own — scan the art, OCR the prayer, and keep a private library on your phone.',
+		image: '/images/myprayercards.png',
+		technologies: ['Flutter', 'Firebase', 'iOS', 'Android'],
+		liveUrl: 'https://daddoodev.pro/myprayercards',
+		store: {
+			googlePlay: 'https://play.google.com/store/apps/details?id=dev.daddoodev.myprayercards',
+			appStore: 'https://apps.apple.com/us/app/my-prayer-cards/id6780271697'
+		}
 	}
 ];
 

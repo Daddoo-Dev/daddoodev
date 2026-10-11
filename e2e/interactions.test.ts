@@ -22,7 +22,7 @@ test.describe('Telemetry bar', () => {
 		for (const path of ['/', '/clocks', '/qr-generator', '/privacy']) {
 			await page.goto(path);
 			await expect(page.locator('.telemetry-bar')).toBeVisible();
-			await expect(page.getByText('3 apps in production')).toBeVisible();
+			await expect(page.getByText('4 apps in production')).toBeVisible();
 		}
 	});
 

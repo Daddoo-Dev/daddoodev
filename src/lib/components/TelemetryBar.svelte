@@ -137,7 +137,7 @@
 
 		<span class="telemetry-item telemetry-item--status">
 			<span class="telemetry-dot" aria-hidden="true"></span>
-			3 apps in production
+			4 apps in production
 		</span>
 	</div>
 </div>

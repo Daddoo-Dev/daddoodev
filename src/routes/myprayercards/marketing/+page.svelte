@@ -3,6 +3,7 @@
 	import StoreBadges from '$lib/components/StoreBadges.svelte';
 
 	const playUrl = 'https://play.google.com/store/apps/details?id=dev.daddoodev.myprayercards';
+	const appStoreUrl = 'https://apps.apple.com/us/app/my-prayer-cards/id6780271697';
 </script>
 
 <SEO
@@ -49,7 +50,7 @@
 			<div class="download-section">
 				<h2>Get the app</h2>
 				<div class="download-buttons">
-					<StoreBadges googlePlay={playUrl} appStore={undefined} />
+					<StoreBadges googlePlay={playUrl} appStore={appStoreUrl} />
 				</div>
 			</div>
 

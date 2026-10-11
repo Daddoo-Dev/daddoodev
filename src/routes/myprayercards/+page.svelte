@@ -3,6 +3,7 @@
 	import StoreBadges from '$lib/components/StoreBadges.svelte';
 
 	const playUrl = 'https://play.google.com/store/apps/details?id=dev.daddoodev.myprayercards';
+	const appStoreUrl = 'https://apps.apple.com/us/app/my-prayer-cards/id6780271697';
 	const frontUrl = '/images/myprayercards/review-front.jpg';
 	const backUrl = '/images/myprayercards/review-back.png';
 </script>
@@ -49,9 +50,8 @@
 
 			<div class="download-section">
 				<h2>Get the app</h2>
-				<p>Google Play and App Store listings are in review.</p>
 				<div class="download-buttons">
-					<StoreBadges googlePlay={playUrl} appStore={undefined} />
+					<StoreBadges googlePlay={playUrl} appStore={appStoreUrl} />
 				</div>
 			</div>
 

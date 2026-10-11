@@ -80,7 +80,7 @@ function aboutLines(): TerminalLine[] {
 	return [
 		line('Shawn McPeek — solo developer, Colorado.', 'bright'),
 		line('Flutter + SvelteKit + TypeScript. Supabase and Firebase backends.'),
-		line('3 apps in production, 4 extensions published.'),
+		line('4 apps in production, 4 extensions published.'),
 		line('Ships end to end from sketch to store listing.')
 	];
 }
