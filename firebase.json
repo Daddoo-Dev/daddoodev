@@ -19,6 +19,16 @@
         "source": "/godspeed_ginny/",
         "destination": "/lab/godspeed-ginny/index.html",
         "type": 302
+      },
+      {
+        "source": "/bottledstar/support",
+        "destination": "/bottledstar/support.html",
+        "type": 301
+      },
+      {
+        "source": "/bottledstar/support/",
+        "destination": "/bottledstar/support.html",
+        "type": 301
       }
     ],
     "rewrites": [
