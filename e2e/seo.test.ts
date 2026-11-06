@@ -5,6 +5,8 @@ const PUBLIC_INDEXABLE = [
 	'/',
 	'/twistedfortunes',
 	'/twistedfortunes/privacy',
+	'/bottledstar',
+	'/dailycompany',
 	'/myprayercards',
 	'/myprayercards/support',
 	'/adorate'
@@ -20,7 +22,8 @@ const HIDDEN_NOINDEX = [
 	'/analytics/knights-management',
 	'/bbs',
 	'/lab/godspeed-ginny/index.html',
-	'/myprayercards/marketing'
+	'/myprayercards/marketing',
+	'/bottledstar/support'
 ];
 
 test.describe('SEO — public routes', () => {

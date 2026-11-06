@@ -80,7 +80,7 @@
 				const pushSize =
 					typeof event.payload?.size === 'number'
 						? event.payload.size
-						: event.payload?.commits?.length ?? 0;
+						: (event.payload?.commits?.length ?? 0);
 				commits += pushSize;
 				if (event.repo?.name) repos.add(event.repo.name);
 			}
@@ -137,7 +137,7 @@
 
 		<span class="telemetry-item telemetry-item--status">
 			<span class="telemetry-dot" aria-hidden="true"></span>
-			4 apps in production
+			6 apps in production
 		</span>
 	</div>
 </div>

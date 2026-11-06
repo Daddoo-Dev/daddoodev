@@ -52,6 +52,14 @@ test.describe('Footer navigation', () => {
 		await expect(page).toHaveURL(/\/twistedfortunes$/);
 
 		await page.goto('/');
+		await page.locator('footer a[href="/bottledstar"]').click();
+		await expect(page).toHaveURL(/\/bottledstar$/);
+
+		await page.goto('/');
+		await page.locator('footer a[href="/dailycompany"]').click();
+		await expect(page).toHaveURL(/\/dailycompany$/);
+
+		await page.goto('/');
 		await page.locator('footer a[href="/clocks"]').click();
 		await expect(page).toHaveURL(/\/clocks$/);
 

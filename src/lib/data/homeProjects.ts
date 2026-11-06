@@ -29,7 +29,8 @@ export const featuredProjects: FeaturedProject[] = [
 		technologies: ['Flutter', 'Firebase', 'iOS', 'Android'],
 		liveUrl: 'https://ridewealthassistant.com/marketing/',
 		store: {
-			googlePlay: 'https://play.google.com/store/apps/details?id=com.ridewealthassistant.app&hl=en_US',
+			googlePlay:
+				'https://play.google.com/store/apps/details?id=com.ridewealthassistant.app&hl=en_US',
 			appStore: 'https://apps.apple.com/us/app/ridewealth-assistant/id6670771727'
 		}
 	},
@@ -53,6 +54,30 @@ export const featuredProjects: FeaturedProject[] = [
 		store: {
 			googlePlay: 'https://play.google.com/store/apps/details?id=com.daddoodev.twistedfortunes',
 			appStore: 'https://apps.apple.com/us/app/twisted-fortunes/id6756530267'
+		}
+	},
+	{
+		title: 'Bottled Star',
+		description:
+			'A fusion game of sealed stars. Inject nuclei, climb to iron, and choose how your star ends.',
+		image: '/images/bottledstar.png',
+		technologies: ['Flame', 'Firebase', 'iOS', 'Android'],
+		liveUrl: 'https://daddoodev.pro/bottledstar',
+		store: {
+			googlePlay: 'https://play.google.com/store/apps/details?id=pro.daddoodev.bottledstar',
+			appStore: 'https://apps.apple.com/us/app/bottled-star-fusion-game/id6798914010'
+		}
+	},
+	{
+		title: 'Daily Company',
+		description:
+			"Daily spiritual reading with one saint at a time. Choose a house — today's reading is already waiting.",
+		image: '/images/dailycompany.png',
+		technologies: ['Flutter', 'iOS', 'Android'],
+		liveUrl: 'https://daddoodev.pro/dailycompany',
+		store: {
+			googlePlay: 'https://play.google.com/store/apps/details?id=pro.daddoodev.dailycompany',
+			appStore: 'https://apps.apple.com/us/app/daily-company/id6804503930'
 		}
 	},
 	{

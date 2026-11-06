@@ -1,8 +1,4 @@
-import {
-	toDecimalTime,
-	getCurrentHobbitMeal,
-	type HobbitMeal
-} from '$lib/clocks/timeUtils';
+import { toDecimalTime, getCurrentHobbitMeal, type HobbitMeal } from '$lib/clocks/timeUtils';
 import { fetchGuestbookEntries, formatGuestbookDate, signGuestbook } from './bbsFirestore';
 
 export type LineTone = 'default' | 'bright' | 'dim' | 'error';
@@ -40,6 +36,8 @@ const LS_LINES: TerminalLine[] = [
 	{ text: 'ridewealth/       Financial tracking for rideshare drivers', tone: 'default' },
 	{ text: 'conclavium/       Finance for KofC councils and assemblies', tone: 'default' },
 	{ text: 'twistedfortunes/  Darkly humorous fortune-cookie game', tone: 'default' },
+	{ text: 'bottledstar/      Fusion game of sealed stars', tone: 'default' },
+	{ text: 'dailycompany/     Daily reading with one saint at a time', tone: 'default' },
 	{ text: 'extensions/       VS Code tools (Zivora, NotchList, …)', tone: 'default' },
 	{ text: 'lab/              Experiments and small tools', tone: 'default' }
 ];
@@ -51,6 +49,8 @@ const OPEN_TARGETS: Record<
 	ridewealth: { type: 'external', url: 'https://ridewealthassistant.com/marketing/' },
 	conclavium: { type: 'external', url: 'https://conclavium.app' },
 	twistedfortunes: { type: 'internal', href: '/twistedfortunes' },
+	bottledstar: { type: 'internal', href: '/bottledstar' },
+	dailycompany: { type: 'internal', href: '/dailycompany' },
 	extensions: { type: 'scroll_tools' },
 	lab: { type: 'internal', href: '/clocks' }
 };
@@ -64,7 +64,9 @@ function helpLines(): TerminalLine[] {
 		line('Available commands:', 'bright'),
 		line('  HELP              List commands'),
 		line('  LS [projects]     Directory of apps and tools'),
-		line('  OPEN <name>       Visit ridewealth, conclavium, twistedfortunes, extensions, lab'),
+		line(
+			'  OPEN <name>       ridewealth, conclavium, twistedfortunes, bottledstar, dailycompany, extensions, lab'
+		),
 		line('  ABOUT             About the SysOp'),
 		line('  CONTACT           Email and GitHub'),
 		line('  CLOCKS            Standard, decimal, and Hobbit time'),
@@ -80,7 +82,7 @@ function aboutLines(): TerminalLine[] {
 	return [
 		line('Shawn McPeek — solo developer, Colorado.', 'bright'),
 		line('Flutter + SvelteKit + TypeScript. Supabase and Firebase backends.'),
-		line('4 apps in production, 4 extensions published.'),
+		line('6 apps in production, 4 extensions published.'),
 		line('Ships end to end from sketch to store listing.')
 	];
 }
@@ -119,7 +121,10 @@ function openResult(target: string): CommandResult {
 		return {
 			lines: [
 				line(`Unknown project: ${target}`, 'error'),
-				line('Try: ridewealth, conclavium, twistedfortunes, extensions, lab', 'dim')
+				line(
+					'Try: ridewealth, conclavium, twistedfortunes, bottledstar, dailycompany, extensions, lab',
+					'dim'
+				)
 			]
 		};
 	}
@@ -174,7 +179,10 @@ async function signLines(args: string[]): Promise<CommandResult> {
 	return { lines: [line(result.error, result.error.includes('slow down') ? 'dim' : 'error')] };
 }
 
-export async function executeCommand(input: string, ctx: CommandContext = {}): Promise<CommandResult> {
+export async function executeCommand(
+	input: string,
+	ctx: CommandContext = {}
+): Promise<CommandResult> {
 	const trimmed = input.trim();
 	if (!trimmed) return { lines: [] };
 
@@ -232,13 +240,19 @@ export async function executeCommand(input: string, ctx: CommandContext = {}): P
 	}
 
 	if (command === 'exit') {
-		return { lines: [line('Connection closed. Thanks for calling.', 'dim')], action: { type: 'close' } };
+		return {
+			lines: [line('Connection closed. Thanks for calling.', 'dim')],
+			action: { type: 'close' }
+		};
 	}
 
 	if (command === 'sudo') {
 		return {
 			lines: [
-				line('guest is not in the sudoers file. This incident will be reported to the SysOp.', 'error')
+				line(
+					'guest is not in the sudoers file. This incident will be reported to the SysOp.',
+					'error'
+				)
 			]
 		};
 	}

@@ -1,61 +1,77 @@
 {
-  "firestore": {
-    "rules": "firestore.rules"
-  },
-  "hosting": {
-    "public": "build",
-    "ignore": [
-      "firebase.json",
-      "**/.*",
-      "**/node_modules/**"
-    ],
-    "redirects": [
-      {
-        "source": "/godspeed_ginny",
-        "destination": "/lab/godspeed-ginny/index.html",
-        "type": 302
-      },
-      {
-        "source": "/godspeed_ginny/",
-        "destination": "/lab/godspeed-ginny/index.html",
-        "type": 302
-      },
-      {
-        "source": "/bottledstar/support",
-        "destination": "/bottledstar/support.html",
-        "type": 301
-      },
-      {
-        "source": "/bottledstar/support/",
-        "destination": "/bottledstar/support.html",
-        "type": 301
-      }
-    ],
-    "rewrites": [
-      {
-        "source": "/ym/v2/**",
-        "function": "ymApi"
-      },
-      {
-        "source": "/api/km-analytics",
-        "function": "kmAnalytics"
-      },
-      {
-        "source": "/api/triptime",
-        "function": "triptime"
-      },
-      {
-        "source": "/mm/chart",
-        "function": "mmChart"
-      },
-      {
-        "source": "!/**/*.html",
-        "destination": "/index.html"
-      }
-    ]
-  },
-  "functions": {
-    "source": "functions",
-    "codebase": "default"
-  }
+	"firestore": {
+		"rules": "firestore.rules"
+	},
+	"hosting": {
+		"public": "build",
+		"ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+		"redirects": [
+			{
+				"source": "/godspeed_ginny",
+				"destination": "/lab/godspeed-ginny/index.html",
+				"type": 302
+			},
+			{
+				"source": "/godspeed_ginny/",
+				"destination": "/lab/godspeed-ginny/index.html",
+				"type": 302
+			},
+			{
+				"source": "/bottledstar",
+				"destination": "/bottledstar.html",
+				"type": 301
+			},
+			{
+				"source": "/bottledstar/",
+				"destination": "/bottledstar.html",
+				"type": 301
+			},
+			{
+				"source": "/bottledstar/support",
+				"destination": "/bottledstar/support.html",
+				"type": 301
+			},
+			{
+				"source": "/bottledstar/support/",
+				"destination": "/bottledstar/support.html",
+				"type": 301
+			},
+			{
+				"source": "/dailycompany",
+				"destination": "/dailycompany.html",
+				"type": 301
+			},
+			{
+				"source": "/dailycompany/",
+				"destination": "/dailycompany.html",
+				"type": 301
+			}
+		],
+		"rewrites": [
+			{
+				"source": "/ym/v2/**",
+				"function": "ymApi"
+			},
+			{
+				"source": "/api/km-analytics",
+				"function": "kmAnalytics"
+			},
+			{
+				"source": "/api/triptime",
+				"function": "triptime"
+			},
+			{
+				"source": "/mm/chart",
+				"function": "mmChart"
+			},
+			{
+				"source": "!/**/*.html",
+				"destination": "/index.html"
+			}
+		]
+	},
+	"functions": {
+		"source": "functions",
+		"codebase": "default"
+	}
 }

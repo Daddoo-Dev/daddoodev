@@ -24,7 +24,7 @@ export const PUBLIC_ROUTES: RouteSpec[] = [
 	{
 		path: '/',
 		title: /Daddoo Dev/i,
-		heading: /I ship cross-platform apps that are live on both stores/i
+		heading: /I ship apps and games that are live on both stores/i
 	},
 	{
 		path: '/clocks',
@@ -40,6 +40,16 @@ export const PUBLIC_ROUTES: RouteSpec[] = [
 		path: '/twistedfortunes',
 		title: /Twisted Fortunes/i,
 		heading: /Twisted Fortunes/i
+	},
+	{
+		path: '/bottledstar',
+		title: /Bottled Star/i,
+		heading: /Bottled Star/i
+	},
+	{
+		path: '/dailycompany',
+		title: /Daily Company/i,
+		heading: /Daily Company/i
 	},
 	{
 		path: '/myprayercards',
@@ -121,7 +131,7 @@ export const HIDDEN_ROUTES: RouteSpec[] = [
 export async function expectSiteShell(page: Page): Promise<void> {
 	await expect(page.locator('header.header')).toBeVisible();
 	await expect(page.locator('.telemetry-bar')).toBeVisible();
-	await expect(page.getByText('4 apps in production')).toBeVisible();
+	await expect(page.getByText('6 apps in production')).toBeVisible();
 }
 
 export async function expectRobots(page: Page, content: RegExp): Promise<void> {
@@ -135,9 +145,9 @@ export async function expectNotNoIndexed(page: Page): Promise<void> {
 }
 
 export async function expectNoHiddenLinks(page: Page): Promise<void> {
-	const hrefs = await page.locator('a[href]').evaluateAll((anchors) =>
-		anchors.map((anchor) => anchor.getAttribute('href') ?? '')
-	);
+	const hrefs = await page
+		.locator('a[href]')
+		.evaluateAll((anchors) => anchors.map((anchor) => anchor.getAttribute('href') ?? ''));
 
 	for (const href of hrefs) {
 		for (const pattern of HIDDEN_ROUTE_PATTERNS) {

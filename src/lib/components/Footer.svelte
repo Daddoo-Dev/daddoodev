@@ -9,9 +9,7 @@
 	<div class="footer-grid">
 		<div class="footer-brand">
 			<div class="footer-brand-name">DADDOO<span class="logo-accent">_</span>DEV</div>
-			<p>
-				Cross-platform apps, games and developer tools — designed and shipped by Shawn McPeek.
-			</p>
+			<p>Cross-platform apps, games and developer tools — designed and shipped by Shawn McPeek.</p>
 			<div class="footer-meta-links">
 				<button type="button" class="footer-text-mode" onclick={openTerminal}>TEXT MODE</button>
 			</div>
@@ -21,8 +19,11 @@
 			<div class="footer-col-title">APPS</div>
 			<a href="https://conclavium.app" target="_blank" rel="noopener noreferrer">Conclavium</a>
 			<a href="https://ridewealthassistant.com/marketing/" target="_blank" rel="noopener noreferrer"
-				>Ridewealth Assistant</a>
+				>Ridewealth Assistant</a
+			>
 			<a href="/twistedfortunes">Twisted Fortunes</a>
+			<a href="/bottledstar">Bottled Star</a>
+			<a href="/dailycompany">Daily Company</a>
 			<a href="/myprayercards">My Prayer Cards</a>
 		</div>
 
@@ -58,9 +59,13 @@
 				<a
 					href="https://play.google.com/store/apps/developer?id=Daddoo+Dev"
 					target="_blank"
-					rel="noopener noreferrer">Play Store</a>
-				<a href="https://apps.apple.com/us/developer/shawn-mcpeek/id1783843453" target="_blank" rel="noopener noreferrer"
-					>App Store</a>
+					rel="noopener noreferrer">Play Store</a
+				>
+				<a
+					href="https://apps.apple.com/us/developer/shawn-mcpeek/id1783843453"
+					target="_blank"
+					rel="noopener noreferrer">App Store</a
+				>
 			</div>
 		</div>
 	</div>

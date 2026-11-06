@@ -13,7 +13,9 @@ test.describe('Homepage — Mission Control', () => {
 	});
 
 	test('loads hero, shell, and indexable SEO', async ({ page }) => {
-		await expect(page.locator('h1')).toHaveText(/I ship cross-platform apps that are live on both stores/i);
+		await expect(page.locator('h1')).toHaveText(
+			/I ship apps and games that are live on both stores/i
+		);
 		await expectSiteShell(page);
 		await expectRobots(page, /index, follow/i);
 		await expectNotNoIndexed(page);
@@ -23,11 +25,13 @@ test.describe('Homepage — Mission Control', () => {
 		await expectNoHiddenLinks(page);
 	});
 
-	test('shows four featured work cards', async ({ page }) => {
-		await expect(page.locator('#projects .featured-card')).toHaveCount(4);
+	test('shows six featured work cards', async ({ page }) => {
+		await expect(page.locator('#projects .featured-card')).toHaveCount(6);
 		await expect(page.getByRole('heading', { name: 'Ridewealth Assistant' })).toBeVisible();
 		await expect(page.getByRole('heading', { name: 'Conclavium' })).toBeVisible();
 		await expect(page.getByRole('heading', { name: 'Twisted Fortunes' })).toBeVisible();
+		await expect(page.getByRole('heading', { name: 'Bottled Star' })).toBeVisible();
+		await expect(page.getByRole('heading', { name: 'Daily Company' })).toBeVisible();
 		await expect(page.getByRole('heading', { name: 'My Prayer Cards' })).toBeVisible();
 	});
 
@@ -36,7 +40,9 @@ test.describe('Homepage — Mission Control', () => {
 		await expect(page.locator('#tools .tool-card').filter({ hasText: 'Zivora' })).toBeVisible();
 		await expect(page.locator('#tools .tool-card').filter({ hasText: 'NotchList' })).toBeVisible();
 		await expect(page.locator('#tools .tool-card').filter({ hasText: 'AddASaint' })).toBeVisible();
-		await expect(page.locator('#tools .tool-card').filter({ hasText: 'SecretKeeper' })).toBeVisible();
+		await expect(
+			page.locator('#tools .tool-card').filter({ hasText: 'SecretKeeper' })
+		).toBeVisible();
 	});
 
 	test('shows lab strip with ChronoCluster and QR Generator', async ({ page }) => {
@@ -69,6 +75,6 @@ test('homepage route spec', async ({ page }) => {
 	await visitRoute(page, {
 		path: '/',
 		title: /Daddoo Dev/i,
-		heading: /I ship cross-platform apps/i
+		heading: /I ship apps and games/i
 	});
 });
