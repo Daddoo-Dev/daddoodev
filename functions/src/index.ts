@@ -1,8 +1,19 @@
 import { onRequest } from 'firebase-functions/v2/https';
 import { defineSecret } from 'firebase-functions/params';
 import * as admin from 'firebase-admin';
+import { getAppCheck } from 'firebase-admin/app-check';
+import { type App, getApps, initializeApp } from 'firebase-admin/app';
 
 admin.initializeApp();
+
+/** YetiMatch client apps live in this project; App Check tokens must be verified here. */
+const YETIMATCH_PROJECT_ID = 'yetimatch';
+
+function yetimatchApp(): App {
+  const existing = getApps().find((a) => a.name === 'yetimatch');
+  if (existing) return existing;
+  return initializeApp({ projectId: YETIMATCH_PROJECT_ID }, 'yetimatch');
+}
 
 export { mmChart } from './mmChart.js';
 export { mmImport } from './mmImportHttp.js';
@@ -32,6 +43,19 @@ function validateApiKey(req: Req): boolean {
   return !!key && key === apiKey.value();
 }
 
+async function validateAppCheck(req: Req): Promise<boolean> {
+  const raw = req.headers['x-firebase-appcheck'];
+  const token = Array.isArray(raw) ? raw[0] : raw;
+  if (!token) return false;
+  try {
+    await getAppCheck(yetimatchApp()).verifyToken(token);
+    return true;
+  } catch (err) {
+    console.warn('ymApi App Check verification failed:', err);
+    return false;
+  }
+}
+
 function parsePath(path: string): { type: 'list' | 'single'; id?: string } | null {
   const match = path.match(/^\/ym\/v2\/quizzes(?:\/([^/]+))?\/?$/);
   if (!match) return null;
@@ -49,6 +73,11 @@ export const ymApi = onRequest(
     }
 
     if (!validateApiKey(req)) {
+      res.status(401).json({ error: 'Unauthorized' });
+      return;
+    }
+
+    if (!(await validateAppCheck(req))) {
       res.status(401).json({ error: 'Unauthorized' });
       return;
     }
