@@ -33,3 +33,5 @@
 .island-list ul { list-style: none; padding: 0; display: grid; gap: 0.5rem; }
 .island-list li { display: flex; flex-wrap: wrap; gap: 0.75rem; }
 .island-list a { color: var(--accent-bright); }
+
+.island-hud, .island-hint, .island-count { text-shadow: 0 1px 3px rgba(0, 0, 0, 0.7); }
