@@ -11,7 +11,7 @@
 .island-loading { position: absolute; inset: 0; display: grid; place-items: center; text-align: center; padding: 2rem; font-family: var(--font-mono); font-size: 0.8rem; letter-spacing: 0.08em; color: var(--accent-bright); }
 
 .island-hud { position: absolute; top: 0.9rem; left: 1rem; display: flex; flex-wrap: wrap; gap: 0.9rem; font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.08em; color: rgba(143, 252, 240, 0.85); pointer-events: none; }
-.island-bar { position: absolute; top: 0.7rem; right: 1rem; display: flex; align-items: center; gap: 0.75rem; }
+.island-bar { position: absolute; top: 0.7rem; right: 1rem; display: flex; flex-wrap: wrap; justify-content: flex-end; align-items: center; gap: 0.5rem 0.75rem; max-width: calc(100% - 2rem); }
 .island-count { font-family: var(--font-mono); font-size: 0.72rem; color: var(--accent-bright); }
 .island-btn { font-family: var(--font-mono); font-size: 0.72rem; padding: 0.4rem 0.8rem; border: 1px solid var(--border-strong); border-radius: var(--radius); background: rgba(10, 14, 30, 0.7); color: var(--accent-bright); cursor: pointer; }
 .island-btn:hover, .island-btn:focus-visible { border-color: var(--accent); }
@@ -35,3 +35,10 @@
 .island-list a { color: var(--accent-bright); }
 
 .island-hud, .island-hint, .island-count { text-shadow: 0 1px 3px rgba(0, 0, 0, 0.7); }
+
+.island-sky { z-index: 6; }
+.island-sky .island-chip { background: none; cursor: pointer; }
+.island-sky .island-chip:hover { background: var(--accent); color: var(--primary-ink); }
+.island-skylabel { position: absolute; left: 1rem; bottom: 2.6rem; margin: 0; font-family: var(--font-mono); font-size: 0.7rem; color: var(--accent-bright); text-shadow: 0 1px 3px rgba(0, 0, 0, 0.7); pointer-events: none; }
+
+@media (max-width: 700px) { .island-hud { display: none; } }

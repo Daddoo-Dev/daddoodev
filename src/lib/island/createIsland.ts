@@ -9,6 +9,7 @@ import { OutputPass } from 'three/examples/jsm/postprocessing/OutputPass.js';
 import { GTAOPass } from 'three/examples/jsm/postprocessing/GTAOPass.js';
 import { RoundedBoxGeometry } from 'three/examples/jsm/geometries/RoundedBoxGeometry.js';
 import { ENTRIES } from './data';
+import type { WeatherState } from './weather';
 
 export interface IslandHud {
 	utc: string;
@@ -32,6 +33,7 @@ export type TimeMode = 'day' | 'dusk' | 'night';
 
 export interface IslandController {
 	setTime(mode: TimeMode): void;
+	setWeather(w: WeatherState | null): void;
 	cycleTime(): void;
 	startTour(): void;
 	stopTour(): void;
@@ -278,7 +280,7 @@ export async function createIsland(
 	/* ───────── helpers ───────── */
 	const glowers: Mat[] = []; // materials whose glow depends on time of day: userData.dn = [day, night]
 	const tick: Tick[] = [];
-	const state = { nm: 0.5, tod: 1 };
+	const state = { nm: 0.5, tod: 1, cloud: 0, wind: 0 };
 	const holoMats: { m: THREE.Material & { opacity: number }; o: number }[] = [];
 	const nightLights: { light: THREE.PointLight; day: number; night: number }[] = [];
 	const nl = (light: THREE.PointLight, day: number, night: number) => {
@@ -592,6 +594,7 @@ export async function createIsland(
 	cyl(world, 1.45, 1.45, 0.06, 18, M(0xa8a4b8), 0.6, 0.01, 5.2);
 	const waterU = {
 		uTime: { value: 0 },
+		uRain: { value: 0 },
 		uTop: { value: new THREE.Color(0x6fbdf5) },
 		uHor: { value: new THREE.Color(0xffe9c9) },
 		uDeep: { value: new THREE.Color(0x0d4a78) },
@@ -608,13 +611,14 @@ export async function createIsland(
 			uniforms: waterU,
 			vertexShader: /* glsl */ `varying vec3 vW; void main(){ vec4 w = modelMatrix * vec4(position,1.0); vW = w.xyz; gl_Position = projectionMatrix * viewMatrix * w; }`,
 			fragmentShader: /* glsl */ `
-				uniform float uTime; uniform vec3 uTop, uHor, uDeep, uSun, uSunCol; varying vec3 vW;
+				uniform float uTime, uRain; uniform vec3 uTop, uHor, uDeep, uSun, uSunCol; varying vec3 vW;
 				void main() {
 					vec2 p = vW.xz * 7.0;
 					vec3 n = normalize(vec3(
 						sin(p.x * 1.3 + uTime * 1.1) * 0.035 + sin(p.y * 2.1 - uTime * 0.9) * 0.022 + sin((p.x + p.y) * 3.1 + uTime * 1.7) * 0.015,
 						1.0,
 						cos(p.y * 1.2 - uTime * 1.0) * 0.035 + cos(p.x * 2.3 + uTime * 0.8) * 0.022 + cos((p.x - p.y) * 2.7 - uTime * 1.5) * 0.015));
+					n = normalize(vec3(n.x * (1.0 + uRain * 2.5), n.y, n.z * (1.0 + uRain * 2.5)));
 					vec3 V = normalize(cameraPosition - vW);
 					vec3 R = reflect(-V, n);
 					vec3 sky = mix(uHor, uTop, clamp(R.y * 1.4, 0.0, 1.0));
@@ -2253,7 +2257,8 @@ export async function createIsland(
 			p = new THREE.Vector3();
 		const update = (t: number) => {
 			base.forEach((b, i) => {
-				e.set(Math.sin(t * 1.4 + b.ph) * 0.18, 0, Math.cos(t * 1.1 + b.ph * 1.3) * 0.18);
+				const amp = 0.18 * (1 + state.wind * 1.8);
+				e.set(Math.sin(t * 1.4 + b.ph) * amp, 0, Math.cos(t * 1.1 + b.ph * 1.3) * amp);
 				q.setFromEuler(e);
 				sc.setScalar(b.s);
 				p.set(b.x, 0.16 * b.s, b.z);
@@ -2502,6 +2507,121 @@ export async function createIsland(
 	flies.frustumCulled = false;
 	world.add(flies);
 
+	/* ───────── weather: rain, snow, fog, lightning, wind (driven by "Match my sky") ───────── */
+	type WKeys = 'cloud' | 'rain' | 'snow' | 'fog' | 'storm' | 'wind';
+	const W: Record<WKeys, number> = { cloud: 0, rain: 0, snow: 0, fog: 0, storm: 0, wind: 0 };
+	const WT: Record<WKeys, number> = { cloud: 0, rain: 0, snow: 0, fog: 0, storm: 0, wind: 0 };
+	const W_KEYS: WKeys[] = ['cloud', 'rain', 'snow', 'fog', 'storm', 'wind'];
+	const gloom = () => Math.min(1, Math.max(W.cloud * 0.8, W.rain, W.snow * 0.7, W.storm));
+
+	const RAIN_N = low ? 350 : 900;
+	const rainPos = new Float32Array(RAIN_N * 6);
+	const drops = Array.from({ length: RAIN_N }, () => ({ x: (rnd() - 0.5) * 30, y: rnd() * 24 - 3, z: (rnd() - 0.5) * 30, sp: 20 + rnd() * 10 }));
+	const rainGeo = new THREE.BufferGeometry();
+	rainGeo.setAttribute('position', new THREE.BufferAttribute(rainPos, 3));
+	const rainLines = new THREE.LineSegments(rainGeo, new THREE.LineBasicMaterial({ color: 0xa9bde6, transparent: true, opacity: 0.6, depthWrite: false, fog: false }));
+	rainLines.frustumCulled = false;
+	rainLines.visible = false;
+	rainLines.raycast = () => {};
+	scene.add(rainLines);
+
+	const SNOW_N = low ? 300 : 700;
+	const snowPos = new Float32Array(SNOW_N * 3);
+	const flakes = Array.from({ length: SNOW_N }, () => ({ x: (rnd() - 0.5) * 30, y: rnd() * 24 - 3, z: (rnd() - 0.5) * 30, sp: 1.2 + rnd() * 1.4, ph: rnd() * 6 }));
+	const snowGeo = new THREE.BufferGeometry();
+	snowGeo.setAttribute('position', new THREE.BufferAttribute(snowPos, 3));
+	const snowTex = canvasTex(32, 32, (c, w) => {
+		const gr = c.createRadialGradient(w / 2, w / 2, 0, w / 2, w / 2, w / 2);
+		gr.addColorStop(0, 'rgba(255,255,255,1)');
+		gr.addColorStop(0.5, 'rgba(255,255,255,0.6)');
+		gr.addColorStop(1, 'rgba(255,255,255,0)');
+		c.fillStyle = gr;
+		c.fillRect(0, 0, w, w);
+	});
+	const snowPts = new THREE.Points(snowGeo, new THREE.PointsMaterial({ map: snowTex, size: 0.34, transparent: true, depthWrite: false, fog: false, color: 0xffffff }));
+	snowPts.frustumCulled = false;
+	snowPts.visible = false;
+	snowPts.raycast = () => {};
+	scene.add(snowPts);
+
+	// lightning: a brief flash of light plus a jagged bolt outside the island
+	const boltPts = Array.from({ length: 9 }, () => new THREE.Vector3());
+	const boltGeo = new THREE.BufferGeometry().setFromPoints(boltPts);
+	const bolt = new THREE.Line(boltGeo, new THREE.LineBasicMaterial({ color: 0xeaf0ff, transparent: true, opacity: 0, toneMapped: false, fog: false }));
+	bolt.frustumCulled = false;
+	bolt.raycast = () => {};
+	scene.add(bolt);
+	const lightning = { cd: 4, flash: 0, echo: 0 };
+	function strike() {
+		const a = rnd() * Math.PI * 2,
+			r = 11 + rnd() * 5;
+		let x = Math.cos(a) * r,
+			z = Math.sin(a) * r;
+		for (let i = 0; i < boltPts.length; i++) {
+			boltPts[i].set(x, 24 - i * 3.3, z);
+			x += (rnd() - 0.5) * 2.2;
+			z += (rnd() - 0.5) * 2.2;
+		}
+		boltGeo.setFromPoints(boltPts);
+		lightning.flash = 1;
+		lightning.echo = 0.13;
+	}
+	const snowWhite = new THREE.Color(1, 1, 1);
+	function weatherFx(dt: number, t: number) {
+		const slant = 0.15 + W.wind * 0.55;
+		if (W.rain > 0.02) {
+			rainLines.visible = true;
+			const n = Math.floor(RAIN_N * W.rain);
+			for (let i = 0; i < n; i++) {
+				const d = drops[i];
+				d.y -= d.sp * dt;
+				d.x -= slant * d.sp * dt * 0.5;
+				if (d.y < -3) {
+					d.y = 21 + rnd() * 3;
+					d.x = (rnd() - 0.5) * 30;
+					d.z = (rnd() - 0.5) * 30;
+				}
+				const len = 0.6 + W.rain * 0.4;
+				rainPos.set([d.x, d.y, d.z, d.x - slant * len, d.y + len, d.z], i * 6);
+			}
+			rainGeo.setDrawRange(0, n * 2);
+			rainGeo.attributes.position.needsUpdate = true;
+		} else rainLines.visible = false;
+		if (W.snow > 0.02) {
+			snowPts.visible = true;
+			const n = Math.floor(SNOW_N * W.snow);
+			for (let i = 0; i < n; i++) {
+				const f = flakes[i];
+				f.y -= f.sp * dt;
+				f.x += (Math.sin(t * 0.8 + f.ph) * 0.5 + W.wind * 2.5) * dt;
+				if (f.y < -3) {
+					f.y = 21 + rnd() * 3;
+					f.x = (rnd() - 0.5) * 30;
+					f.z = (rnd() - 0.5) * 30;
+				}
+				if (f.x > 15) f.x -= 30;
+				snowPos.set([f.x, f.y, f.z], i * 3);
+			}
+			snowGeo.setDrawRange(0, n);
+			snowGeo.attributes.position.needsUpdate = true;
+		} else snowPts.visible = false;
+		(top.material as Mat).emissive.copy(snowWhite).multiplyScalar(W.snow * 0.6);
+		if (W.storm > 0.3) {
+			lightning.cd -= dt;
+			if (lightning.cd <= 0) {
+				strike();
+				lightning.cd = 3 + rnd() * 8;
+			}
+		}
+		if (lightning.echo > 0) {
+			lightning.echo -= dt;
+			if (lightning.echo <= 0) lightning.flash = Math.max(lightning.flash, 0.7);
+		}
+		lightning.flash *= Math.exp(-dt * 8);
+		if (lightning.flash < 0.01) lightning.flash = 0;
+		(bolt.material as THREE.LineBasicMaterial).opacity = Math.min(1, lightning.flash * 1.4);
+	}
+
 	/* ───────── atmosphere: light cones, mist, cloud sea, aurora, nebula, shooting stars ───────── */
 	const gradTop = gradTexture(true),
 		gradBottom = gradTexture(false);
@@ -2689,7 +2809,7 @@ export async function createIsland(
 		cU = new THREE.Vector3(),
 		cF = new THREE.Vector3();
 	tick.push((dt) => {
-		const vis = THREE.MathUtils.clamp((state.tod - 1.25) / 0.6, 0, 1);
+		const vis = THREE.MathUtils.clamp((state.tod - 1.25) / 0.6, 0, 1) * (1 - state.cloud * 0.85);
 		auroraMat.uniforms.uTime.value += dt;
 		auroraMat.uniforms.uOpacity.value = vis * 0.75;
 		nebMat.opacity = vis * 0.3;
@@ -2743,7 +2863,15 @@ export async function createIsland(
 		lastTod = -1;
 	const skyCtx = skyCanvas.getContext('2d')!;
 	function paintSky(t: number) {
-		for (let i = 0; i < 3; i++) mixC(skyNow[i], DAY.sky[i], DUSK.sky[i], NIGHT.sky[i], t);
+		const gl = gloom();
+		for (let i = 0; i < 3; i++) {
+			mixC(skyNow[i], DAY.sky[i], DUSK.sky[i], NIGHT.sky[i], t);
+			if (gl > 0) {
+				const lum = skyNow[i].r * 0.3 + skyNow[i].g * 0.59 + skyNow[i].b * 0.11;
+				const dim = 0.9 - 0.45 * gl;
+				skyNow[i].lerp(tmp.setRGB(lum * dim, lum * dim * 1.03, lum * dim * 1.12), gl * 0.8);
+			}
+		}
 		const gr = skyCtx.createLinearGradient(0, 0, 0, 256);
 		gr.addColorStop(0, '#' + skyNow[0].getHexString());
 		gr.addColorStop(0.55, '#' + skyNow[1].getHexString());
@@ -2754,13 +2882,45 @@ export async function createIsland(
 		(scene.fog as THREE.FogExp2).color.copy(skyNow[1]);
 	}
 	const sunDirNow = new THREE.Vector3();
+	let hemiBase = 1,
+		sunBase = 2.5,
+		starBase = 0,
+		seaOpBase = 0.6,
+		mistBase = 0.1,
+		bloomBase = 0.5,
+		lastGloom = -1;
+	const seaBase = new THREE.Color();
+	const GREY = new THREE.Color(0x77808f);
+	function applyWeather(force = false) {
+		const gl = gloom();
+		sun.intensity = sunBase * (1 - 0.7 * W.cloud);
+		hemi.intensity = hemiBase * (1 - 0.3 * gl) + lightning.flash * 3.2;
+		bloom.strength = bloomBase + lightning.flash * 0.5;
+		(stars.material as THREE.PointsMaterial).opacity = starBase * (1 - Math.min(1, W.cloud * 0.9 + W.fog));
+		seaMat.color.copy(seaBase).lerp(GREY, W.cloud * 0.5);
+		seaMat.opacity = Math.min(0.92, seaOpBase * (1 + W.cloud * 0.35 + W.fog * 0.4));
+		mistMat.opacity = Math.min(0.5, mistBase * (1 + W.fog * 4));
+		(scene.fog as THREE.FogExp2).density = 0.006 + W.fog * 0.028 + W.rain * 0.004 + W.snow * 0.006;
+		butterflies.visible = tod < 1.1 && W.rain < 0.15 && W.snow < 0.1;
+		state.cloud = W.cloud;
+		state.wind = W.wind;
+		waterU.uRain.value = W.rain;
+		if (force || Math.abs(gl - lastGloom) > 0.004) {
+			lastGloom = gl;
+			if (!force) {
+				paintSky(tod);
+				waterU.uTop.value.copy(skyNow[0]);
+				waterU.uHor.value.copy(skyNow[2]);
+			}
+		}
+	}
 	function applyTime(t: number) {
 		const n = t / 2;
 		mixC(hemi.color, DAY.hs, DUSK.hs, NIGHT.hs, t);
 		mixC(hemi.groundColor, DAY.hg, DUSK.hg, NIGHT.hg, t);
-		hemi.intensity = mixS(1.1, 0.95, 1.05, t);
+		hemiBase = mixS(1.1, 0.95, 1.05, t);
 		mixC(sun.color, DAY.sun, DUSK.sun, NIGHT.sun, t);
-		sun.intensity = mixS(2.7, 3.0, 2.1, t);
+		sunBase = mixS(2.7, 3.0, 2.1, t);
 		if (t <= 1) sun.position.lerpVectors(SUN_P, DUSK_P, t);
 		else sun.position.lerpVectors(DUSK_P, MOON_P, t - 1);
 		renderer.toneMappingExposure = mixS(1.05, 1.12, 1.1, t);
@@ -2771,11 +2931,11 @@ export async function createIsland(
 		});
 		mixC(cloudMat.color, DAY.cloud, DUSK.cloud, NIGHT.cloud, t);
 		mixC(cloudMat.emissive, DAY.cloudE, DUSK.cloudE, NIGHT.cloudE, t);
-		mixC(seaMat.color, DAY.sea, DUSK.sea, NIGHT.sea, t);
-		seaMat.opacity = mixS(0.55, 0.65, 0.32, t);
+		mixC(seaBase, DAY.sea, DUSK.sea, NIGHT.sea, t);
+		seaOpBase = mixS(0.55, 0.65, 0.32, t);
 		mixC(mistMat.color, DAY.mist, DUSK.mist, NIGHT.mist, t);
-		mistMat.opacity = mixS(0.09, 0.15, 0.12, t);
-		(stars.material as THREE.PointsMaterial).opacity = Math.max(0, (n - 0.3) / 0.7);
+		mistBase = mixS(0.09, 0.15, 0.12, t);
+		starBase = Math.max(0, (n - 0.3) / 0.7);
 		sunDirNow.lerpVectors(SUN_P, DUSK_P, Math.min(t, 1)).normalize().multiplyScalar(62);
 		sunO.mesh.position.copy(sunDirNow);
 		sunO.halo.position.copy(sunDirNow);
@@ -2789,10 +2949,9 @@ export async function createIsland(
 		orbitLine.material.opacity = mixS(0.08, 0.16, 0.3, t);
 		mixC(tmp, C(0x2a3a6a), C(0x3a2a4a), C(0x0b0f24), t);
 		birdMat.color.copy(tmp);
-		butterflies.visible = t < 1.1;
 		lanternMat.opacity = Math.max(0, (n - 0.2) / 0.8);
 		blobMat.opacity = mixS(0.38, 0.45, 0.55, t);
-		bloom.strength = mixS(0.22, 0.5, 0.8, t);
+		bloomBase = mixS(0.22, 0.5, 0.8, t);
 		grade.uniforms.uTod.value = t;
 		paintSky(t);
 		waterU.uTop.value.copy(skyNow[0]);
@@ -2800,6 +2959,7 @@ export async function createIsland(
 		mixC(waterU.uDeep.value, DAY.deep, DUSK.deep, NIGHT.deep, t);
 		mixC(waterU.uSunCol.value, C(0xfff1dc), C(0xff9a55), C(0xa9bcff), t);
 		waterU.uSun.value.copy(sun.position);
+		applyWeather(true);
 	}
 	const rayPos = new THREE.Vector3(),
 		rayTmp = new THREE.Vector3();
@@ -2812,7 +2972,7 @@ export async function createIsland(
 		const inFront = rayTmp.z < 0;
 		rayTmp.copy(rayPos).project(camera);
 		rays.uniforms.uLight.value.set(rayTmp.x * 0.5 + 0.5, rayTmp.y * 0.5 + 0.5);
-		rays.uniforms.uStrength.value = inFront ? mixS(0.5, 1.0, 0.55, tod) : 0;
+		rays.uniforms.uStrength.value = inFront ? mixS(0.5, 1.0, 0.55, tod) * (1 - W.cloud * 0.6) : 0;
 		mixC(rays.uniforms.uTint.value, C(0xfff0cc), C(0xff9a55), C(0x9fb4ff), tod);
 	}
 	function setTimeMode(m: TimeMode) {
@@ -2976,6 +3136,7 @@ export async function createIsland(
 
 	/* ───────── loop ───────── */
 	const clock = new THREE.Clock();
+	let lastFlash = 0;
 	let first = true,
 		hudT = 0,
 		disposed = false;
@@ -2997,6 +3158,20 @@ export async function createIsland(
 		state.nm = nm;
 		state.tod = tod;
 		waterU.uTime.value = t;
+		{
+			let moving = false;
+			const kw = reduceMotion ? 1 : 1 - Math.exp(-dt * 0.8);
+			for (const k of W_KEYS) {
+				const d = WT[k] - W[k];
+				if (Math.abs(d) > 0.001) {
+					W[k] += d * kw;
+					moving = true;
+				} else W[k] = WT[k];
+			}
+			weatherFx(dt, t);
+			if (moving || lightning.flash > 0 || lastFlash > 0) applyWeather();
+			lastFlash = lightning.flash;
+		}
 
 		if (introT < INTRO) {
 			introT += dt;
@@ -3030,7 +3205,7 @@ export async function createIsland(
 
 		world.position.y = Math.sin(t * 0.8) * 0.12 * mo;
 		for (const f of tick) f(dt * mo, t * mo);
-		for (const c of clouds) c.pivot.rotation.y += c.sp * dt * mo;
+		for (const c of clouds) c.pivot.rotation.y += c.sp * dt * mo * (1 + W.wind * 3);
 		for (const s of islets) s.g.position.y = s.y + Math.sin(t * 0.7 + s.ph) * 0.25 * mo;
 		orbitSpin.rotation.y += dt * 0.16 * mo;
 		sat.rotation.y += dt * 0.6 * mo;
@@ -3106,6 +3281,9 @@ export async function createIsland(
 	return {
 		setTime(mode: TimeMode) {
 			setTimeMode(mode);
+		},
+		setWeather(w: WeatherState | null) {
+			for (const k of W_KEYS) WT[k] = w ? w[k] : 0;
 		},
 		cycleTime() {
 			setTimeMode(MODES[(Math.round(todTarget) + 1) % 3]);

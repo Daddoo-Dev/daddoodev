@@ -2,6 +2,7 @@
 	import { onMount } from 'svelte';
 	import { ENTRIES, FIND_IDS, FOUND_STORAGE_KEY } from '$lib/island/data';
 	import type { IslandController, IslandHud, TimeMode } from '$lib/island/createIsland';
+	import { fetchWeather, SKY_FLAG } from '$lib/island/weather';
 
 	let host = $state<HTMLDivElement | null>(null);
 	let ctl: IslandController | null = null;
@@ -9,6 +10,64 @@
 	let failed = $state(false);
 	let mode = $state<TimeMode>('dusk');
 	let touring = $state(false);
+
+	type SkyState = 'off' | 'asking' | 'loading' | 'on' | 'error';
+	let sky = $state<SkyState>('off');
+	let skyLabel = $state('');
+	let refreshTimer: ReturnType<typeof setInterval> | undefined;
+
+	function getPosition(): Promise<{ lat: number; lon: number }> {
+		return new Promise((resolve, reject) => {
+			if (!('geolocation' in navigator)) return reject(new Error('no geolocation'));
+			navigator.geolocation.getCurrentPosition(
+				(p) => resolve({ lat: p.coords.latitude, lon: p.coords.longitude }),
+				reject,
+				{ enableHighAccuracy: false, timeout: 10000, maximumAge: 3_600_000 }
+			);
+		});
+	}
+	async function matchSky(silent = false) {
+		sky = 'loading';
+		try {
+			const { lat, lon } = await getPosition();
+			const w = await fetchWeather(lat, lon);
+			ctl?.setWeather(w);
+			ctl?.setTime(w.mode);
+			skyLabel = w.label;
+			sky = 'on';
+			try {
+				localStorage.setItem(SKY_FLAG, '1');
+			} catch {
+				/* storage unavailable: opt-in lasts for this visit only */
+			}
+			clearInterval(refreshTimer);
+			refreshTimer = setInterval(() => void matchSky(true), 15 * 60 * 1000);
+		} catch {
+			// a failed silent refresh keeps the current sky; a failed manual attempt explains itself
+			sky = silent && skyLabel ? 'on' : 'error';
+		}
+	}
+	function resetSky() {
+		clearInterval(refreshTimer);
+		ctl?.setWeather(null);
+		skyLabel = '';
+		sky = 'off';
+		try {
+			localStorage.removeItem(SKY_FLAG);
+		} catch {
+			/* ignore */
+		}
+	}
+	async function resumeSky() {
+		// only re-run without asking if the browser already granted permission and the visitor opted in before
+		try {
+			if (localStorage.getItem(SKY_FLAG) !== '1' || !navigator.permissions) return;
+			const st = await navigator.permissions.query({ name: 'geolocation' });
+			if (st.state === 'granted') void matchSky(true);
+		} catch {
+			/* ignore */
+		}
+	}
 	let selected = $state<string | null>(null);
 	let hover = $state<{ id: string; x: number; y: number } | null>(null);
 	let found = $state<string[]>([]);
@@ -59,6 +118,7 @@
 					onReady: () => (ready = true)
 				});
 				if (cancelled) ctl.dispose();
+				else void resumeSky();
 			} catch {
 				failed = true;
 			}
@@ -69,6 +129,7 @@
 		window.addEventListener('keydown', onKey);
 		return () => {
 			cancelled = true;
+			clearInterval(refreshTimer);
 			window.removeEventListener('keydown', onKey);
 			ctl?.dispose();
 			ctl = null;
@@ -95,6 +156,11 @@
 		<button type="button" class="island-btn" onclick={() => (touring ? ctl?.stopTour() : ctl?.startTour())}>
 			{touring ? 'Stop tour' : 'Play tour'}
 		</button>
+		{#if sky === 'on' || sky === 'loading'}
+			<button type="button" class="island-btn" onclick={resetSky}>Reset sky</button>
+		{:else}
+			<button type="button" class="island-btn" onclick={() => (sky = 'asking')}>Match my sky</button>
+		{/if}
 		<button type="button" class="island-btn" onclick={() => ctl?.cycleTime()}>
 			{mode === 'day' ? 'Day' : mode === 'dusk' ? 'Golden hour' : 'Night'} ▸
 		</button>
@@ -105,6 +171,31 @@
 		<div class="island-tip" style:left="{hover.x + 14}px" style:top="{hover.y + 14}px">
 			{tip.find && !found.includes(hover.id) ? '? ? ?' : tip.title}
 		</div>
+	{/if}
+
+	{#if sky === 'on' && skyLabel}
+		<p class="island-skylabel">Your sky: {skyLabel}</p>
+	{/if}
+
+	{#if sky === 'asking' || sky === 'error'}
+		<aside class="island-card island-sky" aria-live="polite">
+			<button type="button" class="island-close" aria-label="Close" onclick={() => (sky = 'off')}>×</button>
+			{#if sky === 'asking'}
+				<h2>Match my sky</h2>
+				<p>
+					The island can mirror the real weather and time of day where you are. Your browser will ask for your
+					location once. It is never stored on our servers. It stays on your device, and only an approximate,
+					rounded position is sent to Open-Meteo, a free weather service, to fetch the forecast.
+				</p>
+				<div class="island-links">
+					<button type="button" class="island-chip" onclick={() => matchSky()}>Allow</button>
+					<button type="button" class="island-chip is-soon" onclick={() => (sky = 'off')}>Not now</button>
+				</div>
+			{:else}
+				<h2>Couldn't match your sky</h2>
+				<p>We couldn't read your location or the weather, so the island keeps its normal sky. You can try again any time.</p>
+			{/if}
+		</aside>
 	{/if}
 
 	{#if card}
