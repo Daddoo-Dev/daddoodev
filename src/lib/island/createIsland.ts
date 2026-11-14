@@ -524,6 +524,7 @@ export async function createIsland(
 	});
 
 	/* ───────── scenery ───────── */
+	let krakenPoke: () => void = () => {};
 	const obstacles: [number, number, number][] = []; // keeps flowers and grass off buildings and paths
 	function tree(x: number, z: number, s = 1, col = 0x4fae5b) {
 		const g = new THREE.Group(),
@@ -1932,6 +1933,257 @@ export async function createIsland(
 		nl(gl, 0.3, 2.4);
 		registerFind('geode', g, 1.0, 0);
 	}
+	// Pond kraken: small, shy, and very into gardening
+	krakenPoke = (() => {
+		const PX = 0.6,
+			PZ = 5.2,
+			WY = 0.07;
+		const g = new THREE.Group();
+		g.position.set(PX, WY, PZ);
+		g.visible = false;
+		world.add(g);
+		const skin = M(0x9b7bff, { roughness: 0.55, flatShading: false }),
+			belly = M(0xd9ccff, { roughness: 0.6, flatShading: false }),
+			white = M(0xffffff, { roughness: 0.3, flatShading: false }),
+			ink = M(0x14102a, { roughness: 0.3, flatShading: false }),
+			blush = M(0xff8fc7, { roughness: 0.7, flatShading: false });
+		const body = new THREE.Group();
+		g.add(body);
+		ball(body, 0.34, skin, 0, 0, 0, 2).scale.set(1, 1.12, 1);
+		ball(body, 0.26, belly, 0, -0.06, 0.1, 2).scale.set(0.9, 0.8, 0.7);
+		const face = new THREE.Group();
+		body.add(face);
+		const eyes: THREE.Mesh[] = [];
+		[-0.12, 0.12].forEach((x) => {
+			const e = ball(face, 0.085, white, x, 0.1, 0.27, 2);
+			eyes.push(e);
+			ball(face, 0.045, ink, x, 0.1, 0.345, 1);
+			ball(face, 0.014, white, x + 0.015, 0.125, 0.385, 0);
+			ball(face, 0.045, blush, x * 1.65, -0.0, 0.27, 1).scale.set(1, 0.6, 0.5);
+		});
+		const smile = new THREE.Mesh(new THREE.TorusGeometry(0.04, 0.009, 4, 10, Math.PI), ink);
+		smile.rotation.z = Math.PI;
+		smile.position.set(0, 0.03, 0.335);
+		face.add(smile);
+		// tentacles: chains of blobs laid along a bezier from body to a moving tip
+		const N = 8,
+			SEG = 12;
+		const segGeo = new THREE.IcosahedronGeometry(1, 1);
+		const tents = Array.from({ length: N }, (_, i) => {
+			const segs = Array.from({ length: SEG }, () => {
+				const m = new THREE.Mesh(segGeo, skin);
+				m.castShadow = false;
+				g.add(m);
+				return m;
+			});
+			const a = (i / N) * Math.PI * 2 + 0.2;
+			return { a, segs, tip: new THREE.Vector3(Math.cos(a) * 0.5, 0, Math.sin(a) * 0.5), target: new THREE.Vector3(), ph: rnd() * 6 };
+		});
+		// tulips planted around the pond rim (grabbable)
+		const tulipCols = [0xff6b9a, 0xffd23f, 0xff8a3d, 0xc9a3ff];
+		const plants = [60, 130, 215, 285].map((deg, i) => {
+			const a = (deg * Math.PI) / 180,
+				x = PX + Math.cos(a) * 1.62,
+				z = PZ + Math.sin(a) * 1.62;
+			const pg = new THREE.Group();
+			cyl(pg, 0.018, 0.022, 0.3, 5, M(0x3f9d57), 0, 0.15, 0);
+			const leaf = ball(pg, 0.06, M(0x4fae5b), 0.05, 0.1, 0, 0);
+			leaf.scale.set(1.6, 0.3, 0.7);
+			const head = ball(pg, 0.085, M(tulipCols[i]), 0, 0.33, 0, 1);
+			head.scale.set(1, 1.25, 1);
+			pg.position.set(x, 0, z);
+			noRay(pg);
+			world.add(pg);
+			obstacles.push([x, z, 0.35]);
+			return { g: pg, home: new THREE.Vector3(x, 0, z), a, gone: false, regrow: 0, grow: 1 };
+		});
+		const ringM = new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0, depthWrite: false, blending: THREE.AdditiveBlending });
+		const ring = new THREE.Mesh(new THREE.RingGeometry(0.85, 1, 40), ringM);
+		ring.rotation.x = -Math.PI / 2;
+		ring.position.y = 0.03;
+		g.add(ring);
+		let ringT = 1;
+		noRay(g);
+		registerFind('kraken', g, 0.75, 0.45);
+		const hit = g.children[g.children.length - 1] as THREE.Mesh;
+		const hitRay = hit.raycast.bind(hit);
+		hit.raycast = (rc, it2) => {
+			if (g.visible) hitRay(rc, it2);
+		};
+
+		type Phase = 'hidden' | 'rise' | 'wave' | 'reach' | 'carry' | 'sink';
+		let phase: Phase = 'hidden',
+			pt = 0,
+			wait = 7,
+			by = -0.65,
+			plantIdx = -1,
+			tentJ = 0;
+		const WAVERS = [0, 3, 5];
+		const easeBack = (k: number) => 1 + 2.7 * Math.pow(k - 1, 3) + 1.7 * Math.pow(k - 1, 2);
+		const B = new THREE.Vector3(),
+			Mid = new THREE.Vector3(),
+			Pt = new THREE.Vector3();
+		const camLocal = new THREE.Vector3();
+		let faceY = 0;
+		const splash = () => (ringT = 0);
+
+		tick.push((dt, t) => {
+			// planted tulips regrow only while the kraken is away
+			for (const pl of plants) {
+				if (!pl.gone && pl.grow < 1) {
+					pl.grow = Math.min(1, pl.grow + dt * 1.2);
+					pl.g.scale.setScalar(Math.max(0.01, pl.grow));
+				}
+				if (pl.gone && phase === 'hidden') {
+					pl.regrow -= dt;
+					if (pl.regrow <= 0) {
+						pl.gone = false;
+						pl.grow = 0;
+						pl.g.visible = true;
+						pl.g.position.copy(pl.home);
+						pl.g.rotation.set(0, 0, 0);
+					}
+				}
+			}
+			if (ringT < 1) {
+				ringT = Math.min(1, ringT + dt * 1.1);
+				ring.scale.setScalar(0.4 + ringT * 0.9);
+				ringM.opacity = 0.55 * (1 - ringT);
+			}
+			if (phase === 'hidden') {
+				wait -= dt;
+				if (wait <= 0) {
+					phase = 'rise';
+					pt = 0;
+					plantIdx = -1;
+					g.visible = true;
+					splash();
+				}
+				if (!g.visible) return;
+			}
+
+			// state machine
+			if (phase === 'rise') {
+				pt += dt;
+				const k = Math.min(pt / 1.0, 1);
+				by = L(-0.65, 0.42, easeBack(k));
+				if (k >= 1) {
+					phase = 'wave';
+					pt = 0;
+				}
+			} else if (phase === 'wave') {
+				by = 0.42 + Math.sin(t * 2.4) * 0.03;
+				pt += dt;
+				if (pt > 3.2) {
+					const avail = plants.map((p, i) => (p.gone ? -1 : i)).filter((i) => i >= 0);
+					if (!avail.length) {
+						phase = 'sink';
+						pt = 0;
+						splash();
+					} else {
+						plantIdx = avail[Math.floor(rnd() * avail.length)];
+						const pa = plants[plantIdx].a;
+						let best = 1e9;
+						tents.forEach((T, i) => {
+							const d = Math.abs(Math.atan2(Math.sin(T.a - pa), Math.cos(T.a - pa)));
+							if (d < best) {
+								best = d;
+								tentJ = i;
+							}
+						});
+						phase = 'reach';
+						pt = 0;
+					}
+				}
+			} else if (phase === 'reach') {
+				by = 0.42 + Math.sin(t * 2.4) * 0.03;
+				pt += dt;
+				const pl = plants[plantIdx];
+				Pt.set(pl.home.x - PX, 0.3, pl.home.z - PZ);
+				if (tents[tentJ].tip.distanceTo(Pt) < 0.14 || pt > 1.8) {
+					phase = 'carry';
+					pt = 0;
+				}
+			} else if (phase === 'carry') {
+				by = 0.42 + Math.sin(t * 2.4) * 0.03;
+				pt += dt;
+				if (pt > 1.9) {
+					phase = 'sink';
+					pt = 0;
+					splash();
+				}
+			} else if (phase === 'sink') {
+				pt += dt;
+				const k = Math.min(pt / 0.9, 1);
+				by = L(0.42, -0.7, k * k);
+				if (k >= 1) {
+					phase = 'hidden';
+					g.visible = false;
+					wait = 18 + rnd() * 16;
+					if (plantIdx >= 0 && plants[plantIdx].g.visible === false) plants[plantIdx].regrow = 9 + rnd() * 5;
+				}
+			}
+
+			// targets for each tentacle
+			tents.forEach((T, i) => {
+				const wob = Math.sin(t * 0.9 + T.ph);
+				let lift = 0.05;
+				if ((phase === 'wave' || phase === 'carry') && WAVERS.includes(i) && !(phase === 'carry' && i === tentJ)) {
+					T.target.set(Math.cos(T.a) * 0.3 + Math.sin(t * 3 + T.ph) * 0.4, by + 0.8 + Math.sin(t * 4 + T.ph) * 0.15, Math.sin(T.a) * 0.3 + Math.cos(t * 2.4 + T.ph) * 0.2);
+					lift = 0.5;
+				} else if (i === tentJ && phase === 'reach') {
+					const pl = plants[plantIdx];
+					T.target.set(pl.home.x - PX, 0.3, pl.home.z - PZ);
+					lift = 0.35;
+				} else if (i === tentJ && (phase === 'carry' || phase === 'sink') && plantIdx >= 0) {
+					T.target.set(Math.sin(t * 2) * 0.12, by + 0.95, 0.12);
+					lift = 0.4;
+				} else {
+					const r = 0.85 + 0.15 * wob;
+					T.target.set(Math.cos(T.a) * r, 0.02, Math.sin(T.a) * r);
+				}
+				T.tip.lerp(T.target, 1 - Math.exp(-dt * (i === tentJ && phase === 'reach' ? 7 : 5)));
+				B.set(Math.cos(T.a) * 0.2, by - 0.12, Math.sin(T.a) * 0.2);
+				Mid.copy(B).add(T.tip).multiplyScalar(0.5);
+				Mid.y += 0.22 + lift;
+				const dx = T.tip.x - B.x,
+					dz = T.tip.z - B.z,
+					dl = Math.hypot(dx, dz) || 1;
+				T.segs.forEach((m, k) => {
+					const u = (k + 0.5) / SEG,
+						a0 = (1 - u) * (1 - u),
+						b0 = 2 * (1 - u) * u,
+						c0 = u * u;
+					Pt.set(B.x * a0 + Mid.x * b0 + T.tip.x * c0, B.y * a0 + Mid.y * b0 + T.tip.y * c0, B.z * a0 + Mid.z * b0 + T.tip.z * c0);
+					const w = Math.sin(t * 2.6 + T.ph + u * 5) * 0.05 * u * (0.5 + lift);
+					Pt.x += (-dz / dl) * w;
+					Pt.z += (dx / dl) * w;
+					m.position.copy(Pt);
+					m.scale.setScalar(0.078 * (1 - u) + 0.024);
+				});
+			});
+			// carried tulip follows its tentacle tip
+			if ((phase === 'carry' || phase === 'sink') && plantIdx >= 0) {
+				const pl = plants[plantIdx],
+					tip = tents[tentJ].tip;
+				pl.g.position.set(PX + tip.x, WY + tip.y - 0.3, PZ + tip.z);
+				pl.g.rotation.z = Math.sin(t * 5) * 0.15;
+				pl.gone = true;
+				if (phase === 'sink' && by < -0.05) pl.g.visible = false;
+			}
+
+			body.position.y = by;
+			// face the camera, blink now and then
+			camLocal.set(camera.position.x - (PX + 0), 0, camera.position.z - PZ);
+			faceY += (Math.atan2(camLocal.x, camLocal.z) - faceY) * Math.min(1, dt * 4);
+			face.rotation.y = faceY;
+			const blink = t % 4.2 > 4.05 ? 0.15 : 1;
+			eyes.forEach((e) => (e.scale.y = blink));
+		});
+		return () => {
+			if (phase === 'hidden' && wait > 0.4) wait = 0.4;
+		};
+	})();
 	// a distant ringed planet
 	let planetIt: Item;
 	{
@@ -2640,7 +2892,9 @@ export async function createIsland(
 		const mv = Math.hypot(e.clientX - down.x, e.clientY - down.y);
 		down = null;
 		if (mv > 6) return;
-		select(pick(e));
+		const it = pick(e);
+		if (!it && ray.intersectObject(water, false).length) krakenPoke();
+		select(it);
 	};
 	el.addEventListener('pointermove', onMove);
 	el.addEventListener('pointerleave', onLeave);
