@@ -3,7 +3,7 @@
 	import { ENTRIES, FIND_IDS, FOUND_STORAGE_KEY } from '$lib/island/data';
 	import { setViewPref } from '$lib/island/preference';
 	import { isLocalNight } from '$lib/island/time';
-	import type { IslandController, IslandHud } from '$lib/island/createIsland';
+	import type { IslandController, IslandHud, TimeMode } from '$lib/island/createIsland';
 
 	let { onBack }: { onBack: () => void } = $props();
 
@@ -11,7 +11,8 @@
 	let ctl: IslandController | null = null;
 	let ready = $state(false);
 	let failed = $state(false);
-	let night = $state(true);
+	let mode = $state<TimeMode>('dusk');
+	let touring = $state(false);
 	let selected = $state<string | null>(null);
 	let hover = $state<{ id: string; x: number; y: number } | null>(null);
 	let found = $state<string[]>([]);
@@ -45,7 +46,7 @@
 	}
 
 	onMount(() => {
-		night = isLocalNight();
+		mode = isLocalNight() ? 'night' : 'day';
 		found = loadFound();
 		let cancelled = false;
 		(async () => {
@@ -58,7 +59,8 @@
 					onHover: (id, x, y) => (hover = id ? { id, x, y } : null),
 					onSelect,
 					onHud: (h) => (hud = h),
-					onNight: (n) => (night = n),
+					onTime: (m) => (mode = m),
+					onTour: (a) => (touring = a),
 					onReady: () => (ready = true),
 					onBack
 				});
@@ -102,8 +104,11 @@
 
 	<div class="island-bar">
 		<span class="island-count" aria-live="polite">Field journal {found.length}/{FIND_IDS.length}</span>
-		<button type="button" class="island-btn" onclick={() => ctl?.toggleNight()}>
-			{night ? 'Switch to day' : 'Switch to night'}
+		<button type="button" class="island-btn" onclick={() => (touring ? ctl?.stopTour() : ctl?.startTour())}>
+			{touring ? 'Stop tour' : 'Play tour'}
+		</button>
+		<button type="button" class="island-btn" onclick={() => ctl?.cycleTime()}>
+			{mode === 'day' ? 'Day' : mode === 'dusk' ? 'Golden hour' : 'Night'} ▸
 		</button>
 	</div>
 	<p class="island-hint">Drag to orbit, all the way around and underneath. Click things. Some are hidden.</p>

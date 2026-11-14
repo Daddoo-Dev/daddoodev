@@ -6,6 +6,8 @@ import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js';
 import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPass.js';
 import { ShaderPass } from 'three/examples/jsm/postprocessing/ShaderPass.js';
 import { OutputPass } from 'three/examples/jsm/postprocessing/OutputPass.js';
+import { GTAOPass } from 'three/examples/jsm/postprocessing/GTAOPass.js';
+import { RoundedBoxGeometry } from 'three/examples/jsm/geometries/RoundedBoxGeometry.js';
 import { ENTRIES } from './data';
 import { isLocalNight } from './time';
 
@@ -22,14 +24,19 @@ export interface IslandOptions {
 	onHover(id: string | null, x: number, y: number): void;
 	onSelect(id: string | null): void;
 	onHud(hud: IslandHud): void;
-	onNight(night: boolean): void;
+	onTime(mode: TimeMode): void;
+	onTour(active: boolean): void;
 	onReady(): void;
 	onBack(): void;
 }
 
+export type TimeMode = 'day' | 'dusk' | 'night';
+
 export interface IslandController {
-	setNight(night: boolean): void;
-	toggleNight(): void;
+	setTime(mode: TimeMode): void;
+	cycleTime(): void;
+	startTour(): void;
+	stopTour(): void;
 	closeCard(): void;
 	dispose(): void;
 }
@@ -64,31 +71,93 @@ function mulberry32(seed: number) {
 	};
 }
 
-/** Film-ish finishing pass: vignette, gentle contrast, night/day tint and a touch of grain. */
+/** Film finishing: edge chromatic aberration, vignette, split-tone, gentle HDR-safe contrast, grain. */
 const GradeShader = {
 	uniforms: {
 		tDiffuse: { value: null as THREE.Texture | null },
-		uVig: { value: 0.38 },
-		uNight: { value: 0 },
+		uVig: { value: 0.4 },
+		uTod: { value: 2 },
 		uTime: { value: 0 },
-		uGrain: { value: 0.028 }
+		uGrain: { value: 0.026 },
+		uCA: { value: 0.0035 }
 	},
 	vertexShader: /* glsl */ `
 		varying vec2 vUv;
 		void main() { vUv = uv; gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }`,
 	fragmentShader: /* glsl */ `
-		uniform sampler2D tDiffuse; uniform float uVig, uNight, uTime, uGrain; varying vec2 vUv;
+		uniform sampler2D tDiffuse; uniform float uVig, uTod, uTime, uGrain, uCA; varying vec2 vUv;
 		float rand(vec2 co) { return fract(sin(dot(co, vec2(12.9898, 78.233))) * 43758.5453); }
 		void main() {
-			vec4 tex = texture2D(tDiffuse, vUv);
-			vec3 col = tex.rgb;
-			float d = distance(vUv, vec2(0.5));
-			col *= 1.0 - smoothstep(0.34, 0.9, d) * uVig;
-			vec3 warm = vec3(1.03, 1.0, 0.95), cool = vec3(0.93, 0.98, 1.07);
-			col *= mix(warm, cool, uNight);
-			col = mix(col, col * col * (3.0 - 2.0 * col), 0.18);
+			vec2 dir = vUv - 0.5;
+			float ca = uCA * dot(dir, dir) * 4.0;
+			vec3 col = vec3(
+				texture2D(tDiffuse, vUv + dir * ca).r,
+				texture2D(tDiffuse, vUv).g,
+				texture2D(tDiffuse, vUv - dir * ca).b);
+			float d = length(dir);
+			col *= 1.0 - smoothstep(0.32, 0.88, d) * uVig;
+			float dusk = 1.0 - abs(uTod - 1.0);
+			float night = clamp(uTod - 1.0, 0.0, 1.0);
+			vec3 warm = vec3(1.04, 1.0, 0.94), cool = vec3(0.93, 0.98, 1.07);
+			col *= mix(warm, cool, night);
+			float lum = dot(col, vec3(0.2126, 0.7152, 0.0722));
+			col = mix(col, col * vec3(0.9, 1.0, 1.1), (1.0 - smoothstep(0.0, 0.5, lum)) * 0.35);
+			col = mix(col, col * vec3(1.12, 1.0, 0.86), smoothstep(0.5, 1.4, lum) * (0.25 + 0.5 * dusk));
+			vec3 c1 = clamp(col, 0.0, 1.0);
+			col += (c1 * c1 * (3.0 - 2.0 * c1) - c1) * 0.2;
 			col += (rand(vUv * (uTime + 1.0)) - 0.5) * uGrain;
-			gl_FragColor = vec4(col, tex.a);
+			gl_FragColor = vec4(col, 1.0);
+		}`
+};
+
+/** Tilt-shift blur: sharp focus band, soft top/bottom. Run once horizontally, once vertically. */
+const TiltShader = {
+	uniforms: {
+		tDiffuse: { value: null as THREE.Texture | null },
+		uDir: { value: new THREE.Vector2(1, 0) },
+		uRes: { value: new THREE.Vector2(1, 1) },
+		uFocus: { value: 0.5 },
+		uBand: { value: 0.2 },
+		uAmount: { value: 3.2 }
+	},
+	vertexShader: /* glsl */ `varying vec2 vUv; void main(){ vUv = uv; gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0); }`,
+	fragmentShader: /* glsl */ `
+		uniform sampler2D tDiffuse; uniform vec2 uDir, uRes; uniform float uFocus, uBand, uAmount; varying vec2 vUv;
+		void main() {
+			float k = smoothstep(uBand, 0.5, abs(vUv.y - uFocus)) * uAmount;
+			vec2 stp = uDir / uRes * k;
+			vec4 c = texture2D(tDiffuse, vUv) * 0.2270270270;
+			c += (texture2D(tDiffuse, vUv + stp * 1.3846153846) + texture2D(tDiffuse, vUv - stp * 1.3846153846)) * 0.3162162162;
+			c += (texture2D(tDiffuse, vUv + stp * 3.2307692308) + texture2D(tDiffuse, vUv - stp * 3.2307692308)) * 0.0702702703;
+			gl_FragColor = c;
+		}`
+};
+
+/** Screen-space light shafts toward the sun/moon (radial march over bright pixels). */
+const RaysShader = {
+	uniforms: {
+		tDiffuse: { value: null as THREE.Texture | null },
+		uLight: { value: new THREE.Vector2(0.5, 0.5) },
+		uStrength: { value: 0 },
+		uTint: { value: new THREE.Color(1, 0.8, 0.6) }
+	},
+	vertexShader: /* glsl */ `varying vec2 vUv; void main(){ vUv = uv; gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0); }`,
+	fragmentShader: /* glsl */ `
+		uniform sampler2D tDiffuse; uniform vec2 uLight; uniform float uStrength; uniform vec3 uTint; varying vec2 vUv;
+		void main() {
+			vec4 base = texture2D(tDiffuse, vUv);
+			if (uStrength <= 0.001) { gl_FragColor = base; return; }
+			vec2 delta = (uLight - vUv) / 26.0;
+			vec2 uv = vUv;
+			float decay = 1.0, acc = 0.0;
+			for (int i = 0; i < 26; i++) {
+				uv += delta;
+				vec3 s = texture2D(tDiffuse, uv).rgb;
+				float l = max(dot(s, vec3(0.3333)) - 0.8, 0.0);
+				acc += l * decay;
+				decay *= 0.94;
+			}
+			gl_FragColor = vec4(base.rgb + uTint * acc * uStrength * 0.09, base.a);
 		}`
 };
 
@@ -149,6 +218,7 @@ export async function createIsland(
 	let cardOpen = false;
 	const glide = { target: null as THREE.Vector3 | null, dist: null as number | null };
 	controls.addEventListener('start', () => {
+		stopTour();
 		controls.autoRotate = false;
 		clearTimeout(resumeTimer);
 		glide.target = null;
@@ -164,8 +234,33 @@ export async function createIsland(
 		new THREE.WebGLRenderTarget(2, 2, { type: THREE.HalfFloatType, samples: low ? 0 : 4 })
 	);
 	composer.addPass(new RenderPass(scene, camera));
+	// transparent/additive effects are hidden while AO samples depth, so halos don't darken the scene
+	const fx: THREE.Object3D[] = [];
+	let gtao: GTAOPass | null = null;
+	if (!low) {
+		gtao = new GTAOPass(scene, camera, 2, 2);
+		gtao.updateGtaoMaterial({ radius: 0.9, distanceExponent: 1.4, thickness: 1.2, scale: 1.1, samples: 12, distanceFallOff: 1, screenSpaceRadius: false });
+		gtao.blendIntensity = 0.9;
+		const baseRender = gtao.render.bind(gtao);
+		gtao.render = (...args: Parameters<GTAOPass['render']>) => {
+			const was = fx.map((o) => o.visible);
+			fx.forEach((o) => (o.visible = false));
+			baseRender(...args);
+			fx.forEach((o, i) => (o.visible = was[i]));
+		};
+		composer.addPass(gtao);
+	}
 	const bloom = new UnrealBloomPass(new THREE.Vector2(2, 2), 0.3, 0.55, 0.92);
 	composer.addPass(bloom);
+	const tiltH = new ShaderPass(TiltShader);
+	const tiltV = new ShaderPass(TiltShader);
+	tiltV.uniforms.uDir.value = new THREE.Vector2(0, 1);
+	tiltV.uniforms.uRes.value = new THREE.Vector2(1, 1);
+	tiltH.uniforms.uRes.value = new THREE.Vector2(1, 1);
+	composer.addPass(tiltH);
+	composer.addPass(tiltV);
+	const rays = new ShaderPass(RaysShader);
+	if (!low) composer.addPass(rays);
 	const grade = new ShaderPass(GradeShader);
 	composer.addPass(grade);
 	composer.addPass(new OutputPass());
@@ -185,6 +280,7 @@ export async function createIsland(
 	/* ───────── helpers ───────── */
 	const glowers: Mat[] = []; // materials whose glow depends on time of day: userData.dn = [day, night]
 	const tick: Tick[] = [];
+	const state = { nm: 0.5, tod: 1 };
 	const holoMats: { m: THREE.Material & { opacity: number }; o: number }[] = [];
 	const nightLights: { light: THREE.PointLight; day: number; night: number }[] = [];
 	const nl = (light: THREE.PointLight, day: number, night: number) => {
@@ -228,6 +324,17 @@ export async function createIsland(
 		parent.add(m);
 		return m;
 	};
+	const bevelCache = new Map<string, THREE.BufferGeometry>();
+	function bevel(w: number, h: number, d: number) {
+		const key = `${w}|${h}|${d}`;
+		let g = bevelCache.get(key);
+		if (!g) {
+			const r = Math.min(0.045, Math.min(w, h, d) * 0.32);
+			g = new RoundedBoxGeometry(w, h, d, low ? 1 : 2, r);
+			bevelCache.set(key, g);
+		}
+		return g;
+	}
 	const box = (
 		p: THREE.Object3D,
 		w: number,
@@ -237,7 +344,7 @@ export async function createIsland(
 		x: number,
 		y: number,
 		z: number
-	) => add(p, new THREE.BoxGeometry(w, h, d), mat, x, y, z);
+	) => add(p, bevel(w, h, d), mat, x, y, z);
 	const cyl = (
 		p: THREE.Object3D,
 		rt: number,
@@ -484,8 +591,49 @@ export async function createIsland(
 
 	// pond, with ripples and a tiny boat
 	cyl(world, 1.45, 1.45, 0.06, 18, M(0xa8a4b8), 0.6, 0.01, 5.2);
-	cyl(world, 1.3, 1.3, 0.08, 18, M(0x57b6ea, { roughness: 0.15, metalness: 0.1 }), 0.6, 0.03, 5.2).castShadow =
-		false;
+	const waterU = {
+		uTime: { value: 0 },
+		uTop: { value: new THREE.Color(0x6fbdf5) },
+		uHor: { value: new THREE.Color(0xffe9c9) },
+		uDeep: { value: new THREE.Color(0x0d4a78) },
+		uSun: { value: new THREE.Vector3(0, 1, 0) },
+		uSunCol: { value: new THREE.Color(0xffffff) }
+	};
+	const water = cyl(
+		world,
+		1.3,
+		1.3,
+		0.08,
+		24,
+		new THREE.ShaderMaterial({
+			uniforms: waterU,
+			vertexShader: /* glsl */ `varying vec3 vW; void main(){ vec4 w = modelMatrix * vec4(position,1.0); vW = w.xyz; gl_Position = projectionMatrix * viewMatrix * w; }`,
+			fragmentShader: /* glsl */ `
+				uniform float uTime; uniform vec3 uTop, uHor, uDeep, uSun, uSunCol; varying vec3 vW;
+				void main() {
+					vec2 p = vW.xz * 7.0;
+					vec3 n = normalize(vec3(
+						sin(p.x * 1.3 + uTime * 1.1) * 0.035 + sin(p.y * 2.1 - uTime * 0.9) * 0.022 + sin((p.x + p.y) * 3.1 + uTime * 1.7) * 0.015,
+						1.0,
+						cos(p.y * 1.2 - uTime * 1.0) * 0.035 + cos(p.x * 2.3 + uTime * 0.8) * 0.022 + cos((p.x - p.y) * 2.7 - uTime * 1.5) * 0.015));
+					vec3 V = normalize(cameraPosition - vW);
+					vec3 R = reflect(-V, n);
+					vec3 sky = mix(uHor, uTop, clamp(R.y * 1.4, 0.0, 1.0));
+					float f = 0.18 + 0.82 * pow(1.0 - max(dot(n, V), 0.0), 3.0);
+					vec3 col = mix(uDeep, sky, f);
+					float spec = pow(max(dot(R, normalize(uSun)), 0.0), 140.0);
+					col += uSunCol * spec * 1.1;
+					float glint = pow(max(sin(p.x * 5.0 + uTime * 2.0) * sin(p.y * 5.0 - uTime * 1.6), 0.0), 40.0);
+					col += uSunCol * glint * 0.1;
+					gl_FragColor = vec4(col, 1.0);
+				}`
+		}),
+		0.6,
+		0.03,
+		5.2
+	);
+	water.castShadow = false;
+	water.receiveShadow = false;
 	cyl(world, 0.22, 0.22, 0.03, 8, M(0x3f9d57), 1.0, 0.09, 5.0).castShadow = false;
 	obstacles.push([0.6, 5.2, 1.8]);
 	const ripples = [0, 0.5].map((p0) => {
@@ -1971,8 +2119,8 @@ export async function createIsland(
 		noRay(pivot);
 		clouds.push({ pivot, sp: (0.01 + rnd() * 0.018) * (rnd() < 0.5 ? 1 : -1) });
 	}
-	const starPos = new Float32Array(600 * 3);
-	for (let i = 0; i < 600; i++) {
+	const starPos = new Float32Array(900 * 3);
+	for (let i = 0; i < 900; i++) {
 		let x = 0,
 			y = 0,
 			z = 0;
@@ -1980,7 +2128,7 @@ export async function createIsland(
 			x = rnd() * 2 - 1;
 			y = rnd() * 2 - 1;
 			z = rnd() * 2 - 1;
-		} while (x * x + y * y + z * z > 1 || y < 0.05);
+		} while (x * x + y * y + z * z > 1);
 		const l = Math.hypot(x, y, z);
 		starPos.set([(x / l) * 85, (y / l) * 85, (z / l) * 85], i * 3);
 	}
@@ -2018,7 +2166,7 @@ export async function createIsland(
 		halo.position.copy(pos);
 		halo.raycast = () => {};
 		scene.add(halo);
-		return { m, hm };
+		return { m, hm, mesh, halo };
 	};
 	const sunO = orb(3.2, 0xfff0b0, new THREE.Vector3(40, 26, 32)),
 		moonO = orb(2.8, 0xdfe8ff, new THREE.Vector3(-38, 28, -34));
@@ -2105,68 +2253,332 @@ export async function createIsland(
 	flies.frustumCulled = false;
 	world.add(flies);
 
-	/* ───────── day / night ───────── */
+	/* ───────── atmosphere: light cones, mist, cloud sea, aurora, nebula, shooting stars ───────── */
+	const gradTop = gradTexture(true),
+		gradBottom = gradTexture(false);
+	function gradTexture(apexTop: boolean) {
+		return canvasTex(4, 64, (c, w, h) => {
+			const gr = c.createLinearGradient(0, 0, 0, h);
+			gr.addColorStop(0, apexTop ? 'rgba(255,255,255,0.95)' : 'rgba(255,255,255,0)');
+			gr.addColorStop(1, apexTop ? 'rgba(255,255,255,0)' : 'rgba(255,255,255,0.95)');
+			c.fillStyle = gr;
+			c.fillRect(0, 0, w, h);
+		});
+	}
+	const cones: { m: THREE.Mesh; day: number; night: number }[] = [];
+	function beam(
+		parent: THREE.Object3D,
+		geo: THREE.BufferGeometry,
+		color: number,
+		day: number,
+		night: number,
+		apexTop: boolean,
+		x: number,
+		y: number,
+		z: number
+	) {
+		const mat = new THREE.MeshBasicMaterial({
+			color,
+			map: apexTop ? gradTop : gradBottom,
+			transparent: true,
+			opacity: 0,
+			depthWrite: false,
+			blending: THREE.AdditiveBlending,
+			side: THREE.DoubleSide,
+			toneMapped: false,
+			fog: false
+		});
+		const m = new THREE.Mesh(geo, mat);
+		m.position.set(x, y, z);
+		m.raycast = () => {};
+		parent.add(m);
+		cones.push({ m, day, night });
+		return m;
+	}
+	// lantern pool of light, mission-control tower beam, sweeping searchlight
+	beam(world, new THREE.ConeGeometry(1.15, 1.45, 28, 1, true), 0xffb347, 0.03, 0.42, true, 1.7, 0.725, -1.7);
+	beam(world, new THREE.CylinderGeometry(0.5, 0.08, 7, 18, 1, true), 0x62f0e0, 0, 0.34, false, 2.5, 6.2, -6.0);
+	const searchlight = new THREE.Group();
+	searchlight.position.set(-0.9, 3.4, -6.1);
+	world.add(searchlight);
+	const slGeo = new THREE.CylinderGeometry(0.6, 0.03, 11, 16, 1, true);
+	slGeo.translate(0, 5.5, 0);
+	slGeo.rotateZ(-(Math.PI / 2 - 0.5));
+	beam(searchlight, slGeo, 0x9ff6ff, 0, 0.3, false, 0, 0, 0);
+	tick.push((_dt, t) => {
+		searchlight.rotation.y = t * 0.6;
+		for (const c of cones) (c.m.material as THREE.MeshBasicMaterial).opacity = L(c.day, c.night, state.nm);
+	});
+
+	// low ground mist and wisps under the island
+	const mistTex = canvasTex(128, 128, (c, w) => {
+		const gr = c.createRadialGradient(w / 2, w / 2, 0, w / 2, w / 2, w / 2);
+		gr.addColorStop(0, 'rgba(255,255,255,0.9)');
+		gr.addColorStop(0.5, 'rgba(255,255,255,0.35)');
+		gr.addColorStop(1, 'rgba(255,255,255,0)');
+		c.fillStyle = gr;
+		c.fillRect(0, 0, w, w);
+	});
+	const mistMat = new THREE.MeshBasicMaterial({ map: mistTex, color: 0xffffff, transparent: true, opacity: 0.1, depthWrite: false, fog: false, toneMapped: false });
+	const mists = Array.from({ length: low ? 6 : 11 }, (_, i) => {
+		const m = new THREE.Mesh(new THREE.PlaneGeometry(1, 1), mistMat);
+		m.rotation.x = -Math.PI / 2;
+		const sz = i < 6 ? 6 + rnd() * 6 : 9 + rnd() * 5;
+		m.scale.set(sz, sz, 1);
+		m.raycast = () => {};
+		world.add(m);
+		return { m, ph: rnd() * 6, x: (rnd() - 0.5) * (i < 6 ? 8 : 6), z: (rnd() - 0.5) * (i < 6 ? 8 : 6), y: i < 6 ? 0.2 + (i % 3) * 0.2 : -2.2 - (i - 6) * 0.9 };
+	});
+	tick.push((_dt, t) => {
+		for (const k of mists) k.m.position.set(k.x + Math.sin(t * 0.07 + k.ph) * 1.6, k.y, k.z + Math.cos(t * 0.06 + k.ph) * 1.6);
+	});
+
+	// cloud sea far below, so the island floats above a layer of soft cloud
+	const puffTex = canvasTex(128, 128, (c, w) => {
+		for (let i = 0; i < 7; i++) {
+			const x = w * (0.25 + rnd() * 0.5),
+				y = w * (0.35 + rnd() * 0.3),
+				r = w * (0.2 + rnd() * 0.18);
+			const gr = c.createRadialGradient(x, y, 0, x, y, r);
+			gr.addColorStop(0, 'rgba(255,255,255,0.7)');
+			gr.addColorStop(1, 'rgba(255,255,255,0)');
+			c.fillStyle = gr;
+			c.fillRect(0, 0, w, w);
+		}
+	});
+	const seaMat = new THREE.SpriteMaterial({ map: puffTex, color: 0xffffff, transparent: true, opacity: 0.6, depthWrite: false, fog: false });
+	const seaPivot = new THREE.Group();
+	scene.add(seaPivot);
+	for (let i = 0; i < (low ? 14 : 26); i++) {
+		const a = rnd() * Math.PI * 2,
+			r = 18 + rnd() * 44;
+		const sp = new THREE.Sprite(seaMat);
+		sp.position.set(Math.cos(a) * r, -12 - rnd() * 10, Math.sin(a) * r);
+		const sz = 18 + rnd() * 18;
+		sp.scale.set(sz, sz * 0.55, 1);
+		sp.raycast = () => {};
+		seaPivot.add(sp);
+	}
+	tick.push((dt) => {
+		seaPivot.rotation.y += dt * 0.004;
+	});
+
+	// aurora curtain ring (night)
+	const auroraMat = new THREE.ShaderMaterial({
+		uniforms: { uTime: { value: 0 }, uOpacity: { value: 0 } },
+		transparent: true,
+		depthWrite: false,
+		side: THREE.BackSide,
+		blending: THREE.AdditiveBlending,
+		vertexShader: /* glsl */ `varying vec2 vUv; void main(){ vUv = uv; gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0); }`,
+		fragmentShader: /* glsl */ `
+			uniform float uTime, uOpacity; varying vec2 vUv;
+			void main() {
+				float a = vUv.x * 6.2831853;
+				float sweep = sin(a * 3.0 + uTime * 0.25 + sin(a * 7.0 + uTime * 0.4) * 1.4) * 0.5 + 0.5;
+				float clump = smoothstep(0.25, 0.85, sin(a * 2.0 - uTime * 0.08 + 1.0) * 0.5 + 0.5);
+				float rays = 0.55 + 0.45 * sin(a * 90.0 + sin(a * 17.0 + uTime * 0.7) * 3.0);
+				float v = vUv.y;
+				float prof = smoothstep(0.0, 0.3, v) * smoothstep(1.0, 0.5, v);
+				vec3 col = mix(vec3(0.15, 1.0, 0.55), vec3(0.55, 0.3, 1.0), smoothstep(0.35, 1.0, v));
+				float al = sweep * clump * rays * prof * uOpacity;
+				gl_FragColor = vec4(col * al * 1.4, al);
+			}`
+	});
+	const aurora = new THREE.Mesh(new THREE.CylinderGeometry(58, 58, 28, 96, 1, true), auroraMat);
+	aurora.position.y = -6;
+	aurora.raycast = () => {};
+	aurora.frustumCulled = false;
+	scene.add(aurora);
+
+	// nebula smudges
+	const nebTex = canvasTex(256, 256, (c, w) => {
+		const cols = ['rgba(150,90,255,0.35)', 'rgba(70,120,255,0.3)', 'rgba(255,110,190,0.25)', 'rgba(60,220,230,0.2)'];
+		for (let i = 0; i < 9; i++) {
+			const x = w * (0.25 + rnd() * 0.5),
+				y = w * (0.25 + rnd() * 0.5),
+				r = w * (0.16 + rnd() * 0.22);
+			const gr = c.createRadialGradient(x, y, 0, x, y, r);
+			gr.addColorStop(0, cols[i % cols.length]);
+			gr.addColorStop(1, 'rgba(0,0,0,0)');
+			c.fillStyle = gr;
+			c.fillRect(0, 0, w, w);
+		}
+	});
+	const nebMat = new THREE.SpriteMaterial({ map: nebTex, transparent: true, opacity: 0, depthWrite: false, blending: THREE.AdditiveBlending, toneMapped: false, fog: false });
+	(
+		[
+			[-52, -2, -30, 80],
+			[-20, 2, -62, 90],
+			[-60, -8, 6, 70]
+		] as [number, number, number, number][]
+	).forEach(([x, y, z, sz]) => {
+		const sp = new THREE.Sprite(nebMat);
+		sp.position.set(x, y, z);
+		sp.scale.set(sz, sz, 1);
+		sp.raycast = () => {};
+		scene.add(sp);
+	});
+
+	// shooting stars, spawned in view space so they always cross the frame
+	const streakTex = canvasTex(128, 8, (c, w, h) => {
+		const gr = c.createLinearGradient(0, 0, w, 0);
+		gr.addColorStop(0, 'rgba(255,255,255,0)');
+		gr.addColorStop(1, 'rgba(255,255,255,1)');
+		c.fillStyle = gr;
+		c.fillRect(0, h / 2 - 1.5, w, 3);
+	});
+	const shooters = Array.from({ length: 3 }, () => {
+		const mat = new THREE.SpriteMaterial({ map: streakTex, transparent: true, opacity: 0, depthWrite: false, blending: THREE.AdditiveBlending, toneMapped: false, fog: false });
+		const sp = new THREE.Sprite(mat);
+		sp.scale.set(8, 0.28, 1);
+		sp.raycast = () => {};
+		scene.add(sp);
+		return { sp, mat, life: 0, dur: 1, vel: new THREE.Vector3(), cd: 1 + rnd() * 5 };
+	});
+	const cR = new THREE.Vector3(),
+		cU = new THREE.Vector3(),
+		cF = new THREE.Vector3();
+	tick.push((dt) => {
+		const vis = THREE.MathUtils.clamp((state.tod - 1.25) / 0.6, 0, 1);
+		auroraMat.uniforms.uTime.value += dt;
+		auroraMat.uniforms.uOpacity.value = vis * 0.75;
+		nebMat.opacity = vis * 0.3;
+		camera.updateMatrixWorld();
+		cR.setFromMatrixColumn(camera.matrixWorld, 0);
+		cU.setFromMatrixColumn(camera.matrixWorld, 1);
+		cF.setFromMatrixColumn(camera.matrixWorld, 2).negate();
+		for (const sh of shooters) {
+			if (sh.life > 0) {
+				sh.life -= dt;
+				sh.sp.position.addScaledVector(sh.vel, dt);
+				const k = 1 - sh.life / sh.dur;
+				sh.mat.opacity = Math.sin(Math.PI * k) * vis;
+				if (sh.life <= 0) sh.mat.opacity = 0;
+			} else if (vis > 0.5 && (sh.cd -= dt) <= 0) {
+				const ang = -(0.25 + rnd() * 0.45) + (rnd() < 0.5 ? 0 : Math.PI + 0.5);
+				sh.sp.position.copy(camera.position).addScaledVector(cF, 75).addScaledVector(cR, (rnd() - 0.5) * 55).addScaledVector(cU, 2 + rnd() * 16);
+				sh.vel.set(0, 0, 0).addScaledVector(cR, Math.cos(ang) * 38).addScaledVector(cU, Math.sin(ang) * 38);
+				sh.mat.rotation = ang;
+				sh.dur = sh.life = 0.8 + rnd() * 0.7;
+				sh.cd = 3 + rnd() * 7;
+			}
+		}
+	});
+
+	/* ───────── time of day: day, golden-hour dusk, night ───────── */
 	const C = (h: number) => new THREE.Color(h);
 	const DAY = {
 		hs: C(0xbfe0ff), hg: C(0xa8946e), sun: C(0xfff1dc),
-		sky: [C(0x6fbdf5), C(0xb4e1ff), C(0xffe9c9)], cloud: C(0xffffff), cloudE: C(0xffe5ef)
+		sky: [C(0x6fbdf5), C(0xb4e1ff), C(0xffe9c9)], cloud: C(0xffffff), cloudE: C(0xffe5ef), sea: C(0xffffff), mist: C(0xeaf6ff), deep: C(0x0d4a78)
+	};
+	const DUSK = {
+		hs: C(0xffb98f), hg: C(0x5a3a58), sun: C(0xff9a55),
+		sky: [C(0x1f2566), C(0xd9627a), C(0xffb15e)], cloud: C(0xffc7a8), cloudE: C(0xd9627a), sea: C(0xffb59a), mist: C(0xffc9a6), deep: C(0x3a2a5e)
 	};
 	const NIGHT = {
 		hs: C(0x6074e0), hg: C(0x1a1038), sun: C(0xa9bcff),
-		sky: [C(0x040716), C(0x0c1640), C(0x1d2c6c)], cloud: C(0x5b5f94), cloudE: C(0x2a2f66)
+		sky: [C(0x040716), C(0x0c1640), C(0x1d2c6c)], cloud: C(0x5b5f94), cloudE: C(0x2a2f66), sea: C(0x232a5c), mist: C(0x7c8fe0), deep: C(0x06203a)
 	};
 	const SUN_P = new THREE.Vector3(11, 15, 9),
+		DUSK_P = new THREE.Vector3(-15, 6.5, -5),
 		MOON_P = new THREE.Vector3(-10, 13, -8);
-	const tmp = new THREE.Color(),
-		tmp2 = new THREE.Color();
-	const startNight = isLocalNight() ? 1 : 0;
-	let night = startNight,
-		nightTarget = startNight,
-		lastN = -1,
+	const mixC = (out: THREE.Color, d: THREE.Color, u: THREE.Color, n: THREE.Color, t: number) =>
+		t <= 1 ? out.lerpColors(d, u, t) : out.lerpColors(u, n, t - 1);
+	const mixS = (d: number, u: number, n: number, t: number) => (t <= 1 ? L(d, u, t) : L(u, n, t - 1));
+	const tmp = new THREE.Color();
+	const skyNow = [new THREE.Color(), new THREE.Color(), new THREE.Color()];
+	const MODES: TimeMode[] = ['day', 'dusk', 'night'];
+	const startTod = isLocalNight() ? 2 : 0;
+	let tod = startTod,
+		todTarget = startTod,
+		lastTod = -1,
 		followClock = true;
 	const skyCtx = skyCanvas.getContext('2d')!;
-	function paintSky(n: number) {
+	function paintSky(t: number) {
+		for (let i = 0; i < 3; i++) mixC(skyNow[i], DAY.sky[i], DUSK.sky[i], NIGHT.sky[i], t);
 		const gr = skyCtx.createLinearGradient(0, 0, 0, 256);
-		const st = DAY.sky.map((d, i) => tmp.clone().lerpColors(d, NIGHT.sky[i], n));
-		gr.addColorStop(0, '#' + st[0].getHexString());
-		gr.addColorStop(0.55, '#' + st[1].getHexString());
-		gr.addColorStop(1, '#' + st[2].getHexString());
+		gr.addColorStop(0, '#' + skyNow[0].getHexString());
+		gr.addColorStop(0.55, '#' + skyNow[1].getHexString());
+		gr.addColorStop(1, '#' + skyNow[2].getHexString());
 		skyCtx.fillStyle = gr;
 		skyCtx.fillRect(0, 0, 2, 256);
 		skyTex.needsUpdate = true;
-		(scene.fog as THREE.FogExp2).color.copy(st[1]);
+		(scene.fog as THREE.FogExp2).color.copy(skyNow[1]);
 	}
-	function applyNight(n: number) {
-		hemi.color.lerpColors(DAY.hs, NIGHT.hs, n);
-		hemi.groundColor.lerpColors(DAY.hg, NIGHT.hg, n);
-		hemi.intensity = L(1.1, 1.05, n);
-		sun.color.lerpColors(DAY.sun, NIGHT.sun, n);
-		sun.intensity = L(2.7, 2.1, n);
-		sun.position.lerpVectors(SUN_P, MOON_P, n);
-		renderer.toneMappingExposure = L(1.05, 1.1, n);
-		const env = L(0.3, 0.16, n);
+	const sunDirNow = new THREE.Vector3();
+	function applyTime(t: number) {
+		const n = t / 2;
+		mixC(hemi.color, DAY.hs, DUSK.hs, NIGHT.hs, t);
+		mixC(hemi.groundColor, DAY.hg, DUSK.hg, NIGHT.hg, t);
+		hemi.intensity = mixS(1.1, 0.95, 1.05, t);
+		mixC(sun.color, DAY.sun, DUSK.sun, NIGHT.sun, t);
+		sun.intensity = mixS(2.7, 3.0, 2.1, t);
+		if (t <= 1) sun.position.lerpVectors(SUN_P, DUSK_P, t);
+		else sun.position.lerpVectors(DUSK_P, MOON_P, t - 1);
+		renderer.toneMappingExposure = mixS(1.05, 1.12, 1.1, t);
+		const env = mixS(0.3, 0.22, 0.16, t);
 		scene.traverse((o) => {
 			const mat = (o as THREE.Mesh).material as Mat | undefined;
 			if (mat && 'envMapIntensity' in mat) mat.envMapIntensity = env;
 		});
-		cloudMat.color.lerpColors(DAY.cloud, NIGHT.cloud, n);
-		cloudMat.emissive.lerpColors(DAY.cloudE, NIGHT.cloudE, n);
-		(stars.material as THREE.PointsMaterial).opacity = Math.max(0, (n - 0.15) / 0.85);
-		sunO.m.opacity = 1 - n;
-		sunO.hm.opacity = 0.18 * (1 - n);
-		moonO.m.opacity = n;
-		moonO.hm.opacity = 0.14 * n;
-		fliesM.opacity = L(0.12, 1, n);
-		orbitLine.material.opacity = L(0.08, 0.3, n);
-		birdMat.color.lerpColors(tmp2.set(0x2a3a6a), tmp.set(0x0b0f24), n);
-		butterflies.visible = n < 0.6;
-		lanternMat.opacity = Math.max(0, (n - 0.3) / 0.7);
-		blobMat.opacity = L(0.38, 0.55, n);
-		bloom.strength = L(0.22, 0.8, n);
-		grade.uniforms.uNight.value = n;
-		paintSky(n);
-		opts.onNight(n > 0.5);
+		mixC(cloudMat.color, DAY.cloud, DUSK.cloud, NIGHT.cloud, t);
+		mixC(cloudMat.emissive, DAY.cloudE, DUSK.cloudE, NIGHT.cloudE, t);
+		mixC(seaMat.color, DAY.sea, DUSK.sea, NIGHT.sea, t);
+		seaMat.opacity = mixS(0.55, 0.65, 0.32, t);
+		mixC(mistMat.color, DAY.mist, DUSK.mist, NIGHT.mist, t);
+		mistMat.opacity = mixS(0.09, 0.15, 0.12, t);
+		(stars.material as THREE.PointsMaterial).opacity = Math.max(0, (n - 0.3) / 0.7);
+		sunDirNow.lerpVectors(SUN_P, DUSK_P, Math.min(t, 1)).normalize().multiplyScalar(62);
+		sunO.mesh.position.copy(sunDirNow);
+		sunO.halo.position.copy(sunDirNow);
+		const sunVis = 1 - THREE.MathUtils.clamp((t - 1) / 0.7, 0, 1),
+			moonVis = THREE.MathUtils.clamp((t - 0.8) / 1.2, 0, 1);
+		sunO.m.opacity = sunVis;
+		sunO.hm.opacity = 0.2 * sunVis;
+		moonO.m.opacity = moonVis;
+		moonO.hm.opacity = 0.14 * moonVis;
+		fliesM.opacity = mixS(0.12, 0.55, 1, t);
+		orbitLine.material.opacity = mixS(0.08, 0.16, 0.3, t);
+		mixC(tmp, C(0x2a3a6a), C(0x3a2a4a), C(0x0b0f24), t);
+		birdMat.color.copy(tmp);
+		butterflies.visible = t < 1.1;
+		lanternMat.opacity = Math.max(0, (n - 0.2) / 0.8);
+		blobMat.opacity = mixS(0.38, 0.45, 0.55, t);
+		bloom.strength = mixS(0.22, 0.5, 0.8, t);
+		grade.uniforms.uTod.value = t;
+		paintSky(t);
+		waterU.uTop.value.copy(skyNow[0]);
+		waterU.uHor.value.copy(skyNow[2]);
+		mixC(waterU.uDeep.value, DAY.deep, DUSK.deep, NIGHT.deep, t);
+		mixC(waterU.uSunCol.value, C(0xfff1dc), C(0xff9a55), C(0xa9bcff), t);
+		waterU.uSun.value.copy(sun.position);
 	}
+	const rayPos = new THREE.Vector3(),
+		rayTmp = new THREE.Vector3();
+	function updateRays() {
+		if (low) return;
+		if (tod <= 1) rayPos.copy(sunDirNow);
+		else rayPos.lerpVectors(sunDirNow, moonO.mesh.position, tod - 1);
+		camera.updateMatrixWorld();
+		rayTmp.copy(rayPos).applyMatrix4(camera.matrixWorldInverse);
+		const inFront = rayTmp.z < 0;
+		rayTmp.copy(rayPos).project(camera);
+		rays.uniforms.uLight.value.set(rayTmp.x * 0.5 + 0.5, rayTmp.y * 0.5 + 0.5);
+		rays.uniforms.uStrength.value = inFront ? mixS(0.5, 1.0, 0.55, tod) : 0;
+		mixC(rays.uniforms.uTint.value, C(0xfff0cc), C(0xff9a55), C(0x9fb4ff), tod);
+	}
+	function setTimeMode(m: TimeMode) {
+		todTarget = MODES.indexOf(m);
+		if (reduceMotion) tod = todTarget;
+		opts.onTime(m);
+	}
+	opts.onTime(MODES[startTod]);
+	// everything translucent or additive is hidden from the ambient-occlusion depth pass
+	scene.traverse((o) => {
+		const m = (o as THREE.Mesh).material as THREE.Material | THREE.Material[] | undefined;
+		if (m && (Array.isArray(m) ? m.some((x) => x.transparent) : m.transparent)) fx.push(o);
+	});
 
 	/* ───────── interaction ───────── */
 	const el = renderer.domElement;
@@ -2244,6 +2656,44 @@ export async function createIsland(
 	el.addEventListener('pointerdown', onDown);
 	el.addEventListener('pointerup', onUp);
 
+	/* ───────── guided tour ───────── */
+	const TOUR = ['workshop', 'chapel', 'arcade', 'toolshed', 'appstore', 'play'];
+	const tour = { active: false, i: -1, wait: 0 };
+	function startTour() {
+		if (tour.active) return;
+		skipIntro();
+		tour.active = true;
+		tour.i = -1;
+		tour.wait = 0;
+		controls.autoRotateSpeed = 1.1;
+		opts.onTour(true);
+	}
+	function stopTour(silent = false) {
+		if (!tour.active) return;
+		tour.active = false;
+		controls.autoRotateSpeed = 0.5;
+		if (!silent) {
+			opts.onTour(false);
+			if (selected) select(null);
+		}
+	}
+	function tourStep(dt: number) {
+		tour.wait -= dt;
+		if (tour.wait > 0) return;
+		tour.i++;
+		if (tour.i >= TOUR.length) {
+			tour.active = false;
+			controls.autoRotateSpeed = 0.5;
+			select(null);
+			glide.dist = HOME.length();
+			opts.onTour(false);
+			return;
+		}
+		select(byId[TOUR[tour.i]]);
+		controls.autoRotate = !reduceMotion;
+		tour.wait = 5.5;
+	}
+
 	/* ───────── sizing ───────── */
 	function resize() {
 		const w = Math.max(1, container.clientWidth),
@@ -2252,6 +2702,9 @@ export async function createIsland(
 		composer.setPixelRatio(renderer.getPixelRatio());
 		composer.setSize(w, h);
 		bloom.resolution.set(w / (low ? 2 : 1), h / (low ? 2 : 1));
+		const pr = renderer.getPixelRatio();
+		tiltH.uniforms.uRes.value.set(w * pr, h * pr);
+		tiltV.uniforms.uRes.value.set(w * pr, h * pr);
 		camera.aspect = w / h;
 		camera.zoom = w / h < 1 ? 0.5 + 0.5 * (w / h) : 1;
 		camera.updateProjectionMatrix();
@@ -2291,21 +2744,24 @@ export async function createIsland(
 		clockT += dt;
 		if (followClock && clockT > 1) {
 			clockT = 0;
-			const next = isLocalNight() ? 1 : 0;
-			if (next !== nightTarget) {
-				nightTarget = next;
-				if (reduceMotion) night = nightTarget;
+			const next = isLocalNight() ? 2 : 0;
+			if (next !== todTarget) {
+				todTarget = next;
+				if (reduceMotion) tod = todTarget;
 			}
 		}
-		if (Math.abs(night - nightTarget) > 0.001) {
-			night += (nightTarget - night) * Math.min(1, dt * 2.2);
-			if (Math.abs(night - nightTarget) < 0.002) night = nightTarget;
+		if (Math.abs(tod - todTarget) > 0.001) {
+			tod += (todTarget - tod) * Math.min(1, dt * 1.6);
+			if (Math.abs(tod - todTarget) < 0.003) tod = todTarget;
 		}
-		if (night !== lastN) {
-			applyNight(night);
-			lastN = night;
+		if (tod !== lastTod) {
+			applyTime(tod);
+			lastTod = tod;
 		}
-		const nm = THREE.MathUtils.smoothstep(night, 0, 1);
+		const nm = THREE.MathUtils.smoothstep(tod / 2, 0, 1);
+		state.nm = nm;
+		state.tod = tod;
+		waterU.uTime.value = t;
 
 		if (introT < INTRO) {
 			introT += dt;
@@ -2401,6 +2857,8 @@ export async function createIsland(
 		}
 
 		grade.uniforms.uTime.value = t % 100;
+		if (tour.active) tourStep(dt);
+		updateRays();
 		composer.render();
 		if (first) {
 			first = false;
@@ -2411,15 +2869,19 @@ export async function createIsland(
 	const isFoundNoop = opts.isFound; // referenced by the page for "? ? ?" labels; kept here so the contract is explicit
 
 	return {
-		setNight(n: boolean) {
+		setTime(mode: TimeMode) {
 			followClock = false;
-			nightTarget = n ? 1 : 0;
-			if (reduceMotion) night = nightTarget;
+			setTimeMode(mode);
 		},
-		toggleNight() {
+		cycleTime() {
 			followClock = false;
-			nightTarget = nightTarget ? 0 : 1;
-			if (reduceMotion) night = nightTarget;
+			setTimeMode(MODES[(Math.round(todTarget) + 1) % 3]);
+		},
+		startTour() {
+			startTour();
+		},
+		stopTour() {
+			stopTour();
 		},
 		closeCard() {
 			if (selected) select(null);
@@ -2429,6 +2891,7 @@ export async function createIsland(
 			disposed = true;
 			renderer.setAnimationLoop(null);
 			clearTimeout(resumeTimer);
+			stopTour(true);
 			ro.disconnect();
 			el.removeEventListener('pointermove', onMove);
 			el.removeEventListener('pointerleave', onLeave);
