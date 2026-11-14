@@ -123,6 +123,10 @@ const FIND_DATA: Record<string, { title: string; blurb: string }> = {
 		title: 'Hidden Geode',
 		blurb: 'A cave tucked under the rock, glowing quietly. Not everything worth finding is on top.'
 	},
+	kraken: {
+		title: 'Pond Kraken',
+		blurb: 'Small, shy, and very into gardening. It surfaces now and then to borrow a tulip. Please do not tell the sailboat.'
+	},
 	skull: {
 		title: 'Memento Mori',
 		blurb: 'Remember that you will die. A reminder to spend the time well.'
