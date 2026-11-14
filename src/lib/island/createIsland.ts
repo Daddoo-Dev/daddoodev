@@ -8,6 +8,8 @@ import { ShaderPass } from 'three/examples/jsm/postprocessing/ShaderPass.js';
 import { OutputPass } from 'three/examples/jsm/postprocessing/OutputPass.js';
 import { GTAOPass } from 'three/examples/jsm/postprocessing/GTAOPass.js';
 import { RoundedBoxGeometry } from 'three/examples/jsm/geometries/RoundedBoxGeometry.js';
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
+import { MeshoptDecoder } from 'three/examples/jsm/libs/meshopt_decoder.module.js';
 import { ENTRIES } from './data';
 import type { WeatherState } from './weather';
 
@@ -526,6 +528,9 @@ export async function createIsland(
 	});
 
 	/* ───────── scenery ───────── */
+	const gltfLoader = new GLTFLoader();
+	gltfLoader.setMeshoptDecoder(MeshoptDecoder);
+	const loadModel = (url: string) => new Promise<THREE.Group>((resolve, reject) => gltfLoader.load(url, (g) => resolve(g.scene), undefined, reject));
 	let krakenPoke: () => void = () => {};
 	const obstacles: [number, number, number][] = []; // keeps flowers and grass off buildings and paths
 	function tree(x: number, z: number, s = 1, col = 0x4fae5b) {
@@ -1633,7 +1638,9 @@ export async function createIsland(
 		g.rotation.y = -2.2;
 		world.add(g);
 		blob(6.5, -1.4, 1.2);
-		const mound = add(g, new THREE.DodecahedronGeometry(0.9, 0), M(0x8b86a0), 0, 0.3, 0);
+		const proc = new THREE.Group(); // procedural stand-in, replaced by the authored model when it loads
+		g.add(proc);
+		const mound = add(proc, new THREE.DodecahedronGeometry(0.9, 0), M(0x8b86a0), 0, 0.3, 0);
 		mound.scale.set(1.3, 0.6, 1.1);
 		const sc = M(0x3fa66a),
 			gold = M(0xf2c14e);
@@ -1641,10 +1648,10 @@ export async function createIsland(
 		body.rotation.x = Math.PI / 2;
 		body.position.y = 0.7;
 		body.castShadow = true;
-		g.add(body);
+		proc.add(body);
 		const dh = new THREE.Group();
 		dh.position.set(0.82, 0.72, 0.12);
-		g.add(dh);
+		proc.add(dh);
 		ball(dh, 0.25, sc, 0, 0, 0, 1);
 		box(dh, 0.2, 0.14, 0.26, sc, 0.2, -0.04, 0);
 		[-0.09, 0.09].forEach((z) => {
@@ -1653,10 +1660,10 @@ export async function createIsland(
 			add(dh, new THREE.SphereGeometry(0.025, 5, 4), G(0xff8a3c, 0xff6a00, 0.15, 1.8), 0.32, -0.02, z * 0.55);
 		});
 		[-1, 1].forEach((s) => {
-			const w = box(g, 0.04, 0.5, 0.4, M(0x2e8a57), -0.12, 1.0, s * 0.28);
+			const w = box(proc, 0.04, 0.5, 0.4, M(0x2e8a57), -0.12, 1.0, s * 0.28);
 			w.rotation.set(s * 0.45, 0, 0.3);
 		});
-		const tail = ball(g, 0.14, sc, 0.42, 0.68, -0.44, 1);
+		const tail = ball(proc, 0.14, sc, 0.42, 0.68, -0.44, 1);
 		tail.scale.set(1.8, 0.8, 0.8);
 		tail.rotation.y = -0.32;
 		const zTex = canvasTex(64, 64, (c, w) => {
@@ -1685,22 +1692,56 @@ export async function createIsland(
 		dl.position.set(1.1, 0.8, 0.12);
 		g.add(dl);
 		nl(dl, 0, 1.3);
+		const nose = { x: 1.12, y: 0.66, z: 0.12 };
+		const MODEL_S = 1.9;
+		let model: THREE.Group | null = null;
 		tick.push((dt, t) => {
-			g.scale.y = 1 + Math.sin(t * 1.2) * 0.02;
+			if (model) model.scale.y = MODEL_S * (1 + Math.sin(t * 1.2) * 0.015);
+			else proc.scale.y = 1 + Math.sin(t * 1.2) * 0.02;
 			for (const z of zs) {
 				z.p = (z.p + dt * 0.25) % 1;
-				z.sp.position.set(0.95 + z.p * 0.3, 1.05 + z.p * 0.9, 0.12);
+				z.sp.position.set(nose.x - 0.17 + z.p * 0.3, nose.y + 0.39 + z.p * 0.9, nose.z);
 				z.sp.scale.setScalar(0.18 + z.p * 0.25);
 				z.sp.material.opacity = 1 - z.p;
 			}
 			for (const f of puffs) {
 				f.p = (f.p + dt * 0.35) % 1;
-				f.m.position.set(1.12 + f.p * 0.25, 0.66 + f.p * 0.35, 0.12);
+				f.m.position.set(nose.x + f.p * 0.25, nose.y + f.p * 0.35, nose.z);
 				f.m.scale.setScalar(0.6 + f.p * 1.6);
 				(f.m.material as THREE.MeshStandardMaterial).opacity = 0.45 * (1 - f.p);
 			}
 		});
 		registerFind('dragon', g, 1.1, 0.7);
+		dl.position.set(nose.x - 0.02, nose.y + 0.14, nose.z);
+		// authored model (Meshy -> glTF, meshopt + WebP, ~170 KB); procedural dragon stays if it fails to load
+		loadModel('/island/dragon.glb')
+			.then((m) => {
+				m.scale.setScalar(MODEL_S);
+				m.position.y = 0.43 * MODEL_S;
+				m.rotation.y = Math.PI / 2; // model faces +z, the island's dragon faces +x
+				m.traverse((o) => {
+					const mesh = o as THREE.Mesh;
+					if (mesh.isMesh) {
+						mesh.castShadow = true;
+						mesh.receiveShadow = true;
+						// generated PBR maps are fully metallic; soften so it matches the island's matte look
+						const mm = mesh.material as Mat;
+						mm.metalness = 0.18;
+						mm.roughness = 1;
+						mm.side = THREE.FrontSide;
+					}
+				});
+				g.remove(proc);
+				g.add(m);
+				prep(m, byId.dragon.mats);
+				model = m;
+				nose.x = 0.86;
+				nose.y = 0.58;
+				nose.z = 0;
+				dl.position.set(nose.x - 0.02, nose.y + 0.14, nose.z);
+				lastTod = -1; // re-apply lighting so the new materials pick up this time of day
+			})
+			.catch(() => {});
 		obstacles.push([6.5, -1.4, 1.3]);
 	}
 	// Okapi, grazing near the pond
