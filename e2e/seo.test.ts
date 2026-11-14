@@ -21,6 +21,7 @@ const HIDDEN_NOINDEX = [
 	'/analytics/conclavium',
 	'/analytics/knights-management',
 	'/bbs',
+	'/island',
 	'/lab/godspeed-ginny/index.html',
 	'/myprayercards/marketing',
 	'/bottledstar/support'
