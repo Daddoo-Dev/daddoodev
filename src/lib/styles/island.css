@@ -1,8 +1,10 @@
 /* Field Station (/island): hidden route, styled with site tokens */
 .island-page { padding: 0; }
+.island-fallback { display: grid; gap: 1rem; justify-items: center; }
 .island-sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 
 .island-stage { position: relative; height: calc(100vh - 8.5rem); min-height: 420px; overflow: hidden; background: #060a1c; }
+.island-page .island-stage { height: 100vh; min-height: 100vh; }
 .island-host, .island-canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
 .island-canvas { touch-action: none; cursor: grab; }
 .island-canvas.is-hover { cursor: pointer; }

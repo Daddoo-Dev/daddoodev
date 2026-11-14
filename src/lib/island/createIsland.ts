@@ -7,6 +7,7 @@ import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPa
 import { ShaderPass } from 'three/examples/jsm/postprocessing/ShaderPass.js';
 import { OutputPass } from 'three/examples/jsm/postprocessing/OutputPass.js';
 import { ENTRIES } from './data';
+import { isLocalNight } from './time';
 
 export interface IslandHud {
 	utc: string;
@@ -23,6 +24,7 @@ export interface IslandOptions {
 	onHud(hud: IslandHud): void;
 	onNight(night: boolean): void;
 	onReady(): void;
+	onBack(): void;
 }
 
 export interface IslandController {
@@ -1193,6 +1195,7 @@ export async function createIsland(
 		};
 		plank('ginny', 'GODSPEED GINNY >', 1.85, -0.55, 0xc08a54, '#c08a54');
 		plank('repos', 'ALL REPOS >', 1.3, 0.7, 0xa9744a, '#a9744a');
+		plank('back', 'BACK TO NORMAL >', 0.78, 0.1, 0x8f6a45, '#8f6a45');
 	}
 
 	/* ═══════════ MISSION CONTROL annex (decor) ═══════════ */
@@ -2116,9 +2119,11 @@ export async function createIsland(
 		MOON_P = new THREE.Vector3(-10, 13, -8);
 	const tmp = new THREE.Color(),
 		tmp2 = new THREE.Color();
-	let night = 1,
-		nightTarget = 1,
-		lastN = -1;
+	const startNight = isLocalNight() ? 1 : 0;
+	let night = startNight,
+		nightTarget = startNight,
+		lastN = -1,
+		followClock = true;
 	const skyCtx = skyCanvas.getContext('2d')!;
 	function paintSky(n: number) {
 		const gr = skyCtx.createLinearGradient(0, 0, 0, 256);
@@ -2201,6 +2206,10 @@ export async function createIsland(
 	};
 	const wp = new THREE.Vector3();
 	function select(it: Item | null) {
+		if (it?.id === 'back') {
+			opts.onBack();
+			return;
+		}
 		selected = it;
 		cardOpen = !!it;
 		opts.onSelect(it ? it.id : null);
@@ -2271,6 +2280,7 @@ export async function createIsland(
 	const clock = new THREE.Clock();
 	let first = true,
 		hudT = 0,
+		clockT = 0,
 		disposed = false;
 	const offv = new THREE.Vector3();
 	renderer.setAnimationLoop(() => {
@@ -2278,6 +2288,15 @@ export async function createIsland(
 			t = clock.elapsedTime,
 			mo = mo0;
 
+		clockT += dt;
+		if (followClock && clockT > 1) {
+			clockT = 0;
+			const next = isLocalNight() ? 1 : 0;
+			if (next !== nightTarget) {
+				nightTarget = next;
+				if (reduceMotion) night = nightTarget;
+			}
+		}
 		if (Math.abs(night - nightTarget) > 0.001) {
 			night += (nightTarget - night) * Math.min(1, dt * 2.2);
 			if (Math.abs(night - nightTarget) < 0.002) night = nightTarget;
@@ -2393,10 +2412,12 @@ export async function createIsland(
 
 	return {
 		setNight(n: boolean) {
+			followClock = false;
 			nightTarget = n ? 1 : 0;
 			if (reduceMotion) night = nightTarget;
 		},
 		toggleNight() {
+			followClock = false;
 			nightTarget = nightTarget ? 0 : 1;
 			if (reduceMotion) night = nightTarget;
 		},

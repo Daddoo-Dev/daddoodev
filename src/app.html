@@ -4,6 +4,11 @@
 		<meta charset="utf-8" />
 		<link rel="icon" href="%sveltekit.assets%/images/daddoodev.png" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<script>
+			try {
+				if (location.pathname === '/' && localStorage.getItem('dd-view') === 'island') location.replace('/island');
+			} catch (e) {}
+		</script>
 
 		<link rel="preconnect" href="https://fonts.googleapis.com" />
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
