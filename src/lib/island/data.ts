@@ -77,6 +77,14 @@ export const BUILDINGS: Record<string, IslandEntry> = {
 			{ label: 'GitHub repos', url: `${GITHUB}?tab=repositories` }
 		].filter((link): link is IslandLink => link !== null)
 	},
+	mission: {
+		title: 'Mission Control',
+		blurb: 'Status: 6 apps in production and 4 extensions published, with more in the lab. Questions, bug reports and ideas are always welcome.',
+		links: [
+			{ label: 'Email daddoodev@proton.me', url: 'mailto:daddoodev@proton.me' },
+			{ label: 'GitHub', url: GITHUB }
+		]
+	},
 	appstore: {
 		title: 'App Store',
 		blurb: 'Everything I have published for iPhone and iPad.',

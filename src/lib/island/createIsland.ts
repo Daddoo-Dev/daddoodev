@@ -1433,7 +1433,7 @@ export async function createIsland(
 		plank('back', 'BACK TO NORMAL >', 0.78, 0.1, 0x8f6a45, '#8f6a45');
 	}
 
-	/* ═══════════ MISSION CONTROL annex (decor) ═══════════ */
+	/* ═══════════ MISSION CONTROL — status and contact ═══════════ */
 	{
 		const g = new THREE.Group();
 		g.position.set(0, 0, -6.1);
@@ -1513,7 +1513,6 @@ export async function createIsland(
 		mcl.position.set(0, 1.2, 2.2);
 		g.add(mcl);
 		nl(mcl, 0, 3.5);
-		noRay(g);
 		let acc = 0;
 		tick.push((dt, t) => {
 			dishPivot.rotation.y = t * 0.45;
@@ -1526,6 +1525,8 @@ export async function createIsland(
 				draw(t);
 			}
 		});
+		register('mission', g, 0, 4.1, 0);
+		beacon.material = beaconM; // keep the blink: register() clones materials for hover glow
 		obstacles.push([0, -6.1, 2.6]);
 	}
 
