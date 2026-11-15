@@ -30,4 +30,8 @@
 			{/each}
 		</ul>
 	</nav>
+	<p class="island-credits">
+		Models: Church by Poly by Google (<a href="https://creativecommons.org/licenses/by/3.0/" rel="noopener noreferrer">CC-BY</a>),
+		via <a href="https://poly.pizza/m/6vzTphxL9w4" rel="noopener noreferrer">Poly Pizza</a>.
+	</p>
 </main>

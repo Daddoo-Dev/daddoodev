@@ -893,6 +893,7 @@ export async function createIsland(
 			wood = M(0x7a4e2d),
 			slate = M(0x59638f);
 		box(g, 2.4, 0.2, 5.0, M(0x9a96ab), 0, 0.1, 0.5);
+		const platformN = g.children.length;
 		box(g, 2.0, 1.7, 3.0, stone, 0, 1.05, -0.5);
 		const th = 0.7,
 			w = 1.15,
@@ -978,6 +979,7 @@ export async function createIsland(
 				g.add(m);
 			})
 		);
+		const shell = g.children.slice(platformN);
 		const cl = new THREE.PointLight(0xffb66b, 0, 6, 2);
 		cl.position.set(0, 1.3, 3.2);
 		g.add(cl);
@@ -1058,6 +1060,24 @@ export async function createIsland(
 			kids.push(['skull', sk, 0.5, 0.4]);
 		}
 		register('chapel', g, 0, 6.2, 1.55);
+		// authored church (Poly by Google, CC-BY, via Poly Pizza; meshopt + WebP, ~58 KB); procedural chapel stays if it fails to load
+		loadModel('/island/church.glb')
+			.then((m) => {
+				m.scale.setScalar(0.2); // source is ~13 x 29 x 24 units; tower at +z
+				m.position.set(0, 0.2, 0.5);
+				m.traverse((o) => {
+					const mesh = o as THREE.Mesh;
+					if (mesh.isMesh) {
+						mesh.castShadow = true;
+						mesh.receiveShadow = true;
+					}
+				});
+				shell.forEach((o) => g.remove(o));
+				g.add(m);
+				prep(m, byId.chapel.mats);
+				lastTod = -1;
+			})
+			.catch(() => {});
 		kids.forEach((k) => registerFind(...k));
 		obstacles.push([5.0, -3.8, 3.0]);
 		spoke(5.0, -3.8, 3.0);
