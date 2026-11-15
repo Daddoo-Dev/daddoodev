@@ -52,3 +52,9 @@
 	font-size: 0.8rem;
 	opacity: 0.7;
 }
+
+.island-proj { flex-basis: 100%; margin-top: 0.4rem; font-size: 0.8rem; opacity: 0.75; letter-spacing: 0.04em; }
+.island-badge { display: inline-flex; border-radius: 8px; transition: transform 0.2s ease; }
+.island-badge:hover { transform: translateY(-1px); }
+.island-badge:focus-visible { outline: 2px solid var(--accent-bright); outline-offset: 2px; }
+.island-badge img { display: block; height: 40px; width: auto; }

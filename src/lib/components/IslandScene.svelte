@@ -218,8 +218,19 @@
 			<p>{card.blurb}</p>
 			{#if card.links.length}
 				<div class="island-links">
-					{#each card.links as l (l.url)}
-						{#if l.url.startsWith('/')}
+					{#each card.links as l, i (l.url)}
+						{#if l.project && card.links[i - 1]?.project !== l.project}
+							<span class="island-proj">{l.project}</span>
+						{/if}
+						{#if l.kind}
+							<a class="island-badge" href={l.url} target="_blank" rel="noopener noreferrer" aria-label={l.label}>
+								{#if l.kind === 'play'}
+									<img src="/images/GetItOnGooglePlay_Badge_Web_color_English.png" alt="Get it on Google Play" height="40" />
+								{:else}
+									<img src="/images/Download_on_the_App_Store_Badge_US-UK_RGB_blk_092917.svg" alt="Download on the App Store" height="40" />
+								{/if}
+							</a>
+						{:else if l.url.startsWith('/')}
 							<a class="island-chip" href={l.url} onclick={() => { if (l.url === '/') setViewPref('normal'); }}>{l.label}</a>
 						{:else}
 							<a class="island-chip" href={l.url} target="_blank" rel="noopener noreferrer">{l.label} ↗</a>
