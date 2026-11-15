@@ -88,6 +88,10 @@ const FIND_DATA: Record<string, { title: string; blurb: string }> = {
 		title: 'Pond Kraken',
 		blurb: 'Small, shy, and very into gardening. It surfaces now and then to borrow a tulip. Please do not tell the sailboat.'
 	},
+	monorail: {
+		title: 'Monorail',
+		blurb: 'It loops over the rooftops, drops past the rim and hangs right around the underside. It has never been late, because it has never stopped.'
+	},
 	skull: {
 		title: 'Memento Mori',
 		blurb: 'Remember that you will die. A reminder to spend the time well.'

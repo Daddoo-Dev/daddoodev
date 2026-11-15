@@ -2003,7 +2003,7 @@ export async function createIsland(
 		tick.push((_dt, t) => {
 			if (orca) orca.rotation.y = Math.PI / 2 + Math.sin(t * 1.4) * 0.08;
 			const a = t * 0.09;
-			g.position.set(Math.cos(a) * 9, -8.5 + Math.sin(t * 0.6) * 0.5, Math.sin(a) * 9);
+			g.position.set(Math.cos(a) * 12.5, -8.5 + Math.sin(t * 0.6) * 0.5, Math.sin(a) * 12.5);
 			g.rotation.y = -a - Math.PI / 2 + Math.PI;
 			g.rotation.z = Math.sin(t * 0.6) * 0.06;
 			tailG.rotation.z = Math.sin(t * 1.4) * 0.35;
@@ -2322,6 +2322,158 @@ export async function createIsland(
 			if (phase === 'hidden' && wait > 0.4) wait = 0.4;
 		};
 	})();
+	// Monorail: a little loop over the rooftops, down past the rim and round the underside
+	{
+		const pts = (
+			[
+				[-7.3, 0.9, 2.2],
+				[-5.0, 2.2, 1.8],
+				[-2.0, 3.2, 2.6],
+				[1.5, 3.4, 1.4],
+				[4.5, 2.4, 2.0],
+				[7.3, 0.9, 1.2],
+				[9.3, -0.4, 0.8],
+				[9.2, -3.5, 0.4],
+				[7.4, -7.2, -0.5],
+				[4.0, -10.2, -1.0],
+				[0, -11.4, -0.3],
+				[-4.0, -10.2, 1.0],
+				[-7.4, -7.2, 0.5],
+				[-9.2, -3.5, 0.4],
+				[-9.3, -0.4, 1.0]
+			] as [number, number, number][]
+		).map(([x, y, z]) => new THREE.Vector3(x, y, z));
+		const curve = new THREE.CatmullRomCurve3(pts, true, 'centripetal');
+		curve.arcLengthDivisions = 900;
+		const total = curve.getLength();
+		const zAxis = new THREE.Vector3(0, 0, 1);
+		// carriage rides on the outside of the loop, so it hangs beneath the track under the island
+		const frame = (dir: THREE.Vector3) => {
+			const u = new THREE.Vector3().crossVectors(zAxis, dir).normalize();
+			const r = new THREE.Vector3().crossVectors(u, dir).normalize();
+			return { u, r };
+		};
+		const at = (d: number) => curve.getPointAt((((d / total) % 1) + 1) % 1);
+		// sweep a small profile along the curve into a flat-shaded ribbon
+		const sweep = (profile: [number, number][], N = 420) => {
+			const rings: THREE.Vector3[][] = [];
+			for (let i = 0; i < N; i++) {
+				const t = i / N;
+				const p = curve.getPointAt(t);
+				const d = curve.getTangentAt(t);
+				const { u, r } = frame(d);
+				rings.push(profile.map(([a, b]) => p.clone().addScaledVector(r, a).addScaledVector(u, b)));
+			}
+			const pos: number[] = [];
+			const push = (v: THREE.Vector3) => pos.push(v.x, v.y, v.z);
+			for (let i = 0; i < N; i++) {
+				const A = rings[i],
+					B = rings[(i + 1) % N];
+				for (let k = 0; k < profile.length; k++) {
+					const k2 = (k + 1) % profile.length;
+					push(A[k]);
+					push(B[k]);
+					push(B[k2]);
+					push(A[k]);
+					push(B[k2]);
+					push(A[k2]);
+				}
+			}
+			const geo = new THREE.BufferGeometry();
+			geo.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3));
+			geo.computeVertexNormals();
+			return geo;
+		};
+		const beam = new THREE.Mesh(
+			sweep([
+				[-0.19, -0.045],
+				[-0.19, 0.045],
+				[0.19, 0.045],
+				[0.19, -0.045]
+			]),
+			M(0x59638f, { metalness: 0.3, roughness: 0.55 })
+		);
+		beam.castShadow = true;
+		beam.receiveShadow = true;
+		const stripMat = G(0x9fd4ff, 0x62f0e0, 0.5, 2.4);
+		const strips = [-1, 1].map((sg) => {
+			const m = new THREE.Mesh(
+				sweep([
+					[sg * 0.165, 0.045],
+					[sg * 0.165, 0.062],
+					[sg * 0.195, 0.062],
+					[sg * 0.195, 0.045]
+				]),
+				stripMat
+			);
+			m.castShadow = false;
+			return m;
+		});
+		const rail = new THREE.Group();
+		rail.add(beam, ...strips);
+		noRay(rail);
+		world.add(rail);
+		// pylons under the raised stretch
+		const pyM = M(0x59638f);
+		for (let d = 0; d < total; d += 2.6) {
+			const p = at(d);
+			if (p.y < 1.4 || Math.abs(p.x) > 6.4) continue;
+			const py = box(world, 0.12, p.y - 0.06, 0.12, pyM, p.x, (p.y - 0.06) / 2 + 0.02, p.z);
+			py.raycast = () => {};
+			box(world, 0.32, 0.05, 0.32, pyM, p.x, 0.045, p.z).raycast = () => {};
+		}
+		// the train: three small carriages, with stand-ins until the authored model loads
+		const train = new THREE.Group();
+		world.add(train);
+		const CARS = 3,
+			CAR_L = 1.7,
+			GAP = 0.14;
+		const cars: { g: THREE.Group; proc: THREE.Group }[] = [];
+		for (let i = 0; i < CARS; i++) {
+			const cg = new THREE.Group();
+			const proc = new THREE.Group();
+			box(proc, 0.28, 0.2, CAR_L - 0.1, M(0xd62839), 0, 0.12, 0);
+			box(proc, 0.3, 0.07, CAR_L - 0.3, G(0xffe29a, 0xffc860, 0.3, 1.6), 0, 0.17, 0);
+			cg.add(proc);
+			train.add(cg);
+			cars.push({ g: cg, proc });
+		}
+		registerFind('monorail', train, 1.7, 0.2);
+		loadModel('/island/carriage.glb')
+			.then((m) => {
+				const k = 0.0028; // source is ~590 units long
+				m.scale.setScalar(k);
+				m.position.y = 60 * k + 0.002; // origin is the middle; sit the wheels on the rail
+				finishModel(m);
+				cars.forEach((c) => {
+					const inst = m.clone(true);
+					c.g.remove(c.proc);
+					c.g.add(inst);
+					prep(inst as THREE.Group, byId.monorail.mats);
+				});
+				lastTod = -1;
+			})
+			.catch(() => {});
+		let dist = 6;
+		const tmpM = new THREE.Matrix4();
+		tick.push((dt) => {
+			dist += dt * 1.5;
+			const mids: THREE.Vector3[] = [];
+			cars.forEach((c, i) => {
+				const dc = dist - i * (CAR_L + GAP);
+				const f = at(dc + CAR_L * 0.38),
+					r = at(dc - CAR_L * 0.38);
+				const dir = f.clone().sub(r).normalize();
+				const { u, r: rr } = frame(dir);
+				const mid = f.clone().add(r).multiplyScalar(0.5).addScaledVector(u, 0.045);
+				mids.push(mid);
+				tmpM.makeBasis(rr, u, dir);
+				c.g.quaternion.setFromRotationMatrix(tmpM);
+			});
+			train.position.copy(mids[1]);
+			cars.forEach((c, i) => c.g.position.copy(mids[i]).sub(mids[1]));
+		});
+	}
 	// a distant ringed planet
 	let planetIt: Item;
 	{
