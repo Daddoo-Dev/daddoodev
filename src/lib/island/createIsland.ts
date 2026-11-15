@@ -531,6 +531,21 @@ export async function createIsland(
 	const gltfLoader = new GLTFLoader();
 	gltfLoader.setMeshoptDecoder(MeshoptDecoder);
 	const loadModel = (url: string) => new Promise<THREE.Group>((resolve, reject) => gltfLoader.load(url, (g) => resolve(g.scene), undefined, reject));
+	const loadGltf = (url: string) =>
+		new Promise<{ scene: THREE.Group; animations: THREE.AnimationClip[] }>((resolve, reject) =>
+			gltfLoader.load(url, (g) => resolve({ scene: g.scene, animations: g.animations }), undefined, reject)
+		);
+	// shared tidy-up for authored models: shadows on, and soften metal so they match the island's matte look
+	const finishModel = (m: THREE.Object3D) =>
+		m.traverse((o) => {
+			const mesh = o as THREE.Mesh;
+			if (mesh.isMesh) {
+				mesh.castShadow = true;
+				mesh.receiveShadow = true;
+				const mm = mesh.material as Mat;
+				if (mm.metalness > 0.2) mm.metalness = 0.12;
+			}
+		});
 	let krakenPoke: () => void = () => {};
 	const obstacles: [number, number, number][] = []; // keeps flowers and grass off buildings and paths
 	function tree(x: number, z: number, s = 1, col = 0x4fae5b) {
@@ -1623,6 +1638,7 @@ export async function createIsland(
 
 	/* ───────── hidden finds: creatures and curiosities ───────── */
 	// Yeti, lurking near the pines
+	const YETI_S = 0.7;
 	{
 		const g = new THREE.Group();
 		g.position.set(-5.9, 0, -5.0);
@@ -1648,7 +1664,29 @@ export async function createIsland(
 			head.rotation.z = Math.sin(t * 0.7) * 0.18;
 			head.rotation.y = Math.sin(t * 0.4) * 0.4;
 		});
+		const shell = g.children.slice();
 		registerFind('yeti', g, 0.85, 0.85);
+		// authored yeti (Quaternius, CC0; rigged, ~47 KB); keeps its idle animation. Procedural yeti stays if it fails to load.
+		let mixer: THREE.AnimationMixer | null = null;
+		tick.push((dt) => mixer?.update(dt));
+		loadGltf('/island/yeti.glb')
+			.then(({ scene: m, animations }) => {
+				m.scale.setScalar(YETI_S);
+				finishModel(m);
+				m.traverse((o) => {
+					o.frustumCulled = false;
+				});
+				shell.forEach((o) => g.remove(o));
+				g.add(m);
+				prep(m, byId.yeti.mats);
+				const idle = animations.find((c) => /idle/i.test(c.name)) ?? animations[0];
+				if (idle) {
+					mixer = new THREE.AnimationMixer(m);
+					mixer.clipAction(idle).play();
+				}
+				lastTod = -1;
+			})
+			.catch(() => {});
 		obstacles.push([-5.9, -5.0, 1.0]);
 	}
 	// Dragon, asleep on a warm rock
@@ -1819,6 +1857,8 @@ export async function createIsland(
 		obstacles.push([3.0, 5.5, 1.1]);
 	}
 	// Giraffe, peeking over the tree line
+	const GIRAFFE_S = 0.16,
+		GIRAFFE_Z = -0.5;
 	{
 		const g = new THREE.Group();
 		g.position.set(-6.5, 0, 4.7);
@@ -1866,7 +1906,20 @@ export async function createIsland(
 			neck.rotation.z = Math.sin(t * 0.5) * 0.05;
 			neck.rotation.x = Math.sin(t * 0.3) * 0.04;
 		});
+		const shell = g.children.slice();
 		registerFind('giraffe', g, 1.1, 2.2);
+		// authored giraffe (Poly by Google, CC-BY, via Poly Pizza; ~71 KB); procedural giraffe stays if it fails to load
+		loadModel('/island/giraffe.glb')
+			.then((m) => {
+				m.scale.setScalar(GIRAFFE_S);
+				m.position.set(0, 0, GIRAFFE_Z);
+				finishModel(m);
+				shell.forEach((o) => g.remove(o));
+				g.add(m);
+				prep(m, byId.giraffe.mats);
+				lastTod = -1;
+			})
+			.catch(() => {});
 		obstacles.push([-6.5, 4.7, 1.2]);
 	}
 	// Golden-age rocket on its pad
@@ -1945,7 +1998,10 @@ export async function createIsland(
 			ball(g, 0.07, M(0x10183a), 1.7, 0.15, s2 * 0.55, 0);
 		});
 		g.scale.setScalar(0.75);
+		const proc = g.children.slice();
+		let orca: THREE.Group | null = null;
 		tick.push((_dt, t) => {
+			if (orca) orca.rotation.y = Math.PI / 2 + Math.sin(t * 1.4) * 0.08;
 			const a = t * 0.09;
 			g.position.set(Math.cos(a) * 9, -8.5 + Math.sin(t * 0.6) * 0.5, Math.sin(a) * 9);
 			g.rotation.y = -a - Math.PI / 2 + Math.PI;
@@ -1953,6 +2009,23 @@ export async function createIsland(
 			tailG.rotation.z = Math.sin(t * 1.4) * 0.35;
 		});
 		registerFind('whale', g, 2.6, 0);
+		// authored orca (Poly by Google, CC-BY, via Poly Pizza; ~15 KB) swims in place of the sky whale; procedural whale stays if it fails to load
+		loadModel('/island/orca.glb')
+			.then((m) => {
+				const k = 0.0086; // source is ~560 units nose to tail
+				const w = new THREE.Group();
+				m.scale.setScalar(k);
+				m.position.set(0, -52 * k, 0);
+				w.rotation.y = Math.PI / 2; // model's nose is +z, the island's whale heads +x
+				w.add(m);
+				finishModel(w);
+				proc.forEach((o) => g.remove(o));
+				g.add(w);
+				prep(w, byId.whale.mats);
+				orca = w;
+				lastTod = -1;
+			})
+			.catch(() => {});
 	}
 	// Dive bell hanging from a chain under the island
 	{
