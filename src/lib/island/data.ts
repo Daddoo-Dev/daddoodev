@@ -1,5 +1,7 @@
 /** Content for the floating field-station diorama at /island (hidden, noindex). */
 
+import { featuredProjects, labProjects, toolProjects } from '$lib/data/homeProjects';
+
 export type IslandLink = { label: string; url: string };
 
 export type IslandEntry = {
@@ -11,39 +13,76 @@ export type IslandEntry = {
 };
 
 const GITHUB = 'https://github.com/Daddoo-Dev';
-// An empty url renders as a "soon" chip until the store listing is wired in.
-const STORES: IslandLink[] = [
-	{ label: 'App Store', url: '' },
-	{ label: 'Google Play', url: '' }
-];
+const APP_STORE = 'https://apps.apple.com/us/developer/shawn-mcpeek/id1783843453';
+const PLAY = 'https://play.google.com/store/apps/developer?id=Daddoo+Dev';
+
+function featured(title: string): IslandLink[] {
+	const project = featuredProjects.find((item) => item.title === title);
+	if (!project) return [];
+	const links: IslandLink[] = [];
+	if (project.liveUrl) {
+		const site = project.liveUrl.startsWith('https://daddoodev.pro')
+			? project.liveUrl.slice('https://daddoodev.pro'.length) || '/'
+			: project.liveUrl;
+		links.push({ label: `${project.title} site`, url: site });
+	}
+	if (project.store?.appStore) links.push({ label: `${project.title} on the App Store`, url: project.store.appStore });
+	if (project.store?.googlePlay) links.push({ label: `${project.title} on Google Play`, url: project.store.googlePlay });
+	return links;
+}
+
+function lab(title: string): IslandLink | null {
+	const item = labProjects.find((entry) => entry.title === title && entry.href);
+	return item?.href ? { label: item.title, url: item.href } : null;
+}
 
 /** Interactive buildings and gates. Keys match the ids used in createIsland.ts. */
 export const BUILDINGS: Record<string, IslandEntry> = {
 	workshop: {
 		title: 'The Workshop',
 		blurb: 'Source code, experiments and open-source bits.',
-		links: [{ label: 'GitHub', url: GITHUB }]
+		links: [
+			{ label: 'GitHub', url: GITHUB },
+			...featured('Ridewealth Assistant'),
+			...featured('Conclavium'),
+			lab('Inspiration by Simpsons'),
+			lab('TopMath'),
+			lab('New Horizons Landscaping')
+		].filter((link): link is IslandLink => link !== null)
 	},
-	chapel: { title: 'The Chapel', blurb: 'Prayer and formation apps.', links: STORES },
+	chapel: {
+		title: 'The Chapel',
+		blurb: 'Prayer and formation apps.',
+		links: [...featured('Daily Company'), ...featured('My Prayer Cards'), { label: 'Adorate', url: '/adorate' }]
+	},
 	toolshed: {
 		title: 'The Toolshed',
 		blurb: 'Practical tools I built because I needed them.',
-		links: STORES
+		links: [
+			...toolProjects.map((tool) => ({ label: tool.title, url: tool.href })),
+			lab('ChronoCluster'),
+			lab('QR Generator')
+		].filter((link): link is IslandLink => link !== null)
 	},
 	arcade: {
 		title: 'The Arcade',
 		blurb: 'Puzzle, strategy and arcade games.',
-		links: [...STORES, { label: 'GitHub repos', url: `${GITHUB}?tab=repositories` }]
+		links: [
+			...featured('Twisted Fortunes'),
+			...featured('Bottled Star'),
+			lab('Stock Market Game'),
+			{ label: 'GitHub repos', url: `${GITHUB}?tab=repositories` }
+		].filter((link): link is IslandLink => link !== null)
 	},
 	appstore: {
 		title: 'App Store',
 		blurb: 'Everything I have published for iPhone and iPad.',
-		links: [{ label: 'Open the App Store', url: '' }]
+		links: [{ label: 'Open the App Store', url: APP_STORE }]
 	},
 	play: {
 		title: 'Google Play',
 		blurb: 'Everything I have published for Android.',
-		links: [{ label: 'Open Google Play', url: '' }]
+		links: [{ label: 'Open Google Play', url: PLAY }]
 	},
 	ginny: {
 		title: 'Godspeed Ginny',
@@ -109,6 +148,11 @@ export const FIND_IDS = Object.keys(FIND_DATA);
 
 export const ENTRIES: Record<string, IslandEntry> = {
 	...BUILDINGS,
+	back: {
+		title: 'Back to normal',
+		blurb: 'Return to the regular site.',
+		links: [{ label: 'Back to normal site', url: '/' }]
+	},
 	...Object.fromEntries(
 		Object.entries(FIND_DATA).map(([id, v]) => [id, { ...v, find: true, links: [] }])
 	)

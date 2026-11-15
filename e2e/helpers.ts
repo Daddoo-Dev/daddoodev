@@ -7,7 +7,6 @@ export const HIDDEN_ROUTE_PATTERNS = [
 	'/honorguard',
 	'/analytics/',
 	'/triptime',
-	'/island',
 	'/lab/godspeed-ginny',
 	'/godspeed_ginny',
 	'/myprayercards/marketing'
@@ -113,7 +112,6 @@ export const HIDDEN_ROUTES: RouteSpec[] = [
 	},
 	{
 		path: '/triptime',
-	'/island',
 		title: /TripTime/i,
 		heading: /TripTime/i
 	},

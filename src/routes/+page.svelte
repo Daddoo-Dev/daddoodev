@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { goto } from '$app/navigation';
+  import { onMount } from 'svelte';
   import Hero from '$lib/components/Hero.svelte';
   import About from '$lib/components/About.svelte';
   import Projects from '$lib/components/Projects.svelte';
@@ -6,6 +8,11 @@
   import Footer from '$lib/components/Footer.svelte';
   import SEO from '$lib/components/SEO.svelte';
   import Analytics from '$lib/components/Analytics.svelte';
+  import { getViewPref } from '$lib/island/preference';
+
+  onMount(() => {
+    if (getViewPref() === 'island') goto('/island', { replaceState: true });
+  });
 </script>
 
 <Analytics />

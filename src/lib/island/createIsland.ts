@@ -11,6 +11,7 @@ import { RoundedBoxGeometry } from 'three/examples/jsm/geometries/RoundedBoxGeom
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { MeshoptDecoder } from 'three/examples/jsm/libs/meshopt_decoder.module.js';
 import { ENTRIES } from './data';
+import { isLocalNight } from './time';
 import type { WeatherState } from './weather';
 
 export interface IslandHud {
@@ -29,6 +30,7 @@ export interface IslandOptions {
 	onTime(mode: TimeMode): void;
 	onTour(active: boolean): void;
 	onReady(): void;
+	onBack(): void;
 }
 
 export type TimeMode = 'day' | 'dusk' | 'night';
@@ -823,7 +825,7 @@ export async function createIsland(
 			1.72,
 			1.345
 		).castShadow = false;
-		const win = () => G(0xffd27a, 0xffc15a, 0.25, 1.7);
+		const win = () => G(0xffd27a, 0xffc15a, 0.12, 0.5);
 		[-0.95, 0.95].forEach((x) => {
 			box(g, 0.7, 0.7, 0.06, M(0x7a4e2d), x, 1.35, 1.31);
 			box(g, 0.54, 0.54, 0.08, win(), x, 1.35, 1.33);
@@ -859,10 +861,10 @@ export async function createIsland(
 			const a = (k / 8) * Math.PI * 2;
 			box(gear, 0.12, 0.16, 0.16, gm, 0, Math.cos(a) * 0.42, Math.sin(a) * 0.42).rotation.x = -a;
 		}
-		const wl = new THREE.PointLight(0xffc46b, 0, 6, 2);
+		const wl = new THREE.PointLight(0xffc46b, 0, 3.5, 2);
 		wl.position.set(0, 1.3, 2.4);
 		g.add(wl);
-		nl(wl, 0, 6);
+		nl(wl, 0, 1.6);
 		// katana on its stand
 		{
 			const ks = new THREE.Group();
@@ -966,7 +968,7 @@ export async function createIsland(
 			c.arc(64, 64, 22, 0, 7);
 			c.stroke();
 		});
-		const roseMesh = new THREE.Mesh(new THREE.CircleGeometry(0.36, 20), glassMat(rose, 0.5, 2.0));
+		const roseMesh = new THREE.Mesh(new THREE.CircleGeometry(0.36, 20), glassMat(rose, 0.25, 1.0));
 		roseMesh.position.set(0, 1.95, 2.11);
 		g.add(roseMesh);
 		const lancet = canvasTex(64, 128, (c, ww, hh) => {
@@ -995,10 +997,10 @@ export async function createIsland(
 			})
 		);
 		const shell = g.children.slice(platformN);
-		const cl = new THREE.PointLight(0xffb66b, 0, 6, 2);
+		const cl = new THREE.PointLight(0xffb66b, 0, 4, 2);
 		cl.position.set(0, 1.3, 3.2);
 		g.add(cl);
-		nl(cl, 0, 4);
+		nl(cl, 0, 1);
 
 		// a tiny Swiss Guard on duty at the door
 		{
@@ -1428,6 +1430,7 @@ export async function createIsland(
 		};
 		plank('ginny', 'GODSPEED GINNY >', 1.85, -0.55, 0xc08a54, '#c08a54');
 		plank('repos', 'ALL REPOS >', 1.3, 0.7, 0xa9744a, '#a9744a');
+		plank('back', 'BACK TO NORMAL >', 0.78, 0.1, 0x8f6a45, '#8f6a45');
 	}
 
 	/* ═══════════ MISSION CONTROL annex (decor) ═══════════ */
@@ -1554,16 +1557,16 @@ export async function createIsland(
 		const h = new THREE.Group();
 		h.position.y = 1.35;
 		g.add(h);
-		const globe = add3(new THREE.IcosahedronGeometry(0.5, 1), 0x62f0e0, 0.75, true);
+		const globe = add3(new THREE.IcosahedronGeometry(0.5, 1), 0x62f0e0, 0.14, true);
 		h.add(globe);
-		const ringA = add3(new THREE.TorusGeometry(0.78, 0.012, 4, 56), 0x8ffcf0, 0.9);
+		const ringA = add3(new THREE.TorusGeometry(0.78, 0.012, 4, 56), 0x8ffcf0, 0.18);
 		ringA.rotation.x = 1.1;
 		h.add(ringA);
-		const ringB = add3(new THREE.TorusGeometry(0.66, 0.012, 4, 56), 0xffb347, 0.8);
+		const ringB = add3(new THREE.TorusGeometry(0.66, 0.012, 4, 56), 0xffb347, 0.16);
 		ringB.rotation.x = -0.7;
 		ringB.rotation.y = 0.5;
 		h.add(ringB);
-		const beam = add3(new THREE.CylinderGeometry(0.5, 0.62, 1.2, 18, 1, true), 0x62f0e0, 0.12);
+		const beam = add3(new THREE.CylinderGeometry(0.5, 0.62, 1.2, 18, 1, true), 0x62f0e0, 0.025);
 		beam.position.y = -0.55;
 		h.add(beam);
 		const panels = new THREE.Group();
@@ -1605,10 +1608,10 @@ export async function createIsland(
 			panels.add(pl);
 		});
 		noRay(g);
-		const hl = new THREE.PointLight(0x62f0e0, 0, 5, 2);
+		const hl = new THREE.PointLight(0x62f0e0, 0, 3.2, 2);
 		hl.position.y = 1.3;
 		g.add(hl);
-		nl(hl, 0, 2.6);
+		nl(hl, 0, 0.35);
 		tick.push((_dt, t) => {
 			globe.rotation.y = t * 0.6;
 			globe.rotation.x = t * 0.2;
@@ -2043,7 +2046,7 @@ export async function createIsland(
 		const proc = g.children.slice();
 		let orca: THREE.Group | null = null;
 		tick.push((_dt, t) => {
-			if (orca) orca.rotation.y = Math.PI / 2 + Math.sin(t * 1.4) * 0.08;
+			if (orca) orca.rotation.y = -Math.PI / 2 + Math.sin(t * 1.4) * 0.08;
 			const a = t * 0.09;
 			g.position.set(Math.cos(a) * 12.5, -8.5 + Math.sin(t * 0.6) * 0.5, Math.sin(a) * 12.5);
 			g.rotation.y = -a - Math.PI / 2 + Math.PI;
@@ -2058,7 +2061,7 @@ export async function createIsland(
 				const w = new THREE.Group();
 				m.scale.setScalar(k);
 				m.position.set(0, -52 * k, 0);
-				w.rotation.y = Math.PI / 2; // model's nose is +z, the island's whale heads +x
+				w.rotation.y = -Math.PI / 2; // model's nose is +z; flip it so it leads along the circle
 				w.add(m);
 				finishModel(w);
 				proc.forEach((o) => g.remove(o));
@@ -2437,7 +2440,7 @@ export async function createIsland(
 		);
 		beam.castShadow = true;
 		beam.receiveShadow = true;
-		const stripMat = G(0x9fd4ff, 0x62f0e0, 0.5, 2.4);
+		const stripMat = G(0x9fd4ff, 0x62f0e0, 0.125, 0.6);
 		const strips = [-1, 1].map((sg) => {
 			const m = new THREE.Mesh(
 				sweep([
@@ -2509,6 +2512,9 @@ export async function createIsland(
 				const { u, r: rr } = frame(dir);
 				const mid = f.clone().add(r).multiplyScalar(0.5).addScaledVector(u, 0.045);
 				mids.push(mid);
+				// the carriage model faces the opposite way along the rail
+				dir.negate();
+				rr.negate();
 				tmpM.makeBasis(rr, u, dir);
 				c.g.quaternion.setFromRotationMatrix(tmpM);
 			});
@@ -3186,9 +3192,11 @@ export async function createIsland(
 	const tmp = new THREE.Color();
 	const skyNow = [new THREE.Color(), new THREE.Color(), new THREE.Color()];
 	const MODES: TimeMode[] = ['day', 'dusk', 'night'];
-	let tod = 1,
-		todTarget = 1,
-		lastTod = -1;
+	const startTod = isLocalNight() ? 2 : 0;
+	let tod = startTod,
+		todTarget = startTod,
+		lastTod = -1,
+		followClock = true;
 	const skyCtx = skyCanvas.getContext('2d')!;
 	function paintSky(t: number) {
 		const gl = gloom();
@@ -3246,13 +3254,13 @@ export async function createIsland(
 		const n = t / 2;
 		mixC(hemi.color, DAY.hs, DUSK.hs, NIGHT.hs, t);
 		mixC(hemi.groundColor, DAY.hg, DUSK.hg, NIGHT.hg, t);
-		hemiBase = mixS(1.1, 0.95, 1.05, t);
+		hemiBase = mixS(1.1, 0.95, 0.22, t);
 		mixC(sun.color, DAY.sun, DUSK.sun, NIGHT.sun, t);
-		sunBase = mixS(2.7, 3.0, 2.1, t);
+		sunBase = mixS(2.7, 3.0, 0.38, t);
 		if (t <= 1) sun.position.lerpVectors(SUN_P, DUSK_P, t);
 		else sun.position.lerpVectors(DUSK_P, MOON_P, t - 1);
-		renderer.toneMappingExposure = mixS(1.05, 1.12, 1.1, t);
-		const env = mixS(0.3, 0.22, 0.16, t);
+		renderer.toneMappingExposure = mixS(1.05, 1.12, 0.82, t);
+		const env = mixS(0.3, 0.22, 0.05, t);
 		scene.traverse((o) => {
 			const mat = (o as THREE.Mesh).material as Mat | undefined;
 			if (mat && 'envMapIntensity' in mat) mat.envMapIntensity = env;
@@ -3308,7 +3316,7 @@ export async function createIsland(
 		if (reduceMotion) tod = todTarget;
 		opts.onTime(m);
 	}
-	opts.onTime('dusk');
+	opts.onTime(MODES[startTod]);
 	// everything translucent or additive is hidden from the ambient-occlusion depth pass
 	scene.traverse((o) => {
 		const m = (o as THREE.Mesh).material as THREE.Material | THREE.Material[] | undefined;
@@ -3353,6 +3361,10 @@ export async function createIsland(
 	};
 	const wp = new THREE.Vector3();
 	function select(it: Item | null) {
+		if (it?.id === 'back') {
+			opts.onBack();
+			return;
+		}
 		selected = it;
 		cardOpen = !!it;
 		opts.onSelect(it ? it.id : null);
@@ -3467,6 +3479,7 @@ export async function createIsland(
 	let lastFlash = 0;
 	let first = true,
 		hudT = 0,
+		clockT = 0,
 		disposed = false;
 	const offv = new THREE.Vector3();
 	renderer.setAnimationLoop(() => {
@@ -3474,6 +3487,15 @@ export async function createIsland(
 			t = clock.elapsedTime,
 			mo = mo0;
 
+		clockT += dt;
+		if (followClock && clockT > 1) {
+			clockT = 0;
+			const next = isLocalNight() ? 2 : 0;
+			if (next !== todTarget) {
+				todTarget = next;
+				if (reduceMotion) tod = todTarget;
+			}
+		}
 		if (Math.abs(tod - todTarget) > 0.001) {
 			tod += (todTarget - tod) * Math.min(1, dt * 1.6);
 			if (Math.abs(tod - todTarget) < 0.003) tod = todTarget;
@@ -3564,7 +3586,7 @@ export async function createIsland(
 		for (const hm of holoMats) hm.m.opacity = hm.o * L(0.25, 1, nm);
 		for (const n of nightLights)
 			n.light.intensity = L(n.day, n.night, nm) + ((n.light.userData.flick as number | undefined) ?? 0) * nm;
-		underGlow.intensity = 4 * nm;
+		underGlow.intensity = 1.5 * nm;
 		for (const m of glowers) m.emissiveIntensity = L(m.userData.dn[0], m.userData.dn[1], nm);
 		for (const it of interactives) {
 			const target = it === hovered || it === selected ? 1 : 0;
@@ -3608,12 +3630,14 @@ export async function createIsland(
 
 	return {
 		setTime(mode: TimeMode) {
+			followClock = false;
 			setTimeMode(mode);
 		},
 		setWeather(w: WeatherState | null) {
 			for (const k of W_KEYS) WT[k] = w ? w[k] : 0;
 		},
 		cycleTime() {
+			followClock = false;
 			setTimeMode(MODES[(Math.round(todTarget) + 1) % 3]);
 		},
 		startTour() {

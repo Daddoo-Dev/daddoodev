@@ -1,8 +1,12 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { ENTRIES, FIND_IDS, FOUND_STORAGE_KEY } from '$lib/island/data';
+	import { setViewPref } from '$lib/island/preference';
+	import { isLocalNight } from '$lib/island/time';
 	import type { IslandController, IslandHud, TimeMode } from '$lib/island/createIsland';
 	import { fetchWeather, SKY_FLAG } from '$lib/island/weather';
+
+	let { onBack }: { onBack: () => void } = $props();
 
 	let host = $state<HTMLDivElement | null>(null);
 	let ctl: IslandController | null = null;
@@ -101,6 +105,7 @@
 	}
 
 	onMount(() => {
+		mode = isLocalNight() ? 'night' : 'day';
 		found = loadFound();
 		let cancelled = false;
 		(async () => {
@@ -115,12 +120,14 @@
 					onHud: (h) => (hud = h),
 					onTime: (m) => (mode = m),
 					onTour: (a) => (touring = a),
-					onReady: () => (ready = true)
+					onReady: () => (ready = true),
+					onBack
 				});
 				if (cancelled) ctl.dispose();
 				else void resumeSky();
 			} catch {
 				failed = true;
+				setViewPref('normal');
 			}
 		})();
 		const onKey = (e: KeyboardEvent) => {
@@ -144,7 +151,12 @@
 		<div class="island-loading">Powering up the station…</div>
 	{/if}
 	{#if failed}
-		<div class="island-loading">WebGL is not available here. The link list below has everything.</div>
+		<div class="island-loading">
+			<div class="island-fallback">
+				<p>WebGL is not available here.</p>
+				<a class="island-btn" href="/" onclick={() => setViewPref('normal')}>Go to the standard site</a>
+			</div>
+		</div>
 	{/if}
 
 	<div class="island-hud" aria-hidden="true">
@@ -206,11 +218,11 @@
 			<p>{card.blurb}</p>
 			{#if card.links.length}
 				<div class="island-links">
-					{#each card.links as l (l.label)}
-						{#if l.url}
-							<a class="island-chip" href={l.url} target="_blank" rel="noopener noreferrer">{l.label} ↗</a>
+					{#each card.links as l (l.url)}
+						{#if l.url.startsWith('/')}
+							<a class="island-chip" href={l.url} onclick={() => { if (l.url === '/') setViewPref('normal'); }}>{l.label}</a>
 						{:else}
-							<span class="island-chip is-soon">{l.label} · soon</span>
+							<a class="island-chip" href={l.url} target="_blank" rel="noopener noreferrer">{l.label} ↗</a>
 						{/if}
 					{/each}
 				</div>

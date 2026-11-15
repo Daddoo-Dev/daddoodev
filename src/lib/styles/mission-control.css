@@ -117,6 +117,10 @@ body {
 	color: var(--text-1);
 }
 
+.site-chrome.is-hidden {
+	display: none;
+}
+
 /* —— Buttons (override global glow styles) —— */
 .primary-button,
 .secondary-button {
