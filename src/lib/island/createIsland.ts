@@ -241,7 +241,8 @@ export async function createIsland(
 	// transparent/additive effects are hidden while AO samples depth, so halos don't darken the scene
 	const fx: THREE.Object3D[] = [];
 	let gtao: GTAOPass | null = null;
-	if (!low) {
+	// ambient occlusion is opt-in (?ao): it drew a dark slab behind the signpost on some GPUs
+	if (!low && new URLSearchParams(location.search).has('ao')) {
 		gtao = new GTAOPass(scene, camera, 2, 2);
 		gtao.updateGtaoMaterial({ radius: 0.9, distanceExponent: 1.4, thickness: 1.2, scale: 1.1, samples: 12, distanceFallOff: 1, screenSpaceRadius: false });
 		gtao.blendIntensity = 0.9;
@@ -3346,10 +3347,13 @@ export async function createIsland(
 		opts.onTime(m);
 	}
 	opts.onTime(MODES[startTod]);
-	// everything translucent or additive is hidden from the ambient-occlusion depth pass
+	// everything translucent, additive or invisible (click-proxy hitboxes use material.visible = false,
+	// which the AO override material ignores, so they would show up as dark slabs) is hidden from the depth pass
 	scene.traverse((o) => {
 		const m = (o as THREE.Mesh).material as THREE.Material | THREE.Material[] | undefined;
-		if (m && (Array.isArray(m) ? m.some((x) => x.transparent) : m.transparent)) fx.push(o);
+		if (!m) return;
+		const ms = Array.isArray(m) ? m : [m];
+		if (ms.some((x) => x.transparent || !x.visible)) fx.push(o);
 	});
 
 	/* ───────── interaction ───────── */
