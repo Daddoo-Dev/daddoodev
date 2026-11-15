@@ -1301,7 +1301,7 @@ export async function createIsland(
 		const ph = new THREE.Group();
 		ph.position.y = 1.7;
 		g.add(ph);
-		box(ph, 1.32, 2.5, 0.2, M(0x3a3f78, { metalness: 0.6, roughness: 0.35, flatShading: false }), 0, 0, 0);
+		box(ph, 1.32, 2.5, 0.2, M(0x6672d8, { metalness: 0.15, roughness: 0.5, flatShading: false }), 0, 0, 0);
 		const tex = canvasTex(256, 512, (c, w, h) => {
 			const gr = c.createLinearGradient(0, 0, 0, h);
 			gr.addColorStop(0, '#16205a');
@@ -1335,6 +1335,34 @@ export async function createIsland(
 		const scr = new THREE.Mesh(new THREE.PlaneGeometry(1.16, 2.32), glassMat(tex, 0.6, 1.1));
 		scr.position.z = 0.105;
 		ph.add(scr);
+		// back of the phone: so it never reads as a black slab from behind
+		const backTex = canvasTex(256, 512, (c, w, h) => {
+			const gr = c.createLinearGradient(0, 0, w, h);
+			gr.addColorStop(0, '#7c8cff');
+			gr.addColorStop(1, '#ff8a6b');
+			c.fillStyle = gr;
+			c.fillRect(0, 0, w, h);
+			c.fillStyle = 'rgba(255,255,255,.28)';
+			rr(c, 22, 22, 112, 112, 26);
+			c.fill();
+			[[48, 48], [100, 48], [74, 100]].forEach(([x, y]) => {
+				c.fillStyle = '#16205a';
+				c.beginPath();
+				c.arc(x, y, 17, 0, 7);
+				c.fill();
+				c.fillStyle = 'rgba(255,255,255,.7)';
+				c.beginPath();
+				c.arc(x - 5, y - 5, 4, 0, 7);
+				c.fill();
+			});
+		});
+		const back = new THREE.Mesh(
+			new THREE.PlaneGeometry(1.16, 2.32),
+			new THREE.MeshStandardMaterial({ map: backTex, roughness: 0.6 })
+		);
+		back.position.z = -0.105;
+		back.rotation.y = Math.PI;
+		ph.add(back);
 		register('appstore', g, 0, 3.55, 0);
 		tick.push((_dt, t) => {
 			ph.position.y = 1.7 + Math.sin(t * 1.6) * 0.09;
