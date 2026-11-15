@@ -44,3 +44,11 @@
 .island-skylabel { position: absolute; left: 1rem; bottom: 2.6rem; margin: 0; font-family: var(--font-mono); font-size: 0.7rem; color: var(--accent-bright); text-shadow: 0 1px 3px rgba(0, 0, 0, 0.7); pointer-events: none; }
 
 @media (max-width: 700px) { .island-hud { display: none; } }
+
+.island-credits {
+	margin: 0 auto;
+	padding: 0 1.5rem 2rem;
+	max-width: 60rem;
+	font-size: 0.8rem;
+	opacity: 0.7;
+}

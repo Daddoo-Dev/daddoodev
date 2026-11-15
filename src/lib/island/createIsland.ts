@@ -8,6 +8,8 @@ import { ShaderPass } from 'three/examples/jsm/postprocessing/ShaderPass.js';
 import { OutputPass } from 'three/examples/jsm/postprocessing/OutputPass.js';
 import { GTAOPass } from 'three/examples/jsm/postprocessing/GTAOPass.js';
 import { RoundedBoxGeometry } from 'three/examples/jsm/geometries/RoundedBoxGeometry.js';
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
+import { MeshoptDecoder } from 'three/examples/jsm/libs/meshopt_decoder.module.js';
 import { ENTRIES } from './data';
 import { isLocalNight } from './time';
 import type { WeatherState } from './weather';
@@ -528,6 +530,24 @@ export async function createIsland(
 	});
 
 	/* ───────── scenery ───────── */
+	const gltfLoader = new GLTFLoader();
+	gltfLoader.setMeshoptDecoder(MeshoptDecoder);
+	const loadModel = (url: string) => new Promise<THREE.Group>((resolve, reject) => gltfLoader.load(url, (g) => resolve(g.scene), undefined, reject));
+	const loadGltf = (url: string) =>
+		new Promise<{ scene: THREE.Group; animations: THREE.AnimationClip[] }>((resolve, reject) =>
+			gltfLoader.load(url, (g) => resolve({ scene: g.scene, animations: g.animations }), undefined, reject)
+		);
+	// shared tidy-up for authored models: shadows on, and soften metal so they match the island's matte look
+	const finishModel = (m: THREE.Object3D) =>
+		m.traverse((o) => {
+			const mesh = o as THREE.Mesh;
+			if (mesh.isMesh) {
+				mesh.castShadow = true;
+				mesh.receiveShadow = true;
+				const mm = mesh.material as Mat;
+				if (mm.metalness > 0.2) mm.metalness = 0.12;
+			}
+		});
 	let krakenPoke: () => void = () => {};
 	const obstacles: [number, number, number][] = []; // keeps flowers and grass off buildings and paths
 	function tree(x: number, z: number, s = 1, col = 0x4fae5b) {
@@ -890,6 +910,7 @@ export async function createIsland(
 			wood = M(0x7a4e2d),
 			slate = M(0x59638f);
 		box(g, 2.4, 0.2, 5.0, M(0x9a96ab), 0, 0.1, 0.5);
+		const platformN = g.children.length;
 		box(g, 2.0, 1.7, 3.0, stone, 0, 1.05, -0.5);
 		const th = 0.7,
 			w = 1.15,
@@ -975,6 +996,7 @@ export async function createIsland(
 				g.add(m);
 			})
 		);
+		const shell = g.children.slice(platformN);
 		const cl = new THREE.PointLight(0xffb66b, 0, 6, 2);
 		cl.position.set(0, 1.3, 3.2);
 		g.add(cl);
@@ -1055,6 +1077,24 @@ export async function createIsland(
 			kids.push(['skull', sk, 0.5, 0.4]);
 		}
 		register('chapel', g, 0, 6.2, 1.55);
+		// authored church (Poly by Google, CC-BY, via Poly Pizza; meshopt + WebP, ~58 KB); procedural chapel stays if it fails to load
+		loadModel('/island/church.glb')
+			.then((m) => {
+				m.scale.setScalar(0.2); // source is ~13 x 29 x 24 units; tower at +z
+				m.position.set(0, 0.2, 0.5);
+				m.traverse((o) => {
+					const mesh = o as THREE.Mesh;
+					if (mesh.isMesh) {
+						mesh.castShadow = true;
+						mesh.receiveShadow = true;
+					}
+				});
+				shell.forEach((o) => g.remove(o));
+				g.add(m);
+				prep(m, byId.chapel.mats);
+				lastTod = -1;
+			})
+			.catch(() => {});
 		kids.forEach((k) => registerFind(...k));
 		obstacles.push([5.0, -3.8, 3.0]);
 		spoke(5.0, -3.8, 3.0);
@@ -1601,6 +1641,7 @@ export async function createIsland(
 
 	/* ───────── hidden finds: creatures and curiosities ───────── */
 	// Yeti, lurking near the pines
+	const YETI_S = 0.7;
 	{
 		const g = new THREE.Group();
 		g.position.set(-5.9, 0, -5.0);
@@ -1626,7 +1667,29 @@ export async function createIsland(
 			head.rotation.z = Math.sin(t * 0.7) * 0.18;
 			head.rotation.y = Math.sin(t * 0.4) * 0.4;
 		});
+		const shell = g.children.slice();
 		registerFind('yeti', g, 0.85, 0.85);
+		// authored yeti (Quaternius, CC0; rigged, ~47 KB); keeps its idle animation. Procedural yeti stays if it fails to load.
+		let mixer: THREE.AnimationMixer | null = null;
+		tick.push((dt) => mixer?.update(dt));
+		loadGltf('/island/yeti.glb')
+			.then(({ scene: m, animations }) => {
+				m.scale.setScalar(YETI_S);
+				finishModel(m);
+				m.traverse((o) => {
+					o.frustumCulled = false;
+				});
+				shell.forEach((o) => g.remove(o));
+				g.add(m);
+				prep(m, byId.yeti.mats);
+				const idle = animations.find((c) => /idle/i.test(c.name)) ?? animations[0];
+				if (idle) {
+					mixer = new THREE.AnimationMixer(m);
+					mixer.clipAction(idle).play();
+				}
+				lastTod = -1;
+			})
+			.catch(() => {});
 		obstacles.push([-5.9, -5.0, 1.0]);
 	}
 	// Dragon, asleep on a warm rock
@@ -1636,7 +1699,9 @@ export async function createIsland(
 		g.rotation.y = -2.2;
 		world.add(g);
 		blob(6.5, -1.4, 1.2);
-		const mound = add(g, new THREE.DodecahedronGeometry(0.9, 0), M(0x8b86a0), 0, 0.3, 0);
+		const proc = new THREE.Group(); // procedural stand-in, replaced by the authored model when it loads
+		g.add(proc);
+		const mound = add(proc, new THREE.DodecahedronGeometry(0.9, 0), M(0x8b86a0), 0, 0.3, 0);
 		mound.scale.set(1.3, 0.6, 1.1);
 		const sc = M(0x3fa66a),
 			gold = M(0xf2c14e);
@@ -1644,10 +1709,10 @@ export async function createIsland(
 		body.rotation.x = Math.PI / 2;
 		body.position.y = 0.7;
 		body.castShadow = true;
-		g.add(body);
+		proc.add(body);
 		const dh = new THREE.Group();
 		dh.position.set(0.82, 0.72, 0.12);
-		g.add(dh);
+		proc.add(dh);
 		ball(dh, 0.25, sc, 0, 0, 0, 1);
 		box(dh, 0.2, 0.14, 0.26, sc, 0.2, -0.04, 0);
 		[-0.09, 0.09].forEach((z) => {
@@ -1656,10 +1721,10 @@ export async function createIsland(
 			add(dh, new THREE.SphereGeometry(0.025, 5, 4), G(0xff8a3c, 0xff6a00, 0.15, 1.8), 0.32, -0.02, z * 0.55);
 		});
 		[-1, 1].forEach((s) => {
-			const w = box(g, 0.04, 0.5, 0.4, M(0x2e8a57), -0.12, 1.0, s * 0.28);
+			const w = box(proc, 0.04, 0.5, 0.4, M(0x2e8a57), -0.12, 1.0, s * 0.28);
 			w.rotation.set(s * 0.45, 0, 0.3);
 		});
-		const tail = ball(g, 0.14, sc, 0.42, 0.68, -0.44, 1);
+		const tail = ball(proc, 0.14, sc, 0.42, 0.68, -0.44, 1);
 		tail.scale.set(1.8, 0.8, 0.8);
 		tail.rotation.y = -0.32;
 		const zTex = canvasTex(64, 64, (c, w) => {
@@ -1688,22 +1753,56 @@ export async function createIsland(
 		dl.position.set(1.1, 0.8, 0.12);
 		g.add(dl);
 		nl(dl, 0, 1.3);
+		const nose = { x: 1.12, y: 0.66, z: 0.12 };
+		const MODEL_S = 1.9;
+		let model: THREE.Group | null = null;
 		tick.push((dt, t) => {
-			g.scale.y = 1 + Math.sin(t * 1.2) * 0.02;
+			if (model) model.scale.y = MODEL_S * (1 + Math.sin(t * 1.2) * 0.015);
+			else proc.scale.y = 1 + Math.sin(t * 1.2) * 0.02;
 			for (const z of zs) {
 				z.p = (z.p + dt * 0.25) % 1;
-				z.sp.position.set(0.95 + z.p * 0.3, 1.05 + z.p * 0.9, 0.12);
+				z.sp.position.set(nose.x - 0.17 + z.p * 0.3, nose.y + 0.39 + z.p * 0.9, nose.z);
 				z.sp.scale.setScalar(0.18 + z.p * 0.25);
 				z.sp.material.opacity = 1 - z.p;
 			}
 			for (const f of puffs) {
 				f.p = (f.p + dt * 0.35) % 1;
-				f.m.position.set(1.12 + f.p * 0.25, 0.66 + f.p * 0.35, 0.12);
+				f.m.position.set(nose.x + f.p * 0.25, nose.y + f.p * 0.35, nose.z);
 				f.m.scale.setScalar(0.6 + f.p * 1.6);
 				(f.m.material as THREE.MeshStandardMaterial).opacity = 0.45 * (1 - f.p);
 			}
 		});
 		registerFind('dragon', g, 1.1, 0.7);
+		dl.position.set(nose.x - 0.02, nose.y + 0.14, nose.z);
+		// authored model (Meshy -> glTF, meshopt + WebP, ~170 KB); procedural dragon stays if it fails to load
+		loadModel('/island/dragon.glb')
+			.then((m) => {
+				m.scale.setScalar(MODEL_S);
+				m.position.y = 0.43 * MODEL_S;
+				m.rotation.y = Math.PI / 2; // model faces +z, the island's dragon faces +x
+				m.traverse((o) => {
+					const mesh = o as THREE.Mesh;
+					if (mesh.isMesh) {
+						mesh.castShadow = true;
+						mesh.receiveShadow = true;
+						// generated PBR maps are fully metallic; soften so it matches the island's matte look
+						const mm = mesh.material as Mat;
+						mm.metalness = 0.18;
+						mm.roughness = 1;
+						mm.side = THREE.FrontSide;
+					}
+				});
+				g.remove(proc);
+				g.add(m);
+				prep(m, byId.dragon.mats);
+				model = m;
+				nose.x = 0.86;
+				nose.y = 0.58;
+				nose.z = 0;
+				dl.position.set(nose.x - 0.02, nose.y + 0.14, nose.z);
+				lastTod = -1; // re-apply lighting so the new materials pick up this time of day
+			})
+			.catch(() => {});
 		obstacles.push([6.5, -1.4, 1.3]);
 	}
 	// Okapi, grazing near the pond
@@ -1761,6 +1860,8 @@ export async function createIsland(
 		obstacles.push([3.0, 5.5, 1.1]);
 	}
 	// Giraffe, peeking over the tree line
+	const GIRAFFE_S = 0.16,
+		GIRAFFE_Z = -0.5;
 	{
 		const g = new THREE.Group();
 		g.position.set(-6.5, 0, 4.7);
@@ -1808,7 +1909,20 @@ export async function createIsland(
 			neck.rotation.z = Math.sin(t * 0.5) * 0.05;
 			neck.rotation.x = Math.sin(t * 0.3) * 0.04;
 		});
+		const shell = g.children.slice();
 		registerFind('giraffe', g, 1.1, 2.2);
+		// authored giraffe (Poly by Google, CC-BY, via Poly Pizza; ~71 KB); procedural giraffe stays if it fails to load
+		loadModel('/island/giraffe.glb')
+			.then((m) => {
+				m.scale.setScalar(GIRAFFE_S);
+				m.position.set(0, 0, GIRAFFE_Z);
+				finishModel(m);
+				shell.forEach((o) => g.remove(o));
+				g.add(m);
+				prep(m, byId.giraffe.mats);
+				lastTod = -1;
+			})
+			.catch(() => {});
 		obstacles.push([-6.5, 4.7, 1.2]);
 	}
 	// Golden-age rocket on its pad
@@ -1887,14 +2001,34 @@ export async function createIsland(
 			ball(g, 0.07, M(0x10183a), 1.7, 0.15, s2 * 0.55, 0);
 		});
 		g.scale.setScalar(0.75);
+		const proc = g.children.slice();
+		let orca: THREE.Group | null = null;
 		tick.push((_dt, t) => {
+			if (orca) orca.rotation.y = Math.PI / 2 + Math.sin(t * 1.4) * 0.08;
 			const a = t * 0.09;
-			g.position.set(Math.cos(a) * 9, -8.5 + Math.sin(t * 0.6) * 0.5, Math.sin(a) * 9);
+			g.position.set(Math.cos(a) * 12.5, -8.5 + Math.sin(t * 0.6) * 0.5, Math.sin(a) * 12.5);
 			g.rotation.y = -a - Math.PI / 2 + Math.PI;
 			g.rotation.z = Math.sin(t * 0.6) * 0.06;
 			tailG.rotation.z = Math.sin(t * 1.4) * 0.35;
 		});
 		registerFind('whale', g, 2.6, 0);
+		// authored orca (Poly by Google, CC-BY, via Poly Pizza; ~15 KB) swims in place of the sky whale; procedural whale stays if it fails to load
+		loadModel('/island/orca.glb')
+			.then((m) => {
+				const k = 0.0086; // source is ~560 units nose to tail
+				const w = new THREE.Group();
+				m.scale.setScalar(k);
+				m.position.set(0, -52 * k, 0);
+				w.rotation.y = Math.PI / 2; // model's nose is +z, the island's whale heads +x
+				w.add(m);
+				finishModel(w);
+				proc.forEach((o) => g.remove(o));
+				g.add(w);
+				prep(w, byId.whale.mats);
+				orca = w;
+				lastTod = -1;
+			})
+			.catch(() => {});
 	}
 	// Dive bell hanging from a chain under the island
 	{
@@ -2191,6 +2325,158 @@ export async function createIsland(
 			if (phase === 'hidden' && wait > 0.4) wait = 0.4;
 		};
 	})();
+	// Monorail: a little loop over the rooftops, down past the rim and round the underside
+	{
+		const pts = (
+			[
+				[-7.3, 0.9, 2.2],
+				[-5.0, 2.2, 1.8],
+				[-2.0, 3.2, 2.6],
+				[1.5, 3.4, 1.4],
+				[4.5, 2.4, 2.0],
+				[7.3, 0.9, 1.2],
+				[9.3, -0.4, 0.8],
+				[9.2, -3.5, 0.4],
+				[7.4, -7.2, -0.5],
+				[4.0, -10.2, -1.0],
+				[0, -11.4, -0.3],
+				[-4.0, -10.2, 1.0],
+				[-7.4, -7.2, 0.5],
+				[-9.2, -3.5, 0.4],
+				[-9.3, -0.4, 1.0]
+			] as [number, number, number][]
+		).map(([x, y, z]) => new THREE.Vector3(x, y, z));
+		const curve = new THREE.CatmullRomCurve3(pts, true, 'centripetal');
+		curve.arcLengthDivisions = 900;
+		const total = curve.getLength();
+		const zAxis = new THREE.Vector3(0, 0, 1);
+		// carriage rides on the outside of the loop, so it hangs beneath the track under the island
+		const frame = (dir: THREE.Vector3) => {
+			const u = new THREE.Vector3().crossVectors(zAxis, dir).normalize();
+			const r = new THREE.Vector3().crossVectors(u, dir).normalize();
+			return { u, r };
+		};
+		const at = (d: number) => curve.getPointAt((((d / total) % 1) + 1) % 1);
+		// sweep a small profile along the curve into a flat-shaded ribbon
+		const sweep = (profile: [number, number][], N = 420) => {
+			const rings: THREE.Vector3[][] = [];
+			for (let i = 0; i < N; i++) {
+				const t = i / N;
+				const p = curve.getPointAt(t);
+				const d = curve.getTangentAt(t);
+				const { u, r } = frame(d);
+				rings.push(profile.map(([a, b]) => p.clone().addScaledVector(r, a).addScaledVector(u, b)));
+			}
+			const pos: number[] = [];
+			const push = (v: THREE.Vector3) => pos.push(v.x, v.y, v.z);
+			for (let i = 0; i < N; i++) {
+				const A = rings[i],
+					B = rings[(i + 1) % N];
+				for (let k = 0; k < profile.length; k++) {
+					const k2 = (k + 1) % profile.length;
+					push(A[k]);
+					push(B[k]);
+					push(B[k2]);
+					push(A[k]);
+					push(B[k2]);
+					push(A[k2]);
+				}
+			}
+			const geo = new THREE.BufferGeometry();
+			geo.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3));
+			geo.computeVertexNormals();
+			return geo;
+		};
+		const beam = new THREE.Mesh(
+			sweep([
+				[-0.19, -0.045],
+				[-0.19, 0.045],
+				[0.19, 0.045],
+				[0.19, -0.045]
+			]),
+			M(0x59638f, { metalness: 0.3, roughness: 0.55 })
+		);
+		beam.castShadow = true;
+		beam.receiveShadow = true;
+		const stripMat = G(0x9fd4ff, 0x62f0e0, 0.5, 2.4);
+		const strips = [-1, 1].map((sg) => {
+			const m = new THREE.Mesh(
+				sweep([
+					[sg * 0.165, 0.045],
+					[sg * 0.165, 0.062],
+					[sg * 0.195, 0.062],
+					[sg * 0.195, 0.045]
+				]),
+				stripMat
+			);
+			m.castShadow = false;
+			return m;
+		});
+		const rail = new THREE.Group();
+		rail.add(beam, ...strips);
+		noRay(rail);
+		world.add(rail);
+		// pylons under the raised stretch
+		const pyM = M(0x59638f);
+		for (let d = 0; d < total; d += 2.6) {
+			const p = at(d);
+			if (p.y < 1.4 || Math.abs(p.x) > 6.4) continue;
+			const py = box(world, 0.12, p.y - 0.06, 0.12, pyM, p.x, (p.y - 0.06) / 2 + 0.02, p.z);
+			py.raycast = () => {};
+			box(world, 0.32, 0.05, 0.32, pyM, p.x, 0.045, p.z).raycast = () => {};
+		}
+		// the train: three small carriages, with stand-ins until the authored model loads
+		const train = new THREE.Group();
+		world.add(train);
+		const CARS = 3,
+			CAR_L = 1.7,
+			GAP = 0.14;
+		const cars: { g: THREE.Group; proc: THREE.Group }[] = [];
+		for (let i = 0; i < CARS; i++) {
+			const cg = new THREE.Group();
+			const proc = new THREE.Group();
+			box(proc, 0.28, 0.2, CAR_L - 0.1, M(0xd62839), 0, 0.12, 0);
+			box(proc, 0.3, 0.07, CAR_L - 0.3, G(0xffe29a, 0xffc860, 0.3, 1.6), 0, 0.17, 0);
+			cg.add(proc);
+			train.add(cg);
+			cars.push({ g: cg, proc });
+		}
+		registerFind('monorail', train, 1.7, 0.2);
+		loadModel('/island/carriage.glb')
+			.then((m) => {
+				const k = 0.0028; // source is ~590 units long
+				m.scale.setScalar(k);
+				m.position.y = 60 * k + 0.002; // origin is the middle; sit the wheels on the rail
+				finishModel(m);
+				cars.forEach((c) => {
+					const inst = m.clone(true);
+					c.g.remove(c.proc);
+					c.g.add(inst);
+					prep(inst as THREE.Group, byId.monorail.mats);
+				});
+				lastTod = -1;
+			})
+			.catch(() => {});
+		let dist = 6;
+		const tmpM = new THREE.Matrix4();
+		tick.push((dt) => {
+			dist += dt * 1.5;
+			const mids: THREE.Vector3[] = [];
+			cars.forEach((c, i) => {
+				const dc = dist - i * (CAR_L + GAP);
+				const f = at(dc + CAR_L * 0.38),
+					r = at(dc - CAR_L * 0.38);
+				const dir = f.clone().sub(r).normalize();
+				const { u, r: rr } = frame(dir);
+				const mid = f.clone().add(r).multiplyScalar(0.5).addScaledVector(u, 0.045);
+				mids.push(mid);
+				tmpM.makeBasis(rr, u, dir);
+				c.g.quaternion.setFromRotationMatrix(tmpM);
+			});
+			train.position.copy(mids[1]);
+			cars.forEach((c, i) => c.g.position.copy(mids[i]).sub(mids[1]));
+		});
+	}
 	// a distant ringed planet
 	let planetIt: Item;
 	{
