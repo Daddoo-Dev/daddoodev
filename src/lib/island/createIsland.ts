@@ -1231,6 +1231,48 @@ export async function createIsland(
 		A.add(screen);
 		box(A, 1.12, 0.92, 0.04, M(0x14142b), 0, 1.6, 0.545);
 		register('arcade', g, 0, 3.45, 0);
+		// authored cabinet (J-Toastie, CC-BY, via Poly Pizza; ~19 KB). Its screen mesh gets the live game; procedural cabinet stays if it fails to load.
+		loadModel('/island/arcade.glb')
+			.then((m) => {
+				m.rotation.y = -Math.PI / 2; // model faces +x, the island's cabinet faces +z
+				m.position.set(0, 0.25, -0.17);
+				finishModel(m);
+				m.updateMatrixWorld(true);
+				m.traverse((o) => {
+					const mesh = o as THREE.Mesh;
+					if (mesh.isMesh && mesh.name === 'ArcadeMachine_Cube002-Mesh') {
+						// the cabinet is near-black; a faint violet glow keeps it readable and on-palette
+						const bm = (mesh.material as Mat).clone();
+						bm.emissive.set(0x4a3bb5);
+						bm.emissiveIntensity = 0.35;
+						mesh.material = bm;
+					}
+					if (!mesh.isMesh || mesh.name !== 'GameScreen_Plane') return;
+					// the plane's UVs point at one palette pixel; lay them across the screen instead
+					const pos = mesh.geometry.attributes.position;
+					const uv = new Float32Array(pos.count * 2);
+					const v = new THREE.Vector3();
+					const rel = m.matrixWorld.clone().invert().multiply(mesh.matrixWorld); // mesh space -> model space
+					for (let i = 0; i < pos.count; i++) {
+						v.fromBufferAttribute(pos, i).applyMatrix4(rel);
+						uv[i * 2] = (0.39 - v.z) / 0.78;
+						uv[i * 2 + 1] = (v.y - 1.5) / 0.78;
+					}
+					mesh.geometry = mesh.geometry.clone();
+					mesh.geometry.setAttribute('uv', new THREE.BufferAttribute(uv, 2));
+					mesh.material = scrM;
+					mesh.castShadow = false;
+				});
+				const mq2 = new THREE.Mesh(new THREE.PlaneGeometry(0.7, 0.2), glassMat(mt, 0.7, 1.0));
+				mq2.position.set(0.3, 2.44, 0);
+				mq2.rotation.y = Math.PI / 2;
+				m.add(mq2);
+				g.remove(A);
+				g.add(m);
+				prep(m, byId.arcade.mats);
+				lastTod = -1;
+			})
+			.catch(() => {});
 		tick.push((dt) => {
 			acc += dt;
 			if (acc > 0.05) {
