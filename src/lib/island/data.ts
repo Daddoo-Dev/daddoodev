@@ -98,7 +98,7 @@ export const BUILDINGS: Record<string, IslandEntry> = {
 			{ label: 'CC-BY 3.0', url: 'https://creativecommons.org/licenses/by/3.0/' }
 		],
 		creditsText:
-			'Church, Giraffe, Killer Whale and Railway Carriage by Poly by Google; Arcade Machine by J-Toastie; House by burunduk (all CC-BY). Yeti by Quaternius (CC0). Okapi and Swiss Guard made with Copilot and Meshy.'
+			'Church, Giraffe, Killer Whale and Railway Carriage by Poly by Google; Arcade Machine by J-Toastie; House by burunduk (all CC-BY). Yeti and rock by Quaternius, skull candle and grave by Kay Lousberg (CC0). Okapi and Swiss Guard made with Copilot and Meshy.'
 	},
 	appstore: {
 		title: 'App Store',
