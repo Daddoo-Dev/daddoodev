@@ -191,7 +191,10 @@ export async function createIsland(
 
 	const scene = new THREE.Scene();
 	scene.environment = new THREE.PMREMGenerator(renderer).fromScene(new RoomEnvironment(), 0.04).texture;
-	scene.fog = new THREE.FogExp2(0x101a45, 0.006);
+	// Horizontal layout scale. Objects keep their size; the island, paths, and camera grow with it.
+	const SPREAD = 1.5;
+	const FOG = 0.006 / SPREAD;
+	scene.fog = new THREE.FogExp2(0x101a45, FOG);
 
 	// sky is painted into a tiny gradient texture so the post-processing pipeline can bloom against it
 	const skyCanvas = document.createElement('canvas');
@@ -202,7 +205,7 @@ export async function createIsland(
 	scene.background = skyTex;
 
 	const camera = new THREE.PerspectiveCamera(32, 1, 0.5, 140);
-	const HOME = new THREE.Vector3(17, 13.5, 17);
+	const HOME = new THREE.Vector3(17, 13.5, 17).multiplyScalar(SPREAD);
 	camera.position.copy(HOME);
 
 	const controls = new OrbitControls(camera, renderer.domElement);
@@ -211,8 +214,8 @@ export async function createIsland(
 		enableDamping: true,
 		dampingFactor: 0.07,
 		enablePan: false,
-		minDistance: 9,
-		maxDistance: 46,
+		minDistance: 9 * SPREAD,
+		maxDistance: 46 * SPREAD,
 		minPolarAngle: Math.PI / 8,
 		maxPolarAngle: Math.PI * 0.93,
 		autoRotate: !reduceMotion,
@@ -274,13 +277,22 @@ export async function createIsland(
 	const sun = new THREE.DirectionalLight(0xffffff, 2);
 	sun.castShadow = true;
 	sun.shadow.mapSize.set(low ? 1024 : 2048, low ? 1024 : 2048);
-	Object.assign(sun.shadow.camera, { left: -13, right: 13, top: 13, bottom: -13, near: 1, far: 50 });
+	Object.assign(sun.shadow.camera, {
+		left: -13 * SPREAD,
+		right: 13 * SPREAD,
+		top: 13 * SPREAD,
+		bottom: -13 * SPREAD,
+		near: 1,
+		far: 50 * SPREAD
+	});
 	sun.shadow.bias = -0.0004;
 	sun.shadow.normalBias = 0.03;
 	scene.add(hemi, sun);
 
 	const world = new THREE.Group(); // island + everything on it bobs together
 	scene.add(world);
+	const relayout: (() => void)[] = [];
+	let mcGroup: THREE.Group | null = null;
 
 	/* ───────── helpers ───────── */
 	const glowers: Mat[] = []; // materials whose glow depends on time of day: userData.dn = [day, night]
@@ -440,8 +452,8 @@ export async function createIsland(
 		return m;
 	}
 
-	/* ───────── island (15 × 15) ───────── */
-	const S = 15;
+	/* ───────── island (footprint grows with SPREAD; meshes on it do not) ───────── */
+	const S = 15 * SPREAD;
 	const grassTex = canvasTex(480, 480, (g, w) => {
 		const n = 15,
 			s = w / n,
@@ -469,8 +481,48 @@ export async function createIsland(
 		ROCK_H = 8.2,
 		ROCK_RT = (S - 0.6) / Math.SQRT2,
 		ROCK_RB = 1.1;
-	cyl(world, ROCK_RT, ROCK_RB, ROCK_H, 4, M(0x7d7399), 0, ROCK_TOP - ROCK_H / 2, 0).rotation.y =
-		Math.PI / 4;
+	const rockMat = M(0x7d7399, { side: THREE.DoubleSide });
+	const bore = Array.from({ length: 6 }, () => new THREE.Vector3());
+	const BORE_R = 1.2;
+	rockMat.customProgramCacheKey = () => 'island-rock-bore';
+	rockMat.onBeforeCompile = (shader) => {
+		shader.uniforms.uB0 = { value: bore[0] };
+		shader.uniforms.uB1 = { value: bore[1] };
+		shader.uniforms.uB2 = { value: bore[2] };
+		shader.uniforms.uB3 = { value: bore[3] };
+		shader.uniforms.uB4 = { value: bore[4] };
+		shader.uniforms.uB5 = { value: bore[5] };
+		shader.uniforms.uBR = { value: BORE_R };
+		shader.vertexShader = shader.vertexShader
+			.replace('#include <common>', '#include <common>\nvarying vec3 vRockPos;')
+			.replace('#include <begin_vertex>', '#include <begin_vertex>\nvRockPos = position;');
+		shader.fragmentShader = shader.fragmentShader
+			.replace(
+				'#include <common>',
+				`#include <common>
+				varying vec3 vRockPos;
+				uniform vec3 uB0, uB1, uB2, uB3, uB4, uB5;
+				uniform float uBR;
+				float boreTube(vec3 p, vec3 a, vec3 b) {
+					vec3 ab = b - a;
+					float d2 = dot(ab, ab);
+					float t = d2 > 0.0001 ? clamp(dot(p - a, ab) / d2, 0.0, 1.0) : 0.0;
+					return distance(p, a + ab * t);
+				}`
+			)
+			.replace(
+				'#include <dithering_fragment>',
+				`#include <dithering_fragment>
+				if (boreTube(vRockPos, uB0, uB1) < uBR || boreTube(vRockPos, uB1, uB2) < uBR || boreTube(vRockPos, uB2, uB3) < uBR || boreTube(vRockPos, uB3, uB4) < uBR || boreTube(vRockPos, uB4, uB5) < uBR) discard;`
+			);
+	};
+	const rock = cyl(world, ROCK_RT, ROCK_RB, ROCK_H, 4, rockMat, 0, ROCK_TOP - ROCK_H / 2, 0);
+	rock.rotation.y = Math.PI / 4;
+	const toRock = (p: THREE.Vector3, out: THREE.Vector3) => {
+		const c = Math.cos(Math.PI / 4),
+			s = Math.sin(Math.PI / 4);
+		out.set(p.x * c - p.z * s, p.y - (ROCK_TOP - ROCK_H / 2), p.x * s + p.z * c);
+	};
 	const inR = (y: number) =>
 		(ROCK_RT - (ROCK_RT - ROCK_RB) * ((ROCK_TOP - y) / ROCK_H)) / Math.SQRT2;
 	(
@@ -506,10 +558,11 @@ export async function createIsland(
 			c.position.set(off, y, -r);
 			c.rotation.x = -tilt;
 		}
+		c.userData.layout = 'rock';
 		c.raycast = () => {};
 		world.add(c);
 	});
-	const underGlow = new THREE.PointLight(0x62f0e0, 0, 14, 2);
+	const underGlow = new THREE.PointLight(0x62f0e0, 0, 14 * SPREAD, 2);
 	underGlow.position.set(0, -5.5, 0);
 	world.add(underGlow);
 
@@ -699,7 +752,7 @@ export async function createIsland(
 	noRay(boat);
 	tick.push((_dt, t) => {
 		const a = t * 0.25;
-		boat.position.set(0.6 + Math.cos(a) * 0.62, 0.02 + Math.sin(t * 2) * 0.02, 5.2 + Math.sin(a) * 0.5);
+		boat.position.set(0.6 * SPREAD + Math.cos(a) * 0.62, 0.02 + Math.sin(t * 2) * 0.02, 5.2 * SPREAD + Math.sin(a) * 0.5);
 		boat.rotation.y = -a + Math.PI / 2;
 		boat.rotation.z = Math.sin(t * 1.7) * 0.06;
 	});
@@ -762,6 +815,7 @@ export async function createIsland(
 		);
 		gem.position.set(mx, my, mz);
 		group.add(gem);
+		gem.visible = false;
 		const mats: Mat[] = [];
 		prep(group, mats);
 		group.userData.itemId = id;
@@ -1524,6 +1578,7 @@ export async function createIsland(
 		g.position.set(0, 0, -6.1);
 		faceTo(g);
 		world.add(g);
+		mcGroup = g;
 		blob(0, -6.1, 2.6, 1.8);
 		box(g, 4.0, 0.2, 2.8, M(0x8d93ad), 0, 0.1, 0);
 		box(g, 3.6, 1.3, 2.3, M(0xc9cfe2, { metalness: 0.2 }), 0, 0.85, 0);
@@ -1744,7 +1799,7 @@ export async function createIsland(
 		noRay(dr);
 		tick.push((_dt, t) => {
 			const a = t * 0.5;
-			dr.position.set(Math.cos(a) * 3.3, 3.5 + Math.sin(t * 1.3) * 0.18, -6.1 + Math.sin(a) * 2.2);
+			dr.position.set(Math.cos(a) * 3.3, 3.5 + Math.sin(t * 1.3) * 0.18, -6.1 * SPREAD + Math.sin(a) * 2.2);
 			dr.rotation.y = -a;
 			dr.rotation.z = Math.sin(t * 1.3) * 0.08;
 			rotors.forEach((r, i) => {
@@ -1892,8 +1947,8 @@ export async function createIsland(
 			sp.set(wv, 0.7);
 			return fr.intersectsSphere(sp);
 		};
-		const plazaObs = (o: number[]) => o[0] === PLAZA.x && o[1] === PLAZA.z;
-		const pondObs = (o: number[]) => o[0] === 0.6 && o[1] === 5.2;
+		const plazaObs = (o: number[]) => o[0] === PLAZA.x * SPREAD && o[1] === PLAZA.z * SPREAD;
+		const pondObs = (o: number[]) => o[0] === 0.6 * SPREAD && o[1] === 5.2 * SPREAD;
 		const solids = () => obstacles.filter((o) => o[2] >= 0.6 && !plazaObs(o));
 		const wrap = (a: number) => Math.atan2(Math.sin(a), Math.cos(a));
 		let last = '';
@@ -1917,9 +1972,9 @@ export async function createIsland(
 					x += -uz * 0.3;
 					z += ux * 0.3;
 				}
-				if (Math.hypot(x, z) > 7.2) return;
-				if (x * cdx + z * cdz > -1.0) return; // must be hidden on the far side from the camera
-				if (Math.hypot(x - g.position.x, z - g.position.z) > 14) return;
+				if (Math.hypot(x, z) > 7.2 * SPREAD) return;
+				if (x * cdx + z * cdz > -1.0 * SPREAD) return; // must be hidden on the far side from the camera
+				if (Math.hypot(x - g.position.x, z - g.position.z) > 14 * SPREAD) return;
 				if (all.some((o) => !(o[0] === cx && o[1] === cz) && Math.hypot(x - o[0], z - o[1]) < o[2] + 0.05)) return;
 				const face = Math.atan2(ux, uz);
 				cands.push({ x, z, yaw: good ? face : face + Math.PI / 2, good, cx, cz });
@@ -1965,8 +2020,8 @@ export async function createIsland(
 			const cl = Math.hypot(camera.position.x, camera.position.z) || 1;
 			const side = (gp.x * camera.position.x + gp.z * camera.position.z) / cl;
 			const view = inView();
-			const clear = side < -2 || !view;
-			const seen = side > -0.6 && view;
+			const clear = side < -2 * SPREAD || !view;
+			const seen = side > -0.6 * SPREAD && view;
 			yblob.position.set(gp.x, 0.012, gp.z);
 			if (st === 'hide') {
 				if (clear) wait -= dt;
@@ -2415,7 +2470,7 @@ export async function createIsland(
 		tick.push((_dt, t) => {
 			if (orca) orca.rotation.y = -Math.PI / 2 + Math.sin(t * 1.4) * 0.08;
 			const a = t * 0.09;
-			g.position.set(Math.cos(a) * 12.5, -8.5 + Math.sin(t * 0.6) * 0.5, Math.sin(a) * 12.5);
+			g.position.set(Math.cos(a) * 12.5 * SPREAD, -8.5 + Math.sin(t * 0.6) * 0.5, Math.sin(a) * 12.5 * SPREAD);
 			g.rotation.y = -a - Math.PI / 2 + Math.PI;
 			g.rotation.z = Math.sin(t * 0.6) * 0.06;
 			tailG.rotation.z = Math.sin(t * 1.4) * 0.35;
@@ -2547,6 +2602,14 @@ export async function createIsland(
 			obstacles.push([x, z, 0.35]);
 			return { g: pg, home: new THREE.Vector3(x, 0, z), a, gone: false, regrow: 0, grow: 1 };
 		});
+		relayout.push(() => {
+			for (const pl of plants) {
+				const ox = pl.home.x - PX,
+					oz = pl.home.z - PZ;
+				pl.home.set(g.position.x + ox, pl.home.y, g.position.z + oz);
+				pl.g.position.copy(pl.home);
+			}
+		});
 		const ringM = new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0, depthWrite: false, blending: THREE.AdditiveBlending });
 		const ring = new THREE.Mesh(new THREE.RingGeometry(0.85, 1, 40), ringM);
 		ring.rotation.x = -Math.PI / 2;
@@ -2649,7 +2712,7 @@ export async function createIsland(
 				by = 0.42 + Math.sin(t * 2.4) * 0.03;
 				pt += dt;
 				const pl = plants[plantIdx];
-				Pt.set(pl.home.x - PX, 0.3, pl.home.z - PZ);
+				Pt.set(pl.home.x - g.position.x, 0.3, pl.home.z - g.position.z);
 				if (tents[tentJ].tip.distanceTo(Pt) < 0.14 || pt > 1.8) {
 					phase = 'carry';
 					pt = 0;
@@ -2683,7 +2746,7 @@ export async function createIsland(
 					lift = 0.5;
 				} else if (i === tentJ && phase === 'reach') {
 					const pl = plants[plantIdx];
-					T.target.set(pl.home.x - PX, 0.3, pl.home.z - PZ);
+					T.target.set(pl.home.x - g.position.x, 0.3, pl.home.z - g.position.z);
 					lift = 0.35;
 				} else if (i === tentJ && (phase === 'carry' || phase === 'sink') && plantIdx >= 0) {
 					T.target.set(Math.sin(t * 2) * 0.12, by + 0.95, 0.12);
@@ -2716,7 +2779,7 @@ export async function createIsland(
 			if ((phase === 'carry' || phase === 'sink') && plantIdx >= 0) {
 				const pl = plants[plantIdx],
 					tip = tents[tentJ].tip;
-				pl.g.position.set(PX + tip.x, WY + tip.y - 0.3, PZ + tip.z);
+				pl.g.position.set(g.position.x + tip.x, WY + tip.y - 0.3, g.position.z + tip.z);
 				pl.g.rotation.z = Math.sin(t * 5) * 0.15;
 				pl.gone = true;
 				if (phase === 'sink' && by < -0.05) pl.g.visible = false;
@@ -2724,7 +2787,7 @@ export async function createIsland(
 
 			body.position.y = by;
 			// face the camera, blink now and then
-			camLocal.set(camera.position.x - (PX + 0), 0, camera.position.z - PZ);
+			camLocal.set(camera.position.x - g.position.x, 0, camera.position.z - g.position.z);
 			faceY += (Math.atan2(camLocal.x, camLocal.z) - faceY) * Math.min(1, dt * 4);
 			face.rotation.y = faceY;
 			const blink = t % 4.2 > 4.05 ? 0.15 : 1;
@@ -2734,7 +2797,7 @@ export async function createIsland(
 			if (phase === 'hidden' && wait > 0.4) wait = 0.4;
 		};
 	})();
-	// Monorail: a little loop over the rooftops, down past the rim and round the underside
+	// Monorail: over the rooftops, then through a bore in the lower rock instead of looping under it
 	{
 		const pts = (
 			[
@@ -2744,17 +2807,19 @@ export async function createIsland(
 				[1.5, 3.4, 1.4],
 				[4.5, 2.4, 2.0],
 				[7.3, 0.9, 1.2],
-				[9.3, -0.4, 0.8],
-				[9.2, -3.5, 0.4],
-				[7.4, -7.2, -0.5],
-				[4.0, -10.2, -1.0],
-				[0, -11.4, -0.3],
-				[-4.0, -10.2, 1.0],
-				[-7.4, -7.2, 0.5],
-				[-9.2, -3.5, 0.4],
-				[-9.3, -0.4, 1.0]
+				[9.3, -0.4, 0.55],
+				[8.6, -2.2, 0.5],
+				[7.4, -4.0, 0.7],
+				[4.0, -5.7, 1.4],
+				[1.5, -6.3, 1.5],
+				[0, -6.4, 1.5],
+				[-1.5, -6.3, 1.5],
+				[-4.0, -5.7, 1.4],
+				[-7.4, -4.0, 0.7],
+				[-8.6, -2.2, 0.5],
+				[-9.3, -0.4, 0.7]
 			] as [number, number, number][]
-		).map(([x, y, z]) => new THREE.Vector3(x, y, z));
+		).map(([x, y, z]) => new THREE.Vector3(x * SPREAD, y, z * SPREAD));
 		const curve = new THREE.CatmullRomCurve3(pts, true, 'centripetal');
 		curve.arcLengthDivisions = 900;
 		const total = curve.getLength();
@@ -2825,15 +2890,71 @@ export async function createIsland(
 		rail.add(beam, ...strips);
 		noRay(rail);
 		world.add(rail);
+		const insideU: number[] = [];
+		for (let i = 0; i <= 240; i++) {
+			const u = i / 240;
+			const p = curve.getPointAt(u);
+			const half = inR(p.y);
+			if (p.y < ROCK_TOP && p.y > ROCK_TOP - ROCK_H && Math.abs(p.x) < half - 0.2 && Math.abs(p.z) < half - 0.2)
+				insideU.push(u);
+		}
+		if (insideU.length > 1) {
+			const u0 = insideU[0],
+				u1 = insideU[insideU.length - 1];
+			const uStart = Math.max(0, u0 - 0.012),
+				uEnd = Math.min(0.999, u1 + 0.012);
+			for (let i = 0; i < bore.length; i++)
+				toRock(curve.getPointAt(uStart + ((uEnd - uStart) * i) / (bore.length - 1)), bore[i]);
+			const seg = low ? 8 : 12,
+				steps = 16,
+				rad = 1.02;
+			const rings: THREE.Vector3[][] = [];
+			for (let i = 0; i <= steps; i++) {
+				const u = u0 + ((u1 - u0) * i) / steps;
+				const p = curve.getPointAt(u);
+				const d = curve.getTangentAt(u);
+				const { u: up, r } = frame(d);
+				const ring: THREE.Vector3[] = [];
+				for (let k = 0; k < seg; k++) {
+					const a = (k / seg) * Math.PI * 2;
+					ring.push(p.clone().addScaledVector(r, Math.cos(a) * rad).addScaledVector(up, Math.sin(a) * rad));
+				}
+				rings.push(ring);
+			}
+			const wall: number[] = [];
+			const pushV = (v: THREE.Vector3) => wall.push(v.x, v.y, v.z);
+			for (let i = 0; i < steps; i++) {
+				const A = rings[i],
+					B = rings[i + 1];
+				for (let k = 0; k < seg; k++) {
+					const k2 = (k + 1) % seg;
+					pushV(A[k]);
+					pushV(B[k]);
+					pushV(B[k2]);
+					pushV(A[k]);
+					pushV(B[k2]);
+					pushV(A[k2]);
+				}
+			}
+			const liner = new THREE.Mesh(
+				new THREE.BufferGeometry().setAttribute('position', new THREE.Float32BufferAttribute(wall, 3)),
+				M(0x3c3654, { side: THREE.BackSide, roughness: 1, flatShading: true })
+			);
+			liner.geometry.computeVertexNormals();
+			liner.castShadow = false;
+			liner.receiveShadow = false;
+			liner.raycast = () => {};
+			rail.add(liner);
+		}
 		// pylons under the raised stretch
 		const pyM = M(0x59638f);
 		for (let d = 0; d < total; d += 2.6) {
 			const p = at(d);
-			if (p.y < 1.4 || Math.abs(p.x) > 6.4) continue;
-			const py = box(world, 0.12, p.y - 0.06, 0.12, pyM, p.x, (p.y - 0.06) / 2 + 0.02, p.z);
+			if (p.y < 1.4 || Math.abs(p.x) > 6.4 * SPREAD) continue;
+			const py = box(rail, 0.12, p.y - 0.06, 0.12, pyM, p.x, (p.y - 0.06) / 2 + 0.02, p.z);
 			py.raycast = () => {};
-			narrowCovers.push([p.x, p.z, 0.07]);
-			box(world, 0.32, 0.05, 0.32, pyM, p.x, 0.045, p.z).raycast = () => {};
+			narrowCovers.push([p.x / SPREAD, p.z / SPREAD, 0.07]);
+			box(rail, 0.32, 0.05, 0.32, pyM, p.x, 0.045, p.z).raycast = () => {};
 		}
 		// the train: three small carriages, with stand-ins until the authored model loads
 		const train = new THREE.Group();
@@ -2963,7 +3084,7 @@ export async function createIsland(
 				e.set(Math.sin(t * 1.4 + b.ph) * amp, 0, Math.cos(t * 1.1 + b.ph * 1.3) * amp);
 				q.setFromEuler(e);
 				sc.setScalar(b.s);
-				p.set(b.x, 0.16 * b.s, b.z);
+				p.set(b.x * SPREAD, 0.16 * b.s, b.z * SPREAD);
 				mesh.setMatrixAt(i, m4.compose(p, q, sc));
 			});
 			mesh.instanceMatrix.needsUpdate = true;
@@ -2989,7 +3110,7 @@ export async function createIsland(
 		b.add(new THREE.Mesh(new THREE.ConeGeometry(0.05, 0.22, 4).rotateX(Math.PI / 2), birdMat));
 		noRay(b);
 		world.add(b);
-		return { b, pivL, pivR, ph: i * 1.3, R: 10.5 + (i % 3) * 1.4, h: 5.5 + (i % 2) * 1.6, sp: 0.18 + i * 0.015 };
+		return { b, pivL, pivR, ph: i * 1.3, R: (10.5 + (i % 3) * 1.4) * SPREAD, h: 5.5 + (i % 2) * 1.6, sp: 0.18 + i * 0.015 };
 	});
 	tick.push((_dt, t) => {
 		for (const k of birds) {
@@ -3023,9 +3144,9 @@ export async function createIsland(
 	tick.push((_dt, t) => {
 		for (const k of bfs) {
 			k.b.position.set(
-				-1.5 + Math.sin(t * 0.5 + k.ph) * 4 + k.ph,
+				(-1.5 + Math.sin(t * 0.5 + k.ph) * 4 + k.ph) * SPREAD,
 				0.7 + Math.sin(t * 1.6 + k.ph) * 0.25,
-				2.2 + Math.cos(t * 0.37 + k.ph * 1.7) * 3.5
+				(2.2 + Math.cos(t * 0.37 + k.ph * 1.7) * 3.5) * SPREAD
 			);
 			k.b.rotation.y = t * 0.5 + k.ph;
 			const f = Math.sin(t * 16 + k.ph) * 0.9;
@@ -3039,7 +3160,7 @@ export async function createIsland(
 		const m = new THREE.Mesh(new THREE.BoxGeometry(0.18, 0.24, 0.18), lanternMat);
 		m.raycast = () => {};
 		world.add(m);
-		return { m, p: i / 7, x: (rnd() - 0.5) * 8, z: (rnd() - 0.5) * 8, ph: rnd() * 6 };
+		return { m, p: i / 7, x: (rnd() - 0.5) * 8 * SPREAD, z: (rnd() - 0.5) * 8 * SPREAD, ph: rnd() * 6 };
 	});
 	tick.push((dt, t) => {
 		for (const l of lanterns) {
@@ -3057,7 +3178,7 @@ export async function createIsland(
 		pivot.rotation.y = rnd() * 6.28;
 		scene.add(pivot);
 		const c = new THREE.Group();
-		c.position.set(17 + rnd() * 7, -1 + rnd() * 8, 0);
+		c.position.set((17 + rnd() * 7) * SPREAD, -1 + rnd() * 8, 0);
 		pivot.add(c);
 		(
 			[
@@ -3131,7 +3252,7 @@ export async function createIsland(
 	const orbitTilt = new THREE.Group();
 	orbitTilt.rotation.set(0.5, 0, 0.22);
 	scene.add(orbitTilt);
-	const OR = 15.5;
+	const OR = 15.5 * SPREAD;
 	const ringPts: THREE.Vector3[] = [];
 	for (let i = 0; i <= 96; i++) {
 		const a = (i / 96) * Math.PI * 2;
@@ -3186,7 +3307,7 @@ export async function createIsland(
 		ffPos = new Float32Array(FF * 3),
 		ffBase: { x: number; y: number; z: number; ph: number; sp: number }[] = [];
 	for (let i = 0; i < FF; i++)
-		ffBase.push({ x: (rnd() - 0.5) * 15, y: 0.6 + rnd() * 3.8, z: (rnd() - 0.5) * 15, ph: rnd() * 6, sp: 0.4 + rnd() * 0.6 });
+		ffBase.push({ x: (rnd() - 0.5) * 15 * SPREAD, y: 0.6 + rnd() * 3.8, z: (rnd() - 0.5) * 15 * SPREAD, ph: rnd() * 6, sp: 0.4 + rnd() * 0.6 });
 	const ffGeo = new THREE.BufferGeometry();
 	ffGeo.setAttribute('position', new THREE.BufferAttribute(ffPos, 3));
 	const dot = canvasTex(64, 64, (c, w) => {
@@ -3218,7 +3339,7 @@ export async function createIsland(
 
 	const RAIN_N = low ? 350 : 900;
 	const rainPos = new Float32Array(RAIN_N * 6);
-	const drops = Array.from({ length: RAIN_N }, () => ({ x: (rnd() - 0.5) * 30, y: rnd() * 24 - 3, z: (rnd() - 0.5) * 30, sp: 20 + rnd() * 10 }));
+	const drops = Array.from({ length: RAIN_N }, () => ({ x: (rnd() - 0.5) * 30 * SPREAD, y: rnd() * 24 - 3, z: (rnd() - 0.5) * 30 * SPREAD, sp: 20 + rnd() * 10 }));
 	const rainGeo = new THREE.BufferGeometry();
 	rainGeo.setAttribute('position', new THREE.BufferAttribute(rainPos, 3));
 	const rainLines = new THREE.LineSegments(rainGeo, new THREE.LineBasicMaterial({ color: 0xa9bde6, transparent: true, opacity: 0.6, depthWrite: false, fog: false }));
@@ -3229,7 +3350,7 @@ export async function createIsland(
 
 	const SNOW_N = low ? 300 : 700;
 	const snowPos = new Float32Array(SNOW_N * 3);
-	const flakes = Array.from({ length: SNOW_N }, () => ({ x: (rnd() - 0.5) * 30, y: rnd() * 24 - 3, z: (rnd() - 0.5) * 30, sp: 1.2 + rnd() * 1.4, ph: rnd() * 6 }));
+	const flakes = Array.from({ length: SNOW_N }, () => ({ x: (rnd() - 0.5) * 30 * SPREAD, y: rnd() * 24 - 3, z: (rnd() - 0.5) * 30 * SPREAD, sp: 1.2 + rnd() * 1.4, ph: rnd() * 6 }));
 	const snowGeo = new THREE.BufferGeometry();
 	snowGeo.setAttribute('position', new THREE.BufferAttribute(snowPos, 3));
 	const snowTex = canvasTex(32, 32, (c, w) => {
@@ -3256,7 +3377,7 @@ export async function createIsland(
 	const lightning = { cd: 4, flash: 0, echo: 0 };
 	function strike() {
 		const a = rnd() * Math.PI * 2,
-			r = 11 + rnd() * 5;
+			r = (11 + rnd() * 5) * SPREAD;
 		let x = Math.cos(a) * r,
 			z = Math.sin(a) * r;
 		for (let i = 0; i < boltPts.length; i++) {
@@ -3280,8 +3401,8 @@ export async function createIsland(
 				d.x -= slant * d.sp * dt * 0.5;
 				if (d.y < -3) {
 					d.y = 21 + rnd() * 3;
-					d.x = (rnd() - 0.5) * 30;
-					d.z = (rnd() - 0.5) * 30;
+					d.x = (rnd() - 0.5) * 30 * SPREAD;
+					d.z = (rnd() - 0.5) * 30 * SPREAD;
 				}
 				const len = 0.6 + W.rain * 0.4;
 				rainPos.set([d.x, d.y, d.z, d.x - slant * len, d.y + len, d.z], i * 6);
@@ -3298,8 +3419,8 @@ export async function createIsland(
 				f.x += (Math.sin(t * 0.8 + f.ph) * 0.5 + W.wind * 2.5) * dt;
 				if (f.y < -3) {
 					f.y = 21 + rnd() * 3;
-					f.x = (rnd() - 0.5) * 30;
-					f.z = (rnd() - 0.5) * 30;
+					f.x = (rnd() - 0.5) * 30 * SPREAD;
+					f.z = (rnd() - 0.5) * 30 * SPREAD;
 				}
 				if (f.x > 15) f.x -= 30;
 				snowPos.set([f.x, f.y, f.z], i * 3);
@@ -3366,18 +3487,14 @@ export async function createIsland(
 		cones.push({ m, day, night });
 		return m;
 	}
-	// lantern pool of light, mission-control tower beam, sweeping searchlight
+	// lantern pool of light, mission-control tower beam
 	beam(world, new THREE.ConeGeometry(1.15, 1.45, 28, 1, true), 0xffb347, 0.03, 0.42, true, 1.7, 0.725, -1.7);
-	beam(world, new THREE.CylinderGeometry(0.5, 0.08, 7, 18, 1, true), 0x62f0e0, 0, 0.34, false, 2.5, 6.2, -6.0);
-	const searchlight = new THREE.Group();
-	searchlight.position.set(-0.9, 3.4, -6.1);
-	world.add(searchlight);
-	const slGeo = new THREE.CylinderGeometry(0.6, 0.03, 11, 16, 1, true);
-	slGeo.translate(0, 5.5, 0);
-	slGeo.rotateZ(-(Math.PI / 2 - 0.5));
-	beam(searchlight, slGeo, 0x9ff6ff, 0, 0.3, false, 0, 0, 0);
-	tick.push((_dt, t) => {
-		searchlight.rotation.y = t * 0.6;
+	if (mcGroup) {
+		beam(mcGroup, new THREE.CylinderGeometry(0.5, 0.08, 7, 18, 1, true), 0x62f0e0, 0, 0.34, false, 2.5, 6.2, 0.1);
+	} else {
+		beam(world, new THREE.CylinderGeometry(0.5, 0.08, 7, 18, 1, true), 0x62f0e0, 0, 0.34, false, 2.5, 6.2, -6.0);
+	}
+	tick.push(() => {
 		for (const c of cones) (c.m.material as THREE.MeshBasicMaterial).opacity = L(c.day, c.night, state.nm);
 	});
 
@@ -3398,7 +3515,7 @@ export async function createIsland(
 		m.scale.set(sz, sz, 1);
 		m.raycast = () => {};
 		world.add(m);
-		return { m, ph: rnd() * 6, x: (rnd() - 0.5) * (i < 6 ? 8 : 6), z: (rnd() - 0.5) * (i < 6 ? 8 : 6), y: i < 6 ? 0.2 + (i % 3) * 0.2 : -2.2 - (i - 6) * 0.9 };
+		return { m, ph: rnd() * 6, x: (rnd() - 0.5) * (i < 6 ? 8 : 6) * SPREAD, z: (rnd() - 0.5) * (i < 6 ? 8 : 6) * SPREAD, y: i < 6 ? 0.2 + (i % 3) * 0.2 : -2.2 - (i - 6) * 0.9 };
 	});
 	tick.push((_dt, t) => {
 		for (const k of mists) k.m.position.set(k.x + Math.sin(t * 0.07 + k.ph) * 1.6, k.y, k.z + Math.cos(t * 0.06 + k.ph) * 1.6);
@@ -3422,7 +3539,7 @@ export async function createIsland(
 	scene.add(seaPivot);
 	for (let i = 0; i < (low ? 14 : 26); i++) {
 		const a = rnd() * Math.PI * 2,
-			r = 18 + rnd() * 44;
+			r = 18 * SPREAD + rnd() * 44;
 		const sp = new THREE.Sprite(seaMat);
 		sp.position.set(Math.cos(a) * r, -12 - rnd() * 10, Math.sin(a) * r);
 		const sz = 18 + rnd() * 18;
@@ -3604,7 +3721,7 @@ export async function createIsland(
 		seaMat.color.copy(seaBase).lerp(GREY, W.cloud * 0.5);
 		seaMat.opacity = Math.min(0.92, seaOpBase * (1 + W.cloud * 0.35 + W.fog * 0.4));
 		mistMat.opacity = Math.min(0.5, mistBase * (1 + W.fog * 4));
-		(scene.fog as THREE.FogExp2).density = 0.006 + W.fog * 0.028 + W.rain * 0.004 + W.snow * 0.006;
+		(scene.fog as THREE.FogExp2).density = FOG + W.fog * 0.028 + W.rain * 0.004 + W.snow * 0.006;
 		butterflies.visible = tod < 1.1 && W.rain < 0.15 && W.snow < 0.1;
 		state.cloud = W.cloud;
 		state.wind = W.wind;
@@ -3832,7 +3949,7 @@ export async function createIsland(
 	/* ───────── intro fly-in ───────── */
 	const INTRO = 3.4;
 	let introT = reduceMotion ? INTRO : 0;
-	const introFrom = new THREE.Vector3(36, 26, 40);
+	const introFrom = new THREE.Vector3(36, 26, 40).multiplyScalar(SPREAD);
 	function skipIntro() {
 		if (introT < INTRO) {
 			introT = INTRO;
@@ -3844,6 +3961,22 @@ export async function createIsland(
 		controls.enabled = false;
 		camera.position.copy(introFrom);
 	}
+
+	/* ───────── spread landmarks apart; rock and track are already at the new size ───────── */
+	for (const child of world.children) {
+		if (child.userData.layout === 'rock') continue;
+		child.position.x *= SPREAD;
+		child.position.z *= SPREAD;
+	}
+	for (const o of obstacles) {
+		o[0] *= SPREAD;
+		o[1] *= SPREAD;
+	}
+	for (const o of narrowCovers) {
+		o[0] *= SPREAD;
+		o[1] *= SPREAD;
+	}
+	for (const fn of relayout) fn();
 
 	/* ───────── loop ───────── */
 	const clock = new THREE.Clock();
@@ -3933,7 +4066,7 @@ export async function createIsland(
 		satLightM.color.setRGB(1, 0.2, 0.3).multiplyScalar(Math.sin(t * 3) > 0.5 ? 1 : 0.15);
 		for (const p of pings) {
 			p.p = (p.p + dt * 0.12 * mo) % 1;
-			const r = 8.2 + p.p * 7;
+			const r = (8.2 + p.p * 7) * SPREAD;
 			p.m.scale.set(r, r, r);
 			p.m.position.y = -1.6;
 			(p.m.material as THREE.MeshBasicMaterial).opacity = nm * 0.5 * (1 - p.p);
