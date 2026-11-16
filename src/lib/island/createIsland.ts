@@ -1518,19 +1518,24 @@ export async function createIsland(
 		g.add(sm);
 		box(g, 3.2, 0.62, 0.06, M(0x14142b), 0, 1.0, 1.15);
 		box(g, 0.7, 0.7, 0.06, M(0x2a2e48), 1.3, 0.55, 1.16);
-		// radar dish
-		cyl(g, 0.14, 0.18, 0.7, 8, M(0x59638f), -0.9, 1.97, 0);
+		// radar dish: the back of the cup sits on top of the post and the whole dish turns on the post's axis
+		cyl(g, 0.14, 0.18, 1.0, 8, M(0x59638f), -0.9, 2.12, 0);
 		const dishPivot = new THREE.Group();
-		dishPivot.position.set(-0.9, 2.5, 0);
+		dishPivot.position.set(-0.9, 2.62, 0);
 		g.add(dishPivot);
+		const DISH_R = 0.95,
+			DISH_TILT = Math.PI - 0.8;
 		const dish = new THREE.Mesh(
-			new THREE.SphereGeometry(0.95, 20, 8, 0, Math.PI * 2, 0, 0.95),
+			new THREE.SphereGeometry(DISH_R, 20, 8, 0, Math.PI * 2, 0, 0.95),
 			M(0xe8ecf6, { metalness: 0.3, side: THREE.DoubleSide })
 		);
-		dish.rotation.x = Math.PI - 0.8;
+		dish.rotation.x = DISH_TILT;
+		// the cap's apex is DISH_R above the sphere's centre; move the centre so the apex lands on the pivot
+		dish.position.set(0, DISH_R * Math.cos(0.8), -DISH_R * Math.sin(0.8));
 		dish.castShadow = true;
 		dishPivot.add(dish);
-		ball(dishPivot, 0.09, M(0xff4d6d), 0, 0.55, -0.62, 0);
+		ball(dishPivot, 0.1, M(0x59638f), 0, 0, 0, 0); // hub where the dish meets the post
+		ball(dishPivot, 0.09, M(0xff4d6d), 0, 0.34, -0.35, 0); // feed horn on the dish axis
 		// antenna mast with blinking beacon
 		cyl(g, 0.04, 0.06, 1.9, 6, M(0x59638f), 1.3, 2.5, -0.5);
 		const beaconM = new THREE.MeshStandardMaterial({ color: 0xff3b4f, emissive: 0xff3b4f, emissiveIntensity: 1 });
