@@ -2103,6 +2103,8 @@ export async function createIsland(
 		obstacles.push([6.5, -1.4, 1.3]);
 	}
 	// Okapi, grazing near the pond
+	const OKAPI_S = 0.55,
+		OKAPI_YAW = 0;
 	{
 		const g = new THREE.Group();
 		g.position.set(3.0, 0, 5.5);
@@ -2153,7 +2155,21 @@ export async function createIsland(
 			tailO.rotation.z = Math.sin(t * 3) * 0.3;
 			ears[0].rotation.x = Math.max(0, Math.sin(t * 2.3)) * 0.3;
 		});
+		const shell = g.children.slice();
 		registerFind('okapi', g, 0.85, 0.65);
+		// authored okapi (Meshy, decimated to ~11k triangles, ~270 KB); procedural okapi stays if it fails to load
+		loadModel('/island/okapi.glb')
+			.then((m) => {
+				m.scale.setScalar(OKAPI_S);
+				m.position.y = 0.76 * OKAPI_S; // origin is the centre of the bounds; stand the hooves on the ground
+				m.rotation.y = OKAPI_YAW;
+				finishModel(m);
+				shell.forEach((o) => g.remove(o));
+				g.add(m);
+				prep(m, byId.okapi.mats);
+				lastTod = -1;
+			})
+			.catch(() => {});
 		obstacles.push([3.0, 5.5, 1.1]);
 	}
 	// Giraffe, peeking over the tree line
