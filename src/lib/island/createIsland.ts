@@ -408,6 +408,7 @@ export async function createIsland(
 		});
 	};
 	const PLAZA = { x: 0, z: 0.4 };
+	const SHOW_YAW = 0;
 	const faceTo = (g: THREE.Object3D) => {
 		g.rotation.y = Math.atan2(PLAZA.x - g.position.x, PLAZA.z - g.position.z);
 	};
@@ -1145,6 +1146,42 @@ export async function createIsland(
 		register('toolshed', g, 0, 2.7, 0);
 		obstacles.push([4.8, 4.2, 1.8]);
 		spoke(4.8, 4.2, 1.3);
+	}
+
+	/* ═══════════ THE SHOWROOM — client-facing work ═══════════ */
+	{
+		const SX = -2.9,
+			SZ = -6.3,
+			SHOW_S = 0.3;
+		const g = new THREE.Group();
+		g.position.set(SX, 0, SZ);
+		faceTo(g);
+		world.add(g);
+		blob(SX, SZ, 1.6, 1.4, g.rotation.y);
+		// stand-in while the authored corner building loads
+		const stand = box(g, 1.5, 2.6, 1.4, M(0x8a7456), 0, 1.3, 0);
+		box(g, 1.7, 0.5, 1.6, M(0x3a3a2c), 0, 2.85, 0);
+		register('showroom', g, 0, 4.4, 0);
+		// authored corner building (House by burunduk, CC-BY, via Poly Pizza); the shop sign and clothes racks are stripped out
+		loadModel('/island/office.glb')
+			.then((m) => {
+				const b = new THREE.Box3().setFromObject(m);
+				const c = b.getCenter(new THREE.Vector3());
+				m.position.set(-c.x, -b.min.y, -c.z);
+				const wrap = new THREE.Group();
+				wrap.add(m);
+				wrap.scale.setScalar(SHOW_S);
+				wrap.rotation.y = SHOW_YAW;
+				finishModel(wrap);
+				g.remove(stand);
+				g.children.filter((o) => o !== byId.showroom.gem).forEach((o) => g.remove(o));
+				g.add(wrap);
+				prep(wrap, byId.showroom.mats);
+				lastTod = -1;
+			})
+			.catch(() => {});
+		obstacles.push([SX, SZ, 1.5]);
+		spoke(SX, SZ, 1.3);
 	}
 
 	/* ═══════════ THE ARCADE — games ═══════════ */
@@ -3736,7 +3773,7 @@ export async function createIsland(
 	el.addEventListener('pointerup', onUp);
 
 	/* ───────── guided tour ───────── */
-	const TOUR = ['workshop', 'chapel', 'arcade', 'toolshed', 'appstore', 'play'];
+	const TOUR = ['workshop', 'chapel', 'arcade', 'showroom', 'toolshed', 'appstore', 'play'];
 	const tour = { active: false, i: -1, wait: 0 };
 	function startTour() {
 		if (tour.active) return;

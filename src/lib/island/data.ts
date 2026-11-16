@@ -46,8 +46,6 @@ export const BUILDINGS: Record<string, IslandEntry> = {
 		blurb: 'Source code, experiments and open-source bits.',
 		links: [
 			{ label: 'GitHub', url: GITHUB },
-			...featured('Ridewealth Assistant'),
-			...featured('Conclavium'),
 			lab('Inspiration by Simpsons'),
 			lab('TopMath')
 		].filter((link): link is IslandLink => link !== null)
@@ -56,6 +54,15 @@ export const BUILDINGS: Record<string, IslandEntry> = {
 		title: 'The Chapel',
 		blurb: 'Prayer and formation apps.',
 		links: [...featured('Daily Company'), ...featured('My Prayer Cards'), { label: 'Adorate site', url: '/adorate', project: 'Adorate', icon: '/images/adorate.png' }]
+	},
+	showroom: {
+		title: 'The Showroom',
+		blurb: 'Client-facing work: apps and sites I built for real organizations and businesses.',
+		links: [
+			...featured('Ridewealth Assistant'),
+			...featured('Conclavium'),
+			{ label: 'Knights of Columbus Council 15857', url: 'https://kofc15857.com' }
+		]
 	},
 	toolshed: {
 		title: 'The Toolshed',
