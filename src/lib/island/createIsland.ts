@@ -465,9 +465,15 @@ export async function createIsland(
 			}
 	});
 	grassTex.magFilter = THREE.NearestFilter;
-	box(world, S, 0.5, S, M(0x6fb85e), 0, -0.25, 0);
+	// the showroom side of the square is pushed out so that corner sits on grass
+	const BACK = 2.2;
+	const groundD = S + BACK;
+	grassTex.wrapS = THREE.RepeatWrapping;
+	grassTex.wrapT = THREE.RepeatWrapping;
+	grassTex.repeat.set(1, groundD / S);
+	const cliff = box(world, S, 0.5, groundD, M(0x6fb85e), 0, -0.25, 0);
 	const top = new THREE.Mesh(
-		new THREE.PlaneGeometry(S, S),
+		new THREE.PlaneGeometry(S, groundD),
 		new THREE.MeshStandardMaterial({ map: grassTex, roughness: 0.9, envMapIntensity: 0.2 })
 	);
 	top.rotation.x = -Math.PI / 2;
@@ -475,7 +481,7 @@ export async function createIsland(
 	top.receiveShadow = true;
 	top.raycast = () => {};
 	world.add(top);
-	box(world, S - 0.3, 0.7, S - 0.3, M(0x8b5e45), 0, -0.85, 0);
+	const dirt = box(world, S - 0.3, 0.7, groundD - 0.3, M(0x8b5e45), 0, -0.85, 0);
 
 	const ROCK_TOP = -1.2,
 		ROCK_H = 8.2,
@@ -2406,6 +2412,24 @@ export async function createIsland(
 			box(g, 0.04, 0.42, 0.3, red, Math.sin(a) * 0.36, 0.35, Math.cos(a) * 0.36).rotation.y = a;
 		}
 		ball(g, 0.085, G(0x9fd4ff, 0x62f0e0, 0.5, 1.8), 0, 1.2, 0.26, 1);
+		const nameTex = canvasTex(256, 64, (c, w, h) => {
+			c.fillStyle = '#d62839';
+			c.fillRect(0, 0, w, h);
+			c.fillStyle = '#fff6e8';
+			c.font = '700 34px ' + SANS;
+			c.textAlign = 'center';
+			c.textBaseline = 'middle';
+			c.fillText('BRADBURY', w / 2, h / 2 + 2);
+		});
+		const nameGeo = new THREE.PlaneGeometry(0.42, 0.1);
+		const nameMat = new THREE.MeshStandardMaterial({ map: nameTex, roughness: 0.55 });
+		for (let i = 0; i < 4; i++) {
+			const a = (i / 4) * Math.PI * 2 + Math.PI / 4;
+			const plate = new THREE.Mesh(nameGeo, nameMat);
+			plate.position.set(Math.sin(a) * 0.32, 1.02, Math.cos(a) * 0.32);
+			plate.rotation.y = a;
+			g.add(plate);
+		}
 		[-0.12, 0.12].forEach((z) => box(g, 0.07, 1.9, 0.07, M(0x59638f), 0.78, 0.95, z));
 		[0.4, 0.9, 1.4].forEach((y) => box(g, 0.05, 0.05, 0.3, M(0x59638f), 0.78, y, 0));
 		const lm = new THREE.MeshBasicMaterial({ color: 0xff3b4f, toneMapped: false });
@@ -3968,6 +3992,11 @@ export async function createIsland(
 		child.position.x *= SPREAD;
 		child.position.z *= SPREAD;
 	}
+	// shift after the spread pass so only the showroom side moves, not the opposite edge
+	const groundZ = -BACK / 2;
+	cliff.position.z = groundZ;
+	top.position.z = groundZ;
+	dirt.position.z = groundZ;
 	for (const o of obstacles) {
 		o[0] *= SPREAD;
 		o[1] *= SPREAD;

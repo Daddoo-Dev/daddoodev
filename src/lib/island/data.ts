@@ -158,7 +158,10 @@ const FIND_DATA: Record<string, { title: string; blurb: string }> = {
 	},
 	sword: { title: 'Sword in the Stone', blurb: 'It is not stuck. It just has opinions.' },
 	katana: { title: 'Katana', blurb: 'The sharpest tool in the workshop.' },
-	rocket: { title: 'Golden Age Rocket', blurb: 'Pure 1950s optimism. Destination: Mars, naturally.' },
+	rocket: {
+		title: 'The Bradbury',
+		blurb: 'A golden age rocket. Pure 1950s optimism. Destination: Mars, naturally.'
+	},
 	planet: {
 		title: 'Ringed World',
 		blurb: 'A distant ringed planet. Population unknown. Excellent views.'
