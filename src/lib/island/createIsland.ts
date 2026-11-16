@@ -1794,6 +1794,31 @@ export async function createIsland(
 			})
 			.catch(() => {});
 
+		// surprise mark that pops above his head when he is caught mid-sneak
+		const bang = new THREE.Sprite(
+			new THREE.SpriteMaterial({
+				map: canvasTex(128, 128, (c, w, h) => {
+					c.font = '900 118px Arial Black, Impact, sans-serif';
+					c.textAlign = 'center';
+					c.textBaseline = 'middle';
+					c.lineJoin = 'round';
+					c.lineWidth = 16;
+					c.strokeStyle = '#3a0a0a';
+					c.strokeText('!', w / 2, h / 2 + 6);
+					c.fillStyle = '#ff3b30';
+					c.fillText('!', w / 2, h / 2 + 6);
+				}),
+				transparent: true,
+				depthWrite: false,
+				toneMapped: false
+			})
+		);
+		bang.visible = false;
+		bang.raycast = () => {};
+		bang.position.set(0, 1.65, 0);
+		g.add(bang);
+		let bangT = -1;
+		const bangY = 1.65; // just above his head
 		type Spot = { x: number; z: number; yaw: number; good: boolean; cx: number; cz: number };
 		const fr = new THREE.Frustum(),
 			pm = new THREE.Matrix4(),
@@ -1903,6 +1928,7 @@ export async function createIsland(
 					freezeT = 1.6 + Math.random() * 1.8;
 					mixer.timeScale = 0;
 					faceCam = true;
+					bangT = 0;
 				} else {
 					let dx = spot.x - gp.x,
 						dz = spot.z - gp.z;
@@ -1981,9 +2007,20 @@ export async function createIsland(
 				if (freezeT <= 0 && (clear || freezeT < -2)) {
 					mixer.timeScale = 1;
 					faceCam = false;
+					bangT = -1;
+					gp.y = 0;
 					st = 'sneak';
 				}
 			}
+			if (bangT >= 0) {
+				bangT += dt;
+				const k = Math.min(1, bangT / 0.22),
+					pop = k < 1 ? 1 + 0.35 * Math.sin(k * Math.PI) : 1;
+				bang.visible = true;
+				bang.scale.setScalar(0.5 * Math.min(1, k * 1.6) * pop);
+				bang.position.y = bangY + Math.sin(bangT * 14) * 0.015 * (k < 1 ? 0 : 1);
+				gp.y = bangT < 0.24 ? Math.sin((bangT / 0.24) * Math.PI) * 0.14 : 0; // startled hop
+			} else bang.visible = false;
 			const turn = st === 'freeze' ? 9 : 5;
 			const diff = wrap(yawT - g.rotation.y);
 			g.rotation.y += Math.sign(diff) * Math.min(Math.abs(diff), turn * dt);
