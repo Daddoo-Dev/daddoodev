@@ -1116,11 +1116,15 @@ export async function createIsland(
 			cr.add(ringC);
 			kids.push(['cross', cr, 0.7, 0.8]);
 		}
-		// memento mori: skull, candle and marigolds
+		// memento mori: a mossy rock with a skull candle on top, a gravestone beside it, and a ring of marigolds
+		const mmGd = new THREE.Group();
+		mmGd.position.set(1.75, 0, 0.7);
+		g.add(mmGd);
+		const mmShell: THREE.Object3D[] = [];
 		{
 			const sk = new THREE.Group();
-			sk.position.set(1.75, 0, 0.7);
-			g.add(sk);
+			mmGd.add(sk);
+			mmShell.push(sk);
 			box(sk, 0.5, 0.3, 0.5, M(0x8f8a9e), 0, 0.15, 0);
 			const bone = M(0xf3ead2);
 			ball(sk, 0.15, bone, 0, 0.46, 0, 1);
@@ -1131,14 +1135,14 @@ export async function createIsland(
 				false;
 			for (let i = 0; i < 9; i++) {
 				const a = (i / 9) * Math.PI * 2;
-				ball(sk, 0.065, M(i % 2 ? 0xff9f1c : 0xffb703), Math.cos(a) * 0.4, 0.07, Math.sin(a) * 0.4, 0);
+				ball(mmGd, 0.065, M(i % 2 ? 0xff9f1c : 0xffb703), Math.cos(a) * 0.4 + 0.1, 0.07, Math.sin(a) * 0.4, 0);
 			}
-			const cl2 = new THREE.PointLight(0xffa24a, 0, 3, 2);
-			cl2.position.set(0.17, 0.7, 0.1);
-			sk.add(cl2);
-			nl(cl2, 0.2, 2.2);
-			kids.push(['skull', sk, 0.5, 0.4]);
 		}
+		const cl2 = new THREE.PointLight(0xffa24a, 0, 3, 2);
+		cl2.position.set(0.05, 0.85, 0);
+		mmGd.add(cl2);
+		nl(cl2, 0.2, 2.2);
+		kids.push(['skull', mmGd, 0.7, 0.5]);
 		register('chapel', g, 0, 6.2, 1.55);
 		// authored church (Poly by Google, CC-BY, via Poly Pizza; meshopt + WebP, ~58 KB); procedural chapel stays if it fails to load
 		loadModel('/island/church.glb')
@@ -1159,6 +1163,50 @@ export async function createIsland(
 			})
 			.catch(() => {});
 		kids.forEach((k) => registerFind(...k));
+		// authored memento mori set: rock (Quaternius, CC0), Skull Candle and Grave (Kay Lousberg, CC0), via Poly Pizza; the procedural skull stays if they fail to load
+		Promise.all([loadModel('/island/rock.glb'), loadModel('/island/skullcandle.glb'), loadModel('/island/grave.glb')])
+			.then(([rock, candle, grave]) => {
+				const ROCK_S = 0.2,
+					CANDLE_S = 0.4,
+					GRAVE_S = 0.4;
+				rock.scale.setScalar(ROCK_S);
+				rock.position.set(0, 0.27 * ROCK_S, 0); // source origin sits inside the rock; rest the base on the ground
+				const rockTop = (1.99 + 0.27) * ROCK_S * 0.92; // flat-ish top, a little below the highest point
+				candle.scale.setScalar(CANDLE_S);
+				candle.position.set(0.02, rockTop - 0.05 * CANDLE_S, 0);
+				grave.scale.setScalar(GRAVE_S);
+				grave.position.set(0.95, 0, 0.35);
+				grave.rotation.y = -0.5;
+				// three candle flames at the wick tips (model units are metres at scale 1; wicks measured from the mesh)
+				const flameMat = G(0xffd27a, 0xffa726, 1.6, 3.2);
+				const flames: THREE.Mesh[] = [];
+				(
+					[
+						[0.1, 1.27, -0.23],
+						[-0.08, 1.13, -0.02],
+						[0.07, 1.09, -0.07]
+					] as const
+				).forEach(([x, y, z], i) => {
+					const f = new THREE.Mesh(new THREE.ConeGeometry(0.045, 0.16, 6), flameMat);
+					f.position.set(x, y + 0.08, z);
+					f.raycast = () => {};
+					candle.add(f);
+					flames.push(f);
+					void i;
+				});
+				tick.push((_dt, t) => {
+					flames.forEach((f, i) => {
+						const k = 1 + Math.sin(t * 9 + i * 2.1) * 0.12 + Math.sin(t * 15 + i) * 0.08;
+						f.scale.set(1, k, 1);
+					});
+				});
+				[rock, candle, grave].forEach(finishModel);
+				mmShell.forEach((o) => mmGd.remove(o));
+				mmGd.add(rock, candle, grave);
+				[rock, candle, grave].forEach((m) => prep(m, byId.skull.mats));
+				lastTod = -1;
+			})
+			.catch(() => {});
 		// authored Swiss Guard (Copilot concept, Meshy model, decimated to ~14k triangles, ~420 KB); procedural guard stays if it fails to load
 		loadModel('/island/swiss.glb')
 			.then((m) => {
