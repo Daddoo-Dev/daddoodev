@@ -11,6 +11,9 @@ export type IslandEntry = {
 	/** Hidden "find": shown as a field-journal entry instead of link buttons. */
 	find?: boolean;
 	links: IslandLink[];
+	/** Attribution shown as small print at the bottom of the card. */
+	credits?: IslandLink[];
+	creditsText?: string;
 };
 
 const GITHUB = 'https://github.com/Daddoo-Dev';
@@ -89,7 +92,13 @@ export const BUILDINGS: Record<string, IslandEntry> = {
 		links: [
 			{ label: 'Email daddoodev@proton.me', url: 'mailto:daddoodev@proton.me' },
 			{ label: 'GitHub', url: GITHUB }
-		]
+		],
+		credits: [
+			{ label: 'Models via Poly Pizza', url: 'https://poly.pizza' },
+			{ label: 'CC-BY 3.0', url: 'https://creativecommons.org/licenses/by/3.0/' }
+		],
+		creditsText:
+			'Church, Giraffe, Killer Whale and Railway Carriage by Poly by Google; Arcade Machine by J-Toastie; House by burunduk (all CC-BY). Yeti by Quaternius (CC0). Okapi and Swiss Guard made with Copilot and Meshy.'
 	},
 	appstore: {
 		title: 'App Store',

@@ -107,3 +107,6 @@
 	border: 0;
 	background: #0b0d1c;
 }
+
+.island-credit-note { margin: 0.9rem 0 0; font-size: 0.7rem; line-height: 1.45; opacity: 0.6; }
+.island-credit-note a { color: var(--accent-bright); margin-right: 0.5rem; }

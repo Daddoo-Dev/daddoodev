@@ -24,7 +24,8 @@
 <main class="island-page">
 	<h1 class="island-sr">Daddoo Dev Field Station</h1>
 	<IslandScene onBack={leaveIsland} />
-	<nav class="island-list" aria-label="Projects">
+	<!-- Keyboard and screen-reader route to everything; hidden visually because the island itself is the navigation. -->
+	<nav class="island-list island-sr" aria-label="Projects">
 		<h2>Projects</h2>
 		<ul>
 			{#each listed as b (b.title)}
@@ -40,8 +41,4 @@
 			</li>
 		</ul>
 	</nav>
-	<p class="island-credits">
-		Models via <a href="https://poly.pizza" rel="noopener noreferrer">Poly Pizza</a>: Church, Giraffe, Killer Whale and Railway Carriage by Poly by
-		Google (<a href="https://creativecommons.org/licenses/by/3.0/" rel="noopener noreferrer">CC-BY</a>); Arcade Machine by J-Toastie (CC-BY); House by burunduk (CC-BY); Yeti by Quaternius (CC0).
-	</p>
 </main>

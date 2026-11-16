@@ -291,6 +291,12 @@
 					</div>
 				{/if}
 			{/each}
+			{#if card.creditsText}
+				<p class="island-credit-note">
+					{card.creditsText}
+					{#each card.credits ?? [] as c (c.url)}<a href={c.url} target="_blank" rel="noopener noreferrer">{c.label}</a>{' '}{/each}
+				</p>
+			{/if}
 		</aside>
 	{/if}
 
