@@ -1,12 +1,36 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { ENTRIES, FIND_IDS, FOUND_STORAGE_KEY } from '$lib/island/data';
+	import { ENTRIES, FIND_IDS, FOUND_STORAGE_KEY, type IslandLink } from '$lib/island/data';
 	import { setViewPref } from '$lib/island/preference';
 	import { isLocalNight } from '$lib/island/time';
 	import type { IslandController, IslandHud, TimeMode } from '$lib/island/createIsland';
 	import { fetchWeather, SKY_FLAG } from '$lib/island/weather';
 
 	let { onBack }: { onBack: () => void } = $props();
+
+	type LinkBlock =
+		| { type: 'app'; project: string; icon?: string; site?: string; badges: IslandLink[] }
+		| { type: 'chips'; links: IslandLink[] };
+	/** Group a card's links: each app becomes a small card (icon, name, store badges); loose links stay chips. */
+	function blocks(links: IslandLink[]): LinkBlock[] {
+		const out: LinkBlock[] = [];
+		for (const l of links) {
+			if (l.project) {
+				let b = out.find((x): x is Extract<LinkBlock, { type: 'app' }> => x.type === 'app' && x.project === l.project);
+				if (!b) {
+					b = { type: 'app', project: l.project, icon: l.icon, badges: [] };
+					out.push(b);
+				}
+				if (l.kind) b.badges.push(l);
+				else b.site = l.url;
+			} else {
+				const last = out[out.length - 1];
+				if (last?.type === 'chips') last.links.push(l);
+				else out.push({ type: 'chips', links: [l] });
+			}
+		}
+		return out;
+	}
 
 	let host = $state<HTMLDivElement | null>(null);
 	let ctl: IslandController | null = null;
@@ -216,28 +240,46 @@
 			{#if card.find}<span class="island-tag">Field journal entry</span>{/if}
 			<h2>{card.title}</h2>
 			<p>{card.blurb}</p>
-			{#if card.links.length}
-				<div class="island-links">
-					{#each card.links as l, i (l.url)}
-						{#if l.project && card.links[i - 1]?.project !== l.project}
-							<span class="island-proj">{l.project}</span>
-						{/if}
-						{#if l.kind}
-							<a class="island-badge" href={l.url} target="_blank" rel="noopener noreferrer" aria-label={l.label}>
-								{#if l.kind === 'play'}
-									<img src="/images/GetItOnGooglePlay_Badge_Web_color_English.png" alt="Get it on Google Play" height="40" />
+			{#each blocks(card.links) as b, bi (bi)}
+				{#if b.type === 'app'}
+					<div class="island-app">
+						<div class="island-app-head">
+							{#if b.icon}<img class="island-app-icon" src={b.icon} alt="" width="44" height="44" />{/if}
+							<span class="island-app-name">{b.project}</span>
+							{#if b.site}
+								{#if b.site.startsWith('/')}
+									<a class="island-app-site" href={b.site} onclick={() => { if (b.site === '/') setViewPref('normal'); }}>Visit site</a>
 								{:else}
-									<img src="/images/Download_on_the_App_Store_Badge_US-UK_RGB_blk_092917.svg" alt="Download on the App Store" height="40" />
+									<a class="island-app-site" href={b.site} target="_blank" rel="noopener noreferrer">Visit site ↗</a>
 								{/if}
-							</a>
-						{:else if l.url.startsWith('/')}
-							<a class="island-chip" href={l.url} onclick={() => { if (l.url === '/') setViewPref('normal'); }}>{l.label}</a>
-						{:else}
-							<a class="island-chip" href={l.url} target="_blank" rel="noopener noreferrer">{l.label} ↗</a>
+							{/if}
+						</div>
+						{#if b.badges.length}
+							<div class="island-app-badges">
+								{#each b.badges as l (l.url)}
+									<a class="island-badge" href={l.url} target="_blank" rel="noopener noreferrer" aria-label={l.label}>
+										{#if l.kind === 'play'}
+											<img src="/images/GetItOnGooglePlay_Badge_Web_color_English.png" alt="Get it on Google Play" height="40" />
+										{:else}
+											<img src="/images/Download_on_the_App_Store_Badge_US-UK_RGB_blk_092917.svg" alt="Download on the App Store" height="40" />
+										{/if}
+									</a>
+								{/each}
+							</div>
 						{/if}
-					{/each}
-				</div>
-			{/if}
+					</div>
+				{:else}
+					<div class="island-links">
+						{#each b.links as l (l.url)}
+							{#if l.url.startsWith('/')}
+								<a class="island-chip" href={l.url} onclick={() => { if (l.url === '/') setViewPref('normal'); }}>{l.label}</a>
+							{:else}
+								<a class="island-chip" href={l.url} target="_blank" rel="noopener noreferrer">{l.label} ↗</a>
+							{/if}
+						{/each}
+					</div>
+				{/if}
+			{/each}
 		</aside>
 	{/if}
 </section>

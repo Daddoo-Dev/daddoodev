@@ -3,7 +3,7 @@
 import { featuredProjects, labProjects, toolProjects } from '$lib/data/homeProjects';
 
 /** `kind` renders an official store badge instead of a text chip; `project` captions a group of badges. */
-export type IslandLink = { label: string; url: string; kind?: 'appstore' | 'play'; project?: string };
+export type IslandLink = { label: string; url: string; kind?: 'appstore' | 'play'; project?: string; icon?: string };
 
 export type IslandEntry = {
 	title: string;
@@ -25,12 +25,12 @@ function featured(title: string): IslandLink[] {
 		const site = project.liveUrl.startsWith('https://daddoodev.pro')
 			? project.liveUrl.slice('https://daddoodev.pro'.length) || '/'
 			: project.liveUrl;
-		links.push({ label: `${project.title} site`, url: site, project: project.title });
+		links.push({ label: `${project.title} site`, url: site, project: project.title, icon: project.image });
 	}
 	if (project.store?.appStore)
-		links.push({ label: `${project.title} on the App Store`, url: project.store.appStore, kind: 'appstore', project: project.title });
+		links.push({ label: `${project.title} on the App Store`, url: project.store.appStore, kind: 'appstore', project: project.title, icon: project.image });
 	if (project.store?.googlePlay)
-		links.push({ label: `${project.title} on Google Play`, url: project.store.googlePlay, kind: 'play', project: project.title });
+		links.push({ label: `${project.title} on Google Play`, url: project.store.googlePlay, kind: 'play', project: project.title, icon: project.image });
 	return links;
 }
 
@@ -56,7 +56,7 @@ export const BUILDINGS: Record<string, IslandEntry> = {
 	chapel: {
 		title: 'The Chapel',
 		blurb: 'Prayer and formation apps.',
-		links: [...featured('Daily Company'), ...featured('My Prayer Cards'), { label: 'Adorate', url: '/adorate' }]
+		links: [...featured('Daily Company'), ...featured('My Prayer Cards'), { label: 'Adorate site', url: '/adorate', project: 'Adorate', icon: '/images/adorate.png' }]
 	},
 	toolshed: {
 		title: 'The Toolshed',

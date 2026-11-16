@@ -21,7 +21,7 @@
 
 .island-tip { position: fixed; z-index: 5; padding: 0.3rem 0.6rem; border-radius: var(--radius); background: rgba(10, 14, 30, 0.9); border: 1px solid var(--border-strong); font-family: var(--font-mono); font-size: 0.75rem; color: var(--accent-bright); pointer-events: none; }
 
-.island-card { position: absolute; left: 50%; bottom: 2.6rem; transform: translateX(-50%); width: min(26rem, calc(100% - 2rem)); padding: 1.1rem 1.25rem; border-radius: var(--radius-lg); background: rgba(10, 14, 30, 0.92); border: 1px solid var(--border-strong); backdrop-filter: blur(8px); }
+.island-card { position: absolute; left: 50%; bottom: 2.6rem; transform: translateX(-50%); width: min(26rem, calc(100% - 2rem)); padding: 1.1rem 1.25rem; border-radius: var(--radius-lg); background: rgba(10, 14, 30, 0.92); border: 1px solid var(--border-strong); backdrop-filter: blur(8px); max-height: calc(100% - 4rem); overflow-y: auto; }
 .island-card h2 { margin: 0.2rem 0 0.4rem; font-family: var(--font-display); font-size: 1.25rem; }
 .island-card p { margin: 0; font-size: 0.92rem; line-height: 1.5; opacity: 0.9; }
 .island-tag { font-family: var(--font-mono); font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); }
@@ -53,7 +53,14 @@
 	opacity: 0.7;
 }
 
-.island-proj { flex-basis: 100%; margin-top: 0.4rem; font-size: 0.8rem; opacity: 0.75; letter-spacing: 0.04em; }
+.island-app { margin-top: 0.7rem; padding: 0.7rem 0.75rem; display: flex; flex-direction: column; gap: 0.65rem; border-radius: 14px; background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.09); }
+.island-app-head { display: flex; align-items: center; gap: 0.7rem; }
+.island-app-icon { width: 44px; height: 44px; flex: none; border-radius: 10px; object-fit: cover; background: rgba(255, 255, 255, 0.06); }
+.island-app-name { font-family: var(--font-display); font-size: 1rem; line-height: 1.2; }
+.island-app-site { margin-left: auto; flex: none; font-family: var(--font-mono); font-size: 0.72rem; color: var(--accent-bright); text-decoration: none; white-space: nowrap; }
+.island-app-site:hover { text-decoration: underline; }
+.island-app-badges { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.island-app-badges .island-badge img { height: 36px; }
 .island-badge { display: inline-flex; border-radius: 8px; transition: transform 0.2s ease; }
 .island-badge:hover { transform: translateY(-1px); }
 .island-badge:focus-visible { outline: 2px solid var(--accent-bright); outline-offset: 2px; }
