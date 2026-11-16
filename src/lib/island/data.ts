@@ -53,7 +53,7 @@ export const BUILDINGS: Record<string, IslandEntry> = {
 	chapel: {
 		title: 'The Chapel',
 		blurb: 'Prayer and formation apps.',
-		links: [...featured('Daily Company'), ...featured('My Prayer Cards'), { label: 'Adorate site', url: '/adorate', project: 'Adorate', icon: '/images/adorate.png' }]
+		links: [...featured('Daily Company'), ...featured('My Prayer Cards')]
 	},
 	showroom: {
 		title: 'The Showroom',
