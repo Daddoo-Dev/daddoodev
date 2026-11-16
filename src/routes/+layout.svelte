@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { onMount } from 'svelte';
 	import { page } from '$app/state';
 	import '$lib/styles/global.css';
 	import '$lib/styles/mission-control.css';
@@ -8,13 +9,20 @@
 
 	let { children } = $props();
 
-	const islandScreen = $derived(page.url.pathname === '/island');
+	// pages shown inside the island's panel (an iframe) drop the site header and launcher
+	let embedded = $state(false);
+	onMount(() => {
+		embedded = window.self !== window.top;
+	});
+	const islandScreen = $derived(page.url.pathname === '/island' || embedded);
 </script>
 
 <div class={['site-chrome', { 'is-hidden': islandScreen }]}>
 	<Header />
 	<TelemetryBar />
 </div>
-<TerminalLauncher />
+{#if !embedded}
+	<TerminalLauncher />
+{/if}
 
 {@render children()}

@@ -65,3 +65,45 @@
 .island-badge:hover { transform: translateY(-1px); }
 .island-badge:focus-visible { outline: 2px solid var(--accent-bright); outline-offset: 2px; }
 .island-badge img { display: block; height: 40px; width: auto; }
+
+/* —— Site pages opened over the island —— */
+.island-panel {
+	position: absolute;
+	inset: 3.5rem 1rem 1rem;
+	z-index: 30;
+	display: flex;
+	flex-direction: column;
+	border-radius: 16px;
+	overflow: hidden;
+	background: #0b0d1c;
+	border: 1px solid rgba(255, 255, 255, 0.14);
+	box-shadow: 0 20px 60px rgba(0, 0, 0, 0.55);
+}
+.island-panel-bar {
+	display: flex;
+	align-items: center;
+	gap: 0.75rem;
+	padding: 0.5rem 0.75rem;
+	background: rgba(20, 22, 44, 0.96);
+	border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+.island-panel-title {
+	flex: 1;
+	font-weight: 600;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+.island-panel-open {
+	font-size: 0.8rem;
+	opacity: 0.8;
+}
+.island-panel .island-close {
+	position: static;
+}
+.island-panel-frame {
+	flex: 1;
+	width: 100%;
+	border: 0;
+	background: #0b0d1c;
+}

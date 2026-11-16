@@ -120,6 +120,14 @@
 			/* storage unavailable: session-only */
 		}
 	}
+	/** Site pages open in a panel over the island instead of navigating away. */
+	let panel = $state<{ url: string; title: string } | null>(null);
+	const inPanel = (url: string) => url.startsWith('/') && url !== '/' && !url.startsWith('/island');
+	function openPanel(e: MouseEvent, url: string, title: string) {
+		if (e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0) return;
+		e.preventDefault();
+		panel = { url, title };
+	}
 	function onSelect(id: string | null) {
 		selected = id;
 		if (id && ENTRIES[id]?.find && !found.includes(id)) {
@@ -155,7 +163,10 @@
 			}
 		})();
 		const onKey = (e: KeyboardEvent) => {
-			if (e.key === 'Escape') ctl?.closeCard();
+			if (e.key === 'Escape') {
+				if (panel) panel = null;
+				else ctl?.closeCard();
+			}
 		};
 		window.addEventListener('keydown', onKey);
 		return () => {
@@ -248,7 +259,7 @@
 							<span class="island-app-name">{b.project}</span>
 							{#if b.site}
 								{#if b.site.startsWith('/')}
-									<a class="island-app-site" href={b.site} onclick={() => { if (b.site === '/') setViewPref('normal'); }}>Visit site</a>
+									<a class="island-app-site" href={b.site} onclick={(e) => { if (b.site === '/') setViewPref('normal'); else if (inPanel(b.site!)) openPanel(e, b.site!, b.project!); }}>Visit site</a>
 								{:else}
 									<a class="island-app-site" href={b.site} target="_blank" rel="noopener noreferrer">Visit site ↗</a>
 								{/if}
@@ -272,7 +283,7 @@
 					<div class="island-links">
 						{#each b.links as l (l.url)}
 							{#if l.url.startsWith('/')}
-								<a class="island-chip" href={l.url} onclick={() => { if (l.url === '/') setViewPref('normal'); }}>{l.label}</a>
+								<a class="island-chip" href={l.url} onclick={(e) => { if (l.url === '/') setViewPref('normal'); else if (inPanel(l.url)) openPanel(e, l.url, l.label); }}>{l.label}</a>
 							{:else}
 								<a class="island-chip" href={l.url} target="_blank" rel="noopener noreferrer">{l.label} ↗</a>
 							{/if}
@@ -281,5 +292,16 @@
 				{/if}
 			{/each}
 		</aside>
+	{/if}
+
+	{#if panel}
+		<div class="island-panel" role="dialog" aria-label={panel.title}>
+			<div class="island-panel-bar">
+				<span class="island-panel-title">{panel.title}</span>
+				<a class="island-panel-open" href={panel.url} target="_blank" rel="noopener noreferrer">Open in new tab ↗</a>
+				<button type="button" class="island-close" aria-label="Close panel" onclick={() => (panel = null)}>×</button>
+			</div>
+			<iframe class="island-panel-frame" src={panel.url} title={panel.title}></iframe>
+		</div>
 	{/if}
 </section>
