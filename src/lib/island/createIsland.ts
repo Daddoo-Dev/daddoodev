@@ -1460,7 +1460,6 @@ export async function createIsland(
 			});
 			register(id, p, 1.05, 0.5, 0);
 		};
-		plank('ginny', 'GODSPEED GINNY >', 1.85, -0.55, 0xc08a54, '#c08a54');
 		plank('repos', 'ALL REPOS >', 1.3, 0.7, 0xa9744a, '#a9744a');
 		plank('back', 'BACK TO NORMAL >', 0.78, 0.1, 0x8f6a45, '#8f6a45');
 	}

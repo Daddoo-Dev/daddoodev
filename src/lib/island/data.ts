@@ -49,8 +49,7 @@ export const BUILDINGS: Record<string, IslandEntry> = {
 			...featured('Ridewealth Assistant'),
 			...featured('Conclavium'),
 			lab('Inspiration by Simpsons'),
-			lab('TopMath'),
-			lab('New Horizons Landscaping')
+			lab('TopMath')
 		].filter((link): link is IslandLink => link !== null)
 	},
 	chapel: {
@@ -95,11 +94,6 @@ export const BUILDINGS: Record<string, IslandEntry> = {
 		blurb: 'Everything I have published for Android.',
 		links: [{ label: 'Open Google Play', url: PLAY, kind: 'play' }]
 	},
-	ginny: {
-		title: 'Godspeed Ginny',
-		blurb: 'Open source on GitHub.',
-		links: [{ label: 'View the repo', url: 'https://github.com/shawnmcpeek/godspeed_ginny' }]
-	},
 	repos: {
 		title: 'All Repositories',
 		blurb: 'Everything I have published on GitHub.',
@@ -124,7 +118,7 @@ const FIND_DATA: Record<string, { title: string; blurb: string }> = {
 	cross: { title: 'Celtic Cross', blurb: 'A little piece of Ireland and Scotland, carved in stone.' },
 	whale: {
 		title: 'Sky Whale',
-		blurb: 'The marine biologist I almost became. It swims the open air beneath the island.'
+		blurb: "The marine biologist I wanted to be when I was young. I still don't know what I want to be when I grow up."
 	},
 	diver: {
 		title: 'Dive Bell',
