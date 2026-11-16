@@ -436,6 +436,7 @@ export async function createIsland(
 		m.scale.set(rx * 2, rz * 2, 1);
 		m.raycast = () => {};
 		world.add(m);
+		return m;
 	}
 
 	/* ───────── island (15 × 15) ───────── */
@@ -551,6 +552,7 @@ export async function createIsland(
 		});
 	let krakenPoke: () => void = () => {};
 	const obstacles: [number, number, number][] = []; // keeps flowers and grass off buildings and paths
+	const narrowCovers: [number, number, number][] = []; // posts too thin to hide a yeti behind (he tries anyway)
 	function tree(x: number, z: number, s = 1, col = 0x4fae5b) {
 		const g = new THREE.Group(),
 			gm = M(col);
@@ -704,6 +706,7 @@ export async function createIsland(
 	// plaza + stone path
 	cyl(world, 1.45, 1.45, 0.06, 14, M(0xdbc9a5), PLAZA.x, 0.03, PLAZA.z);
 	obstacles.push([PLAZA.x, PLAZA.z, 1.6]);
+	narrowCovers.push([PLAZA.x, PLAZA.z, 0.1]); // the signpost post
 	const stoneMat = M(0xd2c2a0);
 	function spoke(bx: number, bz: number, d: number) {
 		const dx = PLAZA.x - bx,
@@ -1706,20 +1709,23 @@ export async function createIsland(
 		nl(l, 0.5, 7);
 		noRay(g);
 		obstacles.push([1.7, -1.7, 0.5]);
+		narrowCovers.push([1.7, -1.7, 0.08]);
 		tick.push((_dt, t) => {
 			l.userData.flick = Math.sin(t * 7) * 0.4 + Math.sin(t * 13) * 0.25;
 		});
 	}
 
 	/* ───────── hidden finds: creatures and curiosities ───────── */
-	// Yeti, lurking near the pines
-	const YETI_S = 0.7;
+	// Yeti: plays hide-and-seek. He relocates only when the coast is clear (he is on the far side of the
+	// island from the camera, or out of view), freezes like a statue if you swing round and catch him
+	// mid-sneak, and hides behind buildings, trees and the odd post that is far too thin for him.
+	const YETI_S = 0.48;
 	{
 		const g = new THREE.Group();
 		g.position.set(-5.9, 0, -5.0);
 		g.rotation.y = 0.8;
 		world.add(g);
-		blob(-5.9, -5.0, 0.8);
+		const yblob = blob(-5.9, -5.0, 0.55);
 		const fur = M(0xeaf2ff, { roughness: 1 }),
 			skin = M(0x9fc5e8);
 		ball(g, 0.5, fur, 0, 0.72, 0, 1).scale.set(1, 1.15, 0.9);
@@ -1740,10 +1746,22 @@ export async function createIsland(
 			head.rotation.y = Math.sin(t * 0.4) * 0.4;
 		});
 		const shell = g.children.slice();
-		registerFind('yeti', g, 0.85, 0.85);
-		// authored yeti (Quaternius, CC0; rigged, ~47 KB); keeps its idle animation. Procedural yeti stays if it fails to load.
+		registerFind('yeti', g, 0.7, 0.7);
+		// authored yeti (Quaternius, CC0; rigged, ~47 KB). Procedural yeti stays (and stays put) if it fails to load.
+		type YAct = 'idle' | 'walk' | 'run' | 'jump';
 		let mixer: THREE.AnimationMixer | null = null;
-		tick.push((dt) => mixer?.update(dt));
+		const acts: Partial<Record<YAct, THREE.AnimationAction>> = {};
+		let cur: YAct | null = null;
+		const play = (n: YAct, ts = 1) => {
+			const a = acts[n];
+			if (!a) return;
+			a.timeScale = ts;
+			if (cur === n) return;
+			const prev = cur ? acts[cur] : null;
+			a.reset().fadeIn(0.18).play();
+			prev?.fadeOut(0.18);
+			cur = n;
+		};
 		loadGltf('/island/yeti.glb')
 			.then(({ scene: m, animations }) => {
 				m.scale.setScalar(YETI_S);
@@ -1754,15 +1772,222 @@ export async function createIsland(
 				shell.forEach((o) => g.remove(o));
 				g.add(m);
 				prep(m, byId.yeti.mats);
-				const idle = animations.find((c) => /idle/i.test(c.name)) ?? animations[0];
-				if (idle) {
-					mixer = new THREE.AnimationMixer(m);
-					mixer.clipAction(idle).play();
+				mixer = new THREE.AnimationMixer(m);
+				const find = (re: RegExp) => animations.find((c) => re.test(c.name));
+				const idle = find(/idle/i) ?? animations[0];
+				(
+					[
+						['idle', idle],
+						['walk', find(/walk/i) ?? idle],
+						['run', find(/run/i) ?? find(/walk/i) ?? idle],
+						['jump', find(/jump/i) ?? idle]
+					] as [YAct, THREE.AnimationClip | undefined][]
+				).forEach(([k, clip]) => {
+					if (clip) acts[k] = mixer!.clipAction(clip);
+				});
+				if (acts.jump) {
+					acts.jump.setLoop(THREE.LoopOnce, 1);
+					acts.jump.clampWhenFinished = true;
 				}
+				play('idle');
 				lastTod = -1;
 			})
 			.catch(() => {});
-		obstacles.push([-5.9, -5.0, 1.0]);
+
+		type Spot = { x: number; z: number; yaw: number; good: boolean; cx: number; cz: number };
+		const fr = new THREE.Frustum(),
+			pm = new THREE.Matrix4(),
+			sp = new THREE.Sphere(),
+			wv = new THREE.Vector3();
+		const inView = () => {
+			camera.updateMatrixWorld();
+			pm.multiplyMatrices(camera.projectionMatrix, camera.matrixWorldInverse);
+			fr.setFromProjectionMatrix(pm);
+			g.getWorldPosition(wv);
+			wv.y += 0.4;
+			sp.set(wv, 0.7);
+			return fr.intersectsSphere(sp);
+		};
+		const plazaObs = (o: number[]) => o[0] === PLAZA.x && o[1] === PLAZA.z;
+		const pondObs = (o: number[]) => o[0] === 0.6 && o[1] === 5.2;
+		const solids = () => obstacles.filter((o) => o[2] >= 0.6 && !plazaObs(o));
+		const wrap = (a: number) => Math.atan2(Math.sin(a), Math.cos(a));
+		let last = '';
+		function pickSpot(): Spot | null {
+			const cl = Math.hypot(camera.position.x, camera.position.z) || 1,
+				cdx = camera.position.x / cl,
+				cdz = camera.position.z / cl;
+			const all = solids();
+			const cands: Spot[] = [];
+			const consider = (cx: number, cz: number, r: number, good: boolean) => {
+				const dx = camera.position.x - cx,
+					dz = camera.position.z - cz,
+					dl = Math.hypot(dx, dz) || 1,
+					ux = dx / dl,
+					uz = dz / dl;
+				const gap = good ? 0.42 : 0.3;
+				let x = cx - ux * (r + gap),
+					z = cz - uz * (r + gap);
+				if (good && Math.random() < 0.3) {
+					// a shoulder sticks out
+					x += -uz * 0.3;
+					z += ux * 0.3;
+				}
+				if (Math.hypot(x, z) > 7.2) return;
+				if (x * cdx + z * cdz > -1.0) return; // must be hidden on the far side from the camera
+				if (Math.hypot(x - g.position.x, z - g.position.z) > 14) return;
+				if (all.some((o) => !(o[0] === cx && o[1] === cz) && Math.hypot(x - o[0], z - o[1]) < o[2] + 0.05)) return;
+				const face = Math.atan2(ux, uz);
+				cands.push({ x, z, yaw: good ? face : face + Math.PI / 2, good, cx, cz });
+			};
+			all.filter((o) => !pondObs(o)).forEach((o) => consider(o[0], o[1], o[2], true));
+			narrowCovers.forEach((o) => consider(o[0], o[1], o[2], false));
+			const pool = cands.filter((c) => `${c.cx},${c.cz}` !== last);
+			const use = pool.length ? pool : cands;
+			if (!use.length) return null;
+			// mix of good and bad hides
+			const bad = use.filter((c) => !c.good),
+				good = use.filter((c) => c.good);
+			const from = bad.length && (Math.random() < 0.4 || !good.length) ? bad : good;
+			return from[Math.floor(Math.random() * from.length)];
+		}
+		let st: 'hide' | 'sneak' | 'dive' | 'freeze' = 'hide';
+		let wait = 5,
+			freezeT = 0,
+			spot: Spot | null = null,
+			yawT = g.rotation.y,
+			speed = 0.9,
+			diveTried = false,
+			diveT = 0,
+			diveD = 1,
+			sx = 0,
+			sz = 0,
+			stuck = 0,
+			faceCam = false;
+		const arrive = () => {
+			st = 'hide';
+			g.position.y = 0;
+			play('idle');
+			if (spot) {
+				last = `${spot.cx},${spot.cz}`;
+				yawT = spot.yaw;
+			}
+			wait = 6 + Math.random() * 9;
+		};
+		tick.push((dt) => {
+			if (!mixer) return;
+			mixer.update(dt);
+			const gp = g.position;
+			const cl = Math.hypot(camera.position.x, camera.position.z) || 1;
+			const side = (gp.x * camera.position.x + gp.z * camera.position.z) / cl;
+			const view = inView();
+			const clear = side < -2 || !view;
+			const seen = side > -0.6 && view;
+			yblob.position.set(gp.x, 0.012, gp.z);
+			if (st === 'hide') {
+				if (clear) wait -= dt;
+				if (wait <= 0 && clear) {
+					spot = pickSpot();
+					if (spot) {
+						st = 'sneak';
+						speed = Math.random() < 0.3 ? 2.2 : 0.9;
+						play(speed > 1 ? 'run' : 'walk', speed > 1 ? 1 : 1.1);
+						diveTried = false;
+						stuck = 0;
+					} else wait = 2;
+				}
+			} else if (st === 'sneak' && spot) {
+				if (seen) {
+					// caught moving: freeze like a statue, staring at you
+					st = 'freeze';
+					freezeT = 1.6 + Math.random() * 1.8;
+					mixer.timeScale = 0;
+					faceCam = true;
+				} else {
+					let dx = spot.x - gp.x,
+						dz = spot.z - gp.z;
+					const rem = Math.hypot(dx, dz);
+					stuck += dt;
+					if (rem < 0.12) arrive();
+					else if (stuck > 20) {
+						gp.x = spot.x;
+						gp.z = spot.z;
+						arrive();
+					} else if (rem < 2.4 && spot.good && !diveTried) {
+						diveTried = true;
+						if (Math.random() < 0.5) {
+							st = 'dive';
+							diveT = 0;
+							diveD = Math.max(0.5, rem / 3.2);
+							sx = gp.x;
+							sz = gp.z;
+							yawT = Math.atan2(dx, dz);
+							play('jump', 1.5);
+						}
+					}
+					if (st === 'sneak') {
+						let ux = dx / rem,
+							uz = dz / rem;
+						for (const o of solids()) {
+							const onTarget = o[0] === spot.cx && o[1] === spot.cz;
+							const lim = o[2] + (onTarget ? 0.2 : 0.5);
+							const ex = gp.x - o[0],
+								ez = gp.z - o[1],
+								d = Math.hypot(ex, ez) || 0.001;
+							if (d < lim) {
+								const w = (lim - d) / 0.5,
+									ax = ex / d,
+									az = ez / d;
+								let tx = -az,
+									tz = ax;
+								if (tx * ux + tz * uz < 0) {
+									tx = -tx;
+									tz = -tz;
+								}
+								ux += (ax + tx) * w * 0.9;
+								uz += (az + tz) * w * 0.9;
+							}
+						}
+						const ul = Math.hypot(ux, uz) || 1;
+						ux /= ul;
+						uz /= ul;
+						const step = Math.min(rem, speed * dt);
+						gp.x += ux * step;
+						gp.z += uz * step;
+						for (const o of solids()) {
+							const onTarget = o[0] === spot.cx && o[1] === spot.cz;
+							const lim = o[2] * (onTarget ? 0.9 : 1) + 0.1;
+							const ex = gp.x - o[0],
+								ez = gp.z - o[1],
+								d = Math.hypot(ex, ez) || 0.001;
+							if (d < lim) {
+								gp.x = o[0] + (ex / d) * lim;
+								gp.z = o[1] + (ez / d) * lim;
+							}
+						}
+						yawT = Math.atan2(ux, uz);
+					}
+				}
+			} else if (st === 'dive' && spot) {
+				diveT += dt;
+				const u = Math.min(1, diveT / diveD);
+				gp.x = sx + (spot.x - sx) * u;
+				gp.z = sz + (spot.z - sz) * u;
+				gp.y = Math.sin(u * Math.PI) * 0.3;
+				if (u >= 1) arrive();
+			} else if (st === 'freeze') {
+				freezeT -= dt;
+				if (faceCam) yawT = Math.atan2(camera.position.x - gp.x, camera.position.z - gp.z);
+				if (freezeT <= 0 && (clear || freezeT < -2)) {
+					mixer.timeScale = 1;
+					faceCam = false;
+					st = 'sneak';
+				}
+			}
+			const turn = st === 'freeze' ? 9 : 5;
+			const diff = wrap(yawT - g.rotation.y);
+			g.rotation.y += Math.sign(diff) * Math.min(Math.abs(diff), turn * dt);
+		});
 	}
 	// Dragon, asleep on a warm rock
 	{
@@ -2495,6 +2720,7 @@ export async function createIsland(
 			if (p.y < 1.4 || Math.abs(p.x) > 6.4) continue;
 			const py = box(world, 0.12, p.y - 0.06, 0.12, pyM, p.x, (p.y - 0.06) / 2 + 0.02, p.z);
 			py.raycast = () => {};
+			narrowCovers.push([p.x, p.z, 0.07]);
 			box(world, 0.32, 0.05, 0.32, pyM, p.x, 0.045, p.z).raycast = () => {};
 		}
 		// the train: three small carriages, with stand-ins until the authored model loads
