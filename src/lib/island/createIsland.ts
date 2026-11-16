@@ -1007,6 +1007,8 @@ export async function createIsland(
 		nl(cl, 0, 1);
 
 		// a tiny Swiss Guard on duty at the door
+		let swissGd: THREE.Group | null = null,
+			swissShell: THREE.Object3D[] = [];
 		{
 			const gd = new THREE.Group();
 			gd.position.set(0.95, 0, 2.75);
@@ -1039,6 +1041,8 @@ export async function createIsland(
 			cyl(gd, 0.016, 0.016, 1.45, 5, M(0x5a3a22), 0.29, 0.72, 0.02);
 			box(gd, 0.02, 0.16, 0.12, steel, 0.29, 1.32, 0.02);
 			add(gd, new THREE.ConeGeometry(0.03, 0.18, 5), steel, 0.29, 1.52, 0.02);
+			swissGd = gd;
+			swissShell = gd.children.slice();
 			kids.push(['swiss', gd, 0.7, 0.8]);
 		}
 		// Celtic high cross
@@ -1100,6 +1104,19 @@ export async function createIsland(
 			})
 			.catch(() => {});
 		kids.forEach((k) => registerFind(...k));
+		// authored Swiss Guard (Copilot concept, Meshy model, decimated to ~14k triangles, ~420 KB); procedural guard stays if it fails to load
+		loadModel('/island/swiss.glb')
+			.then((m) => {
+				if (!swissGd) return;
+				m.scale.setScalar(SWISS_S);
+				m.position.y = 0.95 * SWISS_S; // origin is the centre of the bounds; stand the boots on the ground
+				finishModel(m);
+				swissShell.forEach((o) => swissGd!.remove(o));
+				swissGd.add(m);
+				prep(m, byId.swiss.mats);
+				lastTod = -1;
+			})
+			.catch(() => {});
 		obstacles.push([5.0, -3.8, 3.0]);
 		spoke(5.0, -3.8, 3.0);
 	}
@@ -1719,6 +1736,7 @@ export async function createIsland(
 	// island from the camera, or out of view), freezes like a statue if you swing round and catch him
 	// mid-sneak, and hides behind buildings, trees and the odd post that is far too thin for him.
 	const YETI_S = 0.48;
+	const SWISS_S = 0.84;
 	{
 		const g = new THREE.Group();
 		g.position.set(-5.9, 0, -5.0);
