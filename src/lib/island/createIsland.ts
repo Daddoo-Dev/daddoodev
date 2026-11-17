@@ -2538,29 +2538,50 @@ export async function createIsland(
 		registerFind('giraffe', g, 1.1, 2.2);
 		// authored giraffe (Poly by Google, CC-BY, via Poly Pizza; ~71 KB); procedural giraffe stays if it fails to load
 		const giraffeBlob = blob(-6.5, 4.7, 1.0);
-		loadModel('/island/giraffe.glb')
-			.then((m) => {
+		loadGltf('/island/giraffe.glb')
+			.then(({ scene: m, animations }) => {
 				m.scale.setScalar(GIRAFFE_S);
 				m.position.set(0, 0, GIRAFFE_Z);
 				m.rotation.y = GIRAFFE_YAW;
 				finishModel(m);
+				m.traverse((o) => {
+					o.frustumCulled = false; // skinned bounds follow the bind pose, not the animation
+				});
 				shell.forEach((o) => g.remove(o));
-				// the model is a single static mesh, so a stroll is a slow sway and bob of the whole body
-				const body = new THREE.Group();
-				body.add(m);
-				g.add(body);
+				g.add(m);
 				prep(m, byId.giraffe.mats);
 				lastTod = -1;
-				const roam = wanderer(g, { x0: -10, x1: -1.4, z0: 4.8, z1: 10 }, 0.28, 0.8);
-				let gait = 0,
-					phase = 0;
+				const mixer = new THREE.AnimationMixer(m);
+				const act = (n: string) => {
+					const c = animations.find((a) => a.name === n);
+					return c ? mixer.clipAction(c) : null;
+				};
+				const idles = [act('horse_Idle'), act('horse_Idle1')].filter((a): a is THREE.AnimationAction => !!a),
+					walk = act('horse_Walk');
+				let cur: THREE.AnimationAction | null = null;
+				const to = (n: THREE.AnimationAction | null) => {
+					if (!n || n === cur) return;
+					n.reset().play();
+					if (cur) n.crossFadeFrom(cur, 0.4, false);
+					cur = n;
+				};
+				let idleI = 0,
+					idleT = 0;
+				to(idles[0] ?? null);
+				if (walk) walk.timeScale = 0.8;
+				const roam = wanderer(g, { x0: -10, x1: -1.4, z0: 4.8, z1: 10 }, 0.4, 0.8);
 				tick.push((dt) => {
 					const st = roam(dt);
-					gait += ((st === 'walk' ? 1 : 0) - gait) * Math.min(1, dt * 3);
-					phase += dt * 3.2 * gait;
-					body.position.y = Math.abs(Math.sin(phase)) * 0.045 * gait;
-					body.rotation.z = Math.sin(phase) * 0.035 * gait;
-					body.rotation.x = Math.sin(phase * 2) * 0.012 * gait;
+					if (st === 'walk') to(walk);
+					else {
+						idleT -= dt;
+						if (idleT <= 0 || cur === walk) {
+							idleI = (idleI + (idleT <= 0 ? 1 : 0)) % Math.max(1, idles.length);
+							idleT = 6 + Math.random() * 6;
+							to(idles[idleI] ?? null);
+						}
+					}
+					mixer.update(dt);
 					giraffeBlob.position.set(g.position.x, 0.012, g.position.z);
 				});
 			})
