@@ -644,7 +644,12 @@ export async function createIsland(
 			[-2.8, -6.9, 0.8],
 			[2.9, -7, 0.9, 0x3f9d57],
 			[-2.4, 3.2, 0.75],
-			[2.6, 2.9, 0.7, 0x3f9d57]
+			[2.6, 2.9, 0.7, 0x3f9d57],
+			// the extended showroom side, in the same rhythm as the other edges
+			[-6.4, -8.2, 0.9, 0x3f9d57],
+			[-1.1, -8.25, 0.75],
+			[2.4, -8.1, 1],
+			[5.8, -8.3, 0.85, 0x3f9d57]
 		] as [number, number, number, number?][]
 	).forEach(([x, z, s, c]) => tree(x, z, s, c));
 	(
@@ -652,7 +657,10 @@ export async function createIsland(
 			[-1.6, 4.4],
 			[-6.9, 2.8],
 			[6.9, -2.4],
-			[-6.8, -4.9]
+			[-6.8, -4.9],
+			[-4.7, -8.4],
+			[0.6, -8.15],
+			[4.2, -8.45]
 		] as [number, number][]
 	).forEach(([x, z]) => {
 		const b = ball(world, 0.42, M(0x3f9d57), x, 0.3, z, 0);
@@ -666,7 +674,10 @@ export async function createIsland(
 			[-0.8, 5.6],
 			[6.7, 4.3],
 			[-5.9, -6.3],
-			[6.2, 5.6]
+			[6.2, 5.6],
+			[-7.1, -8.15],
+			[-2.6, -8.55],
+			[6.6, -8.2]
 		] as [number, number][]
 	).forEach(([x, z]) => {
 		const r = add(world, new THREE.DodecahedronGeometry(0.34, 0), M(0xa5a1b8), x, 0.2, z);
@@ -3129,17 +3140,37 @@ export async function createIsland(
 			stem.raycast = head.raycast = () => {};
 			n++;
 		}
+		// a few more along the extended back edge, which the square scatter never reaches
+		n = 0;
+		tries = 0;
+		while (n < 14 && tries++ < 200) {
+			const x = (rnd() - 0.5) * 14.2,
+				z = -7.7 - rnd() * 0.95;
+			if (obstacles.some(([ox, oz, r]) => Math.hypot(x - ox, z - oz) < r + 0.15)) continue;
+			const stem = cyl(world, 0.018, 0.018, 0.22, 4, M(0x3f9d57), x, 0.11, z);
+			const head = ball(world, 0.07, M(pal[n % pal.length]), x, 0.25, z, 0);
+			stem.castShadow = head.castShadow = false;
+			stem.raycast = head.raycast = () => {};
+			n++;
+		}
 	}
 	const grass = (() => {
-		const count = low ? 90 : 220;
+		const count = low ? 104 : 250;
 		const mesh = new THREE.InstancedMesh(new THREE.ConeGeometry(0.05, 0.32, 4), M(0x5fae55), count);
 		mesh.castShadow = false;
 		mesh.raycast = () => {};
 		const base: { x: number; z: number; s: number; ph: number }[] = [];
 		let tries = 0;
-		while (base.length < count && tries++ < 4000) {
+		const main = low ? 90 : 220;
+		while (base.length < main && tries++ < 4000) {
 			const x = (rnd() - 0.5) * 14.4,
 				z = (rnd() - 0.5) * 14.4;
+			if (obstacles.some(([ox, oz, r]) => Math.hypot(x - ox, z - oz) < r)) continue;
+			base.push({ x, z, s: 0.7 + rnd() * 0.9, ph: rnd() * 6 });
+		}
+		while (base.length < count && tries++ < 5000) {
+			const x = (rnd() - 0.5) * 14.2,
+				z = -7.65 - rnd() * 1.05;
 			if (obstacles.some(([ox, oz, r]) => Math.hypot(x - ox, z - oz) < r)) continue;
 			base.push({ x, z, s: 0.7 + rnd() * 0.9, ph: rnd() * 6 });
 		}
