@@ -610,6 +610,76 @@ export async function createIsland(
 				if (mm.metalness > 0.2) mm.metalness = 0.12;
 			}
 		});
+	/**
+	 * Lets an animal live on its own patch of the island: idle a while, pick a clear spot nearby, turn, walk there, repeat.
+	 * Regions and obstacles are in final (spread) world coordinates, so setup happens on the first tick, after the layout pass.
+	 */
+	const wanderer = (g: THREE.Object3D, region: { x0: number; x1: number; z0: number; z1: number }, speed: number, selfR: number) => {
+		let tx = 0,
+			tz = 0,
+			state: 'idle' | 'turn' | 'walk' = 'idle',
+			wait = 1 + Math.random() * 3,
+			ready = false;
+		let own: [number, number, number][] = []; // the animal's own spawn-spot obstacle must not block it
+		const free = (x: number, z: number) => {
+			if (x < region.x0 || x > region.x1 || z < region.z0 || z > region.z1) return false;
+			for (const o of obstacles) if (!own.includes(o) && Math.hypot(x - o[0], z - o[1]) < o[2] + selfR + 0.15) return false;
+			return true;
+		};
+		const pick = () => {
+			for (let n = 0; n < 24; n++) {
+				const a = Math.random() * Math.PI * 2,
+					d = 1.6 + Math.random() * 3.4;
+				const x = g.position.x + Math.sin(a) * d,
+					z = g.position.z + Math.cos(a) * d;
+				let ok = free(x, z);
+				for (let k = 1; ok && k < 8; k++) ok = free(g.position.x + ((x - g.position.x) * k) / 8, g.position.z + ((z - g.position.z) * k) / 8);
+				if (ok) {
+					tx = x;
+					tz = z;
+					return true;
+				}
+			}
+			return false;
+		};
+		/** advances one frame; returns what the animal is doing so the caller can pick an animation */
+		return (dt: number): 'idle' | 'turn' | 'walk' => {
+			if (!ready) {
+				ready = true;
+				own = obstacles.filter((o) => Math.hypot(o[0] - g.position.x, o[1] - g.position.z) < 0.3);
+				// start from wherever the layout pass left it, nudged inside the region if needed
+				g.position.x = Math.min(region.x1, Math.max(region.x0, g.position.x));
+				g.position.z = Math.min(region.z1, Math.max(region.z0, g.position.z));
+			}
+			if (state === 'idle') {
+				wait -= dt;
+				if (wait <= 0) {
+					if (pick()) state = 'turn';
+					else wait = 2;
+				}
+			}
+			if (state === 'turn' || state === 'walk') {
+				const want = Math.atan2(tx - g.position.x, tz - g.position.z);
+				let diff = want - g.rotation.y;
+				diff = Math.atan2(Math.sin(diff), Math.cos(diff));
+				g.rotation.y += Math.sign(diff) * Math.min(Math.abs(diff), 1.8 * dt);
+				if (Math.abs(diff) < 0.3) state = 'walk';
+				if (state === 'walk') {
+					const dx = tx - g.position.x,
+						dz = tz - g.position.z,
+						dist = Math.hypot(dx, dz);
+					const step = Math.min(dist, speed * dt);
+					g.position.x += (dx / (dist || 1)) * step;
+					g.position.z += (dz / (dist || 1)) * step;
+					if (dist < 0.08) {
+						state = 'idle';
+						wait = 3 + Math.random() * 8;
+					}
+				}
+			}
+			return state;
+		};
+	};
 	let krakenPoke: () => void = () => {};
 	const obstacles: [number, number, number][] = []; // keeps flowers and grass off buildings and paths
 	const narrowCovers: [number, number, number][] = []; // posts too thin to hide a yeti behind (he tries anyway)
@@ -2326,7 +2396,7 @@ export async function createIsland(
 		g.position.set(3.0, 0, 5.5);
 		g.rotation.y = -1.7;
 		world.add(g);
-		blob(3.0, 5.5, 0.9);
+		const okapiBlob = blob(3.0, 5.5, 0.9);
 		const dark = M(0x4a2d24),
 			cream = M(0xf0e4cf),
 			tan = M(0x7a4a36);
@@ -2373,30 +2443,56 @@ export async function createIsland(
 		});
 		const shell = g.children.slice();
 		registerFind('okapi', g, 0.85, 0.65);
-		// authored okapi (Meshy, decimated to ~11k triangles, ~270 KB); procedural okapi stays if it fails to load
-		loadModel('/island/okapi.glb')
-			.then((m) => {
+		// authored okapi (Meshy, rigged, decimated to ~13k triangles, ~430 KB); procedural okapi stays if it fails to load
+		loadGltf('/island/okapi.glb')
+			.then(({ scene: m, animations }) => {
 				m.scale.setScalar(OKAPI_S);
 				m.position.y = 0.76 * OKAPI_S; // origin is the centre of the bounds; stand the hooves on the ground
 				m.rotation.y = OKAPI_YAW;
 				finishModel(m);
+				m.traverse((o) => {
+					o.frustumCulled = false; // skinned bounds follow the bind pose, not the animation
+				});
 				shell.forEach((o) => g.remove(o));
 				g.add(m);
 				prep(m, byId.okapi.mats);
 				lastTod = -1;
+				const mixer = new THREE.AnimationMixer(m);
+				const act = (n: string) => {
+					const c = animations.find((a) => a.name === n);
+					return c ? mixer.clipAction(c) : null;
+				};
+				const idle = act('deer_idle'),
+					walk = act('deer_walk');
+				let cur: THREE.AnimationAction | null = null;
+				const to = (n: THREE.AnimationAction | null) => {
+					if (!n || n === cur) return;
+					n.reset().play();
+					if (cur) n.crossFadeFrom(cur, 0.35, false);
+					cur = n;
+				};
+				to(idle);
+				if (walk) walk.timeScale = 0.9;
+				const roam = wanderer(g, { x0: 0.8 * SPREAD, x1: 9.8, z0: 4.8, z1: 10 }, 0.5, 0.55);
+				tick.push((dt) => {
+					const st = roam(dt);
+					to(st === 'walk' ? walk : idle);
+					mixer.update(dt);
+					okapiBlob.position.set(g.position.x, 0.012, g.position.z);
+				});
 			})
 			.catch(() => {});
 		obstacles.push([3.0, 5.5, 1.1]);
 	}
 	// Giraffe, peeking over the tree line
 	const GIRAFFE_S = 0.16,
-		GIRAFFE_Z = -0.5;
+		GIRAFFE_Z = -0.5,
+		GIRAFFE_YAW = 0;
 	{
 		const g = new THREE.Group();
 		g.position.set(-6.5, 0, 4.7);
 		faceTo(g);
 		world.add(g);
-		blob(-6.5, 4.7, 1.0);
 		const spot = canvasTex(128, 128, (c, w, h) => {
 			c.fillStyle = '#e9b64f';
 			c.fillRect(0, 0, w, h);
@@ -2441,15 +2537,32 @@ export async function createIsland(
 		const shell = g.children.slice();
 		registerFind('giraffe', g, 1.1, 2.2);
 		// authored giraffe (Poly by Google, CC-BY, via Poly Pizza; ~71 KB); procedural giraffe stays if it fails to load
+		const giraffeBlob = blob(-6.5, 4.7, 1.0);
 		loadModel('/island/giraffe.glb')
 			.then((m) => {
 				m.scale.setScalar(GIRAFFE_S);
 				m.position.set(0, 0, GIRAFFE_Z);
+				m.rotation.y = GIRAFFE_YAW;
 				finishModel(m);
 				shell.forEach((o) => g.remove(o));
-				g.add(m);
+				// the model is a single static mesh, so a stroll is a slow sway and bob of the whole body
+				const body = new THREE.Group();
+				body.add(m);
+				g.add(body);
 				prep(m, byId.giraffe.mats);
 				lastTod = -1;
+				const roam = wanderer(g, { x0: -10, x1: -1.4, z0: 4.8, z1: 10 }, 0.28, 0.8);
+				let gait = 0,
+					phase = 0;
+				tick.push((dt) => {
+					const st = roam(dt);
+					gait += ((st === 'walk' ? 1 : 0) - gait) * Math.min(1, dt * 3);
+					phase += dt * 3.2 * gait;
+					body.position.y = Math.abs(Math.sin(phase)) * 0.045 * gait;
+					body.rotation.z = Math.sin(phase) * 0.035 * gait;
+					body.rotation.x = Math.sin(phase * 2) * 0.012 * gait;
+					giraffeBlob.position.set(g.position.x, 0.012, g.position.z);
+				});
 			})
 			.catch(() => {});
 		obstacles.push([-6.5, 4.7, 1.2]);
