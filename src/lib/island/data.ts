@@ -150,7 +150,7 @@ const FIND_DATA: Record<string, { title: string; blurb: string }> = {
 	},
 	monorail: {
 		title: 'Monorail',
-		blurb: 'It loops over the rooftops, drops past the rim and hangs right around the underside. It has never been late, because it has never stopped.'
+		blurb: 'Monorail, monorail, monorail!'
 	},
 	skull: {
 		title: 'Memento Mori',

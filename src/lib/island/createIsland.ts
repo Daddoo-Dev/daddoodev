@@ -611,25 +611,40 @@ export async function createIsland(
 			}
 		});
 	/**
-	 * Lets an animal live on its own patch of the island: idle a while, pick a clear spot nearby, turn, walk there, repeat.
-	 * Regions and obstacles are in final (spread) world coordinates, so setup happens on the first tick, after the layout pass.
+	 * Idle, pick a clear spot on the pond side of the monorail, turn, and walk there.
+	 * The region is in final world coordinates. The animal's own pen moves with it and is the only obstacle it ignores, so the two animals keep clear of each other.
 	 */
-	const wanderer = (g: THREE.Object3D, region: { x0: number; x1: number; z0: number; z1: number }, speed: number, selfR: number) => {
+	const pondSide = (body: number, railGap: number) => ({
+		x0: -S / 2 + body,
+		x1: S / 2 - body,
+		// the track's pond-side edge is the high control point; railGap keeps the body and a tall neck off the beam
+		z0: 2.6 * SPREAD + railGap,
+		z1: S / 2 - body
+	});
+	const wanderer = (
+		g: THREE.Object3D,
+		region: { x0: number; x1: number; z0: number; z1: number },
+		speed: number,
+		selfR: number,
+		pen: [number, number, number]
+	) => {
 		let tx = 0,
 			tz = 0,
 			state: 'idle' | 'turn' | 'walk' = 'idle',
 			wait = 1 + Math.random() * 3,
 			ready = false;
-		let own: [number, number, number][] = []; // the animal's own spawn-spot obstacle must not block it
 		const free = (x: number, z: number) => {
 			if (x < region.x0 || x > region.x1 || z < region.z0 || z > region.z1) return false;
-			for (const o of obstacles) if (!own.includes(o) && Math.hypot(x - o[0], z - o[1]) < o[2] + selfR + 0.15) return false;
+			for (const o of obstacles) {
+				if (o === pen) continue;
+				if (Math.hypot(x - o[0], z - o[1]) < o[2] + selfR + 0.15) return false;
+			}
 			return true;
 		};
 		const pick = () => {
-			for (let n = 0; n < 24; n++) {
+			for (let n = 0; n < 36; n++) {
 				const a = Math.random() * Math.PI * 2,
-					d = 1.6 + Math.random() * 3.4;
+					d = 1.6 + Math.random() * 7;
 				const x = g.position.x + Math.sin(a) * d,
 					z = g.position.z + Math.cos(a) * d;
 				let ok = free(x, z);
@@ -646,8 +661,6 @@ export async function createIsland(
 		return (dt: number): 'idle' | 'turn' | 'walk' => {
 			if (!ready) {
 				ready = true;
-				own = obstacles.filter((o) => Math.hypot(o[0] - g.position.x, o[1] - g.position.z) < 0.3);
-				// start from wherever the layout pass left it, nudged inside the region if needed
 				g.position.x = Math.min(region.x1, Math.max(region.x0, g.position.x));
 				g.position.z = Math.min(region.z1, Math.max(region.z0, g.position.z));
 			}
@@ -669,14 +682,24 @@ export async function createIsland(
 						dz = tz - g.position.z,
 						dist = Math.hypot(dx, dz);
 					const step = Math.min(dist, speed * dt);
-					g.position.x += (dx / (dist || 1)) * step;
-					g.position.z += (dz / (dist || 1)) * step;
-					if (dist < 0.08) {
+					const nx = g.position.x + (dx / (dist || 1)) * step,
+						nz = g.position.z + (dz / (dist || 1)) * step;
+					// stop rather than step into something that moved onto the path
+					if (!free(nx, nz)) {
 						state = 'idle';
-						wait = 3 + Math.random() * 8;
+						wait = 1.2;
+					} else {
+						g.position.x = nx;
+						g.position.z = nz;
+						if (dist < 0.08) {
+							state = 'idle';
+							wait = 3 + Math.random() * 8;
+						}
 					}
 				}
 			}
+			pen[0] = g.position.x;
+			pen[1] = g.position.z;
 			return state;
 		};
 	};
@@ -2443,6 +2466,8 @@ export async function createIsland(
 		});
 		const shell = g.children.slice();
 		registerFind('okapi', g, 0.85, 0.65);
+		const okapiPen: [number, number, number] = [3.0, 5.5, 1.1];
+		obstacles.push(okapiPen);
 		// authored okapi (Meshy, rigged, decimated to ~13k triangles, ~430 KB); procedural okapi stays if it fails to load
 		loadGltf('/island/okapi.glb')
 			.then(({ scene: m, animations }) => {
@@ -2473,7 +2498,7 @@ export async function createIsland(
 				};
 				to(idle);
 				if (walk) walk.timeScale = 0.9;
-				const roam = wanderer(g, { x0: 0.8 * SPREAD, x1: 9.8, z0: 4.8, z1: 10 }, 0.5, 0.55);
+				const roam = wanderer(g, pondSide(0.75, 1.15), 0.5, 0.75, okapiPen);
 				tick.push((dt) => {
 					const st = roam(dt);
 					to(st === 'walk' ? walk : idle);
@@ -2482,7 +2507,6 @@ export async function createIsland(
 				});
 			})
 			.catch(() => {});
-		obstacles.push([3.0, 5.5, 1.1]);
 	}
 	// Giraffe, peeking over the tree line
 	const GIRAFFE_S = 0.16,
@@ -2536,6 +2560,8 @@ export async function createIsland(
 		});
 		const shell = g.children.slice();
 		registerFind('giraffe', g, 1.1, 2.2);
+		const giraffePen: [number, number, number] = [-6.5, 4.7, 1.2];
+		obstacles.push(giraffePen);
 		// authored giraffe (Poly by Google, CC-BY, via Poly Pizza; ~71 KB); procedural giraffe stays if it fails to load
 		const giraffeBlob = blob(-6.5, 4.7, 1.0);
 		loadGltf('/island/giraffe.glb')
@@ -2569,7 +2595,7 @@ export async function createIsland(
 					idleT = 0;
 				to(idles[0] ?? null);
 				if (walk) walk.timeScale = 0.8;
-				const roam = wanderer(g, { x0: -10, x1: -1.4, z0: 4.8, z1: 10 }, 0.4, 0.8);
+				const roam = wanderer(g, pondSide(1.15, 1.6), 0.4, 1.15, giraffePen);
 				tick.push((dt) => {
 					const st = roam(dt);
 					if (st === 'walk') to(walk);
@@ -2586,7 +2612,6 @@ export async function createIsland(
 				});
 			})
 			.catch(() => {});
-		obstacles.push([-6.5, 4.7, 1.2]);
 	}
 	// Golden-age rocket on its pad
 	{
@@ -2684,12 +2709,28 @@ export async function createIsland(
 		g.scale.setScalar(0.75);
 		const proc = g.children.slice();
 		let orca: THREE.Group | null = null;
+		// tilted circuit: one rise and one dive per lap, nose along the slope
+		const orcaR = 12.5 * SPREAD,
+			orcaTilt = 0.2,
+			orcaY = -8.6,
+			orcaX = new THREE.Vector3(),
+			orcaYAxis = new THREE.Vector3(),
+			orcaZ = new THREE.Vector3(),
+			orcaUp = new THREE.Vector3(0, 1, 0),
+			orcaBasis = new THREE.Matrix4();
 		tick.push((_dt, t) => {
 			if (orca) orca.rotation.y = -Math.PI / 2 + Math.sin(t * 1.4) * 0.08;
-			const a = t * 0.09;
-			g.position.set(Math.cos(a) * 12.5 * SPREAD, -8.5 + Math.sin(t * 0.6) * 0.5, Math.sin(a) * 12.5 * SPREAD);
-			g.rotation.y = -a - Math.PI / 2 + Math.PI;
-			g.rotation.z = Math.sin(t * 0.6) * 0.06;
+			const a = t * 0.09,
+				ct = Math.cos(orcaTilt),
+				st = Math.sin(orcaTilt);
+			g.position.set(Math.cos(a) * orcaR, orcaY + Math.sin(a) * orcaR * st, Math.sin(a) * orcaR * ct);
+			// local +X is the tail, so local -X (the nose) follows the tangent
+			orcaX.set(-Math.sin(a), Math.cos(a) * st, Math.cos(a) * ct).negate().normalize();
+			orcaZ.crossVectors(orcaX, orcaUp);
+			if (orcaZ.lengthSq() < 1e-6) orcaZ.set(0, 0, 1);
+			orcaZ.normalize();
+			orcaYAxis.crossVectors(orcaZ, orcaX).normalize();
+			g.quaternion.setFromRotationMatrix(orcaBasis.makeBasis(orcaX, orcaYAxis, orcaZ));
 			tailG.rotation.z = Math.sin(t * 1.4) * 0.35;
 		});
 		registerFind('whale', g, 2.6, 0);
